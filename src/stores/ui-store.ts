@@ -2,13 +2,13 @@
 
 import { create } from "zustand"
 
-type ActiveDrawer =
+export type ActiveDrawer =
   | { type: "issue"; id: string }
   | { type: "roadmap"; id: string }
   | { type: "assistant"; id?: string }
   | null
 
-type IssuesViewMode = "list" | "board"
+export type IssuesViewMode = "list" | "board"
 
 type UiStore = {
   sidebarCollapsed: boolean

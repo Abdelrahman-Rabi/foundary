@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Issues Patterns"
+  short_description: "Operational issues UI rules for Foundary"
+  default_prompt: "Use $foundary-issues-patterns to implement Foundary issues workflows."

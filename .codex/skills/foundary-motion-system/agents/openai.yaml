@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Motion System"
+  short_description: "Restrained motion rules for Foundary UI"
+  default_prompt: "Use $foundary-motion-system to implement Foundary transitions and interaction motion."

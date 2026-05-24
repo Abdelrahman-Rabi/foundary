@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary DnD Patterns"
+  short_description: "Operational drag-and-drop rules for Foundary"
+  default_prompt: "Use $foundary-dnd-patterns to implement Foundary drag-and-drop workflows."

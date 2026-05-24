@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Component Composition"
+  short_description: "React component composition rules for Foundary"
+  default_prompt: "Use $foundary-component-composition to structure Foundary React components."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Roadmap Patterns"
+  short_description: "Strategic roadmap UI rules for Foundary"
+  default_prompt: "Use $foundary-roadmap-patterns to implement Foundary roadmap workflows."

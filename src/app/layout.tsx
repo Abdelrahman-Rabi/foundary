@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { AppShell } from "@/components/app-shell/app-shell";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -26,7 +27,7 @@ export default function RootLayout({
       className={cn("dark h-full antialiased", inter.variable, geistMono.variable)}
     >
       <body className="min-h-full bg-background text-foreground">
-        {children}
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

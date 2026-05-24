@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Dashboard Composition"
+  short_description: "Calm dashboard layout rules for Foundary"
+  default_prompt: "Use $foundary-dashboard-composition to implement Foundary dashboard layouts."

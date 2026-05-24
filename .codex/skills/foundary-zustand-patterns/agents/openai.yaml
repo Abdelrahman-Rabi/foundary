@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Zustand Patterns"
+  short_description: "Lightweight Zustand architecture for Foundary"
+  default_prompt: "Use $foundary-zustand-patterns to implement Foundary state stores."

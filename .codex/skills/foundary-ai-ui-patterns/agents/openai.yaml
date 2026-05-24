@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary AI UI Patterns"
+  short_description: "Embedded AI UI rules for Foundary"
+  default_prompt: "Use $foundary-ai-ui-patterns to implement embedded Foundary AI UI."

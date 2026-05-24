@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary UI Patterns"
+  short_description: "Compact premium UI rules for Foundary"
+  default_prompt: "Use $foundary-ui-patterns to refine Foundary UI components."

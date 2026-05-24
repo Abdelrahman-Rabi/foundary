@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary App Shell Patterns"
+  short_description: "Stable app shell rules for Foundary"
+  default_prompt: "Use $foundary-app-shell-patterns to implement the Foundary app shell."

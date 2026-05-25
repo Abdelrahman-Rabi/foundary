@@ -1,42 +1,40 @@
-# Current Feature - Roadmap System
+# Current Feature - AI Assistant Layer
 
 ## Current Objective
 
-Build the Foundary Roadmap System as the strategic execution layer.
+Build the Foundary AI Assistant Layer as embedded operational intelligence.
 
 This phase establishes:
-- Now / Next / Later roadmap structure
-- confidence-aware initiative cards
-- venture-aware roadmap filtering
-- linked issue execution context
-- focused roadmap drawer context
-- lightweight mocked AI strategic insights
-- calm strategic visibility across active ventures
+- deterministic mocked AI analysis
+- contextual operational insight cards
+- risk and clarity recommendations
+- issue summaries
+- roadmap confidence analysis
+- continue / split / kill recommendations
+- a real assistant workspace
 
 The goal is NOT:
-> building enterprise roadmap planning software.
+> building a chatbot.
 
 The goal is:
-> making strategic direction, confidence, and execution linkage easy to understand.
+> making venture execution feel more contextual, intelligent, and decision-aware.
 
 ---
 
 # Strategic Goal
 
-The Roadmap System should communicate:
-- venture direction
-- initiative confidence
-- execution progress
-- strategic risk
-- linked operational work
-- disciplined continue / split / kill thinking
+The AI Assistant Layer should communicate:
+- what is risky
+- what lacks clarity
+- what may affect roadmap confidence
+- which initiatives should continue, split, or be stopped
+- where operational focus should tighten
 
 Users should immediately understand:
-- what matters now
-- what is likely next
-- what is less certain
-- where confidence is weak
-- how execution connects to outcomes
+- why an AI signal exists
+- what evidence supports it
+- what action is recommended
+- how confident the system is
 
 ---
 
@@ -44,88 +42,66 @@ Users should immediately understand:
 
 This phase includes ONLY:
 
-## Roadmap Page
-- roadmap header
-- strategic toolbar
-- venture context
-- status and confidence filtering
-- confidence summary
-- Now / Next / Later board
+## Assistant Workspace
+- contextual assistant header
+- portfolio / venture scoped intelligence
+- summary metrics
+- operational insights
+- risk analysis
+- roadmap recommendations
+- issue clarity signals
 
 ---
 
-## Roadmap Board
-- Now column
-- Next column
-- Later column
-- calm initiative cards
-- stable responsive layout
-- drawer open behavior
+## Embedded AI UI
+- shared AI insight cards
+- confidence indicators
+- risk badges
+- recommendation blocks
+- compact signal lists
 
 ---
 
-## Roadmap Drawer
-- initiative header
-- strategic goal
-- progress and confidence
-- linked issue execution context
-- mocked AI strategic insight context
+## Drawer AI
+- issue summary and clarity analysis
+- roadmap confidence analysis
+- continue / split / kill recommendation
+- assistant drawer content
 
 ---
 
 ## State And Data
-- use existing roadmap store
-- keep roadmap state local and frontend-only
-- derive linked issue execution context from issue data
-- derive venture scoping from existing venture store
+- use existing issue, roadmap, venture, and AI mock data
+- derive deterministic AI signals at render time
+- keep AI frontend-only
 
 ---
 
 # Explicitly Out Of Scope
 
 Do NOT build yet:
-- real backend
+- real LLM integration
 - API routes
-- authentication
-- notifications
-- comments
-- dependency graphs
-- Gantt charts
-- release train planning
-- portfolio financial forecasting
-- real AI integration
-- chatbot UI
+- streaming responses
+- chat threads
+- avatars
+- assistant personality
+- autonomous agents
+- fake background jobs
+- notification systems
 
 This phase is ONLY:
-> the strategic roadmap workflow layer.
-
----
-
-# Required Components
-
-## Roadmap Components
-
-```txt
-RoadmapHeader
-RoadmapToolbar
-RoadmapConfidenceSummary
-RoadmapBoard
-RoadmapColumn
-RoadmapCard
-RoadmapDrawerContent
-RoadmapBadges
-```
+> embedded mocked operational intelligence.
 
 ---
 
 # Acceptance Criteria
 
-- roadmap route feels like a real strategic workspace
-- Now / Next / Later structure is clear
-- cards emphasize goals, progress, confidence, and linked issues
-- roadmap drawer preserves page context
-- venture switching scopes visible initiatives
-- filters and search work
-- linked issue context is visible
-- mocked AI roadmap insights feel structured and non-chatty
-- no timeline, Gantt, or enterprise planning complexity was introduced
+- assistant route feels like a real intelligence workspace
+- AI surfaces are embedded and concise
+- dashboard AI uses shared AI components
+- issue drawer shows summaries and risk / clarity recommendations
+- roadmap drawer shows confidence and continue / split / kill analysis
+- venture switching scopes assistant intelligence
+- AI copy remains calm, operational, and non-chatty
+- no chatbot, avatar, typing animation, fake streaming, or AI theatrics were introduced

@@ -9,6 +9,14 @@ export type AiInsightType =
   | "warning"
   | "summary"
 
+export type AiRecommendationKind =
+  | "continue"
+  | "split"
+  | "kill"
+  | "prioritize"
+  | "clarify"
+  | "reduce-scope"
+
 export type AiInsight = {
   id: string
   ventureId: string
@@ -16,9 +24,12 @@ export type AiInsight = {
   entityId: string
   type: AiInsightType
   title: string
+  observation?: string
+  reason?: string
   message: string
   confidence: number
   severity: RiskLevel
+  recommendationKind?: AiRecommendationKind
   suggestedAction?: string
   createdAt: string
 }

@@ -2,6 +2,12 @@
 
 import { AlertCircle, GitBranch, Target } from "lucide-react"
 
+import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
+import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
+import {
+  getInsightSignals,
+  getRoadmapSignals,
+} from "@/features/assistant/utils/assistant-analysis"
 import {
   IssuePriorityBadge,
   IssueStatusBadge,
@@ -51,6 +57,9 @@ export function RoadmapDrawerContent({
   const linkedIssues = getLinkedIssues(issues, item)
   const issueCompletion = getIssueCompletion(linkedIssues)
   const insights = getRoadmapInsights(aiInsights, item)
+  const analysisSignals = getRoadmapSignals(item, issues, ventures)
+  const insightSignals = getInsightSignals(insights)
+  const allSignals = [...insightSignals, ...analysisSignals]
   const blockedCount = linkedIssues.filter((issue) => issue.blocked).length
 
   return (
@@ -172,30 +181,14 @@ export function RoadmapDrawerContent({
             AI strategic insights
           </h3>
           <div className="mt-3 space-y-3">
-            {insights.length > 0 ? (
-              insights.map((insight) => (
-                <div
-                  key={insight.id}
-                  className="rounded-lg border border-warning/40 bg-muted/20 p-3"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-medium text-foreground">
-                      {insight.title}
-                    </p>
-                    <span className="text-xs text-muted-foreground">
-                      {insight.confidence}%
-                    </span>
-                  </div>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                    {insight.message}
-                  </p>
-                  {insight.suggestedAction ? (
-                    <p className="mt-2 text-xs leading-5 text-foreground">
-                      {insight.suggestedAction}
-                    </p>
-                  ) : null}
-                </div>
-              ))
+            {allSignals.length > 0 ? (
+              allSignals.map((signal) =>
+                signal.recommendationKind ? (
+                  <AiRecommendationBlock key={signal.id} signal={signal} />
+                ) : (
+                  <AiInsightCard key={signal.id} signal={signal} compact />
+                )
+              )
             ) : (
               <p className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
                 No strategic risk insight detected for this initiative.

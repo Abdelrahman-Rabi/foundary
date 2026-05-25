@@ -51,7 +51,7 @@ export function RoadmapCard({
           onOpenRoadmapItem(item.id)
         }
       }}
-      className="cursor-pointer border-border/60 bg-card/60 shadow-none transition-colors hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="cursor-pointer border-border/60 bg-card/60 shadow-none transition-all duration-150 hover:border-border hover:bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">

@@ -2,6 +2,7 @@
 
 import { GitBranch } from "lucide-react"
 
+import { EmptyState } from "@/components/shared/empty-state"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
 import {
@@ -51,8 +52,11 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
 
   if (!issue) {
     return (
-      <div className="p-5 text-sm text-muted-foreground">
-        Issue context is no longer available.
+      <div className="p-5">
+        <EmptyState
+          title="Issue context is unavailable."
+          description="The selected issue is no longer present in the current workspace."
+        />
       </div>
     )
   }

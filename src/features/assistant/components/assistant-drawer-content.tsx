@@ -1,5 +1,6 @@
 "use client"
 
+import { EmptyState } from "@/components/shared/empty-state"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
 import {
@@ -71,9 +72,10 @@ export function AssistantDrawerContent({
             <AiInsightCard signal={signal} />
           )
         ) : (
-          <p className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
-            No significant operational intelligence signals detected.
-          </p>
+          <EmptyState
+            title="No operational signal available."
+            description="No significant intelligence signal is active for the current context."
+          />
         )}
       </div>
     </div>

@@ -119,312 +119,79 @@ This scope is deliberate. The prototype is meant to demonstrate a coherent produ
 - Product rationale: see `product-note.md`.
 - AI-assisted development process: see `ai-usage-note.md`.
 
-## ONE STUDIO ASSIGNMENT — STRATEGIC EXECUTION ROADMAP
+## One Studio Assignment: Strategic Execution Roadmap
 
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE A — STRATEGIC FOUNDATION                             │
-│ "Think before building"                                    │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+This roadmap explains how the assignment was approached: first as a strategic product problem, then as a focused execution system, and finally as a reviewer-ready product narrative.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 1 — Decode One Studio Philosophy                      │
-│-------------------------------------------------------------│
-│ Understand:                                                 │
-│ • AI-native workflows                                       │
-│ • Lean venture operations                                   │
-│ • Async execution                                           │
-│ • High-velocity product culture                             │
-│ • Small elite teams                                         │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+> Success is not "a nice frontend." Success is showing how modern AI-native venture studios could operate with more clarity, speed, and strategic discipline.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 2 — Product Positioning                               │
-│-------------------------------------------------------------│
-│ Define the product as:                                      │
-│                                                             │
-│ "AI-native Venture Execution OS"                            │
-│                                                             │
-│ Key Concepts:                                               │
-│ • Venture-aware workflows                                   │
-│ • Portfolio visibility                                      │
-│ • Outcome-oriented execution                                │
-│ • Operational clarity                                       │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+### Roadmap Overview
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 3 — UX & Interaction Philosophy                       │
-│-------------------------------------------------------------│
-│ UX Principles:                                              │
-│ • Calm                                                      │
-│ • Fast                                                      │
-│ • Minimal                                                    │
-│ • Focused                                                   │
-│ • Intelligent                                               │
-│                                                             │
-│ Avoid:                                                      │
-│ • Jira complexity                                           │
-│ • Enterprise density                                        │
-│ • Workflow clutter                                          │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+| Phase | Focus | Outcome |
+| --- | --- | --- |
+| Phase A | Strategic foundation | Define the operating philosophy before building UI. |
+| Phase B | Execution and building | Turn the strategy into believable product workflows. |
+| Phase C | Storytelling and delivery | Present the product as strategic thinking, not only implementation. |
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 4 — Core Venture Adaptations                          │
-│-------------------------------------------------------------│
-│ Introduce:                                                  │
-│ • Venture Layer                                             │
-│ • Venture Health Signals                                    │
-│ • AI Venture Assistant                                      │
-│ • Outcome-Oriented Roadmaps                                 │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+### Phase A: Strategic Foundation
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 5 — Information Architecture                          │
-│-------------------------------------------------------------│
-│ Main Product Areas:                                         │
-│                                                             │
-│ • Dashboard                                                 │
-│ • Venture Switcher                                          │
-│ • Issues                                                    │
-│ • Roadmap                                                   │
-│ • AI Assistant                                              │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Guiding principle:** Think before building.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 6 — Scope Lock                                        │
-│-------------------------------------------------------------│
-│ Decide:                                                     │
-│ • What exists in MVP                                        │
-│ • What is intentionally excluded                            │
-│                                                             │
-│ Prioritize:                                                 │
-│ • UX quality                                                │
-│ • Operational realism                                       │
-│ • Demo sophistication                                       │
-│                                                             │
-│ Avoid:                                                      │
-│ • Overengineering                                           │
-│ • Enterprise features                                       │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+| Step | Decision Area | What It Established |
+| --- | --- | --- |
+| 1 | Decode One Studio philosophy | AI-native workflows, lean venture operations, async execution, high-velocity culture, and small elite teams. |
+| 2 | Product positioning | Foundary as an AI-native venture execution OS. |
+| 3 | UX and interaction philosophy | Calm, fast, minimal, focused, and intelligent product behavior. |
+| 4 | Venture adaptations | Venture layer, health signals, AI venture assistant, and outcome-oriented roadmaps. |
+| 5 | Information architecture | Dashboard, venture switcher, issues, roadmap, and AI assistant as the core product areas. |
+| 6 | Scope lock | Prioritize UX quality, operational realism, and demo sophistication over backend breadth. |
+| 7 | Technical strategy | Build believable sophistication with Next.js, Tailwind, shadcn/ui, Zustand, dnd-kit, and Recharts. |
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 7 — Technical Strategy                                │
-│-------------------------------------------------------------│
-│ Stack:                                                      │
-│ • Next.js                                                   │
-│ • Tailwind                                                  │
-│ • shadcn/ui                                                 │
-│ • Zustand                                                   │
-│ • dnd-kit                                                   │
-│ • Recharts                                                  │
-│                                                             │
-│ Philosophy:                                                 │
-│ "Believable sophistication > backend complexity"            │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Strategic choices:**
 
+- Position the product around venture execution, not generic project management.
+- Make portfolio context visible without turning the app into an enterprise dashboard.
+- Use AI as embedded operational intelligence, not as a generic chatbot.
+- Keep backend complexity out of scope so the demo can focus on product judgment.
 
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE B — EXECUTION & BUILDING                             │
-│ "Transform strategy into believable product quality"       │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+### Phase B: Execution and Building
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 8 — Foundation Setup                                  │
-│-------------------------------------------------------------│
-│ Setup:                                                      │
-│ • Theme                                                     │
-│ • Typography                                                │
-│ • Layout tokens                                             │
-│ • App Router                                                │
-│ • Zustand stores                                            │
-│ • Motion system                                             │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Guiding principle:** Transform strategy into believable product quality.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 9 — App Shell & Navigation                            │
-│-------------------------------------------------------------│
-│ Build:                                                      │
-│ • Sidebar                                                   │
-│ • Venture Switcher                                          │
-│ • Layout shell                                              │
-│ • Drawer system                                             │
-│ • Routing structure                                         │
-│                                                             │
-│ Goal:                                                       │
-│ "Feel like real operational software early"                 │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+| Step | Product Area | Build Intent |
+| --- | --- | --- |
+| 8 | Foundation setup | Establish theme, typography, layout tokens, routing, stores, and motion system. |
+| 9 | App shell and navigation | Create a stable sidebar, venture switcher, layout shell, drawer system, and route structure. |
+| 10 | Dashboard | Surface KPI cards, venture health, portfolio insights, risk visibility, and roadmap overview. |
+| 11 | Issues system | Support list view, board view, filters, search, issue drawer, drag and drop, and quick create. |
+| 12 | Roadmap system | Organize Now / Next / Later initiatives with confidence, progress, and linked issue visibility. |
+| 13 | AI assistant layer | Provide summaries, risk detection, priority suggestions, missing criteria analysis, and continue/kill/split recommendations. |
+| 14 | System synchronization | Connect issues, roadmap, dashboard, AI context, and venture-level portfolio metrics. |
+| 15 | Polish and motion | Refine typography, hover states, drawer transitions, empty states, skeletons, and micro-interactions. |
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 10 — Dashboard                                        │
-│-------------------------------------------------------------│
-│ Create:                                                     │
-│ • KPI cards                                                 │
-│ • Venture health                                            │
-│ • Portfolio insights                                        │
-│ • Risk visibility                                           │
-│ • Roadmap overview                                          │
-│                                                             │
-│ Goal:                                                       │
-│ "Executive-readable operational intelligence"               │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Execution quality signals:**
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 11 — Issues System                                    │
-│-------------------------------------------------------------│
-│ Build:                                                      │
-│ • List view                                                 │
-│ • Kanban board                                              │
-│ • Filters & search                                          │
-│ • Issue drawer                                              │
-│ • Drag & drop                                               │
-│ • Quick create                                              │
-│                                                             │
-│ Most Important Signal:                                      │
-│ "Operationally alive workflows"                             │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+- The app should feel operationally alive, not static.
+- Dashboard views should be executive-readable and venture-aware.
+- Issues should feel fast and focused rather than ticket-heavy.
+- Roadmap cards should communicate strategic confidence, not just task status.
+- AI recommendations should feel grounded in visible product context.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 12 — Roadmap System                                   │
-│-------------------------------------------------------------│
-│ Build:                                                      │
-│ • Now / Next / Later                                        │
-│ • Goal-oriented roadmap cards                               │
-│ • Confidence indicators                                     │
-│ • Linked issues                                             │
-│ • Progress visibility                                       │
-│                                                             │
-│ Goal:                                                       │
-│ "Strategic execution visibility"                            │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+### Phase C: Storytelling and Delivery
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 13 — AI Assistant Layer                               │
-│-------------------------------------------------------------│
-│ AI Behaviors:                                               │
-│ • Summaries                                                 │
-│ • Risk detection                                            │
-│ • Priority suggestions                                      │
-│ • Missing criteria analysis                                 │
-│ • Continue/Kill/Split recommendations                       │
-│                                                             │
-│ AI Philosophy:                                              │
-│ "Embedded operational intelligence"                         │
-│                                                             │
-│ NOT:                                                        │
-│ • Generic chatbot                                           │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Guiding principle:** Present strategic thinking, not just frontend work.
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 14 — System Synchronization                           │
-│-------------------------------------------------------------│
-│ Connect everything:                                         │
-│ • Issues → Roadmap                                          │
-│ • Roadmap → Dashboard                                       │
-│ • AI → Contextual insights                                  │
-│ • Venture → Portfolio metrics                               │
-│                                                             │
-│ Goal:                                                       │
-│ "Product feels alive and interconnected"                    │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+| Step | Delivery Area | Purpose |
+| --- | --- | --- |
+| 16 | Product narrative | Explain why Foundary is Linear-inspired, venture-aware, deliberately simple, and intentionally scoped. |
+| 17 | Demo optimization | Tune mock data, AI recommendations, venture scenarios, portfolio risk states, and dashboard storytelling. |
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 15 — Polish & Motion                                  │
-│-------------------------------------------------------------│
-│ Refine:                                                     │
-│ • Motion                                                    │
-│ • Typography                                                │
-│ • Hover states                                              │
-│ • Drawer transitions                                        │
-│ • Empty states                                              │
-│ • Skeleton loaders                                          │
-│ • Micro-interactions                                        │
-│                                                             │
-│ Goal:                                                       │
-│ "Premium AI-native SaaS feel"                               │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+**Reviewer takeaway:**
 
+The product should make it clear that the work is not only visual polish. It should show an understanding of how a venture studio can connect execution, strategy, portfolio visibility, and AI-assisted judgment into one coherent operating system.
 
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE C — STORYTELLING & DELIVERY                          │
-│ "Present strategic thinking, not just frontend work"       │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
+### Final Success Target
 
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 16 — Product Narrative                                │
-│-------------------------------------------------------------│
-│ Write:                                                      │
-│ • README                                                    │
-│ • Product Note                                              │
-│ • AI Usage Note                                             │
-│                                                             │
-│ Explain:                                                    │
-│ • Why Linear inspired the system                            │
-│ • Why venture-awareness matters                             │
-│ • Why simplicity was prioritized                            │
-│ • What was intentionally excluded                           │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
-
-┌─────────────────────────────────────────────────────────────┐
-│ STEP 17 — Demo Optimization                                │
-│-------------------------------------------------------------│
-│ Tune:                                                       │
-│ • Mock data realism                                         │
-│ • AI recommendations                                        │
-│ • Venture scenarios                                         │
-│ • Portfolio risk states                                     │
-│ • Dashboard storytelling                                    │
-│                                                             │
-│ Goal:                                                       │
-│ "Believable venture operating system realism"               │
-└─────────────────────────────────────────────────────────────┘
-                │
-                ▼
-
-┌─────────────────────────────────────────────────────────────┐
-│ FINAL SUCCESS TARGET                                       │
-│-------------------------------------------------------------│
-│ Reviewer should feel:                                       │
-│                                                             │
-│ "This person understands how modern AI-native               │
-│ venture studios should operate."                            │
-│                                                             │
-│ NOT:                                                        │
-│ "They built a nice frontend."                               │
-└─────────────────────────────────────────────────────────────┘
+| Reviewer Should Feel | Reviewer Should Not Feel |
+| --- | --- |
+| "This person understands how modern AI-native venture studios should operate." | "They built a nice frontend." |

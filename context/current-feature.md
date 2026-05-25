@@ -1,40 +1,39 @@
-# Current Feature - Polish & Motion
+# Current Feature - Demo Optimization
 
 ## Current Objective
 
-Elevate Foundary's perceived maturity through restrained motion, stable loading states, sharper empty states, and targeted visual polish.
+Optimize Foundary for a coherent portfolio-first demo experience.
 
 This phase establishes:
-- shared motion presets
-- route-level loading skeletons
-- stable placeholder components
-- smoother drawer motion
-- calmer hover and active states
-- operational empty states
-- subtle page transitions
+- stronger handcrafted mock data
+- clearer venture differentiation
+- a focused hero demo flow
+- more realistic roadmap states
+- more contextual AI recommendation language
+- recent operational activity for dashboard realism
 
 The goal is NOT:
-> adding new product capability.
+> adding new product workflows.
 
 The goal is:
-> making the existing product feel premium, responsive, stable, and finished.
+> making the existing product feel like a believable venture studio operating environment.
 
 ---
 
-# Strategic Goal
+# Hero Demo Flow
 
-Polish and motion should communicate:
-- fast operational response
-- calm spatial continuity
-- premium restraint
-- stable dashboard, issue, roadmap, and AI surfaces
-- no layout jumps during loading or empty states
+Preferred flow:
 
-Users should immediately feel:
-- interactions are responsive
-- drawers preserve workflow momentum
-- cards and rows feel tactile without being flashy
-- loading and empty states keep the product oriented
+```txt
+Dashboard risk signal
+→ Sentra at-risk roadmap initiative
+→ linked blocked analytics issue
+→ AI recommendation to reduce scope / prioritize dependency resolution
+```
+
+Supporting flows:
+- Reson8 shows validation ambiguity and split / clarify recommendations.
+- Internal Ops shows stable execution and continue recommendations.
 
 ---
 
@@ -42,30 +41,25 @@ Users should immediately feel:
 
 This phase includes ONLY:
 
-## Motion Refinement
-- page reveal transitions
-- panel/card hover transitions
-- drawer timing and overlay polish
-- issue row/card interaction polish
-- reduced-motion-safe behavior
+## Mock Data Tuning
+- add supporting issues
+- add completed and killed roadmap examples
+- improve linked issue relationships
+- keep venture scenarios distinct
 
 ---
 
-## Loading States
-- dashboard loading layout
-- issues loading layout
-- roadmap loading layout
-- assistant loading layout
-- shared skeleton components
+## AI Demo Tuning
+- improve insight specificity
+- ensure recommendations cover reduce-scope, prioritize, clarify, split, continue, and kill
+- keep AI operational and non-chatty
 
 ---
 
-## Empty States
-- operational empty states
-- drawer missing-state blocks
-- board/list empty stability
-- roadmap column empty stability
-- assistant empty signal states
+## Dashboard Storytelling
+- surface the strongest demo risk first
+- add compact recent operational activity
+- keep dashboard calm and non-analytics-heavy
 
 ---
 
@@ -74,24 +68,25 @@ This phase includes ONLY:
 Do NOT build:
 - new workflows
 - backend behavior
-- new synchronization rules
-- fake loading delays
-- animated AI typing
-- playful animation
-- flashy page transitions
-- large visual redesigns
+- persistence
+- authentication
+- chat UI
+- fake streaming
+- enterprise reporting
+- noisy activity feeds
 
 This phase is ONLY:
-> refinement of existing interactions and states.
+> demo credibility and narrative tuning.
 
 ---
 
 # Acceptance Criteria
 
-- route loading states preserve layout rhythm
-- drawer open/close feels smoother and less modal-heavy
-- page transitions are subtle and reduced-motion-aware
-- issue row and card hover states do not shift layout
-- roadmap and assistant empty states remain calm and operational
-- skeletons match final layout structure
-- no bouncy, playful, flashy, or chatbot-like motion was introduced
+- dashboard first impression tells a coherent portfolio story
+- Sentra risk flow is obvious and clickable
+- Reson8 reads as validation uncertainty
+- Internal Ops reads as stable operating leverage
+- roadmap includes active, uncertain, completed, and killed initiatives
+- issues include blocked work, completed wins, missing criteria, killed experiments, and stable internal work
+- AI recommendations are specific, varied, and grounded in current data
+- no generic filler or enterprise workflow complexity was introduced

@@ -55,6 +55,16 @@ export type AttentionItem = {
   sourceId: string
 }
 
+export type OperationalActivity = {
+  id: string
+  title: string
+  detail: string
+  timestamp: string
+  sourceType: "issue" | "roadmap" | "assistant"
+  sourceId: string
+  severity: RiskLevel
+}
+
 export function getScopedVentures(
   ventures: Venture[],
   context: DashboardContext
@@ -228,6 +238,12 @@ function getRoadmapRiskSeverity(status: RoadmapStatus, riskLevel: RiskLevel) {
   return riskLevel
 }
 
+const severityRank: Record<RiskLevel, number> = {
+  high: 0,
+  medium: 1,
+  low: 2,
+}
+
 export function getDashboardRisks(
   issues: Issue[],
   roadmapItems: RoadmapItem[],
@@ -278,7 +294,14 @@ export function getDashboardRisks(
       sourceId: insight.id,
     }))
 
-  return dedupeBySource([...issueRisks, ...roadmapRisks, ...insightRisks]).slice(0, 5)
+  return dedupeBySource([...issueRisks, ...roadmapRisks, ...insightRisks])
+    .sort(
+      (a, b) =>
+        severityRank[a.severity] - severityRank[b.severity] ||
+        Number(b.title.includes("onboarding")) -
+          Number(a.title.includes("onboarding"))
+    )
+    .slice(0, 5)
 }
 
 export function getAttentionItems(
@@ -320,5 +343,90 @@ export function getAttentionItems(
       sourceType: "assistant" as const,
       sourceId: insight.id,
     })),
-  ]).slice(0, 5)
+  ])
+    .sort(
+      (a, b) =>
+        severityRank[a.severity] - severityRank[b.severity] ||
+        Number(b.title.includes("Sentra")) - Number(a.title.includes("Sentra"))
+    )
+    .slice(0, 5)
+}
+
+export function getOperationalActivity(
+  issues: Issue[],
+  roadmapItems: RoadmapItem[],
+  aiInsights: AiInsight[],
+  ventures: Venture[]
+): OperationalActivity[] {
+  const issueActivity = issues
+    .filter(
+      (issue) =>
+        issue.status === "done" ||
+        issue.status === "killed" ||
+        issue.blocked ||
+        isIssueOverdue(issue)
+    )
+    .map((issue) => ({
+      id: `activity-${issue.id}`,
+      title:
+        issue.status === "done"
+          ? `${getVentureName(ventures, issue.ventureId)} completed execution work`
+          : issue.status === "killed"
+            ? `${getVentureName(ventures, issue.ventureId)} stopped low-signal work`
+            : `${getVentureName(ventures, issue.ventureId)} needs execution attention`,
+      detail: issue.title,
+      timestamp: issue.updatedAt,
+      sourceType: "issue" as const,
+      sourceId: issue.id,
+      severity:
+        issue.blocked || issue.riskLevel === "high"
+          ? ("high" as const)
+          : issue.status === "done"
+            ? ("low" as const)
+            : ("medium" as const),
+    }))
+
+  const roadmapActivity = roadmapItems
+    .filter(
+      (item) =>
+        item.status === "completed" ||
+        item.status === "killed" ||
+        item.confidenceTrend === "declining"
+    )
+    .map((item) => ({
+      id: `activity-${item.id}`,
+      title:
+        item.status === "completed"
+          ? `${getVentureName(ventures, item.ventureId)} completed a roadmap milestone`
+          : item.status === "killed"
+            ? `${getVentureName(ventures, item.ventureId)} recorded a stop decision`
+            : `${getVentureName(ventures, item.ventureId)} confidence shifted`,
+      detail: item.title,
+      timestamp: item.updatedAt,
+      sourceType: "roadmap" as const,
+      sourceId: item.id,
+      severity:
+        item.status === "completed"
+          ? ("low" as const)
+          : item.status === "killed"
+            ? ("medium" as const)
+            : item.riskLevel,
+    }))
+
+  const insightActivity = aiInsights.map((insight) => ({
+    id: `activity-${insight.id}`,
+    title: `${getVentureName(ventures, insight.ventureId)} AI signal updated`,
+    detail: insight.title,
+    timestamp: insight.createdAt,
+    sourceType: "assistant" as const,
+    sourceId: insight.id,
+    severity: insight.severity,
+  }))
+
+  return [...issueActivity, ...roadmapActivity, ...insightActivity]
+    .sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
+    .slice(0, 6)
 }

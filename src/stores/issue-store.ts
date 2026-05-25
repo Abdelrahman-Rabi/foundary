@@ -7,8 +7,10 @@ import type {
   Issue,
   IssueFilters,
   IssuePriority,
+  IssueSortBy,
   IssueStatus,
   IssueType,
+  SortDirection,
 } from "@/types/issue"
 
 const defaultFilters: IssueFilters = {
@@ -20,6 +22,8 @@ const defaultFilters: IssueFilters = {
   search: "",
   overdueOnly: false,
   roadmapLinkedOnly: false,
+  sortBy: "priority",
+  sortDirection: "desc",
 }
 
 type IssueStore = {
@@ -30,11 +34,10 @@ type IssueStore = {
   updateIssue: (issueId: string, updates: Partial<Issue>) => void
   setSearch: (search: string) => void
   setFilters: (filters: Partial<IssueFilters>) => void
+  setSorting: (sortBy: IssueSortBy, sortDirection: SortDirection) => void
   resetFilters: () => void
   updateIssueStatus: (issueId: string, status: IssueStatus) => void
   getIssuesByVenture: (ventureId: string) => Issue[]
-  getFilteredIssues: () => Issue[]
-  getGroupedIssues: () => Record<IssueStatus, Issue[]>
 }
 
 type CreateIssueInput = {
@@ -44,25 +47,6 @@ type CreateIssueInput = {
   priority: IssuePriority
   ownerId: string
   roadmapId?: string
-}
-
-const ISSUE_TODAY = new Date("2026-05-24T00:00:00.000Z")
-
-function isIssueOverdue(issue: Issue) {
-  if (!issue.dueDate || issue.status === "done" || issue.status === "killed") {
-    return false
-  }
-
-  return new Date(`${issue.dueDate}T00:00:00.000Z`) < ISSUE_TODAY
-}
-
-const emptyGroups: Record<IssueStatus, Issue[]> = {
-  backlog: [],
-  planned: [],
-  "in-progress": [],
-  "in-review": [],
-  done: [],
-  killed: [],
 }
 
 export const useIssueStore = create<IssueStore>((set, get) => ({
@@ -107,6 +91,8 @@ export const useIssueStore = create<IssueStore>((set, get) => ({
     set((state) => ({ filters: { ...state.filters, search } })),
   setFilters: (filters) =>
     set((state) => ({ filters: { ...state.filters, ...filters } })),
+  setSorting: (sortBy, sortDirection) =>
+    set((state) => ({ filters: { ...state.filters, sortBy, sortDirection } })),
   resetFilters: () => set({ filters: defaultFilters }),
   updateIssueStatus: (issueId, status) =>
     set((state) => ({
@@ -118,41 +104,4 @@ export const useIssueStore = create<IssueStore>((set, get) => ({
     })),
   getIssuesByVenture: (ventureId) =>
     get().issues.filter((issue) => issue.ventureId === ventureId),
-  getFilteredIssues: () => {
-    const { issues, filters } = get()
-    const search = filters.search.trim().toLowerCase()
-
-    return issues.filter((issue) => {
-      const matchesSearch =
-        search.length === 0 ||
-        issue.title.toLowerCase().includes(search) ||
-        issue.tags.some((tag) => tag.toLowerCase().includes(search)) ||
-        issue.type.toLowerCase().includes(search)
-
-      return (
-        matchesSearch &&
-        (filters.ventureIds.length === 0 ||
-          filters.ventureIds.includes(issue.ventureId)) &&
-        (filters.priorities.length === 0 ||
-          filters.priorities.includes(issue.priority)) &&
-        (filters.statuses.length === 0 ||
-          filters.statuses.includes(issue.status)) &&
-        (filters.types.length === 0 || filters.types.includes(issue.type)) &&
-        (filters.ownerIds.length === 0 ||
-          filters.ownerIds.includes(issue.ownerId)) &&
-        (!filters.overdueOnly || isIssueOverdue(issue)) &&
-        (!filters.roadmapLinkedOnly || Boolean(issue.roadmapId))
-      )
-    })
-  },
-  getGroupedIssues: () =>
-    get()
-      .getFilteredIssues()
-      .reduce<Record<IssueStatus, Issue[]>>(
-        (groups, issue) => ({
-          ...groups,
-          [issue.status]: [...groups[issue.status], issue],
-        }),
-        emptyGroups
-      ),
 }))

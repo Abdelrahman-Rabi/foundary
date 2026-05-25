@@ -1,18 +1,16 @@
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
-import { getVentureName } from "@/features/dashboard/utils/dashboard-metrics"
-import type { Venture } from "@/types/venture"
 
 type AiInsightsPanelProps = {
   signals: AiSignal[]
-  ventures: Venture[]
-  onOpenSignal: (signalId: string) => void
+  onOpenSignal: (signal: AiSignal) => void
+  onOpenSource: (signal: AiSignal) => void
 }
 
 export function AiInsightsPanel({
   signals,
-  ventures,
   onOpenSignal,
+  onOpenSource,
 }: AiInsightsPanelProps) {
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
@@ -33,14 +31,13 @@ export function AiInsightsPanel({
           signals.map((signal) => (
             <div key={signal.id}>
               <p className="mb-2 text-xs text-muted-foreground">
-                {signal.ventureId
-                  ? getVentureName(ventures, signal.ventureId)
-                  : "Portfolio"}
+                {signal.ventureName} / {signal.sourceLabel}
               </p>
               <AiInsightCard
                 signal={signal}
                 compact
-                onOpenInsight={onOpenSignal}
+                onOpenSource={onOpenSource}
+                onOpenInsight={() => onOpenSignal(signal)}
               />
             </div>
           ))

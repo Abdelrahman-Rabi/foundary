@@ -5,8 +5,11 @@ import { GitBranch } from "lucide-react"
 import { EmptyState } from "@/components/shared/empty-state"
 import { Button } from "@/components/ui/button"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
+import { AiIssueSummary } from "@/features/assistant/components/ai-issue-summary"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
+import { AiSignalEmptyState } from "@/features/assistant/components/ai-signal-empty-state"
 import {
+  dedupeSignals,
   getInsightSignals,
   getIssueSignals,
   getIssueSummary,
@@ -84,8 +87,13 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
     issue.aiInsightIds.includes(insight.id)
   )
   const derivedSignals = getIssueSignals(issue, roadmapItems, ventures)
-  const insightSignals = getInsightSignals(issueInsights)
-  const allSignals = [...insightSignals, ...derivedSignals]
+  const insightSignals = getInsightSignals(
+    issueInsights,
+    issues,
+    roadmapItems,
+    ventures
+  )
+  const allSignals = dedupeSignals([...insightSignals, ...derivedSignals])
   const strongestSignal = allSignals[0] ?? null
   const issueSummary = getIssueSummary(issue, roadmapItems, ventures)
   const overdue = isIssueOverdue(issue)
@@ -113,10 +121,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
 
       <div className="flex-1 overflow-y-auto">
         <section className="border-b border-border/50 px-5 py-4">
-          <h3 className="text-sm font-medium text-foreground">AI summary</h3>
-          <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            {issueSummary}
-          </p>
+          <AiIssueSummary summary={issueSummary} signalCount={allSignals.length} />
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">
@@ -313,16 +318,27 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
             {allSignals.length > 0 ? (
               allSignals.map((signal) =>
                 signal.recommendationKind ? (
-                  <AiRecommendationBlock key={signal.id} signal={signal} />
+                  <AiRecommendationBlock
+                    key={signal.id}
+                    signal={signal}
+                    onOpenInsight={(signalId) =>
+                      openDrawer({ type: "assistant", id: signalId })
+                    }
+                  />
                 ) : (
-                  <AiInsightCard key={signal.id} signal={signal} compact />
+                  <AiInsightCard
+                    key={signal.id}
+                    signal={signal}
+                    compact
+                    onOpenInsight={(signalId) =>
+                      openDrawer({ type: "assistant", id: signalId })
+                    }
+                  />
                 )
               )
             ) : null}
             {allSignals.length === 0 ? (
-              <p className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
-                No significant issue risk detected.
-              </p>
+              <AiSignalEmptyState title="No significant issue risk detected." />
             ) : null}
           </div>
         </section>

@@ -7,6 +7,7 @@ import type { Venture } from "@/types/venture"
 type RoadmapOverviewPanelProps = {
   roadmapItems: RoadmapItem[]
   ventures: Venture[]
+  onOpenRoadmapItem: (roadmapId: string) => void
 }
 
 const statusClassName = {
@@ -20,6 +21,7 @@ const statusClassName = {
 export function RoadmapOverviewPanel({
   roadmapItems,
   ventures,
+  onOpenRoadmapItem,
 }: RoadmapOverviewPanelProps) {
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
@@ -36,10 +38,19 @@ export function RoadmapOverviewPanel({
       </div>
 
       <div className="space-y-3">
-        {roadmapItems.map((item) => (
+        {roadmapItems.length > 0 ? roadmapItems.map((item) => (
           <div
+            role="button"
+            tabIndex={0}
             key={item.id}
-            className="rounded-lg border border-border/50 bg-background/35 p-3"
+            className="w-full rounded-lg border border-border/50 bg-background/35 p-3 text-left transition-colors hover:border-border hover:bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+            onClick={() => onOpenRoadmapItem(item.id)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault()
+                onOpenRoadmapItem(item.id)
+              }
+            }}
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
@@ -90,10 +101,22 @@ export function RoadmapOverviewPanel({
                     style={{ width: `${item.confidence}%` }}
                   />
                 </div>
+                <p className="mt-2 text-xs capitalize text-muted-foreground">
+                  Trend: {item.confidenceTrend}
+                </p>
               </div>
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="rounded-lg border border-border/50 bg-background/35 p-3">
+            <p className="text-sm text-muted-foreground">
+              No active roadmap initiatives in this context.
+            </p>
+            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              Planned, active, and at-risk initiatives will appear here.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   )

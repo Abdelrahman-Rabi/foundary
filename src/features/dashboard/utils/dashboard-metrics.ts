@@ -1,6 +1,6 @@
 import type { AiInsight } from "@/types/ai"
-import type { Issue, IssueStatus, RiskLevel } from "@/types/issue"
-import type { RoadmapItem } from "@/types/roadmap"
+import type { Issue, IssueFilters, IssueStatus, RiskLevel } from "@/types/issue"
+import type { RoadmapItem, RoadmapStatus } from "@/types/roadmap"
 import type { Venture, VentureHealthState } from "@/types/venture"
 
 export const DASHBOARD_TODAY = new Date("2026-05-24T00:00:00.000Z")
@@ -24,12 +24,15 @@ export type KpiMetric = {
   value: number
   helper: string
   tone: "neutral" | "warning" | "success" | "muted"
+  targetRoute?: "/issues" | "/roadmap"
+  issueFilter?: Partial<IssueFilters>
 }
 
 export type StatusCount = {
   status: IssueStatus
   label: string
   count: number
+  issueFilter: Partial<IssueFilters>
 }
 
 export type DashboardRisk = {
@@ -39,6 +42,8 @@ export type DashboardRisk = {
   severity: RiskLevel
   explanation: string
   suggestedAction: string
+  sourceType: "issue" | "roadmap" | "assistant"
+  sourceId: string
 }
 
 export type AttentionItem = {
@@ -46,6 +51,8 @@ export type AttentionItem = {
   title: string
   detail: string
   severity: RiskLevel
+  sourceType: "issue" | "roadmap" | "assistant"
+  sourceId: string
 }
 
 export function getScopedVentures(
@@ -130,24 +137,30 @@ export function getKpiMetrics(
       value: aggregateIssueCount,
       helper: `${blockedIssues} blocked in detailed records`,
       tone: "neutral",
+      targetRoute: "/issues",
+      issueFilter: {},
     },
     {
       label: "Overdue work",
       value: aggregateOverdueCount,
       helper: "Not done or killed",
       tone: aggregateOverdueCount > 0 ? "warning" : "success",
+      targetRoute: "/issues",
+      issueFilter: { overdueOnly: true },
     },
     {
       label: "Active initiatives",
       value: activeRoadmapItems,
       helper: "Planned, active, or at risk",
       tone: "neutral",
+      targetRoute: "/roadmap",
     },
     {
       label: "Killed initiatives",
       value: killedInitiatives,
       helper: "Disciplined stopped work",
       tone: "muted",
+      targetRoute: "/roadmap",
     },
   ]
 }
@@ -160,6 +173,7 @@ export function getStatusCounts(issues: Issue[]): StatusCount[] {
       .map((part) => part[0].toUpperCase() + part.slice(1))
       .join(" "),
     count: issues.filter((issue) => issue.status === status).length,
+    issueFilter: { statuses: [status] },
   }))
 }
 
@@ -189,6 +203,31 @@ export function getRoadmapOverviewItems(roadmapItems: RoadmapItem[]) {
     .slice(0, 5)
 }
 
+function dedupeBySource<T extends { sourceType: string; sourceId: string }>(
+  items: T[]
+) {
+  const seen = new Set<string>()
+
+  return items.filter((item) => {
+    const key = `${item.sourceType}:${item.sourceId}`
+
+    if (seen.has(key)) {
+      return false
+    }
+
+    seen.add(key)
+    return true
+  })
+}
+
+function getRoadmapRiskSeverity(status: RoadmapStatus, riskLevel: RiskLevel) {
+  if (status === "at-risk") {
+    return riskLevel === "low" ? "medium" : riskLevel
+  }
+
+  return riskLevel
+}
+
 export function getDashboardRisks(
   issues: Issue[],
   roadmapItems: RoadmapItem[],
@@ -209,6 +248,8 @@ export function getDashboardRisks(
         ? "Execution is blocked and may affect linked roadmap confidence."
         : "Issue risk is elevated based on priority, date, or confidence.",
       suggestedAction: "Clarify the blocker and reduce active scope before adding work.",
+      sourceType: "issue" as const,
+      sourceId: issue.id,
     }))
 
   const roadmapRisks = roadmapItems
@@ -217,9 +258,11 @@ export function getDashboardRisks(
       id: `risk-${item.id}`,
       title: item.title,
       ventureName: getVentureName(ventures, item.ventureId),
-      severity: item.riskLevel,
+      severity: getRoadmapRiskSeverity(item.status, item.riskLevel),
       explanation: "Roadmap confidence is weak or declining.",
       suggestedAction: "Reassess linked execution work and validation criteria.",
+      sourceType: "roadmap" as const,
+      sourceId: item.id,
     }))
 
   const insightRisks = aiInsights
@@ -231,9 +274,11 @@ export function getDashboardRisks(
       severity: insight.severity,
       explanation: insight.message,
       suggestedAction: insight.suggestedAction ?? "Review operational context.",
+      sourceType: "assistant" as const,
+      sourceId: insight.id,
     }))
 
-  return [...issueRisks, ...roadmapRisks, ...insightRisks].slice(0, 5)
+  return dedupeBySource([...issueRisks, ...roadmapRisks, ...insightRisks]).slice(0, 5)
 }
 
 export function getAttentionItems(
@@ -250,24 +295,30 @@ export function getAttentionItems(
     (insight) => insight.type === "warning"
   )
 
-  return [
+  return dedupeBySource([
     ...decliningRoadmaps.map((item) => ({
       id: `attention-${item.id}`,
       title: `${getVentureName(ventures, item.ventureId)} confidence is declining`,
       detail: `${item.title} is at ${item.confidence}% confidence.`,
       severity: item.riskLevel,
+      sourceType: "roadmap" as const,
+      sourceId: item.id,
     })),
     ...overdueIssues.map((issue) => ({
       id: `attention-${issue.id}`,
       title: `${getVentureName(ventures, issue.ventureId)} has overdue linked work`,
       detail: issue.title,
       severity: issue.riskLevel,
+      sourceType: "issue" as const,
+      sourceId: issue.id,
     })),
     ...validationWarnings.map((insight) => ({
       id: `attention-${insight.id}`,
       title: insight.title,
       detail: insight.suggestedAction ?? insight.message,
       severity: insight.severity,
+      sourceType: "assistant" as const,
+      sourceId: insight.id,
     })),
-  ].slice(0, 5)
+  ]).slice(0, 5)
 }

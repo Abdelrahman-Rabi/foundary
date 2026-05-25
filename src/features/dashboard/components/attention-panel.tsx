@@ -4,6 +4,7 @@ import type { AttentionItem } from "@/features/dashboard/utils/dashboard-metrics
 
 type AttentionPanelProps = {
   items: AttentionItem[]
+  onOpenAttention: (item: AttentionItem) => void
 }
 
 const severityClassName = {
@@ -12,7 +13,10 @@ const severityClassName = {
   high: "border-destructive/50 text-destructive",
 }
 
-export function AttentionPanel({ items }: AttentionPanelProps) {
+export function AttentionPanel({
+  items,
+  onOpenAttention,
+}: AttentionPanelProps) {
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -31,8 +35,17 @@ export function AttentionPanel({ items }: AttentionPanelProps) {
         {items.length > 0 ? (
           items.map((item) => (
             <div
+              role="button"
+              tabIndex={0}
               key={item.id}
-              className="flex items-start justify-between gap-3 rounded-lg border border-border/50 bg-background/35 p-3"
+              className="flex w-full items-start justify-between gap-3 rounded-lg border border-border/50 bg-background/35 p-3 text-left transition-colors hover:border-border hover:bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+              onClick={() => onOpenAttention(item)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault()
+                  onOpenAttention(item)
+                }
+              }}
             >
               <div className="min-w-0">
                 <h3 className="text-sm font-medium text-foreground">
@@ -51,8 +64,14 @@ export function AttentionPanel({ items }: AttentionPanelProps) {
             </div>
           ))
         ) : (
-          <div className="rounded-lg border border-border/50 bg-background/35 p-3 text-sm text-muted-foreground">
-            No active delivery attention areas detected.
+          <div className="rounded-lg border border-border/50 bg-background/35 p-3">
+            <p className="text-sm text-muted-foreground">
+              No active delivery attention areas detected.
+            </p>
+            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              Declining confidence, overdue work, and validation warnings will
+              appear here.
+            </p>
           </div>
         )}
       </div>

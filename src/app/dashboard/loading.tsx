@@ -18,6 +18,10 @@ export default function DashboardLoading() {
         <SkeletonPanel rows={3} />
         <SkeletonPanel rows={4} />
       </div>
+      <div className="grid gap-5 xl:grid-cols-2">
+        <SkeletonPanel rows={3} />
+        <SkeletonPanel rows={3} />
+      </div>
     </PageContainer>
   )
 }

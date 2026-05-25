@@ -1,6 +1,7 @@
 "use client"
 
-import { BrainCircuit } from "lucide-react"
+import { motion } from "framer-motion"
+import { BrainCircuit, ExternalLink } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
@@ -10,16 +11,24 @@ import { AiConfidenceIndicator } from "@/features/assistant/components/ai-confid
 type AiInsightCardProps = {
   signal: AiSignal
   onOpenInsight?: (signalId: string) => void
+  onOpenSource?: (signal: AiSignal) => void
   compact?: boolean
 }
 
 export function AiInsightCard({
   signal,
   onOpenInsight,
+  onOpenSource,
   compact = false,
 }: AiInsightCardProps) {
   return (
-    <article className="rounded-lg border border-border/60 bg-muted/20 p-4">
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.16, ease: "easeOut" }}
+      className="rounded-lg border border-border/60 bg-muted/20 p-4 transition-colors hover:border-border"
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
@@ -30,6 +39,9 @@ export function AiInsightCard({
           </div>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {signal.observation}
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {signal.ventureName} / {signal.sourceLabel}
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
@@ -54,18 +66,34 @@ export function AiInsightCard({
         </p>
       )}
 
-      {onOpenInsight ? (
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className="mt-3 h-8 px-2 text-xs"
-          onClick={() => onOpenInsight(signal.id)}
-        >
-          Inspect signal
-        </Button>
+      {onOpenInsight || onOpenSource ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {onOpenSource ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2 text-xs"
+              onClick={() => onOpenSource(signal)}
+            >
+              <ExternalLink className="mr-1.5 size-3.5" />
+              {signal.sourceActionLabel ?? "Open source"}
+            </Button>
+          ) : null}
+          {onOpenInsight ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2 text-xs"
+              onClick={() => onOpenInsight(signal.id)}
+            >
+              Inspect signal
+            </Button>
+          ) : null}
+        </div>
       ) : null}
-    </article>
+    </motion.article>
   )
 }
 

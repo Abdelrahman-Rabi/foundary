@@ -33,3 +33,11 @@ export type AiInsight = {
   suggestedAction?: string
   createdAt: string
 }
+
+export type AiSignalSourceType = AiEntityType
+
+export type AiSignalSourceAction = {
+  label: string
+  drawerType?: "issue" | "roadmap" | "assistant"
+  route?: string
+}

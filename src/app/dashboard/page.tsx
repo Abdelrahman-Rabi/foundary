@@ -13,6 +13,8 @@ import { RiskPanel } from "@/features/dashboard/components/risk-panel"
 import { RoadmapOverviewPanel } from "@/features/dashboard/components/roadmap-overview-panel"
 import { VentureHealthPanel } from "@/features/dashboard/components/venture-health-panel"
 import { useDashboardData } from "@/features/dashboard/hooks/use-dashboard-data"
+import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
+import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
 import { useUiStore } from "@/stores/ui-store"
 import type {
@@ -29,6 +31,8 @@ export default function DashboardPage() {
   const setIssueFilters = useIssueStore((state) => state.setFilters)
   const resetIssueFilters = useIssueStore((state) => state.resetFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const selectSignal = useAssistantStore((state) => state.selectSignal)
+  const markInspected = useAssistantStore((state) => state.markInspected)
   const {
     mode,
     activeVenture,
@@ -66,6 +70,29 @@ export default function DashboardPage() {
     resetIssueFilters()
     setIssueFilters(issueFilter)
     router.push("/issues")
+  }
+
+  const openAssistantSignal = (signal: AiSignal) => {
+    selectSignal(signal.id)
+    markInspected(signal.id)
+    openDrawer({ type: "assistant", id: signal.id })
+  }
+
+  const openSignalSource = (signal: AiSignal) => {
+    selectSignal(signal.id)
+    markInspected(signal.id)
+
+    if (signal.sourceType === "issue" && signal.sourceId) {
+      openDrawer({ type: "issue", id: signal.sourceId })
+      return
+    }
+
+    if (signal.sourceType === "roadmap" && signal.sourceId) {
+      openDrawer({ type: "roadmap", id: signal.sourceId })
+      return
+    }
+
+    openDrawer({ type: "assistant", id: signal.id })
   }
 
   const handleMetricSelect = (metric: KpiMetric) => {
@@ -116,10 +143,8 @@ export default function DashboardPage() {
       <div className="grid gap-5 xl:grid-cols-2">
         <AiInsightsPanel
           signals={aiSignals}
-          ventures={ventures}
-          onOpenSignal={(signalId) =>
-            openDrawer({ type: "assistant", id: signalId })
-          }
+          onOpenSignal={openAssistantSignal}
+          onOpenSource={openSignalSource}
         />
         <AttentionPanel
           items={attentionItems}

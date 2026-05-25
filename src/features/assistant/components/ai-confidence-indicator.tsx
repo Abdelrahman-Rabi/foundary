@@ -1,3 +1,7 @@
+"use client"
+
+import { motion } from "framer-motion"
+
 import { cn } from "@/lib/utils"
 
 type AiConfidenceIndicatorProps = {
@@ -23,9 +27,11 @@ export function AiConfidenceIndicator({
         <span className="text-foreground">{confidence}%</span>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted/60">
-        <div
+        <motion.div
           className={cn("h-full rounded-full", tone)}
-          style={{ width: `${confidence}%` }}
+          initial={false}
+          animate={{ width: `${confidence}%` }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
         />
       </div>
     </div>

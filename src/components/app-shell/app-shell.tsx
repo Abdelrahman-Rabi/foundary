@@ -13,12 +13,12 @@ type AppShellProps = {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="flex min-h-screen">
+    <div className="fixed inset-0 overflow-hidden bg-background text-foreground">
+      <div className="flex h-full min-h-0">
         <Sidebar />
-        <main className="flex min-h-screen min-w-0 flex-1 flex-col overflow-hidden">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           <TopBar />
-          <div className="flex-1 overflow-y-auto">
+          <div className="min-h-0 flex-1 overflow-y-auto">
             <PageTransition>{children}</PageTransition>
           </div>
         </main>

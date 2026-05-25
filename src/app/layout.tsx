@@ -26,7 +26,7 @@ export default function RootLayout({
       lang="en"
       className={cn("dark h-full antialiased", inter.variable, geistMono.variable)}
     >
-      <body className="min-h-full bg-background text-foreground">
+      <body className="h-full overflow-hidden bg-background text-foreground">
         <AppShell>{children}</AppShell>
       </body>
     </html>

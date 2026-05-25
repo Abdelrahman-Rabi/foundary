@@ -2,6 +2,13 @@
 
 import { GitBranch } from "lucide-react"
 
+import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
+import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
+import {
+  getInsightSignals,
+  getIssueSignals,
+  getIssueSummary,
+} from "@/features/assistant/utils/assistant-analysis"
 import {
   IssuePriorityBadge,
   IssueRiskBadge,
@@ -53,6 +60,10 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const issueInsights = aiInsights.filter((insight) =>
     issue.aiInsightIds.includes(insight.id)
   )
+  const derivedSignals = getIssueSignals(issue, roadmapItems, ventures)
+  const insightSignals = getInsightSignals(issueInsights)
+  const allSignals = [...insightSignals, ...derivedSignals]
+  const issueSummary = getIssueSummary(issue, roadmapItems, ventures)
   const overdue = isIssueOverdue(issue)
   const missingCriteria =
     !issue.acceptanceCriteria || issue.acceptanceCriteria.length === 0
@@ -77,6 +88,13 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
       </header>
 
       <div className="flex-1 overflow-y-auto">
+        <section className="border-b border-border/50 px-5 py-4">
+          <h3 className="text-sm font-medium text-foreground">AI summary</h3>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            {issueSummary}
+          </p>
+        </section>
+
         <section className="border-b border-border/50 px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">Description</h3>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -159,37 +177,19 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
         <section className="px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">AI issue context</h3>
           <div className="mt-3 space-y-3">
-            {issueInsights.map((insight) => (
-              <div
-                key={insight.id}
-                className="rounded-lg border border-border/60 bg-muted/20 p-3"
-              >
-                <p className="text-sm font-medium text-foreground">
-                  {insight.title}
-                </p>
-                <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                  {insight.message}
-                </p>
-                {insight.suggestedAction ? (
-                  <p className="mt-2 text-xs leading-5 text-foreground">
-                    {insight.suggestedAction}
-                  </p>
-                ) : null}
-              </div>
-            ))}
-            {missingCriteria ? (
-              <div className="rounded-lg border border-warning/40 bg-muted/20 p-3">
-                <p className="text-sm font-medium text-foreground">
-                  Criteria clarity needed
-                </p>
-                <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                  This issue lacks measurable completion conditions, which can
-                  weaken delivery confidence.
-                </p>
-                <p className="mt-2 text-xs leading-5 text-foreground">
-                  Define validation conditions before expanding scope.
-                </p>
-              </div>
+            {allSignals.length > 0 ? (
+              allSignals.map((signal) =>
+                signal.recommendationKind ? (
+                  <AiRecommendationBlock key={signal.id} signal={signal} />
+                ) : (
+                  <AiInsightCard key={signal.id} signal={signal} compact />
+                )
+              )
+            ) : null}
+            {allSignals.length === 0 ? (
+              <p className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
+                No significant issue risk detected.
+              </p>
             ) : null}
           </div>
         </section>

@@ -1,18 +1,25 @@
+"use client"
+
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
 import { AiRiskBadge } from "@/features/assistant/components/ai-badges"
+import { AiSignalEmptyState } from "@/features/assistant/components/ai-signal-empty-state"
+import { Button } from "@/components/ui/button"
 
 type AiSignalListProps = {
   signals: AiSignal[]
   emptyText: string
+  onOpenSource?: (signal: AiSignal) => void
+  onOpenInsight?: (signalId: string) => void
 }
 
-export function AiSignalList({ signals, emptyText }: AiSignalListProps) {
+export function AiSignalList({
+  signals,
+  emptyText,
+  onOpenSource,
+  onOpenInsight,
+}: AiSignalListProps) {
   if (signals.length === 0) {
-    return (
-      <div className="rounded-lg border border-border/50 bg-background/35 p-3 text-sm text-muted-foreground">
-        {emptyText}
-      </div>
-    )
+    return <AiSignalEmptyState title={emptyText} />
   }
 
   return (
@@ -36,6 +43,33 @@ export function AiSignalList({ signals, emptyText }: AiSignalListProps) {
           <p className="mt-2 text-xs leading-5 text-foreground">
             {signal.suggestedAction}
           </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-muted-foreground">
+              {signal.ventureName} / {signal.sourceLabel}
+            </span>
+            {onOpenSource ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="ml-auto h-7 px-2 text-xs"
+                onClick={() => onOpenSource(signal)}
+              >
+                {signal.sourceActionLabel ?? "Open source"}
+              </Button>
+            ) : null}
+            {onOpenInsight ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => onOpenInsight(signal.id)}
+              >
+                Inspect
+              </Button>
+            ) : null}
+          </div>
         </div>
       ))}
     </div>

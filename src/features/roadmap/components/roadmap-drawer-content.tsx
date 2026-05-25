@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { EmptyState } from "@/components/shared/empty-state"
-import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
-import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
+import { AiRoadmapAnalysis } from "@/features/assistant/components/ai-roadmap-analysis"
 import {
+  dedupeSignals,
   getInsightSignals,
   getRoadmapSignals,
 } from "@/features/assistant/utils/assistant-analysis"
@@ -84,14 +84,21 @@ export function RoadmapDrawerContent({
   const syncedMetrics = getSyncedRoadmapMetrics(item, issues)
   const insights = getRoadmapInsights(aiInsights, item)
   const analysisSignals = getRoadmapSignals(syncedItem, issues, ventures)
-  const insightSignals = getInsightSignals(insights)
-  const allSignals = [...insightSignals, ...analysisSignals]
+  const insightSignals = getInsightSignals(
+    insights,
+    issues,
+    roadmapItems,
+    ventures
+  )
+  const allSignals = dedupeSignals([...insightSignals, ...analysisSignals])
+  const itemId = item.id
+  const itemVentureId = item.ventureId
 
   function handleViewLinkedIssues() {
     resetIssueFilters()
     setIssueFilters({
-      roadmapIds: [item.id],
-      ventureIds: item.ventureId ? [item.ventureId] : [],
+      roadmapIds: [itemId],
+      ventureIds: itemVentureId ? [itemVentureId] : [],
       roadmapLinkedOnly: true,
     })
     router.push("/issues")
@@ -258,20 +265,13 @@ export function RoadmapDrawerContent({
           <h3 className="text-sm font-medium text-foreground">
             AI strategic insights
           </h3>
-          <div className="mt-3 space-y-3">
-            {allSignals.length > 0 ? (
-              allSignals.map((signal) =>
-                signal.recommendationKind ? (
-                  <AiRecommendationBlock key={signal.id} signal={signal} />
-                ) : (
-                  <AiInsightCard key={signal.id} signal={signal} compact />
-                )
-              )
-            ) : (
-              <p className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
-                No strategic risk insight detected for this initiative.
-              </p>
-            )}
+          <div className="mt-3">
+            <AiRoadmapAnalysis
+              signals={allSignals}
+              onOpenInsight={(signalId) =>
+                openDrawer({ type: "assistant", id: signalId })
+              }
+            />
           </div>
         </section>
       </div>

@@ -58,6 +58,58 @@ export function SkeletonPanel({ rows = 3 }: { rows?: number }) {
   )
 }
 
+export function SkeletonAiSummaryRow() {
+  return (
+    <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, index) => (
+        <div
+          key={index}
+          className="rounded-lg border border-border/60 bg-card/45 p-4"
+        >
+          <Skeleton className="h-3 w-28" />
+          <Skeleton className="mt-3 h-6 w-12" />
+          <Skeleton className="mt-3 h-3 w-36" />
+        </div>
+      ))}
+    </section>
+  )
+}
+
+export function SkeletonAiInsightCards({ rows = 3 }: { rows?: number }) {
+  return (
+    <div className="space-y-3">
+      {Array.from({ length: rows }).map((_, index) => (
+        <div
+          key={index}
+          className="rounded-lg border border-border/60 bg-muted/20 p-4"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <Skeleton className="h-4 w-2/5" />
+              <Skeleton className="mt-3 h-3 w-full" />
+              <Skeleton className="mt-2 h-3 w-4/5" />
+            </div>
+            <Skeleton className="h-5 w-16 rounded-full" />
+          </div>
+          <Skeleton className="mt-4 h-2 w-full rounded-full" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function SkeletonAiRecommendationBlock() {
+  return (
+    <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
+      <Skeleton className="h-3 w-24" />
+      <Skeleton className="mt-2 h-4 w-1/2" />
+      <Skeleton className="mt-3 h-3 w-full" />
+      <Skeleton className="mt-2 h-3 w-4/5" />
+      <Skeleton className="mt-4 h-2 w-40 rounded-full" />
+    </div>
+  )
+}
+
 export function SkeletonIssueRows({ rows = 8 }: { rows?: number }) {
   return (
     <section className="overflow-hidden rounded-lg border border-border/60 bg-card/45">

@@ -11,6 +11,7 @@ import {
   typeLabels,
 } from "@/features/issues/utils/issue-utils"
 import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 import type { IssuePriority, IssueType } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
 import type { User } from "@/types/user"
@@ -34,6 +35,7 @@ export function QuickCreateIssue({
   onClose,
 }: QuickCreateIssueProps) {
   const createIssue = useIssueStore((state) => state.createIssue)
+  const linkIssueToRoadmap = useRoadmapStore((state) => state.linkIssueToRoadmap)
   const [title, setTitle] = useState("")
   const [type, setType] = useState<IssueType>("feature")
   const [priority, setPriority] = useState<IssuePriority>("medium")
@@ -56,7 +58,9 @@ export function QuickCreateIssue({
       return
     }
 
+    const createdId = `issue-${ventureId.replace("venture-", "")}-${Date.now()}`
     createIssue({
+      id: createdId,
       title: title.trim(),
       type,
       priority,
@@ -64,6 +68,9 @@ export function QuickCreateIssue({
       ownerId,
       roadmapId: roadmapId || undefined,
     })
+    if (roadmapId) {
+      linkIssueToRoadmap(roadmapId, createdId)
+    }
     setTitle("")
     setType("feature")
     setPriority("medium")

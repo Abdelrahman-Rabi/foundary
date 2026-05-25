@@ -173,6 +173,8 @@ export function filterIssues(
         filters.statuses.includes(issue.status)) &&
       (filters.types.length === 0 || filters.types.includes(issue.type)) &&
       (filters.ownerIds.length === 0 || filters.ownerIds.includes(issue.ownerId)) &&
+      (filters.roadmapIds.length === 0 ||
+        Boolean(issue.roadmapId && filters.roadmapIds.includes(issue.roadmapId))) &&
       (!filters.overdueOnly || isIssueOverdue(issue)) &&
       (!filters.roadmapLinkedOnly || Boolean(issue.roadmapId))
     )

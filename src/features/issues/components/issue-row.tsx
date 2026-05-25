@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, GitBranch, MoveRight } from "lucide-react"
+import { AlertTriangle, ArrowRight, GitBranch, MoveRight, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,7 +14,11 @@ import {
   getOwner,
   getRoadmapItem,
   getVenture,
+  hasDecliningRoadmap,
+  hasMissingCriteria,
   isIssueOverdue,
+  issueStatuses,
+  statusLabels,
 } from "@/features/issues/utils/issue-utils"
 import { useIssueStore } from "@/stores/issue-store"
 import { useUiStore } from "@/stores/ui-store"
@@ -42,6 +46,8 @@ export function IssueRow({
   const owner = getOwner(users, issue.ownerId)
   const roadmap = getRoadmapItem(roadmapItems, issue.roadmapId)
   const overdue = isIssueOverdue(issue)
+  const missingCriteria = hasMissingCriteria(issue)
+  const decliningRoadmap = hasDecliningRoadmap(issue, roadmapItems)
   const nextStatus = getNextStatus(issue.status)
 
   return (
@@ -76,7 +82,25 @@ export function IssueRow({
         </div>
       </div>
 
-      <IssueStatusBadge status={issue.status} />
+      <div className="flex items-center gap-2">
+        <IssueStatusBadge status={issue.status} />
+        <select
+          value={issue.status}
+          className="h-7 w-7 rounded-md border border-border/50 bg-background/50 text-[0px] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+          aria-label="Update issue status"
+          onClick={(event) => event.stopPropagation()}
+          onChange={(event) => {
+            event.stopPropagation()
+            updateIssueStatus(issue.id, event.target.value as typeof issue.status)
+          }}
+        >
+          {issueStatuses.map((status) => (
+            <option key={status} value={status}>
+              {statusLabels[status]}
+            </option>
+          ))}
+        </select>
+      </div>
       <IssuePriorityBadge priority={issue.priority} />
       <IssueTypeBadge type={issue.type} />
       <span className="truncate text-xs text-muted-foreground">
@@ -89,6 +113,14 @@ export function IssueRow({
         <span className="truncate text-xs text-muted-foreground">
           {venture?.name ?? "Unknown"}
         </span>
+        <div className="flex items-center gap-1">
+          {issue.blocked || overdue ? (
+            <AlertTriangle className="size-3.5 text-warning" strokeWidth={1.8} />
+          ) : null}
+          {missingCriteria || decliningRoadmap ? (
+            <Sparkles className="size-3.5 text-info" strokeWidth={1.8} />
+          ) : null}
+        </div>
         <Button
           type="button"
           variant="ghost"

@@ -1,22 +1,28 @@
 "use client"
 
+import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { useDraggable } from "@dnd-kit/core"
-import { GitBranch } from "lucide-react"
+import { AlertTriangle, GitBranch, Sparkles } from "lucide-react"
 
 import { Card, CardContent } from "@/components/ui/card"
 import {
   IssuePriorityBadge,
   IssueRiskBadge,
+  IssueStatusBadge,
   IssueTypeBadge,
 } from "@/features/issues/components/issue-badges"
 import {
   getOwner,
   getRoadmapItem,
   getVenture,
+  hasDecliningRoadmap,
+  hasMissingCriteria,
   isIssueOverdue,
+  issueStatuses,
+  statusLabels,
 } from "@/features/issues/utils/issue-utils"
 import { cn } from "@/lib/utils"
+import { useIssueStore } from "@/stores/issue-store"
 import { useUiStore } from "@/stores/ui-store"
 import type { Issue } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
@@ -37,62 +43,128 @@ export function IssueCard({
   roadmapItems,
 }: IssueCardProps) {
   const openDrawer = useUiStore((state) => state.openDrawer)
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
+  const updateIssueStatus = useIssueStore((state) => state.updateIssueStatus)
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({
       id: issue.id,
       data: { status: issue.status },
     })
   const style = {
     transform: CSS.Translate.toString(transform),
+    transition,
   }
-  const venture = getVenture(ventures, issue.ventureId)
-  const owner = getOwner(users, issue.ownerId)
-  const roadmap = getRoadmapItem(roadmapItems, issue.roadmapId)
-  const overdue = isIssueOverdue(issue)
 
   return (
     <Card
       ref={setNodeRef}
       style={style}
       className={cn(
-        "border-border/60 bg-card/60 py-0 shadow-none transition-all duration-150 hover:border-border hover:bg-muted/25 motion-reduce:transition-none",
-        isDragging && "z-10 scale-[1.01] opacity-90 ring-1 ring-ring/50 motion-reduce:scale-100"
+        "group border-border/60 bg-card/60 py-0 shadow-none transition-all duration-150 hover:border-border hover:bg-muted/25 motion-reduce:transition-none",
+        isDragging && "z-10 opacity-40 ring-1 ring-ring/50"
       )}
       {...attributes}
       {...listeners}
       onClick={() => openDrawer({ type: "issue", id: issue.id })}
     >
-      <CardContent className="p-3">
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="line-clamp-2 text-sm font-medium leading-5 text-foreground">
-            {issue.title}
-          </h3>
-          <span
-            className="mt-1 size-2 shrink-0 rounded-full"
-            style={{ backgroundColor: venture?.color ?? "var(--muted)" }}
-          />
-        </div>
+      <IssueCardContent
+        issue={issue}
+        ventures={ventures}
+        users={users}
+        roadmapItems={roadmapItems}
+        onUpdateStatus={(status) => updateIssueStatus(issue.id, status)}
+      />
+    </Card>
+  )
+}
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          <IssuePriorityBadge priority={issue.priority} />
-          <IssueTypeBadge type={issue.type} />
-          {issue.riskLevel !== "low" || overdue ? (
-            <IssueRiskBadge risk={overdue ? "medium" : issue.riskLevel} />
-          ) : null}
-        </div>
+export function IssueCardPreview(props: IssueCardProps) {
+  return (
+    <Card className="w-80 border-border bg-card/95 py-0 shadow-lg ring-1 ring-ring/30">
+      <IssueCardContent {...props} />
+    </Card>
+  )
+}
 
-        <div className="mt-3 flex items-center justify-between gap-3 text-xs text-muted-foreground">
-          <span className="truncate">{owner?.name ?? "Unassigned"}</span>
-          <span>{venture?.name ?? "Unknown"}</span>
-        </div>
+function IssueCardContent({
+  issue,
+  ventures,
+  users,
+  roadmapItems,
+  onUpdateStatus,
+}: IssueCardProps & {
+  onUpdateStatus?: (status: Issue["status"]) => void
+}) {
+  const venture = getVenture(ventures, issue.ventureId)
+  const owner = getOwner(users, issue.ownerId)
+  const roadmap = getRoadmapItem(roadmapItems, issue.roadmapId)
+  const overdue = isIssueOverdue(issue)
+  const missingCriteria = hasMissingCriteria(issue)
+  const decliningRoadmap = hasDecliningRoadmap(issue, roadmapItems)
 
+  return (
+    <CardContent className="p-3">
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="line-clamp-2 text-sm font-medium leading-5 text-foreground">
+          {issue.title}
+        </h3>
+        <span
+          className="mt-1 size-2 shrink-0 rounded-full"
+          style={{ backgroundColor: venture?.color ?? "var(--muted)" }}
+        />
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        <IssueStatusBadge status={issue.status} />
+        <IssuePriorityBadge priority={issue.priority} />
+        <IssueTypeBadge type={issue.type} />
+        {issue.riskLevel !== "low" || overdue ? (
+          <IssueRiskBadge risk={overdue ? "medium" : issue.riskLevel} />
+        ) : null}
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+        <span className="truncate">{owner?.name ?? "Unassigned"}</span>
+        <span className="truncate">{venture?.name ?? "Unknown"}</span>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-2">
         {roadmap ? (
-          <div className="mt-3 flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
             <GitBranch className="size-3 shrink-0" strokeWidth={1.8} />
             <span className="truncate">{roadmap.title}</span>
           </div>
-        ) : null}
-      </CardContent>
-    </Card>
+        ) : (
+          <span className="text-xs text-muted-foreground">No roadmap link</span>
+        )}
+        <div className="flex shrink-0 items-center gap-1">
+          {issue.blocked || overdue ? (
+            <AlertTriangle className="size-3.5 text-warning" strokeWidth={1.8} />
+          ) : null}
+          {missingCriteria || decliningRoadmap ? (
+            <Sparkles className="size-3.5 text-info" strokeWidth={1.8} />
+          ) : null}
+        </div>
+      </div>
+
+      {onUpdateStatus ? (
+        <select
+          value={issue.status}
+          className="mt-3 h-7 w-full rounded-md border border-border/50 bg-background/50 px-2 text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+          aria-label="Update issue status"
+          onClick={(event) => event.stopPropagation()}
+          onPointerDown={(event) => event.stopPropagation()}
+          onChange={(event) => {
+            event.stopPropagation()
+            onUpdateStatus(event.target.value as Issue["status"])
+          }}
+        >
+          {issueStatuses.map((status) => (
+            <option key={status} value={status}>
+              {statusLabels[status]}
+            </option>
+          ))}
+        </select>
+      ) : null}
+    </CardContent>
   )
 }

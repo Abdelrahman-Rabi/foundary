@@ -2,6 +2,7 @@
 
 import { AlertCircle, GitBranch, Target } from "lucide-react"
 
+import { EmptyState } from "@/components/shared/empty-state"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
 import {
@@ -48,8 +49,11 @@ export function RoadmapDrawerContent({
 
   if (!item) {
     return (
-      <div className="p-5 text-sm text-muted-foreground">
-        Roadmap context is no longer available.
+      <div className="p-5">
+        <EmptyState
+          title="Roadmap context is unavailable."
+          description="The selected initiative is no longer present in the current workspace."
+        />
       </div>
     )
   }

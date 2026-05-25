@@ -56,8 +56,13 @@ export function RoadmapColumn({
             />
           ))
         ) : (
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-border/60 p-4 text-center text-sm text-muted-foreground">
-            No active initiatives in this timeframe.
+          <div className="flex min-h-40 flex-1 flex-col items-center justify-center rounded-lg border border-dashed border-border/60 bg-background/20 p-4 text-center">
+            <p className="text-sm font-medium text-foreground">
+              No active initiatives.
+            </p>
+            <p className="mt-1 max-w-48 text-xs leading-5 text-muted-foreground">
+              No roadmap items match this timeframe and current context.
+            </p>
           </div>
         )}
       </div>

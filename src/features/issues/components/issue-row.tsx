@@ -54,7 +54,7 @@ export function IssueRow({
           openDrawer({ type: "issue", id: issue.id })
         }
       }}
-      className="group grid cursor-pointer grid-cols-[minmax(280px,1fr)_110px_100px_110px_100px_130px_110px] items-center gap-3 border-b border-border/50 px-3 py-2 text-sm transition-colors hover:bg-muted/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+      className="group grid cursor-pointer grid-cols-[minmax(280px,1fr)_110px_100px_110px_100px_130px_110px] items-center gap-3 border-b border-border/50 px-3 py-2 text-sm transition-colors duration-150 hover:bg-muted/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 motion-reduce:transition-none"
     >
       <div className="min-w-0">
         <div className="flex min-w-0 items-center gap-2">
@@ -93,7 +93,7 @@ export function IssueRow({
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="opacity-0 transition-opacity group-hover:opacity-100"
+          className="opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
           onClick={(event) => {
             event.stopPropagation()
             updateIssueStatus(issue.id, nextStatus)

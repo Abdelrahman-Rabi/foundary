@@ -3,6 +3,7 @@
 import type { ReactNode } from "react"
 
 import { AppDrawer } from "@/components/app-shell/app-drawer"
+import { PageTransition } from "@/components/layout/page-transition"
 import { Sidebar } from "@/components/app-shell/sidebar"
 import { TopBar } from "@/components/app-shell/top-bar"
 
@@ -17,7 +18,9 @@ export function AppShell({ children }: AppShellProps) {
         <Sidebar />
         <main className="flex min-h-screen min-w-0 flex-1 flex-col overflow-hidden">
           <TopBar />
-          <div className="flex-1 overflow-y-auto">{children}</div>
+          <div className="flex-1 overflow-y-auto">
+            <PageTransition>{children}</PageTransition>
+          </div>
         </main>
       </div>
       <AppDrawer />

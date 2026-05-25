@@ -1,38 +1,40 @@
-# Current Feature - System Synchronization
+# Current Feature - Polish & Motion
 
 ## Current Objective
 
-Make Foundary feel alive and interconnected through lightweight derived synchronization.
+Elevate Foundary's perceived maturity through restrained motion, stable loading states, sharper empty states, and targeted visual polish.
 
 This phase establishes:
-- live Zustand-backed data flow across major routes
-- venture-scoped dashboard, issues, roadmap, and assistant context
-- issue state affecting roadmap progress and confidence displays
-- issue and roadmap state affecting dashboard metrics
-- issue and roadmap state affecting AI analysis
-- drawer content that reflects current local state
+- shared motion presets
+- route-level loading skeletons
+- stable placeholder components
+- smoother drawer motion
+- calmer hover and active states
+- operational empty states
+- subtle page transitions
 
 The goal is NOT:
-> building a backend sync engine.
+> adding new product capability.
 
 The goal is:
-> making the local product feel systemic, coherent, and operationally responsive.
+> making the existing product feel premium, responsive, stable, and finished.
 
 ---
 
 # Strategic Goal
 
-System synchronization should communicate:
-- changes matter across the product
-- issue movement affects roadmap confidence
-- roadmap state affects dashboard and AI context
-- venture switching scopes the full operating system
-- portfolio mode aggregates the full operating picture
+Polish and motion should communicate:
+- fast operational response
+- calm spatial continuity
+- premium restraint
+- stable dashboard, issue, roadmap, and AI surfaces
+- no layout jumps during loading or empty states
 
 Users should immediately feel:
-- dashboard, issues, roadmap, and assistant share one operating context
-- local state changes are reflected without reloads
-- the product is a connected venture execution system
+- interactions are responsive
+- drawers preserve workflow momentum
+- cards and rows feel tactile without being flashy
+- loading and empty states keep the product oriented
 
 ---
 
@@ -40,50 +42,56 @@ Users should immediately feel:
 
 This phase includes ONLY:
 
-## Live Store Reads
-- dashboard reads issue and roadmap stores
-- roadmap reads issue store for linked execution state
-- issues reads roadmap store for linked initiative labels
-- assistant reads issue and roadmap stores
-- drawers read live store state
+## Motion Refinement
+- page reveal transitions
+- panel/card hover transitions
+- drawer timing and overlay polish
+- issue row/card interaction polish
+- reduced-motion-safe behavior
 
 ---
 
-## Derived Synchronization
-- scoped venture / portfolio data
-- linked issue completion
-- derived roadmap progress and confidence display
-- dashboard metrics from current local state
-- assistant signals from current local state
-- venture health display derived from scoped local issue and roadmap state
+## Loading States
+- dashboard loading layout
+- issues loading layout
+- roadmap loading layout
+- assistant loading layout
+- shared skeleton components
 
 ---
 
-## Explicitly Out Of Scope
+## Empty States
+- operational empty states
+- drawer missing-state blocks
+- board/list empty stability
+- roadmap column empty stability
+- assistant empty signal states
+
+---
+
+# Explicitly Out Of Scope
 
 Do NOT build:
-- backend APIs
-- persistence
-- event buses
-- websocket simulation
-- sync queues
-- notification systems
-- complex state machines
-- cross-store mutation chains
-- enterprise workflow automation
+- new workflows
+- backend behavior
+- new synchronization rules
+- fake loading delays
+- animated AI typing
+- playful animation
+- flashy page transitions
+- large visual redesigns
 
 This phase is ONLY:
-> selector-driven frontend synchronization.
+> refinement of existing interactions and states.
 
 ---
 
 # Acceptance Criteria
 
-- issue status movement updates dashboard issue status counts
-- linked issue completion updates roadmap progress displays
-- roadmap drawer reflects current issue state
-- issue drawer reflects current roadmap state
-- assistant route and drawer derive signals from current stores
-- venture switching scopes dashboard, issues, roadmap, and assistant consistently
-- portfolio mode aggregates all ventures
-- no fake backend, event bus, or enterprise sync architecture was introduced
+- route loading states preserve layout rhythm
+- drawer open/close feels smoother and less modal-heavy
+- page transitions are subtle and reduced-motion-aware
+- issue row and card hover states do not shift layout
+- roadmap and assistant empty states remain calm and operational
+- skeletons match final layout structure
+- no bouncy, playful, flashy, or chatbot-like motion was introduced

@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge"
+import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
+import { getInsightSignals } from "@/features/assistant/utils/assistant-analysis"
 import { getVentureName } from "@/features/dashboard/utils/dashboard-metrics"
-import { cn } from "@/lib/utils"
 import type { AiInsight } from "@/types/ai"
 import type { Venture } from "@/types/venture"
 
@@ -9,13 +9,9 @@ type AiInsightsPanelProps = {
   ventures: Venture[]
 }
 
-const severityClassName = {
-  low: "border-success/40 text-success",
-  medium: "border-warning/50 text-warning",
-  high: "border-destructive/50 text-destructive",
-}
-
 export function AiInsightsPanel({ insights, ventures }: AiInsightsPanelProps) {
+  const signals = getInsightSignals(insights)
+
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -27,40 +23,19 @@ export function AiInsightsPanel({ insights, ventures }: AiInsightsPanelProps) {
             Embedded observations from mocked intelligence signals.
           </p>
         </div>
-        <span className="text-xs text-muted-foreground">{insights.length} active</span>
+        <span className="text-xs text-muted-foreground">{signals.length} active</span>
       </div>
 
       <div className="space-y-3">
-        {insights.length > 0 ? (
-          insights.map((insight) => (
-            <div
-              key={insight.id}
-              className="rounded-lg border border-border/50 bg-muted/20 p-3"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <h3 className="text-sm font-medium text-foreground">
-                    {insight.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {getVentureName(ventures, insight.ventureId)} / Confidence {insight.confidence}%
-                  </p>
-                </div>
-                <Badge
-                  variant="outline"
-                  className={cn("capitalize", severityClassName[insight.severity])}
-                >
-                  {insight.severity}
-                </Badge>
-              </div>
-              <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                {insight.message}
+        {signals.length > 0 ? (
+          signals.map((signal) => (
+            <div key={signal.id}>
+              <p className="mb-2 text-xs text-muted-foreground">
+                {signal.ventureId
+                  ? getVentureName(ventures, signal.ventureId)
+                  : "Portfolio"}
               </p>
-              {insight.suggestedAction ? (
-                <p className="mt-2 text-xs leading-5 text-foreground">
-                  {insight.suggestedAction}
-                </p>
-              ) : null}
+              <AiInsightCard signal={signal} compact />
             </div>
           ))
         ) : (

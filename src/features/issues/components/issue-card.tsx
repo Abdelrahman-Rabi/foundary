@@ -55,8 +55,8 @@ export function IssueCard({
       ref={setNodeRef}
       style={style}
       className={cn(
-        "border-border/60 bg-card/60 py-0 shadow-none transition-colors hover:bg-muted/25",
-        isDragging && "z-10 opacity-80 ring-1 ring-ring/50"
+        "border-border/60 bg-card/60 py-0 shadow-none transition-all duration-150 hover:border-border hover:bg-muted/25 motion-reduce:transition-none",
+        isDragging && "z-10 scale-[1.01] opacity-90 ring-1 ring-ring/50 motion-reduce:scale-100"
       )}
       {...attributes}
       {...listeners}

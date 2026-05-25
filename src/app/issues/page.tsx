@@ -31,7 +31,7 @@ export default function IssuesPage() {
         visibleCount={visibleIssues.length}
         onOpenQuickCreate={() => setQuickCreateOpen(true)}
       />
-      <IssuesToolbar ventures={ventures} />
+      <IssuesToolbar ventures={ventures} roadmapItems={roadmapItems} />
       <QuickCreateIssue
         key={quickCreateOpen ? activeVentureId ?? "portfolio" : "closed"}
         open={quickCreateOpen}

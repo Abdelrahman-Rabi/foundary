@@ -8,8 +8,10 @@ export type SyncedRoadmapMetrics = {
   confidence: number
   completedIssues: number
   linkedIssues: number
+  activeIssues: number
   blockedIssues: number
   overdueIssues: number
+  killedIssues: number
 }
 
 export type SyncedVentureHealth = Venture & {
@@ -21,7 +23,10 @@ export type SyncedVentureHealth = Venture & {
 }
 
 export function getLinkedIssues(issues: Issue[], item: RoadmapItem) {
-  return issues.filter((issue) => item.linkedIssueIds.includes(issue.id))
+  return issues.filter(
+    (issue) =>
+      issue.roadmapId === item.id || item.linkedIssueIds.includes(issue.id)
+  )
 }
 
 export function getSyncedRoadmapMetrics(
@@ -37,6 +42,10 @@ export function getSyncedRoadmapMetrics(
   ).length
   const blockedIssues = linkedIssues.filter((issue) => issue.blocked).length
   const overdueIssues = linkedIssues.filter((issue) => isIssueOverdue(issue)).length
+  const killedIssues = linkedIssues.filter((issue) => issue.status === "killed").length
+  const activeIssues = linkedIssues.filter(
+    (issue) => issue.status !== "done" && issue.status !== "killed"
+  ).length
   const issueProgress =
     activeLinkedIssues.length > 0
       ? Math.round((completedIssues / activeLinkedIssues.length) * 100)
@@ -52,8 +61,10 @@ export function getSyncedRoadmapMetrics(
     confidence,
     completedIssues,
     linkedIssues: linkedIssues.length,
+    activeIssues,
     blockedIssues,
     overdueIssues,
+    killedIssues,
   }
 }
 

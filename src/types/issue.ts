@@ -57,6 +57,7 @@ export type IssueFilters = {
   statuses: IssueStatus[]
   types: IssueType[]
   ownerIds: string[]
+  roadmapIds: string[]
   search: string
   overdueOnly: boolean
   roadmapLinkedOnly: boolean

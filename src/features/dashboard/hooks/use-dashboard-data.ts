@@ -12,6 +12,7 @@ import {
   getAttentionItems,
   getDashboardRisks,
   getKpiMetrics,
+  getOperationalActivity,
   getRoadmapOverviewItems,
   getScopedAiInsights,
   getScopedIssues,
@@ -74,6 +75,12 @@ export function useDashboardData() {
         ventures
       ),
       attentionItems: getAttentionItems(
+        scopedIssues,
+        scopedRoadmapItems,
+        scopedInsights,
+        ventures
+      ),
+      operationalActivity: getOperationalActivity(
         scopedIssues,
         scopedRoadmapItems,
         scopedInsights,

@@ -118,3 +118,313 @@ This scope is deliberate. The prototype is meant to demonstrate a coherent produ
 
 - Product rationale: see `product-note.md`.
 - AI-assisted development process: see `ai-usage-note.md`.
+
+## ONE STUDIO ASSIGNMENT — STRATEGIC EXECUTION ROADMAP
+
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE A — STRATEGIC FOUNDATION                             │
+│ "Think before building"                                    │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 1 — Decode One Studio Philosophy                      │
+│-------------------------------------------------------------│
+│ Understand:                                                 │
+│ • AI-native workflows                                       │
+│ • Lean venture operations                                   │
+│ • Async execution                                           │
+│ • High-velocity product culture                             │
+│ • Small elite teams                                         │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 2 — Product Positioning                               │
+│-------------------------------------------------------------│
+│ Define the product as:                                      │
+│                                                             │
+│ "AI-native Venture Execution OS"                            │
+│                                                             │
+│ Key Concepts:                                               │
+│ • Venture-aware workflows                                   │
+│ • Portfolio visibility                                      │
+│ • Outcome-oriented execution                                │
+│ • Operational clarity                                       │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 3 — UX & Interaction Philosophy                       │
+│-------------------------------------------------------------│
+│ UX Principles:                                              │
+│ • Calm                                                      │
+│ • Fast                                                      │
+│ • Minimal                                                    │
+│ • Focused                                                   │
+│ • Intelligent                                               │
+│                                                             │
+│ Avoid:                                                      │
+│ • Jira complexity                                           │
+│ • Enterprise density                                        │
+│ • Workflow clutter                                          │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 4 — Core Venture Adaptations                          │
+│-------------------------------------------------------------│
+│ Introduce:                                                  │
+│ • Venture Layer                                             │
+│ • Venture Health Signals                                    │
+│ • AI Venture Assistant                                      │
+│ • Outcome-Oriented Roadmaps                                 │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 5 — Information Architecture                          │
+│-------------------------------------------------------------│
+│ Main Product Areas:                                         │
+│                                                             │
+│ • Dashboard                                                 │
+│ • Venture Switcher                                          │
+│ • Issues                                                    │
+│ • Roadmap                                                   │
+│ • AI Assistant                                              │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 6 — Scope Lock                                        │
+│-------------------------------------------------------------│
+│ Decide:                                                     │
+│ • What exists in MVP                                        │
+│ • What is intentionally excluded                            │
+│                                                             │
+│ Prioritize:                                                 │
+│ • UX quality                                                │
+│ • Operational realism                                       │
+│ • Demo sophistication                                       │
+│                                                             │
+│ Avoid:                                                      │
+│ • Overengineering                                           │
+│ • Enterprise features                                       │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 7 — Technical Strategy                                │
+│-------------------------------------------------------------│
+│ Stack:                                                      │
+│ • Next.js                                                   │
+│ • Tailwind                                                  │
+│ • shadcn/ui                                                 │
+│ • Zustand                                                   │
+│ • dnd-kit                                                   │
+│ • Recharts                                                  │
+│                                                             │
+│ Philosophy:                                                 │
+│ "Believable sophistication > backend complexity"            │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE B — EXECUTION & BUILDING                             │
+│ "Transform strategy into believable product quality"       │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 8 — Foundation Setup                                  │
+│-------------------------------------------------------------│
+│ Setup:                                                      │
+│ • Theme                                                     │
+│ • Typography                                                │
+│ • Layout tokens                                             │
+│ • App Router                                                │
+│ • Zustand stores                                            │
+│ • Motion system                                             │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 9 — App Shell & Navigation                            │
+│-------------------------------------------------------------│
+│ Build:                                                      │
+│ • Sidebar                                                   │
+│ • Venture Switcher                                          │
+│ • Layout shell                                              │
+│ • Drawer system                                             │
+│ • Routing structure                                         │
+│                                                             │
+│ Goal:                                                       │
+│ "Feel like real operational software early"                 │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 10 — Dashboard                                        │
+│-------------------------------------------------------------│
+│ Create:                                                     │
+│ • KPI cards                                                 │
+│ • Venture health                                            │
+│ • Portfolio insights                                        │
+│ • Risk visibility                                           │
+│ • Roadmap overview                                          │
+│                                                             │
+│ Goal:                                                       │
+│ "Executive-readable operational intelligence"               │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 11 — Issues System                                    │
+│-------------------------------------------------------------│
+│ Build:                                                      │
+│ • List view                                                 │
+│ • Kanban board                                              │
+│ • Filters & search                                          │
+│ • Issue drawer                                              │
+│ • Drag & drop                                               │
+│ • Quick create                                              │
+│                                                             │
+│ Most Important Signal:                                      │
+│ "Operationally alive workflows"                             │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 12 — Roadmap System                                   │
+│-------------------------------------------------------------│
+│ Build:                                                      │
+│ • Now / Next / Later                                        │
+│ • Goal-oriented roadmap cards                               │
+│ • Confidence indicators                                     │
+│ • Linked issues                                             │
+│ • Progress visibility                                       │
+│                                                             │
+│ Goal:                                                       │
+│ "Strategic execution visibility"                            │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 13 — AI Assistant Layer                               │
+│-------------------------------------------------------------│
+│ AI Behaviors:                                               │
+│ • Summaries                                                 │
+│ • Risk detection                                            │
+│ • Priority suggestions                                      │
+│ • Missing criteria analysis                                 │
+│ • Continue/Kill/Split recommendations                       │
+│                                                             │
+│ AI Philosophy:                                              │
+│ "Embedded operational intelligence"                         │
+│                                                             │
+│ NOT:                                                        │
+│ • Generic chatbot                                           │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 14 — System Synchronization                           │
+│-------------------------------------------------------------│
+│ Connect everything:                                         │
+│ • Issues → Roadmap                                          │
+│ • Roadmap → Dashboard                                       │
+│ • AI → Contextual insights                                  │
+│ • Venture → Portfolio metrics                               │
+│                                                             │
+│ Goal:                                                       │
+│ "Product feels alive and interconnected"                    │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 15 — Polish & Motion                                  │
+│-------------------------------------------------------------│
+│ Refine:                                                     │
+│ • Motion                                                    │
+│ • Typography                                                │
+│ • Hover states                                              │
+│ • Drawer transitions                                        │
+│ • Empty states                                              │
+│ • Skeleton loaders                                          │
+│ • Micro-interactions                                        │
+│                                                             │
+│ Goal:                                                       │
+│ "Premium AI-native SaaS feel"                               │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE C — STORYTELLING & DELIVERY                          │
+│ "Present strategic thinking, not just frontend work"       │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 16 — Product Narrative                                │
+│-------------------------------------------------------------│
+│ Write:                                                      │
+│ • README                                                    │
+│ • Product Note                                              │
+│ • AI Usage Note                                             │
+│                                                             │
+│ Explain:                                                    │
+│ • Why Linear inspired the system                            │
+│ • Why venture-awareness matters                             │
+│ • Why simplicity was prioritized                            │
+│ • What was intentionally excluded                           │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ STEP 17 — Demo Optimization                                │
+│-------------------------------------------------------------│
+│ Tune:                                                       │
+│ • Mock data realism                                         │
+│ • AI recommendations                                        │
+│ • Venture scenarios                                         │
+│ • Portfolio risk states                                     │
+│ • Dashboard storytelling                                    │
+│                                                             │
+│ Goal:                                                       │
+│ "Believable venture operating system realism"               │
+└─────────────────────────────────────────────────────────────┘
+                │
+                ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│ FINAL SUCCESS TARGET                                       │
+│-------------------------------------------------------------│
+│ Reviewer should feel:                                       │
+│                                                             │
+│ "This person understands how modern AI-native               │
+│ venture studios should operate."                            │
+│                                                             │
+│ NOT:                                                        │
+│ "They built a nice frontend."                               │
+└─────────────────────────────────────────────────────────────┘

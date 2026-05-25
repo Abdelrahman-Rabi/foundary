@@ -27,10 +27,11 @@ import {
   issueStatusLabels,
 } from "@/features/roadmap/utils/roadmap-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { issues } from "@/data/issues"
 import { users } from "@/data/users"
 import { ventures } from "@/data/ventures"
 import { cn } from "@/lib/utils"
+import { getSyncedRoadmapMetrics } from "@/features/synchronization/utils/sync-utils"
+import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
 
 type RoadmapDrawerContentProps = {
@@ -43,6 +44,7 @@ export function RoadmapDrawerContent({
   const item = useRoadmapStore((state) =>
     state.roadmapItems.find((roadmapItem) => roadmapItem.id === roadmapId)
   )
+  const issues = useIssueStore((state) => state.issues)
 
   if (!item) {
     return (
@@ -56,6 +58,7 @@ export function RoadmapDrawerContent({
   const owner = getOwner(users, item.ownerId)
   const linkedIssues = getLinkedIssues(issues, item)
   const issueCompletion = getIssueCompletion(linkedIssues)
+  const syncedMetrics = getSyncedRoadmapMetrics(item, issues)
   const insights = getRoadmapInsights(aiInsights, item)
   const analysisSignals = getRoadmapSignals(item, issues, ventures)
   const insightSignals = getInsightSignals(insights)
@@ -74,7 +77,7 @@ export function RoadmapDrawerContent({
           </h2>
           <div className="mt-3 flex flex-wrap gap-1.5">
             <RoadmapStatusBadge status={item.status} />
-            <RoadmapConfidenceBadge confidence={item.confidence} />
+            <RoadmapConfidenceBadge confidence={syncedMetrics.confidence} />
             <RoadmapTrendBadge trend={item.confidenceTrend} />
           </div>
         </div>
@@ -107,11 +110,15 @@ export function RoadmapDrawerContent({
             Progress and confidence
           </h3>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <MetricBar label="Progress" value={item.progress} tone="primary" />
+            <MetricBar
+              label="Progress"
+              value={syncedMetrics.progress}
+              tone="primary"
+            />
             <MetricBar
               label="Confidence"
-              value={item.confidence}
-              tone={item.confidence < 50 ? "warning" : "success"}
+              value={syncedMetrics.confidence}
+              tone={syncedMetrics.confidence < 50 ? "warning" : "success"}
             />
           </div>
           <div className="mt-4 grid grid-cols-2 gap-4 text-sm">

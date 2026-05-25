@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
-import { roadmapItems } from "@/data/roadmap"
 import { users } from "@/data/users"
 import { ventures } from "@/data/ventures"
 import { IssueBoard } from "@/features/issues/components/issue-board"
@@ -13,6 +12,7 @@ import { IssuesToolbar } from "@/features/issues/components/issues-toolbar"
 import { QuickCreateIssue } from "@/features/issues/components/quick-create-issue"
 import { filterIssues, issueStatuses } from "@/features/issues/utils/issue-utils"
 import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 import type { Issue, IssueStatus } from "@/types/issue"
@@ -40,6 +40,7 @@ function groupIssues(issues: Issue[]) {
 export default function IssuesPage() {
   const [quickCreateOpen, setQuickCreateOpen] = useState(false)
   const issues = useIssueStore((state) => state.issues)
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const filters = useIssueStore((state) => state.filters)
   const issuesViewMode = useUiStore((state) => state.issuesViewMode)
   const mode = useVentureStore((state) => state.mode)

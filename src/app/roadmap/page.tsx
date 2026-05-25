@@ -4,7 +4,6 @@ import { useMemo, useState } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
-import { issues } from "@/data/issues"
 import { ventures } from "@/data/ventures"
 import { RoadmapBoard } from "@/features/roadmap/components/roadmap-board"
 import { RoadmapConfidenceSummary } from "@/features/roadmap/components/roadmap-confidence-summary"
@@ -16,6 +15,8 @@ import {
   getConfidenceSummary,
   groupRoadmapItems,
 } from "@/features/roadmap/utils/roadmap-utils"
+import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
+import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
@@ -25,6 +26,7 @@ export default function RoadmapPage() {
   const [search, setSearch] = useState("")
   const [status, setStatus] = useState<RoadmapStatus | "all">("all")
   const [confidence, setConfidence] = useState<ConfidenceFilter>("all")
+  const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const openDrawer = useUiStore((state) => state.openDrawer)
   const mode = useVentureStore((state) => state.mode)
@@ -34,14 +36,14 @@ export default function RoadmapPage() {
 
   const visibleRoadmapItems = useMemo(
     () =>
-      filterRoadmapItems(roadmapItems, {
+      filterRoadmapItems(getSyncedRoadmapItems(roadmapItems, issues), {
         mode,
         activeVentureId,
         search,
         status,
         confidence,
       }),
-    [activeVentureId, confidence, mode, roadmapItems, search, status]
+    [activeVentureId, confidence, issues, mode, roadmapItems, search, status]
   )
   const groupedItems = useMemo(
     () => groupRoadmapItems(visibleRoadmapItems),

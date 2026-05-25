@@ -7,10 +7,11 @@ import {
   getScopedAssistantData,
   sortSignals,
 } from "@/features/assistant/utils/assistant-analysis"
+import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { issues } from "@/data/issues"
-import { roadmapItems } from "@/data/roadmap"
 import { ventures } from "@/data/ventures"
+import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 type AssistantDrawerContentProps = {
@@ -20,12 +21,21 @@ type AssistantDrawerContentProps = {
 export function AssistantDrawerContent({
   insightId,
 }: AssistantDrawerContentProps) {
+  const issues = useIssueStore((state) => state.issues)
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
-  const scoped = getScopedAssistantData(issues, roadmapItems, ventures, aiInsights, {
-    mode,
-    activeVentureId,
-  })
+  const syncedRoadmapItems = getSyncedRoadmapItems(roadmapItems, issues)
+  const scoped = getScopedAssistantData(
+    issues,
+    syncedRoadmapItems,
+    ventures,
+    aiInsights,
+    {
+      mode,
+      activeVentureId,
+    }
+  )
   const signals = sortSignals(
     getAssistantSignals(
       scoped.issues,

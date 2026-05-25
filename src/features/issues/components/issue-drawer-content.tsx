@@ -23,10 +23,11 @@ import {
   isIssueOverdue,
 } from "@/features/issues/utils/issue-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { roadmapItems } from "@/data/roadmap"
 import { users } from "@/data/users"
 import { ventures } from "@/data/ventures"
+import { getSyncedRoadmapMetrics } from "@/features/synchronization/utils/sync-utils"
 import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 
 type IssueDrawerContentProps = {
   issueId: string
@@ -42,9 +43,11 @@ function MetadataItem({ label, value }: { label: string; value: string }) {
 }
 
 export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
+  const issues = useIssueStore((state) => state.issues)
   const issue = useIssueStore((state) =>
     state.issues.find((item) => item.id === issueId)
   )
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
 
   if (!issue) {
     return (
@@ -57,6 +60,9 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const venture = getVenture(ventures, issue.ventureId)
   const owner = getOwner(users, issue.ownerId)
   const roadmap = getRoadmapItem(roadmapItems, issue.roadmapId)
+  const syncedRoadmapMetrics = roadmap
+    ? getSyncedRoadmapMetrics(roadmap, issues)
+    : null
   const issueInsights = aiInsights.filter((insight) =>
     issue.aiInsightIds.includes(insight.id)
   )
@@ -162,7 +168,9 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                     {roadmap.goal}
                   </p>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Progress {roadmap.progress}% / Confidence {roadmap.confidence}%
+                    Progress {syncedRoadmapMetrics?.progress ?? roadmap.progress}% /
+                    Confidence{" "}
+                    {syncedRoadmapMetrics?.confidence ?? roadmap.confidence}%
                   </p>
                 </div>
               </div>

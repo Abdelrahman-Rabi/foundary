@@ -2,8 +2,6 @@
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
-import { issues } from "@/data/issues"
-import { roadmapItems } from "@/data/roadmap"
 import { ventures } from "@/data/ventures"
 import { AiInsightsPanel } from "@/features/dashboard/components/ai-insights-panel"
 import { AttentionPanel } from "@/features/dashboard/components/attention-panel"
@@ -24,15 +22,27 @@ import {
   getScopedVentures,
   getStatusCounts,
 } from "@/features/dashboard/utils/dashboard-metrics"
+import {
+  getSyncedRoadmapItems,
+  getSyncedVentureHealth,
+} from "@/features/synchronization/utils/sync-utils"
+import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export default function DashboardPage() {
+  const issues = useIssueStore((state) => state.issues)
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
   const context = { mode, activeVentureId }
-  const scopedVentures = getScopedVentures(ventures, context)
+  const syncedRoadmapItems = getSyncedRoadmapItems(roadmapItems, issues)
+  const syncedVentures = ventures.map((venture) =>
+    getSyncedVentureHealth(venture, issues, syncedRoadmapItems)
+  )
+  const scopedVentures = getScopedVentures(syncedVentures, context)
   const scopedIssues = getScopedIssues(issues, context)
-  const scopedRoadmapItems = getScopedRoadmapItems(roadmapItems, context)
+  const scopedRoadmapItems = getScopedRoadmapItems(syncedRoadmapItems, context)
   const scopedInsights = getScopedAiInsights(aiInsights, context)
   const activeVenture =
     ventures.find((venture) => venture.id === activeVentureId) ?? null

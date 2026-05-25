@@ -3,6 +3,7 @@
 import { GitBranch } from "lucide-react"
 
 import { EmptyState } from "@/components/shared/empty-state"
+import { Button } from "@/components/ui/button"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
 import {
@@ -18,10 +19,15 @@ import {
 } from "@/features/issues/components/issue-badges"
 import {
   formatDate,
-  getOwner,
   getRoadmapItem,
   getVenture,
   isIssueOverdue,
+  issuePriorities,
+  issueStatuses,
+  issueTypes,
+  priorityLabels,
+  statusLabels,
+  typeLabels,
 } from "@/features/issues/utils/issue-utils"
 import { aiInsights } from "@/data/ai-insights"
 import { users } from "@/data/users"
@@ -29,6 +35,8 @@ import { ventures } from "@/data/ventures"
 import { getSyncedRoadmapMetrics } from "@/features/synchronization/utils/sync-utils"
 import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
+import { useUiStore } from "@/stores/ui-store"
+import type { IssuePriority, IssueStatus, IssueType } from "@/types/issue"
 
 type IssueDrawerContentProps = {
   issueId: string
@@ -48,7 +56,9 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const issue = useIssueStore((state) =>
     state.issues.find((item) => item.id === issueId)
   )
+  const updateIssue = useIssueStore((state) => state.updateIssue)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
+  const openDrawer = useUiStore((state) => state.openDrawer)
 
   if (!issue) {
     return (
@@ -62,7 +72,6 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   }
 
   const venture = getVenture(ventures, issue.ventureId)
-  const owner = getOwner(users, issue.ownerId)
   const roadmap = getRoadmapItem(roadmapItems, issue.roadmapId)
   const syncedRoadmapMetrics = roadmap
     ? getSyncedRoadmapMetrics(roadmap, issues)
@@ -73,6 +82,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const derivedSignals = getIssueSignals(issue, roadmapItems, ventures)
   const insightSignals = getInsightSignals(issueInsights)
   const allSignals = [...insightSignals, ...derivedSignals]
+  const strongestSignal = allSignals[0] ?? null
   const issueSummary = getIssueSummary(issue, roadmapItems, ventures)
   const overdue = isIssueOverdue(issue)
   const missingCriteria =
@@ -113,14 +123,101 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">
-          <h3 className="text-sm font-medium text-foreground">Metadata</h3>
-          <div className="mt-3 grid grid-cols-2 gap-4">
-            <MetadataItem label="Owner" value={owner?.name ?? "Unassigned"} />
-            <MetadataItem label="Due date" value={formatDate(issue.dueDate)} />
-            <MetadataItem label="Effort" value={issue.effort} />
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-sm font-medium text-foreground">Metadata</h3>
+            {strongestSignal ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2 text-xs"
+                onClick={() =>
+                  openDrawer({ type: "assistant", id: strongestSignal.id })
+                }
+              >
+                Inspect AI signal
+              </Button>
+            ) : null}
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <MetadataSelect
+              label="Status"
+              value={issue.status}
+              onChange={(value) =>
+                updateIssue(issue.id, { status: value as IssueStatus })
+              }
+              options={issueStatuses.map((status) => ({
+                value: status,
+                label: statusLabels[status],
+              }))}
+            />
+            <MetadataSelect
+              label="Priority"
+              value={issue.priority}
+              onChange={(value) =>
+                updateIssue(issue.id, { priority: value as IssuePriority })
+              }
+              options={issuePriorities.map((priority) => ({
+                value: priority,
+                label: priorityLabels[priority],
+              }))}
+            />
+            <MetadataSelect
+              label="Type"
+              value={issue.type}
+              onChange={(value) =>
+                updateIssue(issue.id, { type: value as IssueType })
+              }
+              options={issueTypes.map((type) => ({
+                value: type,
+                label: typeLabels[type],
+              }))}
+            />
+            <MetadataSelect
+              label="Owner"
+              value={issue.ownerId}
+              onChange={(value) => updateIssue(issue.id, { ownerId: value })}
+              options={users.map((user) => ({
+                value: user.id,
+                label: user.name,
+              }))}
+            />
+            <MetadataInput
+              label="Due date"
+              value={issue.dueDate ?? ""}
+              onChange={(value) =>
+                updateIssue(issue.id, { dueDate: value || undefined })
+              }
+            />
+            <MetadataSelect
+              label="Roadmap"
+              value={issue.roadmapId ?? ""}
+              onChange={(value) =>
+                updateIssue(issue.id, { roadmapId: value || undefined })
+              }
+              options={[
+                { value: "", label: "No roadmap link" },
+                ...roadmapItems
+                  .filter((item) => item.ventureId === issue.ventureId)
+                  .map((item) => ({ value: item.id, label: item.title })),
+              ]}
+            />
+            <label className="flex items-center gap-2 rounded-lg border border-border/60 bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+              <input
+                type="checkbox"
+                checked={issue.blocked}
+                onChange={(event) =>
+                  updateIssue(issue.id, { blocked: event.target.checked })
+                }
+              />
+              Blocked
+            </label>
             <MetadataItem label="Confidence" value={`${issue.confidence}%`} />
-            <MetadataItem label="Blocked" value={issue.blocked ? "Yes" : "No"} />
-            <MetadataItem label="Updated" value={formatDate(issue.updatedAt.slice(0, 10))} />
+            <MetadataItem label="Effort" value={issue.effort} />
+            <MetadataItem
+              label="Updated"
+              value={formatDate(issue.updatedAt.slice(0, 10))}
+            />
           </div>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {issue.tags.length > 0 ? (
@@ -146,16 +243,21 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
             <p className="mt-3 text-sm leading-6 text-warning">
               Missing measurable acceptance criteria.
             </p>
-          ) : (
-            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {issue.acceptanceCriteria?.map((criterion) => (
-                <li key={criterion} className="flex gap-2">
-                  <span className="mt-2 size-1.5 rounded-full bg-muted-foreground" />
-                  <span>{criterion}</span>
-                </li>
-              ))}
-            </ul>
-          )}
+          ) : null}
+          <textarea
+            value={issue.acceptanceCriteria?.join("\n") ?? ""}
+            onChange={(event) =>
+              updateIssue(issue.id, {
+                acceptanceCriteria: event.target.value
+                  .split("\n")
+                  .map((criterion) => criterion.trim())
+                  .filter(Boolean),
+              })
+            }
+            rows={4}
+            placeholder="One measurable criterion per line..."
+            className="mt-3 w-full resize-none rounded-lg border border-border/60 bg-background/50 p-3 text-sm leading-6 text-foreground placeholder:text-muted-foreground"
+          />
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">
@@ -176,6 +278,15 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                     Confidence{" "}
                     {syncedRoadmapMetrics?.confidence ?? roadmap.confidence}%
                   </p>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="mt-3 h-8 px-2 text-xs"
+                    onClick={() => openDrawer({ type: "roadmap", id: roadmap.id })}
+                  >
+                    Open roadmap
+                  </Button>
                 </div>
               </div>
             </div>
@@ -207,5 +318,56 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
         </section>
       </div>
     </div>
+  )
+}
+
+function MetadataSelect({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string
+  value: string
+  options: { value: string; label: string }[]
+  onChange: (value: string) => void
+}) {
+  return (
+    <label>
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-1 h-8 w-full rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
+      >
+        {options.map((option) => (
+          <option key={option.value || "none"} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  )
+}
+
+function MetadataInput({
+  label,
+  value,
+  onChange,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+}) {
+  return (
+    <label>
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <input
+        type="date"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-1 h-8 w-full rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
+      />
+    </label>
   )
 }

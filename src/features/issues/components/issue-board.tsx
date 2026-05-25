@@ -1,7 +1,20 @@
 "use client"
 
-import { DndContext, type DragEndEvent, closestCorners } from "@dnd-kit/core"
+import { useState } from "react"
+import {
+  DndContext,
+  DragOverlay,
+  KeyboardSensor,
+  PointerSensor,
+  type DragEndEvent,
+  type DragStartEvent,
+  closestCorners,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable"
 
+import { IssueCardPreview } from "@/features/issues/components/issue-card"
 import { IssueColumn } from "@/features/issues/components/issue-column"
 import { issueStatuses } from "@/features/issues/utils/issue-utils"
 import { useIssueStore } from "@/stores/issue-store"
@@ -24,15 +37,40 @@ export function IssueBoard({
   roadmapItems,
 }: IssueBoardProps) {
   const updateIssueStatus = useIssueStore((state) => state.updateIssueStatus)
+  const [activeIssueId, setActiveIssueId] = useState<string | null>(null)
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+  const activeIssue = activeIssueId
+    ? Object.values(groupedIssues)
+        .flat()
+        .find((issue) => issue.id === activeIssueId) ?? null
+    : null
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveIssueId(String(event.active.id))
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
+    setActiveIssueId(null)
 
-    if (!over || !issueStatuses.includes(over.id as IssueStatus)) {
+    if (!over) {
       return
     }
 
-    const nextStatus = over.id as IssueStatus
+    const overStatus =
+      over.data.current?.status ??
+      (issueStatuses.includes(over.id as IssueStatus) ? over.id : null)
+
+    if (!overStatus || !issueStatuses.includes(overStatus as IssueStatus)) {
+      return
+    }
+
+    const nextStatus = overStatus as IssueStatus
     const currentStatus = active.data.current?.status as IssueStatus | undefined
 
     if (currentStatus !== nextStatus) {
@@ -41,7 +79,13 @@ export function IssueBoard({
   }
 
   return (
-    <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCorners}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragCancel={() => setActiveIssueId(null)}
+    >
       <div className="overflow-x-auto pb-2">
         <div className="flex gap-4">
           {issueStatuses.map((status) => (
@@ -56,6 +100,16 @@ export function IssueBoard({
           ))}
         </div>
       </div>
+      <DragOverlay>
+        {activeIssue ? (
+          <IssueCardPreview
+            issue={activeIssue}
+            ventures={ventures}
+            users={users}
+            roadmapItems={roadmapItems}
+          />
+        ) : null}
+      </DragOverlay>
     </DndContext>
   )
 }

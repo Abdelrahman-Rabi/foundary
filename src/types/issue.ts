@@ -19,6 +19,16 @@ export type RiskLevel = "low" | "medium" | "high"
 
 export type IssueEffort = "small" | "medium" | "large"
 
+export type IssueSortBy =
+  | "priority"
+  | "dueDate"
+  | "status"
+  | "owner"
+  | "venture"
+  | "updatedAt"
+
+export type SortDirection = "asc" | "desc"
+
 export type Issue = {
   id: string
   ventureId: string
@@ -50,4 +60,6 @@ export type IssueFilters = {
   search: string
   overdueOnly: boolean
   roadmapLinkedOnly: boolean
+  sortBy: IssueSortBy
+  sortDirection: SortDirection
 }

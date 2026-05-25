@@ -1,6 +1,10 @@
 "use client"
 
 import { useDroppable } from "@dnd-kit/core"
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable"
 
 import { IssueCard } from "@/features/issues/components/issue-card"
 import { statusLabels } from "@/features/issues/utils/issue-utils"
@@ -43,15 +47,20 @@ export function IssueColumn({
       </div>
       <div className="flex-1 space-y-3 overflow-y-auto p-3">
         {issues.length > 0 ? (
-          issues.map((issue) => (
-            <IssueCard
-              key={issue.id}
-              issue={issue}
-              ventures={ventures}
-              users={users}
-              roadmapItems={roadmapItems}
-            />
-          ))
+          <SortableContext
+            items={issues.map((issue) => issue.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {issues.map((issue) => (
+              <IssueCard
+                key={issue.id}
+                issue={issue}
+                ventures={ventures}
+                users={users}
+                roadmapItems={roadmapItems}
+              />
+            ))}
+          </SortableContext>
         ) : (
           <div className="rounded-lg border border-dashed border-border/60 p-3 text-xs text-muted-foreground">
             No issues in {statusLabels[status].toLowerCase()}.

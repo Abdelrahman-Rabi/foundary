@@ -1,40 +1,38 @@
-# Current Feature - AI Assistant Layer
+# Current Feature - System Synchronization
 
 ## Current Objective
 
-Build the Foundary AI Assistant Layer as embedded operational intelligence.
+Make Foundary feel alive and interconnected through lightweight derived synchronization.
 
 This phase establishes:
-- deterministic mocked AI analysis
-- contextual operational insight cards
-- risk and clarity recommendations
-- issue summaries
-- roadmap confidence analysis
-- continue / split / kill recommendations
-- a real assistant workspace
+- live Zustand-backed data flow across major routes
+- venture-scoped dashboard, issues, roadmap, and assistant context
+- issue state affecting roadmap progress and confidence displays
+- issue and roadmap state affecting dashboard metrics
+- issue and roadmap state affecting AI analysis
+- drawer content that reflects current local state
 
 The goal is NOT:
-> building a chatbot.
+> building a backend sync engine.
 
 The goal is:
-> making venture execution feel more contextual, intelligent, and decision-aware.
+> making the local product feel systemic, coherent, and operationally responsive.
 
 ---
 
 # Strategic Goal
 
-The AI Assistant Layer should communicate:
-- what is risky
-- what lacks clarity
-- what may affect roadmap confidence
-- which initiatives should continue, split, or be stopped
-- where operational focus should tighten
+System synchronization should communicate:
+- changes matter across the product
+- issue movement affects roadmap confidence
+- roadmap state affects dashboard and AI context
+- venture switching scopes the full operating system
+- portfolio mode aggregates the full operating picture
 
-Users should immediately understand:
-- why an AI signal exists
-- what evidence supports it
-- what action is recommended
-- how confident the system is
+Users should immediately feel:
+- dashboard, issues, roadmap, and assistant share one operating context
+- local state changes are reflected without reloads
+- the product is a connected venture execution system
 
 ---
 
@@ -42,66 +40,50 @@ Users should immediately understand:
 
 This phase includes ONLY:
 
-## Assistant Workspace
-- contextual assistant header
-- portfolio / venture scoped intelligence
-- summary metrics
-- operational insights
-- risk analysis
-- roadmap recommendations
-- issue clarity signals
+## Live Store Reads
+- dashboard reads issue and roadmap stores
+- roadmap reads issue store for linked execution state
+- issues reads roadmap store for linked initiative labels
+- assistant reads issue and roadmap stores
+- drawers read live store state
 
 ---
 
-## Embedded AI UI
-- shared AI insight cards
-- confidence indicators
-- risk badges
-- recommendation blocks
-- compact signal lists
+## Derived Synchronization
+- scoped venture / portfolio data
+- linked issue completion
+- derived roadmap progress and confidence display
+- dashboard metrics from current local state
+- assistant signals from current local state
+- venture health display derived from scoped local issue and roadmap state
 
 ---
 
-## Drawer AI
-- issue summary and clarity analysis
-- roadmap confidence analysis
-- continue / split / kill recommendation
-- assistant drawer content
+## Explicitly Out Of Scope
 
----
-
-## State And Data
-- use existing issue, roadmap, venture, and AI mock data
-- derive deterministic AI signals at render time
-- keep AI frontend-only
-
----
-
-# Explicitly Out Of Scope
-
-Do NOT build yet:
-- real LLM integration
-- API routes
-- streaming responses
-- chat threads
-- avatars
-- assistant personality
-- autonomous agents
-- fake background jobs
+Do NOT build:
+- backend APIs
+- persistence
+- event buses
+- websocket simulation
+- sync queues
 - notification systems
+- complex state machines
+- cross-store mutation chains
+- enterprise workflow automation
 
 This phase is ONLY:
-> embedded mocked operational intelligence.
+> selector-driven frontend synchronization.
 
 ---
 
 # Acceptance Criteria
 
-- assistant route feels like a real intelligence workspace
-- AI surfaces are embedded and concise
-- dashboard AI uses shared AI components
-- issue drawer shows summaries and risk / clarity recommendations
-- roadmap drawer shows confidence and continue / split / kill analysis
-- venture switching scopes assistant intelligence
-- AI copy remains calm, operational, and non-chatty
-- no chatbot, avatar, typing animation, fake streaming, or AI theatrics were introduced
+- issue status movement updates dashboard issue status counts
+- linked issue completion updates roadmap progress displays
+- roadmap drawer reflects current issue state
+- issue drawer reflects current roadmap state
+- assistant route and drawer derive signals from current stores
+- venture switching scopes dashboard, issues, roadmap, and assistant consistently
+- portfolio mode aggregates all ventures
+- no fake backend, event bus, or enterprise sync architecture was introduced

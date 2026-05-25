@@ -4,8 +4,6 @@ import { useMemo } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
-import { issues } from "@/data/issues"
-import { roadmapItems } from "@/data/roadmap"
 import { ventures } from "@/data/ventures"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
@@ -19,10 +17,15 @@ import {
   getScopedAssistantData,
   sortSignals,
 } from "@/features/assistant/utils/assistant-analysis"
+import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
+import { useIssueStore } from "@/stores/issue-store"
+import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export default function AssistantPage() {
+  const issues = useIssueStore((state) => state.issues)
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
   const openDrawer = useUiStore((state) => state.openDrawer)
@@ -30,11 +33,17 @@ export default function AssistantPage() {
     ventures.find((venture) => venture.id === activeVentureId) ?? null
   const scoped = useMemo(
     () =>
-      getScopedAssistantData(issues, roadmapItems, ventures, aiInsights, {
+      getScopedAssistantData(
+        issues,
+        getSyncedRoadmapItems(roadmapItems, issues),
+        ventures,
+        aiInsights,
+        {
         mode,
         activeVentureId,
-      }),
-    [activeVentureId, mode]
+        }
+      ),
+    [activeVentureId, issues, mode, roadmapItems]
   )
   const signals = useMemo(
     () =>

@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Foundary
+
+Foundary is an AI-native venture execution platform inspired by Linear and adapted for venture studios managing multiple startups at once.
+
+It is designed as a calm operating system for high-velocity venture teams: issues for execution, roadmap for strategic direction, dashboard for portfolio awareness, and embedded AI-style intelligence for concise operational judgment.
+
+The project is intentionally frontend-only. It prioritizes product thinking, workflow quality, venture-aware data relationships, and interaction polish over backend completeness.
+
+## Demo Flow
+
+The preferred reviewer path starts in portfolio mode:
+
+1. Open `/dashboard` and review the portfolio risk signal.
+2. Follow the Sentra onboarding risk into the at-risk roadmap initiative.
+3. Inspect the linked blocked analytics issue.
+4. Review the AI recommendation to reduce scope or prioritize dependency resolution.
+
+Supporting flows:
+
+- Reson8 shows validation-stage ambiguity with clarify and split recommendations.
+- Internal Ops shows stable operating work with continue recommendations.
+- Venture switching scopes dashboard, issues, roadmap, and assistant context instantly.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Validate the project:
 
-## Learn More
+```bash
+npm run lint
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Core Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/dashboard` - portfolio and venture-level operational overview
+- `/issues` - Linear-inspired issue list and board workflows
+- `/roadmap` - Now / Next / Later strategic execution board
+- `/assistant` - deterministic operational intelligence workspace
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+Foundary uses the Next.js App Router with a persistent application shell. The shell owns the sidebar, top bar, venture switcher, page transitions, and global drawer.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app is organized around feature-local components:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/features/dashboard` for metrics, risk panels, venture health, and activity
+- `src/features/issues` for list, board, issue cards, quick create, and drawer content
+- `src/features/roadmap` for roadmap board, cards, confidence summaries, and drawer content
+- `src/features/assistant` for AI insight cards, recommendations, summaries, and analysis utilities
+- `src/features/synchronization` for derived cross-surface state
+
+State is held in small Zustand stores:
+
+- venture context
+- issue state
+- roadmap state
+- UI drawer state
+
+Mock data initializes the stores, then dashboard, roadmap, assistant, and drawer surfaces derive their visible state from the current local store state. Synchronization is intentionally render-time and selector-driven rather than an event bus or backend simulation.
+
+## Stack
+
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS v4
+- shadcn/Radix UI primitives
+- Zustand
+- dnd-kit
+- Framer Motion
+- Recharts
+- Lucide icons
+
+## Mocked vs Real Systems
+
+Implemented:
+
+- mocked ventures, issues, roadmap items, users, tags, and AI insights
+- Zustand-backed local runtime state
+- deterministic AI-style recommendations and risk signals
+- derived issue, roadmap, dashboard, and assistant synchronization
+- local drag-and-drop issue movement
+- global contextual drawers
+- route loading states, skeletons, empty states, and restrained motion
+
+Not implemented by design:
+
+- backend API routes
+- database persistence
+- authentication or RBAC
+- multi-user collaboration
+- realtime sockets
+- notifications or comments
+- real LLM calls, streaming, chat threads, or fake typing states
+- production deployment infrastructure
+
+This scope is deliberate. The prototype is meant to demonstrate a coherent product direction and believable operational sophistication, not production infrastructure completeness.
+
+## Delivery Notes
+
+- Product rationale: see `product-note.md`.
+- AI-assisted development process: see `ai-usage-note.md`.

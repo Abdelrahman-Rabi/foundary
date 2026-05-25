@@ -1,19 +1,83 @@
+"use client"
+
+import { useMemo, useState } from "react"
+
 import { PageContainer } from "@/components/layout/page-container"
-import { PageHeader } from "@/components/layout/page-header"
-import { SectionShell } from "@/components/layout/section-shell"
+import { aiInsights } from "@/data/ai-insights"
+import { issues } from "@/data/issues"
+import { ventures } from "@/data/ventures"
+import { RoadmapBoard } from "@/features/roadmap/components/roadmap-board"
+import { RoadmapConfidenceSummary } from "@/features/roadmap/components/roadmap-confidence-summary"
+import { RoadmapHeader } from "@/features/roadmap/components/roadmap-header"
+import { RoadmapToolbar } from "@/features/roadmap/components/roadmap-toolbar"
+import {
+  type ConfidenceFilter,
+  filterRoadmapItems,
+  getConfidenceSummary,
+  groupRoadmapItems,
+} from "@/features/roadmap/utils/roadmap-utils"
+import { useRoadmapStore } from "@/stores/roadmap-store"
+import { useUiStore } from "@/stores/ui-store"
+import { useVentureStore } from "@/stores/venture-store"
+import type { RoadmapStatus } from "@/types/roadmap"
 
 export default function RoadmapPage() {
+  const [search, setSearch] = useState("")
+  const [status, setStatus] = useState<RoadmapStatus | "all">("all")
+  const [confidence, setConfidence] = useState<ConfidenceFilter>("all")
+  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
+  const openDrawer = useUiStore((state) => state.openDrawer)
+  const mode = useVentureStore((state) => state.mode)
+  const activeVentureId = useVentureStore((state) => state.activeVentureId)
+  const activeVenture =
+    ventures.find((venture) => venture.id === activeVentureId) ?? null
+
+  const visibleRoadmapItems = useMemo(
+    () =>
+      filterRoadmapItems(roadmapItems, {
+        mode,
+        activeVentureId,
+        search,
+        status,
+        confidence,
+      }),
+    [activeVentureId, confidence, mode, roadmapItems, search, status]
+  )
+  const groupedItems = useMemo(
+    () => groupRoadmapItems(visibleRoadmapItems),
+    [visibleRoadmapItems]
+  )
+  const confidenceSummary = useMemo(
+    () => getConfidenceSummary(visibleRoadmapItems),
+    [visibleRoadmapItems]
+  )
+  const contextLabel =
+    mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
+
   return (
     <PageContainer>
-      <PageHeader
-        eyebrow="Strategic execution"
-        title="Roadmap"
-        description="Outcome-oriented roadmap coordination will be built in Phase 5."
+      <RoadmapHeader
+        contextLabel={contextLabel}
+        visibleCount={visibleRoadmapItems.length}
       />
-      <SectionShell title="Foundation placeholder" meta="Phase 1">
-        Now, Next, and Later roadmap views are intentionally deferred until the
-        roadmap phase.
-      </SectionShell>
+      <RoadmapToolbar
+        search={search}
+        status={status}
+        confidence={confidence}
+        onSearchChange={setSearch}
+        onStatusChange={setStatus}
+        onConfidenceChange={setConfidence}
+      />
+      <RoadmapConfidenceSummary {...confidenceSummary} />
+      <RoadmapBoard
+        groupedItems={groupedItems}
+        ventures={ventures}
+        issues={issues}
+        insights={aiInsights}
+        onOpenRoadmapItem={(roadmapId) =>
+          openDrawer({ type: "roadmap", id: roadmapId })
+        }
+      />
     </PageContainer>
   )
 }

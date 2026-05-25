@@ -7,6 +7,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
+import { IssueDrawerContent } from "@/features/issues/components/issue-drawer-content"
+import { RoadmapDrawerContent } from "@/features/roadmap/components/roadmap-drawer-content"
 import type { ActiveDrawer } from "@/stores/ui-store"
 import { useUiStore } from "@/stores/ui-store"
 
@@ -16,14 +18,6 @@ function getDrawerContent(drawer: NonNullable<ActiveDrawer>) {
       title: "Issue workspace",
       description: "Issue details will open here in the issues phase.",
       body: "This drawer is reserved for focused execution context without leaving the current workflow.",
-    }
-  }
-
-  if (drawer.type === "roadmap") {
-    return {
-      title: "Roadmap workspace",
-      description: "Roadmap initiative details will open here in the roadmap phase.",
-      body: "This drawer will connect strategic initiatives to linked execution work.",
     }
   }
 
@@ -46,9 +40,13 @@ export function AppDrawer() {
     >
       <SheetContent
         side="right"
-        className="w-[380px] border-border/70 bg-popover"
+        className="w-[520px] border-border/70 bg-popover p-0 sm:max-w-xl"
       >
-        {content ? (
+        {activeDrawer?.type === "issue" ? (
+          <IssueDrawerContent issueId={activeDrawer.id} />
+        ) : activeDrawer?.type === "roadmap" ? (
+          <RoadmapDrawerContent roadmapId={activeDrawer.id} />
+        ) : content ? (
           <>
             <SheetHeader className="border-b border-border/60 p-5">
               <SheetTitle>{content.title}</SheetTitle>

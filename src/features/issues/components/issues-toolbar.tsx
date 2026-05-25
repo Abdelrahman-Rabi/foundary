@@ -34,6 +34,7 @@ import type {
   IssueType,
   SortDirection,
 } from "@/types/issue"
+import type { RoadmapItem } from "@/types/roadmap"
 import type { Venture } from "@/types/venture"
 
 function toggleValue<T extends string>(values: T[], value: T) {
@@ -44,9 +45,10 @@ function toggleValue<T extends string>(values: T[], value: T) {
 
 type IssuesToolbarProps = {
   ventures: Venture[]
+  roadmapItems: RoadmapItem[]
 }
 
-export function IssuesToolbar({ ventures }: IssuesToolbarProps) {
+export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
   const filters = useIssueStore((state) => state.filters)
   const setSearch = useIssueStore((state) => state.setSearch)
   const setFilters = useIssueStore((state) => state.setFilters)
@@ -60,9 +62,10 @@ export function IssuesToolbar({ ventures }: IssuesToolbarProps) {
     filters.types.length +
     filters.ownerIds.length +
     filters.ventureIds.length +
+    filters.roadmapIds.length +
     (filters.overdueOnly ? 1 : 0) +
     (filters.roadmapLinkedOnly ? 1 : 0)
-  const filterChips = getFilterChips(filters, ventures, setFilters)
+  const filterChips = getFilterChips(filters, ventures, roadmapItems, setFilters)
 
   return (
     <div className="rounded-lg border border-border/60 bg-card/45 p-3">
@@ -261,6 +264,7 @@ export function IssuesToolbar({ ventures }: IssuesToolbarProps) {
 function getFilterChips(
   filters: IssueFilters,
   ventures: Venture[],
+  roadmapItems: RoadmapItem[],
   setFilters: (filters: Partial<IssueFilters>) => void
 ) {
   return [
@@ -300,6 +304,16 @@ function getFilterChips(
       onRemove: () =>
         setFilters({
           ownerIds: filters.ownerIds.filter((item) => item !== ownerId),
+        }),
+    })),
+    ...filters.roadmapIds.map((roadmapId) => ({
+      key: `roadmap-${roadmapId}`,
+      label:
+        roadmapItems.find((item) => item.id === roadmapId)?.title ??
+        "Roadmap initiative",
+      onRemove: () =>
+        setFilters({
+          roadmapIds: filters.roadmapIds.filter((item) => item !== roadmapId),
         }),
     })),
     ...(filters.overdueOnly

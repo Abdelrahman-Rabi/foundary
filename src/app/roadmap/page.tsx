@@ -4,13 +4,14 @@ import { useMemo, useState } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
+import { users } from "@/data/users"
 import { ventures } from "@/data/ventures"
+import { QuickCreateRoadmapItem } from "@/features/roadmap/components/quick-create-roadmap-item"
 import { RoadmapBoard } from "@/features/roadmap/components/roadmap-board"
 import { RoadmapConfidenceSummary } from "@/features/roadmap/components/roadmap-confidence-summary"
 import { RoadmapHeader } from "@/features/roadmap/components/roadmap-header"
 import { RoadmapToolbar } from "@/features/roadmap/components/roadmap-toolbar"
 import {
-  type ConfidenceFilter,
   filterRoadmapItems,
   getConfidenceSummary,
   groupRoadmapItems,
@@ -20,14 +21,14 @@ import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
-import type { RoadmapStatus } from "@/types/roadmap"
 
 export default function RoadmapPage() {
-  const [search, setSearch] = useState("")
-  const [status, setStatus] = useState<RoadmapStatus | "all">("all")
-  const [confidence, setConfidence] = useState<ConfidenceFilter>("all")
+  const [quickCreateOpen, setQuickCreateOpen] = useState(false)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
+  const filters = useRoadmapStore((state) => state.filters)
+  const setSearch = useRoadmapStore((state) => state.setSearch)
+  const setFilters = useRoadmapStore((state) => state.setFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
@@ -39,11 +40,11 @@ export default function RoadmapPage() {
       filterRoadmapItems(getSyncedRoadmapItems(roadmapItems, issues), {
         mode,
         activeVentureId,
-        search,
-        status,
-        confidence,
+        search: filters.search,
+        status: filters.status,
+        confidence: filters.confidence,
       }),
-    [activeVentureId, confidence, issues, mode, roadmapItems, search, status]
+    [activeVentureId, filters, issues, mode, roadmapItems]
   )
   const groupedItems = useMemo(
     () => groupRoadmapItems(visibleRoadmapItems),
@@ -61,14 +62,24 @@ export default function RoadmapPage() {
       <RoadmapHeader
         contextLabel={contextLabel}
         visibleCount={visibleRoadmapItems.length}
+        onOpenQuickCreate={() => setQuickCreateOpen(true)}
       />
       <RoadmapToolbar
-        search={search}
-        status={status}
-        confidence={confidence}
+        search={filters.search}
+        status={filters.status}
+        confidence={filters.confidence}
         onSearchChange={setSearch}
-        onStatusChange={setStatus}
-        onConfidenceChange={setConfidence}
+        onStatusChange={(status) => setFilters({ status })}
+        onConfidenceChange={(confidence) => setFilters({ confidence })}
+      />
+      <QuickCreateRoadmapItem
+        key={quickCreateOpen ? activeVentureId ?? "portfolio" : "closed"}
+        open={quickCreateOpen}
+        activeVentureId={mode === "venture" ? activeVentureId : null}
+        ventures={ventures}
+        users={users}
+        onClose={() => setQuickCreateOpen(false)}
+        onCreated={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
       />
       <RoadmapConfidenceSummary {...confidenceSummary} />
       <RoadmapBoard
@@ -76,6 +87,11 @@ export default function RoadmapPage() {
         ventures={ventures}
         issues={issues}
         insights={aiInsights}
+        hasActiveFilters={
+          Boolean(filters.search.trim()) ||
+          filters.status !== "all" ||
+          filters.confidence !== "all"
+        }
         onOpenRoadmapItem={(roadmapId) =>
           openDrawer({ type: "roadmap", id: roadmapId })
         }

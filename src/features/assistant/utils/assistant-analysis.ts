@@ -6,6 +6,10 @@ import type {
 import type { Issue, RiskLevel } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
 import type { Venture } from "@/types/venture"
+import {
+  getLinkedIssues,
+  getSyncedRoadmapMetrics,
+} from "@/features/synchronization/utils/sync-utils"
 
 const TODAY = new Date("2026-05-24T00:00:00.000Z")
 
@@ -167,25 +171,30 @@ export function getRoadmapSignals(
   issues: Issue[],
   ventures: Venture[]
 ): AiSignal[] {
-  const linkedIssues = issues.filter((issue) => item.linkedIssueIds.includes(issue.id))
-  const blockedCount = linkedIssues.filter((issue) => issue.blocked).length
-  const overdueCount = linkedIssues.filter((issue) => isIssueOverdue(issue)).length
-  const doneCount = linkedIssues.filter((issue) => issue.status === "done").length
-  const completion =
-    linkedIssues.length > 0 ? Math.round((doneCount / linkedIssues.length) * 100) : 0
+  const linkedIssues = getLinkedIssues(issues, item)
+  const metrics = getSyncedRoadmapMetrics(item, issues)
+  const blockedCount = metrics.blockedIssues
+  const overdueCount = metrics.overdueIssues
+  const completion = metrics.progress
+  const missingOutcome = !item.targetMetric
   const recommendationKind = getRoadmapRecommendationKind(
     item,
     blockedCount,
     overdueCount,
-    completion
+    completion,
+    metrics.confidence,
+    missingOutcome
   )
   const ventureName = getVentureName(ventures, item.ventureId)
   const severity: RiskLevel =
-    item.confidence < 40 || blockedCount > 0
+    metrics.confidence < 40 || blockedCount > 0
       ? "high"
-      : item.confidence < 65 || overdueCount > 0
+      : metrics.confidence < 65 || overdueCount > 0 || missingOutcome
         ? "medium"
         : "low"
+  const targetOutcome = item.targetMetric
+    ? ` Target outcome: ${item.targetMetric}.`
+    : " Target outcome is not defined."
 
   return [
     {
@@ -193,13 +202,21 @@ export function getRoadmapSignals(
       title: "Roadmap confidence analysis",
       type: "summary",
       severity,
-      confidence: Math.max(58, Math.min(89, item.confidence + 12)),
+      confidence: Math.max(58, Math.min(89, metrics.confidence + 12)),
       ventureId: item.ventureId,
       entityType: "roadmap",
       entityId: item.id,
       recommendationKind,
-      observation: `${ventureName} ${item.title} is at ${item.confidence}% confidence with ${completion}% linked issue completion.`,
-      reason: getRoadmapReason(item, blockedCount, overdueCount, completion),
+      observation: `${ventureName} ${item.title} is at ${metrics.confidence}% confidence with ${completion}% linked issue progress.${targetOutcome}`,
+      reason: getRoadmapReason(
+        item,
+        blockedCount,
+        overdueCount,
+        completion,
+        missingOutcome,
+        linkedIssues.length,
+        metrics.confidence
+      ),
       suggestedAction: getRoadmapAction(recommendationKind),
     },
   ]
@@ -351,22 +368,30 @@ function getRoadmapRecommendationKind(
   item: RoadmapItem,
   blockedCount: number,
   overdueCount: number,
-  completion: number
+  completion: number,
+  confidence: number,
+  missingOutcome: boolean
 ): AiRecommendationKind {
-  if (item.status === "killed" || item.confidence < 30) {
+  if (item.status === "killed" || confidence < 30) {
     return "kill"
   }
 
+  if (blockedCount > 0 || overdueCount > 0) {
+    return "reduce-scope"
+  }
+
+  if (missingOutcome) {
+    return "clarify"
+  }
+
   if (
-    item.confidence < 60 ||
-    item.confidenceTrend === "declining" ||
-    blockedCount > 0 ||
-    overdueCount > 0
+    confidence < 60 ||
+    item.confidenceTrend === "declining"
   ) {
     return "split"
   }
 
-  if (completion >= 50 && item.confidence >= 75) {
+  if (completion >= 50 && confidence >= 75) {
     return "continue"
   }
 
@@ -377,22 +402,35 @@ function getRoadmapReason(
   item: RoadmapItem,
   blockedCount: number,
   overdueCount: number,
-  completion: number
+  completion: number,
+  missingOutcome: boolean,
+  linkedIssueCount: number,
+  confidence: number
 ) {
   if (blockedCount > 0) {
-    return "Linked execution contains blocked work, which can drag down strategic confidence."
+    return `${blockedCount} linked issue${
+      blockedCount === 1 ? "" : "s"
+    } are blocked, which can drag down strategic confidence.`
   }
 
   if (overdueCount > 0) {
-    return "Overdue linked issues indicate delivery friction against the initiative."
+    return `${overdueCount} linked issue${
+      overdueCount === 1 ? "" : "s"
+    } are overdue, indicating delivery friction against the initiative.`
+  }
+
+  if (missingOutcome) {
+    return "The initiative is missing a target outcome, which makes validation and stop/continue decisions weaker."
   }
 
   if (item.confidenceTrend === "declining") {
     return "The initiative confidence trend is declining and should be reviewed before expanding scope."
   }
 
-  if (completion >= 50 && item.confidence >= 75) {
-    return "Linked issue completion and confidence are both healthy enough to continue."
+  if (completion >= 50 && confidence >= 75) {
+    return `${linkedIssueCount} linked issue${
+      linkedIssueCount === 1 ? "" : "s"
+    } provide enough execution signal to continue.`
   }
 
   return "The initiative has manageable uncertainty but needs tighter execution focus."

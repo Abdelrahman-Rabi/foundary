@@ -12,6 +12,7 @@ type RoadmapBoardProps = {
   ventures: Venture[]
   issues: Issue[]
   insights: AiInsight[]
+  hasActiveFilters: boolean
   onOpenRoadmapItem: (roadmapId: string) => void
 }
 
@@ -20,6 +21,7 @@ export function RoadmapBoard({
   ventures,
   issues,
   insights,
+  hasActiveFilters,
   onOpenRoadmapItem,
 }: RoadmapBoardProps) {
   return (
@@ -32,6 +34,7 @@ export function RoadmapBoard({
           ventures={ventures}
           issues={issues}
           insights={insights}
+          hasActiveFilters={hasActiveFilters}
           onOpenRoadmapItem={onOpenRoadmapItem}
         />
       ))}

@@ -19,6 +19,7 @@ const defaultFilters: IssueFilters = {
   statuses: [],
   types: [],
   ownerIds: [],
+  roadmapIds: [],
   search: "",
   overdueOnly: false,
   roadmapLinkedOnly: false,
@@ -41,6 +42,7 @@ type IssueStore = {
 }
 
 type CreateIssueInput = {
+  id?: string
   title: string
   ventureId: string
   type: IssueType
@@ -57,7 +59,9 @@ export const useIssueStore = create<IssueStore>((set, get) => ({
     set((state) => {
       const now = new Date().toISOString()
       const issue: Issue = {
-        id: `issue-${input.ventureId.replace("venture-", "")}-${Date.now()}`,
+        id:
+          input.id ??
+          `issue-${input.ventureId.replace("venture-", "")}-${Date.now()}`,
         ventureId: input.ventureId,
         roadmapId: input.roadmapId,
         title: input.title,

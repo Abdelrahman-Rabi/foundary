@@ -58,6 +58,10 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   )
   const updateIssue = useIssueStore((state) => state.updateIssue)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
+  const linkIssueToRoadmap = useRoadmapStore((state) => state.linkIssueToRoadmap)
+  const unlinkIssueFromRoadmap = useRoadmapStore(
+    (state) => state.unlinkIssueFromRoadmap
+  )
   const openDrawer = useUiStore((state) => state.openDrawer)
 
   if (!issue) {
@@ -192,9 +196,15 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
             <MetadataSelect
               label="Roadmap"
               value={issue.roadmapId ?? ""}
-              onChange={(value) =>
+              onChange={(value) => {
+                if (issue.roadmapId) {
+                  unlinkIssueFromRoadmap(issue.roadmapId, issue.id)
+                }
+                if (value) {
+                  linkIssueToRoadmap(value, issue.id)
+                }
                 updateIssue(issue.id, { roadmapId: value || undefined })
-              }
+              }}
               options={[
                 { value: "", label: "No roadmap link" },
                 ...roadmapItems

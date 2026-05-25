@@ -65,7 +65,10 @@ export function getOwner(users: User[], ownerId: string) {
 }
 
 export function getLinkedIssues(issues: Issue[], item: RoadmapItem) {
-  return issues.filter((issue) => item.linkedIssueIds.includes(issue.id))
+  return issues.filter(
+    (issue) =>
+      issue.roadmapId === item.id || item.linkedIssueIds.includes(issue.id)
+  )
 }
 
 export function getRoadmapInsights(insights: AiInsight[], item: RoadmapItem) {

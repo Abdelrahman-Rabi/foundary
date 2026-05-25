@@ -8,6 +8,7 @@ import { AttentionPanel } from "@/features/dashboard/components/attention-panel"
 import { DashboardHeader } from "@/features/dashboard/components/dashboard-header"
 import { IssuesStatusPanel } from "@/features/dashboard/components/issues-status-panel"
 import { KpiRow } from "@/features/dashboard/components/kpi-row"
+import { OperationalActivityPanel } from "@/features/dashboard/components/operational-activity-panel"
 import { RiskPanel } from "@/features/dashboard/components/risk-panel"
 import { RoadmapOverviewPanel } from "@/features/dashboard/components/roadmap-overview-panel"
 import { VentureHealthPanel } from "@/features/dashboard/components/venture-health-panel"
@@ -18,6 +19,7 @@ import type {
   AttentionItem,
   DashboardRisk,
   KpiMetric,
+  OperationalActivity,
   StatusCount,
 } from "@/features/dashboard/utils/dashboard-metrics"
 import type { IssueFilters } from "@/types/issue"
@@ -36,12 +38,16 @@ export default function DashboardPage() {
     roadmapOverviewItems,
     risks,
     attentionItems,
+    operationalActivity,
     aiSignals,
     ventures,
   } = useDashboardData()
 
   const openDashboardSource = (
-    source: Pick<DashboardRisk | AttentionItem, "sourceType" | "sourceId">
+    source: Pick<
+      DashboardRisk | AttentionItem | OperationalActivity,
+      "sourceType" | "sourceId"
+    >
   ) => {
     if (source.sourceType === "issue") {
       openDrawer({ type: "issue", id: source.sourceId })
@@ -120,6 +126,11 @@ export default function DashboardPage() {
           onOpenAttention={openDashboardSource}
         />
       </div>
+
+      <OperationalActivityPanel
+        items={operationalActivity}
+        onOpenActivity={openDashboardSource}
+      />
     </PageContainer>
   )
 }

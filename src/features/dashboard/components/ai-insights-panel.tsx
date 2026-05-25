@@ -1,17 +1,19 @@
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
-import { getInsightSignals } from "@/features/assistant/utils/assistant-analysis"
+import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
 import { getVentureName } from "@/features/dashboard/utils/dashboard-metrics"
-import type { AiInsight } from "@/types/ai"
 import type { Venture } from "@/types/venture"
 
 type AiInsightsPanelProps = {
-  insights: AiInsight[]
+  signals: AiSignal[]
   ventures: Venture[]
+  onOpenSignal: (signalId: string) => void
 }
 
-export function AiInsightsPanel({ insights, ventures }: AiInsightsPanelProps) {
-  const signals = getInsightSignals(insights)
-
+export function AiInsightsPanel({
+  signals,
+  ventures,
+  onOpenSignal,
+}: AiInsightsPanelProps) {
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -20,7 +22,7 @@ export function AiInsightsPanel({ insights, ventures }: AiInsightsPanelProps) {
             AI operational insights
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Embedded observations from mocked intelligence signals.
+            Embedded observations from current execution signals.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">{signals.length} active</span>
@@ -35,12 +37,21 @@ export function AiInsightsPanel({ insights, ventures }: AiInsightsPanelProps) {
                   ? getVentureName(ventures, signal.ventureId)
                   : "Portfolio"}
               </p>
-              <AiInsightCard signal={signal} compact />
+              <AiInsightCard
+                signal={signal}
+                compact
+                onOpenInsight={onOpenSignal}
+              />
             </div>
           ))
         ) : (
-          <div className="rounded-lg border border-border/50 bg-background/35 p-3 text-sm text-muted-foreground">
-            No significant operational insights for this context.
+          <div className="rounded-lg border border-border/50 bg-background/35 p-3">
+            <p className="text-sm text-muted-foreground">
+              No significant operational insights for this context.
+            </p>
+            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              AI signals will appear when issue or roadmap confidence changes.
+            </p>
           </div>
         )}
       </div>

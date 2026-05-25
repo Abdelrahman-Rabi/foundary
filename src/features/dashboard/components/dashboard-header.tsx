@@ -5,12 +5,14 @@ type DashboardHeaderProps = {
   mode: "portfolio" | "venture"
   activeVenture: Venture | null
   scopedVentures: Venture[]
+  onAnalyzeContext: () => void
 }
 
 export function DashboardHeader({
   mode,
   activeVenture,
   scopedVentures,
+  onAnalyzeContext,
 }: DashboardHeaderProps) {
   const attentionCount = scopedVentures.filter(
     (venture) => venture.health === "at-risk" || venture.health === "critical"
@@ -32,11 +34,16 @@ export function DashboardHeader({
           Dashboard
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          {summary} Operational signals are derived from local venture, issue,
-          roadmap, and AI insight data.
+          {summary} Review the work that needs attention and move directly into
+          the affected context.
         </p>
       </div>
-      <Button variant="outline" className="hidden border-border/60 bg-card/40 md:inline-flex">
+      <Button
+        type="button"
+        variant="outline"
+        className="hidden border-border/60 bg-card/40 transition-colors hover:bg-muted/50 md:inline-flex"
+        onClick={onAnalyzeContext}
+      >
         Analyze context
       </Button>
     </header>

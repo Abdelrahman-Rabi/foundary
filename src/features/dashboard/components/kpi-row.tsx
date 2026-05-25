@@ -11,11 +11,12 @@ import type { KpiMetric } from "@/features/dashboard/utils/dashboard-metrics"
 
 type KpiRowProps = {
   metrics: KpiMetric[]
+  onSelectMetric?: (metric: KpiMetric) => void
 }
 
 const icons: LucideIcon[] = [ListTodo, Timer, Flag, CircleSlash]
 
-export function KpiRow({ metrics }: KpiRowProps) {
+export function KpiRow({ metrics, onSelectMetric }: KpiRowProps) {
   return (
     <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {metrics.map((metric, index) => (
@@ -26,6 +27,11 @@ export function KpiRow({ metrics }: KpiRowProps) {
           helper={metric.helper}
           tone={metric.tone}
           icon={icons[index] ?? ListTodo}
+          onSelect={
+            metric.targetRoute && onSelectMetric
+              ? () => onSelectMetric(metric)
+              : undefined
+          }
         />
       ))}
     </section>

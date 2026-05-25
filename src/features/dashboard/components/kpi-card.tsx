@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react"
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
 type KpiCardProps = {
@@ -9,6 +9,7 @@ type KpiCardProps = {
   helper: string
   icon: LucideIcon
   tone: "neutral" | "warning" | "success" | "muted"
+  onSelect?: () => void
 }
 
 const toneClassName = {
@@ -24,23 +25,46 @@ export function KpiCard({
   helper,
   icon: Icon,
   tone,
+  onSelect,
 }: KpiCardProps) {
+  const content = (
+    <span className="block p-4 text-left">
+      <span className="flex items-start justify-between gap-3">
+        <span>
+          <span className="block text-xs text-muted-foreground">{label}</span>
+          <span className="mt-2 block text-2xl font-semibold tracking-normal text-foreground">
+            {value}
+          </span>
+        </span>
+        <span className="rounded-md border border-border/60 bg-muted/30 p-2">
+          <Icon className={cn("size-4", toneClassName[tone])} strokeWidth={1.8} />
+        </span>
+      </span>
+      <span className="mt-3 block text-xs leading-5 text-muted-foreground">
+        {helper}
+      </span>
+    </span>
+  )
+
   return (
-    <Card className="border-border/60 bg-card/60 shadow-none">
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
-              {value}
-            </p>
-          </div>
-          <div className="rounded-md border border-border/60 bg-muted/30 p-2">
-            <Icon className={cn("size-4", toneClassName[tone])} strokeWidth={1.8} />
-          </div>
-        </div>
-        <p className="mt-3 text-xs leading-5 text-muted-foreground">{helper}</p>
-      </CardContent>
+    <Card
+      className={cn(
+        "border-border/60 bg-card/60 shadow-none",
+        onSelect &&
+          "transition-colors hover:border-border hover:bg-card/80 focus-within:border-border"
+      )}
+    >
+      {onSelect ? (
+        <button
+          type="button"
+          className="block w-full rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+          onClick={onSelect}
+        >
+          {content}
+        </button>
+      ) : (
+        content
+      )}
     </Card>
   )
 }

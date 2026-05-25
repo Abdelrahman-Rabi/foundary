@@ -2,6 +2,7 @@ import type { StatusCount } from "@/features/dashboard/utils/dashboard-metrics"
 
 type IssuesStatusPanelProps = {
   statusCounts: StatusCount[]
+  onSelectStatus: (status: StatusCount) => void
 }
 
 const statusColor: Record<string, string> = {
@@ -13,7 +14,10 @@ const statusColor: Record<string, string> = {
   killed: "bg-muted-foreground",
 }
 
-export function IssuesStatusPanel({ statusCounts }: IssuesStatusPanelProps) {
+export function IssuesStatusPanel({
+  statusCounts,
+  onSelectStatus,
+}: IssuesStatusPanelProps) {
   const total = statusCounts.reduce((sum, status) => sum + status.count, 0)
 
   return (
@@ -45,8 +49,17 @@ export function IssuesStatusPanel({ statusCounts }: IssuesStatusPanelProps) {
       <div className="mt-4 grid grid-cols-2 gap-2">
         {statusCounts.map((status) => (
           <div
+            role="button"
+            tabIndex={0}
             key={status.status}
-            className="flex items-center justify-between rounded-md border border-border/40 bg-background/30 px-3 py-2 text-xs"
+            className="flex items-center justify-between rounded-md border border-border/40 bg-background/30 px-3 py-2 text-left text-xs transition-colors hover:border-border hover:bg-muted/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+            onClick={() => onSelectStatus(status)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault()
+                onSelectStatus(status)
+              }
+            }}
           >
             <span className="flex min-w-0 items-center gap-2 text-muted-foreground">
               <span className={`size-2 rounded-full ${statusColor[status.status]}`} />

@@ -1,4 +1,5 @@
 import type { VentureHealthState, VentureMomentum } from "@/types/venture"
+import type { IssueFilters, RiskLevel } from "@/types/issue"
 
 export type VentureHealth = {
   ventureId: string
@@ -26,4 +27,22 @@ export type DashboardMetrics = {
     issueCount: number
   }[]
   updatedAt: string
+}
+
+export type DashboardSourceType = "issue" | "roadmap" | "assistant"
+
+export type DashboardSource = {
+  sourceType: DashboardSourceType
+  sourceId: string
+}
+
+export type DashboardKpiAction = {
+  targetRoute?: "/issues" | "/roadmap"
+  issueFilter?: Partial<IssueFilters>
+}
+
+export type DashboardSignal = DashboardSource & {
+  id: string
+  title: string
+  severity: RiskLevel
 }

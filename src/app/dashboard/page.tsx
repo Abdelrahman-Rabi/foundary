@@ -1,8 +1,8 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+
 import { PageContainer } from "@/components/layout/page-container"
-import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import { AiInsightsPanel } from "@/features/dashboard/components/ai-insights-panel"
 import { AttentionPanel } from "@/features/dashboard/components/attention-panel"
 import { DashboardHeader } from "@/features/dashboard/components/dashboard-header"
@@ -11,56 +11,71 @@ import { KpiRow } from "@/features/dashboard/components/kpi-row"
 import { RiskPanel } from "@/features/dashboard/components/risk-panel"
 import { RoadmapOverviewPanel } from "@/features/dashboard/components/roadmap-overview-panel"
 import { VentureHealthPanel } from "@/features/dashboard/components/venture-health-panel"
-import {
-  getAttentionItems,
-  getDashboardRisks,
-  getKpiMetrics,
-  getRoadmapOverviewItems,
-  getScopedAiInsights,
-  getScopedIssues,
-  getScopedRoadmapItems,
-  getScopedVentures,
-  getStatusCounts,
-} from "@/features/dashboard/utils/dashboard-metrics"
-import {
-  getSyncedRoadmapItems,
-  getSyncedVentureHealth,
-} from "@/features/synchronization/utils/sync-utils"
+import { useDashboardData } from "@/features/dashboard/hooks/use-dashboard-data"
 import { useIssueStore } from "@/stores/issue-store"
-import { useRoadmapStore } from "@/stores/roadmap-store"
-import { useVentureStore } from "@/stores/venture-store"
+import { useUiStore } from "@/stores/ui-store"
+import type {
+  AttentionItem,
+  DashboardRisk,
+  KpiMetric,
+  StatusCount,
+} from "@/features/dashboard/utils/dashboard-metrics"
+import type { IssueFilters } from "@/types/issue"
 
 export default function DashboardPage() {
-  const issues = useIssueStore((state) => state.issues)
-  const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
-  const mode = useVentureStore((state) => state.mode)
-  const activeVentureId = useVentureStore((state) => state.activeVentureId)
-  const context = { mode, activeVentureId }
-  const syncedRoadmapItems = getSyncedRoadmapItems(roadmapItems, issues)
-  const syncedVentures = ventures.map((venture) =>
-    getSyncedVentureHealth(venture, issues, syncedRoadmapItems)
-  )
-  const scopedVentures = getScopedVentures(syncedVentures, context)
-  const scopedIssues = getScopedIssues(issues, context)
-  const scopedRoadmapItems = getScopedRoadmapItems(syncedRoadmapItems, context)
-  const scopedInsights = getScopedAiInsights(aiInsights, context)
-  const activeVenture =
-    ventures.find((venture) => venture.id === activeVentureId) ?? null
-  const kpiMetrics = getKpiMetrics(scopedVentures, scopedIssues, scopedRoadmapItems)
-  const statusCounts = getStatusCounts(scopedIssues)
-  const roadmapOverviewItems = getRoadmapOverviewItems(scopedRoadmapItems)
-  const risks = getDashboardRisks(
-    scopedIssues,
-    scopedRoadmapItems,
-    scopedInsights,
-    ventures
-  )
-  const attentionItems = getAttentionItems(
-    scopedIssues,
-    scopedRoadmapItems,
-    scopedInsights,
-    ventures
-  )
+  const router = useRouter()
+  const setIssueFilters = useIssueStore((state) => state.setFilters)
+  const resetIssueFilters = useIssueStore((state) => state.resetFilters)
+  const openDrawer = useUiStore((state) => state.openDrawer)
+  const {
+    mode,
+    activeVenture,
+    scopedVentures,
+    kpiMetrics,
+    statusCounts,
+    roadmapOverviewItems,
+    risks,
+    attentionItems,
+    aiSignals,
+    ventures,
+  } = useDashboardData()
+
+  const openDashboardSource = (
+    source: Pick<DashboardRisk | AttentionItem, "sourceType" | "sourceId">
+  ) => {
+    if (source.sourceType === "issue") {
+      openDrawer({ type: "issue", id: source.sourceId })
+      return
+    }
+
+    if (source.sourceType === "roadmap") {
+      openDrawer({ type: "roadmap", id: source.sourceId })
+      return
+    }
+
+    openDrawer({ type: "assistant", id: source.sourceId })
+  }
+
+  const openFilteredIssues = (issueFilter: Partial<IssueFilters>) => {
+    resetIssueFilters()
+    setIssueFilters(issueFilter)
+    router.push("/issues")
+  }
+
+  const handleMetricSelect = (metric: KpiMetric) => {
+    if (metric.targetRoute === "/issues") {
+      openFilteredIssues(metric.issueFilter ?? {})
+      return
+    }
+
+    if (metric.targetRoute === "/roadmap") {
+      router.push("/roadmap")
+    }
+  }
+
+  const handleStatusSelect = (status: StatusCount) => {
+    openFilteredIssues(status.issueFilter)
+  }
 
   return (
     <PageContainer>
@@ -68,26 +83,42 @@ export default function DashboardPage() {
         mode={mode}
         activeVenture={activeVenture}
         scopedVentures={scopedVentures}
+        onAnalyzeContext={() => openDrawer({ type: "assistant" })}
       />
 
-      <KpiRow metrics={kpiMetrics} />
+      <KpiRow metrics={kpiMetrics} onSelectMetric={handleMetricSelect} />
 
       <div className="grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
         <VentureHealthPanel ventures={scopedVentures} />
-        <RiskPanel risks={risks} />
+        <RiskPanel risks={risks} onOpenRisk={openDashboardSource} />
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
         <RoadmapOverviewPanel
           roadmapItems={roadmapOverviewItems}
           ventures={ventures}
+          onOpenRoadmapItem={(roadmapId) =>
+            openDrawer({ type: "roadmap", id: roadmapId })
+          }
         />
-        <IssuesStatusPanel statusCounts={statusCounts} />
+        <IssuesStatusPanel
+          statusCounts={statusCounts}
+          onSelectStatus={handleStatusSelect}
+        />
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <AiInsightsPanel insights={scopedInsights} ventures={ventures} />
-        <AttentionPanel items={attentionItems} />
+        <AiInsightsPanel
+          signals={aiSignals}
+          ventures={ventures}
+          onOpenSignal={(signalId) =>
+            openDrawer({ type: "assistant", id: signalId })
+          }
+        />
+        <AttentionPanel
+          items={attentionItems}
+          onOpenAttention={openDashboardSource}
+        />
       </div>
     </PageContainer>
   )

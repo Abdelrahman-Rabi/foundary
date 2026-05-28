@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Agent Kickoff"
+  short_description: "Kick off Foundary agent work"
+  default_prompt: "Use $foundary-agent-kickoff to start this Foundary agent task with the right context."

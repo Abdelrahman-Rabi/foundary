@@ -30,6 +30,29 @@ This improves:
 
 ---
 
+# Agent Startup Context
+
+Before implementation or review work, load:
+
+```txt
+/context/agent-onboarding.md
+/context/codebase-map.md
+/context/agent-handoff.md
+/context/current-feature.md
+```
+
+Then load only the current task's required feature context.
+
+Use:
+- `/context/agent-onboarding.md` for agent workflow, role boundaries, and handoff expectations
+- `/context/codebase-map.md` for source layout, ownership, and connection points
+- `/context/agent-handoff.md` for recent agent activity and merge-sensitive areas
+- `/context/current-feature.md` for the active implementation focus
+
+Do NOT treat startup context as permission to load all feature specs.
+
+---
+
 # Global Context Files
 
 Load these when:

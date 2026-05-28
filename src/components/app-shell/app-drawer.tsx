@@ -28,7 +28,7 @@ export function AppDrawer() {
     >
       <SheetContent
         side="right"
-        className="w-[520px] border-border/70 bg-popover p-0 sm:max-w-xl"
+        className="w-[min(100vw,560px)] border-border/70 bg-popover p-0 sm:max-w-xl"
       >
         <SheetTitle className="sr-only">{drawerLabel}</SheetTitle>
         <SheetDescription className="sr-only">

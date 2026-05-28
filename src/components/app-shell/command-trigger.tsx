@@ -4,16 +4,22 @@ import { Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useUiStore } from "@/stores/ui-store"
 
 type CommandTriggerProps = {
   className?: string
 }
 
 export function CommandTrigger({ className }: CommandTriggerProps) {
+  const setCommandPaletteOpen = useUiStore(
+    (state) => state.setCommandPaletteOpen
+  )
+
   return (
     <Button
       type="button"
       variant="outline"
+      onClick={() => setCommandPaletteOpen(true)}
       className={cn(
         "hidden h-8 w-56 justify-start gap-2 border-border/60 bg-card/40 px-2 text-muted-foreground hover:bg-muted/45 lg:inline-flex",
         className

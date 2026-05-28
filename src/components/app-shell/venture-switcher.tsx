@@ -10,6 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { useVentureStore } from "@/stores/venture-store"
 import { cn } from "@/lib/utils"
 
@@ -37,39 +42,52 @@ export function VentureSwitcher({ collapsed }: VentureSwitcherProps) {
       ? "All ventures"
       : formatMeta(activeVenture.stage, activeVenture.health)
 
+  const trigger = (
+    <button
+      type="button"
+      className={cn(
+        "mx-3 flex h-11 items-center gap-3 rounded-lg border border-border/60 bg-card/45 px-3 text-left transition-colors hover:bg-muted/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+        collapsed && "mx-2 justify-center px-0"
+      )}
+      aria-label={`Switch venture context. Current context: ${activeLabel}`}
+    >
+      <span
+        className="flex size-6 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/50 text-[11px] font-semibold text-foreground"
+        style={{
+          color: activeVenture?.color,
+        }}
+      >
+        {activeVenture?.icon ?? "F"}
+      </span>
+      <span className={cn("min-w-0 flex-1", collapsed && "sr-only")}>
+        <span className="block truncate text-sm font-medium text-foreground">
+          {activeLabel}
+        </span>
+        <span className="block truncate text-xs text-muted-foreground">
+          {activeMeta}
+        </span>
+      </span>
+      <ChevronDown
+        className={cn("size-3.5 text-muted-foreground", collapsed && "hidden")}
+        strokeWidth={1.8}
+      />
+    </button>
+  )
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className={cn(
-            "mx-3 flex h-11 items-center gap-3 rounded-lg border border-border/60 bg-card/45 px-3 text-left transition-colors hover:bg-muted/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
-            collapsed && "mx-2 justify-center px-0"
-          )}
-          aria-label="Switch venture context"
-        >
-          <span
-            className="flex size-6 shrink-0 items-center justify-center rounded-md border border-border/60 bg-muted/50 text-[11px] font-semibold text-foreground"
-            style={{
-              color: activeVenture?.color,
-            }}
-          >
-            {activeVenture?.icon ?? "F"}
-          </span>
-          <span className={cn("min-w-0 flex-1", collapsed && "sr-only")}>
-            <span className="block truncate text-sm font-medium text-foreground">
-              {activeLabel}
-            </span>
-            <span className="block truncate text-xs text-muted-foreground">
-              {activeMeta}
-            </span>
-          </span>
-          <ChevronDown
-            className={cn("size-3.5 text-muted-foreground", collapsed && "hidden")}
-            strokeWidth={1.8}
-          />
-        </button>
-      </DropdownMenuTrigger>
+      {collapsed ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={8}>
+            {activeLabel}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+      )}
       <DropdownMenuContent className="w-64" align="start">
         <DropdownMenuLabel>Venture context</DropdownMenuLabel>
         <DropdownMenuItem onSelect={setPortfolioMode}>

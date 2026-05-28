@@ -1,12 +1,10 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
-import { users } from "@/data/users"
 import { ventures } from "@/data/ventures"
-import { QuickCreateRoadmapItem } from "@/features/roadmap/components/quick-create-roadmap-item"
 import { RoadmapBoard } from "@/features/roadmap/components/roadmap-board"
 import { RoadmapConfidenceSummary } from "@/features/roadmap/components/roadmap-confidence-summary"
 import { RoadmapHeader } from "@/features/roadmap/components/roadmap-header"
@@ -23,13 +21,15 @@ import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export default function RoadmapPage() {
-  const [quickCreateOpen, setQuickCreateOpen] = useState(false)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const filters = useRoadmapStore((state) => state.filters)
   const setSearch = useRoadmapStore((state) => state.setSearch)
   const setFilters = useRoadmapStore((state) => state.setFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const openQuickCreateRoadmap = useUiStore(
+    (state) => state.openQuickCreateRoadmap
+  )
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
   const activeVenture =
@@ -62,7 +62,7 @@ export default function RoadmapPage() {
       <RoadmapHeader
         contextLabel={contextLabel}
         visibleCount={visibleRoadmapItems.length}
-        onOpenQuickCreate={() => setQuickCreateOpen(true)}
+        onOpenQuickCreate={openQuickCreateRoadmap}
       />
       <RoadmapToolbar
         search={filters.search}
@@ -71,15 +71,6 @@ export default function RoadmapPage() {
         onSearchChange={setSearch}
         onStatusChange={(status) => setFilters({ status })}
         onConfidenceChange={(confidence) => setFilters({ confidence })}
-      />
-      <QuickCreateRoadmapItem
-        key={quickCreateOpen ? activeVentureId ?? "portfolio" : "closed"}
-        open={quickCreateOpen}
-        activeVentureId={mode === "venture" ? activeVentureId : null}
-        ventures={ventures}
-        users={users}
-        onClose={() => setQuickCreateOpen(false)}
-        onCreated={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
       />
       <RoadmapConfidenceSummary {...confidenceSummary} />
       <RoadmapBoard

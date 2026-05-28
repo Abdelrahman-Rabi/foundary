@@ -1,40 +1,19 @@
 "use client"
 
-import { PanelLeft, Sparkles } from "lucide-react"
+import { Menu, PanelLeft, Sparkles } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import { CommandTrigger } from "@/components/app-shell/command-trigger"
+import { getRouteMetadata } from "@/components/app-shell/route-metadata"
 import { Button } from "@/components/ui/button"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
-const routeLabels: Record<string, { label: string; description: string }> = {
-  "/dashboard": {
-    label: "Dashboard",
-    description: "Portfolio operating context",
-  },
-  "/issues": {
-    label: "Issues",
-    description: "Execution workflow",
-  },
-  "/roadmap": {
-    label: "Roadmap",
-    description: "Strategic direction",
-  },
-  "/assistant": {
-    label: "AI Assistant",
-    description: "Operational intelligence",
-  },
-}
-
-function getRouteLabel(pathname: string) {
-  return routeLabels[pathname] ?? routeLabels["/dashboard"]
-}
-
 export function TopBar() {
   const pathname = usePathname()
-  const route = getRouteLabel(pathname)
+  const route = getRouteMetadata(pathname)
   const toggleSidebar = useUiStore((state) => state.toggleSidebar)
+  const setMobileNavOpen = useUiStore((state) => state.setMobileNavOpen)
   const openDrawer = useUiStore((state) => state.openDrawer)
   const ventures = useVentureStore((state) => state.ventures)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
@@ -46,6 +25,16 @@ export function TopBar() {
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b border-border/50 bg-background/80 px-4 backdrop-blur-sm">
       <div className="flex min-w-0 items-center gap-3">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => setMobileNavOpen(true)}
+          aria-label="Open navigation"
+          className="lg:hidden"
+        >
+          <Menu className="size-4" strokeWidth={1.8} />
+        </Button>
         <Button
           type="button"
           variant="ghost"

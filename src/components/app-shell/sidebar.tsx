@@ -3,10 +3,17 @@
 import { SidebarNav } from "@/components/app-shell/sidebar-nav"
 import { VentureSwitcher } from "@/components/app-shell/venture-switcher"
 import { useUiStore } from "@/stores/ui-store"
+import { useVentureStore } from "@/stores/venture-store"
 import { cn } from "@/lib/utils"
 
 export function Sidebar() {
   const collapsed = useUiStore((state) => state.sidebarCollapsed)
+  const mode = useVentureStore((state) => state.mode)
+  const activeVentureId = useVentureStore((state) => state.activeVentureId)
+  const ventures = useVentureStore((state) => state.ventures)
+  const activeVenture = ventures.find((venture) => venture.id === activeVentureId)
+  const contextLabel =
+    mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
 
   return (
     <aside
@@ -49,10 +56,11 @@ export function Sidebar() {
         )}
       >
         <span className={cn(collapsed && "sr-only")}>
-          Mocked local data. No backend attached.
+          Demo workspace
+          <span className="mt-1 block truncate text-[11px]">{contextLabel}</span>
         </span>
         <span className={cn(!collapsed && "hidden")} aria-hidden="true">
-          Local
+          Demo
         </span>
       </div>
     </aside>

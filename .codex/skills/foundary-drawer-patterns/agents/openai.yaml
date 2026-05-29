@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Drawer Patterns"
+  short_description: "Focused drawer patterns for Foundary UI"
+  default_prompt: "Use $foundary-drawer-patterns to implement Foundary drawer interactions."

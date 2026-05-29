@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundary Loading & Empty States"
+  short_description: "Operational placeholder rules for Foundary"
+  default_prompt: "Use $foundary-loading-empty-states to implement Foundary loading and empty states."

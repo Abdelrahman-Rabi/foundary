@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Bot, FilePlus2, GitBranchPlus, PanelRight, Search } from "lucide-react"
+import { Bot, FilePlus2, GitBranchPlus, PanelRight, Search, Download, Upload, RefreshCw } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { appRoutes } from "@/components/app-shell/route-metadata"
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
+import { useWorkspacePersistence } from "@/hooks/use-workspace-persistence"
 import type { AppRoute } from "@/components/app-shell/route-metadata"
 
 type CommandAction = {
@@ -44,6 +45,7 @@ export function CommandPalette() {
   const ventures = useVentureStore((state) => state.ventures)
   const setPortfolioMode = useVentureStore((state) => state.setPortfolioMode)
   const setActiveVenture = useVentureStore((state) => state.setActiveVenture)
+  const { exportWorkspace, importWorkspace, resetWorkspace } = useWorkspacePersistence()
 
   useEffect(() => {
     if (open) {
@@ -115,6 +117,59 @@ export function CommandPalette() {
         },
       },
       {
+        id: "export-workspace",
+        label: "Export Workspace State",
+        description: "Download the current workspace execution state as JSON.",
+        keywords: ["export", "save", "download", "backup"],
+        icon: Download,
+        run: () => {
+          exportWorkspace()
+          close()
+        },
+      },
+      {
+        id: "import-workspace",
+        label: "Import Workspace State",
+        description: "Upload a previously exported workspace JSON file.",
+        keywords: ["import", "load", "upload", "restore"],
+        icon: Upload,
+        run: () => {
+          const input = document.createElement("input")
+          input.type = "file"
+          input.accept = ".json"
+          input.onchange = (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0]
+            if (!file) return
+            const reader = new FileReader()
+            reader.onload = (event) => {
+              try {
+                const parsed = JSON.parse(event.target?.result as string)
+                importWorkspace(parsed)
+                alert("Workspace state imported successfully.")
+              } catch (err) {
+                alert("Import failed: " + (err instanceof Error ? err.message : "Invalid JSON format"))
+              }
+            }
+            reader.readAsText(file)
+          }
+          input.click()
+          close()
+        },
+      },
+      {
+        id: "reset-workspace",
+        label: "Reset Demo Data",
+        description: "Restore all ventures, issues, and roadmap to seeded mock data.",
+        keywords: ["reset", "clear", "restore", "default", "clean"],
+        icon: RefreshCw,
+        run: () => {
+          if (confirm("Are you sure you want to reset all workspace data to seeded mock defaults? This will erase all local modifications.")) {
+            resetWorkspace()
+          }
+          close()
+        },
+      },
+      {
         id: "venture-portfolio",
         label: "Portfolio Context",
         description: "Show all venture operations.",
@@ -148,6 +203,9 @@ export function CommandPalette() {
     setOpen,
     setPortfolioMode,
     ventures,
+    exportWorkspace,
+    importWorkspace,
+    resetWorkspace,
   ])
 
   const filteredActions = actions.filter((action) => {

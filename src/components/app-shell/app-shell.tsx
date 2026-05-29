@@ -21,12 +21,15 @@ import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
+import { useWorkspacePersistence } from "@/hooks/use-workspace-persistence"
+
 type AppShellProps = {
   children: ReactNode
 }
 
 export function AppShell({ children }: AppShellProps) {
   useShellShortcuts()
+  useWorkspacePersistence()
 
   const sidebarPreferenceLoaded = useRef(false)
   const issues = useIssueStore((state) => state.issues)
@@ -117,38 +120,40 @@ export function AppShell({ children }: AppShellProps) {
         <AppDrawer />
         <MobileNav />
         <CommandPalette />
-        <div className="pointer-events-none fixed inset-x-3 top-16 z-40 lg:left-72 lg:right-8">
-          <div className="pointer-events-auto mx-auto max-w-[1500px]">
-            <QuickCreateIssue
-              key={
-                quickCreateIssueOpen
-                  ? `issue-${activeVentureId ?? "portfolio"}`
-                  : "issue-closed"
-              }
-              open={quickCreateIssueOpen}
-              activeVentureId={mode === "venture" ? activeVentureId : null}
-              ventures={ventures}
-              users={users}
-              roadmapItems={roadmapItems}
-              onClose={closeQuickCreateIssue}
-            />
-            <QuickCreateRoadmapItem
-              key={
-                quickCreateRoadmapOpen
-                  ? `roadmap-${activeVentureId ?? "portfolio"}`
-                  : "roadmap-closed"
-              }
-              open={quickCreateRoadmapOpen}
-              activeVentureId={mode === "venture" ? activeVentureId : null}
-              ventures={ventures}
-              users={users}
-              onClose={closeQuickCreateRoadmap}
-              onCreated={(roadmapId) =>
-                openDrawer({ type: "roadmap", id: roadmapId })
-              }
-            />
+        {quickCreateIssueOpen || quickCreateRoadmapOpen ? (
+          <div className="fixed inset-0 z-40 bg-background/70 px-3 pt-24 backdrop-blur-[2px] lg:pl-72 lg:pr-8">
+            <div className="mx-auto max-w-[1500px]">
+              <QuickCreateIssue
+                key={
+                  quickCreateIssueOpen
+                    ? `issue-${activeVentureId ?? "portfolio"}`
+                    : "issue-closed"
+                }
+                open={quickCreateIssueOpen}
+                activeVentureId={mode === "venture" ? activeVentureId : null}
+                ventures={ventures}
+                users={users}
+                roadmapItems={roadmapItems}
+                onClose={closeQuickCreateIssue}
+              />
+              <QuickCreateRoadmapItem
+                key={
+                  quickCreateRoadmapOpen
+                    ? `roadmap-${activeVentureId ?? "portfolio"}`
+                    : "roadmap-closed"
+                }
+                open={quickCreateRoadmapOpen}
+                activeVentureId={mode === "venture" ? activeVentureId : null}
+                ventures={ventures}
+                users={users}
+                onClose={closeQuickCreateRoadmap}
+                onCreated={(roadmapId) =>
+                  openDrawer({ type: "roadmap", id: roadmapId })
+                }
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </TooltipProvider>
   )

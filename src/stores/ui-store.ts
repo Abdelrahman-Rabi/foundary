@@ -31,6 +31,8 @@ type UiStore = {
   openDrawer: (drawer: Exclude<ActiveDrawer, null>) => void
   closeDrawer: () => void
   setIssuesViewMode: (mode: IssuesViewMode) => void
+  hydrate: (state: Partial<Pick<UiStore, "issuesViewMode">>) => void
+  reset: () => void
 }
 
 export const useUiStore = create<UiStore>((set) => ({
@@ -57,4 +59,10 @@ export const useUiStore = create<UiStore>((set) => ({
   openDrawer: (drawer) => set({ activeDrawer: drawer }),
   closeDrawer: () => set({ activeDrawer: null }),
   setIssuesViewMode: (mode) => set({ issuesViewMode: mode }),
+  hydrate: (state) =>
+    set((prev) => ({
+      issuesViewMode: state.issuesViewMode !== undefined ? state.issuesViewMode : prev.issuesViewMode,
+    })),
+  reset: () => set({ issuesViewMode: "list" }),
 }))
+

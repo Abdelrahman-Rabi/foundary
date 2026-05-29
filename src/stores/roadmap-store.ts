@@ -57,6 +57,8 @@ type RoadmapStore = {
   unlinkIssueFromRoadmap: (roadmapId: string, issueId: string) => void
   getRoadmapItemsByVenture: (ventureId: string) => RoadmapItem[]
   getRoadmapItemsByTimeframe: (timeframe: RoadmapTimeframe) => RoadmapItem[]
+  hydrate: (state: Partial<Pick<RoadmapStore, "roadmapItems" | "filters">>) => void
+  reset: () => void
 }
 
 const defaultFilters: RoadmapFilters = {
@@ -163,4 +165,10 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
     get().roadmapItems.filter((item) => item.ventureId === ventureId),
   getRoadmapItemsByTimeframe: (timeframe) =>
     get().roadmapItems.filter((item) => item.timeframe === timeframe),
+  hydrate: (state) =>
+    set((prev) => ({
+      roadmapItems: state.roadmapItems !== undefined ? state.roadmapItems : prev.roadmapItems,
+      filters: state.filters !== undefined ? { ...prev.filters, ...state.filters } : prev.filters,
+    })),
+  reset: () => set({ roadmapItems: initialRoadmapItems, filters: defaultFilters }),
 }))

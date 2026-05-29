@@ -1,92 +1,41 @@
-# Current Feature - Demo Optimization
+# Current Feature - Local-First Execution Continuity
 
 ## Current Objective
 
-Optimize Foundary for a coherent portfolio-first demo experience.
-
-This phase establishes:
-- stronger handcrafted mock data
-- clearer venture differentiation
-- a focused hero demo flow
-- more realistic roadmap states
-- more contextual AI recommendation language
-- recent operational activity for dashboard realism
-
-The goal is NOT:
-> adding new product workflows.
-
-The goal is:
-> making the existing product feel like a believable venture studio operating environment.
+Implement local-first execution continuity for the existing Foundary MVP.
+This ensures user actions survive page refreshes, and provides clean utilities for resetting demo data, exporting workspace state, and importing workspace state.
 
 ---
 
-# Hero Demo Flow
+## Expected Product Behavior
 
-Preferred flow:
-
-```txt
-Dashboard risk signal
-→ Sentra at-risk roadmap initiative
-→ linked blocked analytics issue
-→ AI recommendation to reduce scope / prioritize dependency resolution
-```
-
-Supporting flows:
-- Reson8 shows validation ambiguity and split / clarify recommendations.
-- Internal Ops shows stable execution and continue recommendations.
+- **Venture context** survives refresh.
+- **Creating and moving issues** survives refresh.
+- **Creating roadmap items** survives refresh.
+- **Assistant inspected and dismissed signal states** survive refresh.
+- **Reset demo data** restores seeded mock data.
+- **Export/import workspace state** round-trips the persisted state.
+- **Invalid import JSON** must not overwrite current state or crash the app.
 
 ---
 
-# Current Implementation Scope
+## Technical Approach
 
-This phase includes ONLY:
-
-## Mock Data Tuning
-- add supporting issues
-- add completed and killed roadmap examples
-- improve linked issue relationships
-- keep venture scenarios distinct
-
----
-
-## AI Demo Tuning
-- improve insight specificity
-- ensure recommendations cover reduce-scope, prioritize, clarify, split, continue, and kill
-- keep AI operational and non-chatty
+1. **Persistence Utility (`src/lib/persistence.ts`)**: Versioned local storage helper with read/write/clear/export/import and validation/normalization logic.
+2. **Store Hydration/Reset**: Explicit `.hydrate()` and `.reset()` methods added to Zustand stores:
+   - `useVentureStore`
+   - `useIssueStore`
+   - `useRoadmapStore`
+   - `useAssistantStore`
+3. **App Shell Coordinator Hook (`src/hooks/use-workspace-persistence.ts`)**: Hydrates stores once on client mount and subscribes/autosaves store changes to localStorage.
+4. **UI Access Points**: Integrated workspace database trigger dropdown in `src/components/app-shell/top-bar.tsx` and custom commands inside the command palette `src/components/app-shell/command-palette.tsx`.
 
 ---
 
-## Dashboard Storytelling
-- surface the strongest demo risk first
-- add compact recent operational activity
-- keep dashboard calm and non-analytics-heavy
+## Explicitly Out Of Scope
 
----
-
-# Explicitly Out Of Scope
-
-Do NOT build:
-- new workflows
-- backend behavior
-- persistence
-- authentication
-- chat UI
-- fake streaming
-- enterprise reporting
-- noisy activity feeds
-
-This phase is ONLY:
-> demo credibility and narrative tuning.
-
----
-
-# Acceptance Criteria
-
-- dashboard first impression tells a coherent portfolio story
-- Sentra risk flow is obvious and clickable
-- Reson8 reads as validation uncertainty
-- Internal Ops reads as stable operating leverage
-- roadmap includes active, uncertain, completed, and killed initiatives
-- issues include blocked work, completed wins, missing criteria, killed experiments, and stable internal work
-- AI recommendations are specific, varied, and grounded in current data
-- no generic filler or enterprise workflow complexity was introduced
+- Backend APIs / Database
+- Auth / RBAC
+- Real-time / Comments / Notifications
+- Real LLM integration
+- Settings-heavy UX pages

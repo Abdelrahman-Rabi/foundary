@@ -81,6 +81,8 @@ Polish & Motion
 Demo Optimization
   ↓
 README & Narrative
+  ↓
+Local-First Execution Continuity
 ```
 
 This sequence minimizes:
@@ -841,6 +843,76 @@ The final presentation should communicate:
 
 ---
 
+# Phase 11 — Local-First Execution Continuity
+
+## Goal
+
+Make the finished MVP feel usable beyond a single demo session without adding
+backend infrastructure.
+
+---
+
+# Required Tasks
+
+## Workspace Persistence
+
+Persist:
+```txt
+Issues
+Issue filters
+Issues list / board mode
+Roadmap items
+Roadmap filters
+Venture context
+Assistant inspected / dismissed signals
+```
+
+---
+
+## Workspace Utilities
+
+Add compact app-shell utilities for:
+```txt
+Reset demo data
+Export workspace state
+Import workspace state
+Saved-state visibility
+```
+
+Invalid imports must not overwrite current state or crash the app.
+
+---
+
+## Important Scope Rules
+
+This phase remains:
+- frontend-only
+- local-first
+- mock-data grounded
+- calm and operational
+
+Do NOT add:
+- backend APIs
+- backend database persistence
+- auth
+- realtime collaboration
+- comments
+- notifications
+- settings-heavy UX
+
+---
+
+# Success Criteria
+
+By end of Phase 11:
+- execution state survives refresh
+- filters and view mode survive refresh
+- reset returns the seeded demo state
+- export / import can round-trip workspace state
+- the app still feels lightweight, premium, and non-enterprise
+
+---
+
 # AI-Assisted Development Strategy
 
 ## Best AI Usage Areas
@@ -891,6 +963,8 @@ Notifications
 Permissions
 Backend realism
 Infrastructure complexity
+Realtime collaboration
+Backend database persistence
 ```
 
 ---

@@ -12,6 +12,7 @@ Foundary focuses on:
 - venture-level context
 - operational clarity
 - strategic roadmap confidence
+- local-first workspace continuity
 - embedded AI-style judgment
 - restrained, premium workflows
 
@@ -101,6 +102,7 @@ Included:
 
 - mocked but interconnected data
 - frontend Zustand state
+- browser-persisted local workspace state
 - derived synchronization across surfaces
 - contextual drawers
 - drag-and-drop issue movement
@@ -110,7 +112,7 @@ Included:
 Excluded:
 
 - authentication
-- database persistence
+- backend database persistence
 - backend APIs
 - RBAC
 - notifications
@@ -127,7 +129,7 @@ A production version would deepen the system without changing the product philos
 
 Strong V2 directions include:
 
-- persistent backend state and real multi-user accounts
+- real multi-user accounts and backend-backed workspace sync
 - realtime collaboration across venture teams
 - richer roadmap history and confidence trend analysis
 - comments or async decision records on issues and initiatives

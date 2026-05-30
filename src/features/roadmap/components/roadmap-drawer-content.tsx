@@ -1,9 +1,16 @@
 "use client"
 
-import { GitBranch, Target } from "lucide-react"
+import { GitBranch, Target, ChevronDown } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { EmptyState } from "@/components/shared/empty-state"
 import { AiRoadmapAnalysis } from "@/features/assistant/components/ai-roadmap-analysis"
 import {
@@ -299,21 +306,32 @@ function MetadataSelect({
   options: Array<{ value: string; label: string }>
   onChange: (value: string) => void
 }) {
+  const selectedOption = options.find((opt) => opt.value === value)
   return (
-    <label>
+    <div className="flex flex-col">
       <span className="text-xs text-muted-foreground">{label}</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="mt-1 h-9 w-full rounded-lg border border-border/60 bg-background/50 px-2 text-sm text-foreground"
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </label>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            type="button"
+            variant="outline"
+            className="mt-1 h-9 w-full justify-between rounded-lg border border-border/60 bg-background/50 px-2.5 text-left text-sm font-normal text-foreground select-none"
+          >
+            <span className="truncate">{selectedOption?.label ?? value}</span>
+            <ChevronDown className="size-4 opacity-60 shrink-0" strokeWidth={1.8} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+          <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
+            {options.map((option) => (
+              <DropdownMenuRadioItem key={option.value} value={option.value}>
+                {option.label}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   )
 }
 

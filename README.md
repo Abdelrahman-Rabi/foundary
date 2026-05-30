@@ -4,7 +4,7 @@ Foundary is an AI-native venture execution platform inspired by Linear and adapt
 
 It is designed as a calm operating system for high-velocity venture teams: issues for execution, roadmap for strategic direction, dashboard for portfolio awareness, and embedded AI-style intelligence for concise operational judgment.
 
-The project is intentionally frontend-only. It prioritizes product thinking, workflow quality, venture-aware data relationships, and interaction polish over backend completeness.
+The project is intentionally frontend-only. It prioritizes product thinking, workflow quality, venture-aware data relationships, local-first continuity, and interaction polish over backend completeness.
 
 ## Demo Flow
 
@@ -73,8 +73,15 @@ State is held in small Zustand stores:
 - issue state
 - roadmap state
 - UI drawer state
+- assistant inspection/dismissal state
 
-Mock data initializes the stores, then dashboard, roadmap, assistant, and drawer surfaces derive their visible state from the current local store state. Synchronization is intentionally render-time and selector-driven rather than an event bus or backend simulation.
+Mock data initializes the stores, then dashboard, roadmap, assistant, and drawer surfaces derive their visible state from the current local store state. Current workspace state is persisted in browser storage so issue changes, roadmap changes, venture context, filters, view mode, and assistant inspection state survive refresh. Synchronization is intentionally render-time and selector-driven rather than an event bus or backend simulation.
+
+Workspace utilities support:
+
+- reset to seeded demo data
+- export current workspace state
+- import valid workspace state safely
 
 ## Stack
 
@@ -104,7 +111,7 @@ Implemented:
 Not implemented by design:
 
 - backend API routes
-- database persistence
+- backend database persistence
 - authentication or RBAC
 - multi-user collaboration
 - realtime sockets
@@ -125,7 +132,7 @@ Foundary is an AI-native venture execution platform inspired by Linear and adapt
 
 It is designed as a calm operating system for high-velocity venture teams: issues for execution, roadmap for strategic direction, dashboard for portfolio awareness, and embedded AI-style intelligence for concise operational judgment.
 
-The project is intentionally frontend-only. It prioritizes product thinking, workflow quality, venture-aware data relationships, and interaction polish over backend completeness.
+The project is intentionally frontend-only. It prioritizes product thinking, workflow quality, venture-aware data relationships, local-first continuity, and interaction polish over backend completeness.
 
 ## Demo Flow
 
@@ -194,8 +201,15 @@ State is held in small Zustand stores:
 - issue state
 - roadmap state
 - UI drawer state
+- assistant inspection/dismissal state
 
-Mock data initializes the stores, then dashboard, roadmap, assistant, and drawer surfaces derive their visible state from the current local store state. Synchronization is intentionally render-time and selector-driven rather than an event bus or backend simulation.
+Mock data initializes the stores, then dashboard, roadmap, assistant, and drawer surfaces derive their visible state from the current local store state. Current workspace state is persisted in browser storage so issue changes, roadmap changes, venture context, filters, view mode, and assistant inspection state survive refresh. Synchronization is intentionally render-time and selector-driven rather than an event bus or backend simulation.
+
+Workspace utilities support:
+
+- reset to seeded demo data
+- export current workspace state
+- import valid workspace state safely
 
 ## Stack
 
@@ -225,7 +239,7 @@ Implemented:
 Not implemented by design:
 
 - backend API routes
-- database persistence
+- backend database persistence
 - authentication or RBAC
 - multi-user collaboration
 - realtime sockets

@@ -68,7 +68,8 @@ export function QuickCreateRoadmapItem({
   }
 
   return (
-    <section className="rounded-lg border border-border/60 bg-card/55 p-4">
+    <section className="rounded-lg border border-border/70 bg-popover p-4 shadow-2xl shadow-background/45">
+
       <div className="mb-3 flex items-center justify-between gap-3">
         <div>
           <h2 className="text-sm font-medium text-foreground">New initiative</h2>

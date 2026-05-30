@@ -61,6 +61,63 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-05-29 - Antigravity - Local-First Execution Continuity (Review Fixes)
+
+Task:
+Fix the Phase Two persistence gaps identified during review (hydration overwrite risk and missing filter/view mode persistence).
+
+Changed:
+- [src/lib/persistence.ts](file:///y:/foundary/src/lib/persistence.ts)
+- [src/hooks/use-workspace-persistence.ts](file:///y:/foundary/src/hooks/use-workspace-persistence.ts)
+- [src/stores/issue-store.ts](file:///y:/foundary/src/stores/issue-store.ts)
+- [src/stores/roadmap-store.ts](file:///y:/foundary/src/stores/roadmap-store.ts)
+- [src/stores/ui-store.ts](file:///y:/foundary/src/stores/ui-store.ts)
+
+Verification:
+- Run `npm run lint` — Passed with 0 errors/warnings.
+- Run `npm run build` — Passed successfully.
+- Verified that hydration overwrite guard (React state `isHydrated` check) blocks premature auto-saves.
+- Verified that issue filters, roadmap filters, and issues view modes (list/board) are correctly serialized, parsed, normalized, and restored upon reload.
+
+Notes:
+- Filter fields and UI view mode are safely stored and fallback to default states if missing from imports.
+
+Risks / Follow-ups:
+- None.
+
+## 2026-05-29 - Antigravity - Local-First Execution Continuity
+
+Task:
+Implement local-first execution continuity for the existing Foundary MVP.
+
+Changed:
+- [src/stores/venture-store.ts](file:///Y:/foundary/src/stores/venture-store.ts)
+- [src/stores/issue-store.ts](file:///Y:/foundary/src/stores/issue-store.ts)
+- [src/stores/roadmap-store.ts](file:///Y:/foundary/src/stores/roadmap-store.ts)
+- [src/stores/assistant-store.ts](file:///Y:/foundary/src/stores/assistant-store.ts)
+- [src/lib/persistence.ts](file:///Y:/foundary/src/lib/persistence.ts)
+- [src/hooks/use-workspace-persistence.ts](file:///Y:/foundary/src/hooks/use-workspace-persistence.ts)
+- [src/components/app-shell/app-shell.tsx](file:///Y:/foundary/src/components/app-shell/app-shell.tsx)
+- [src/components/app-shell/top-bar.tsx](file:///Y:/foundary/src/components/app-shell/top-bar.tsx)
+- [src/components/app-shell/command-palette.tsx](file:///Y:/foundary/src/components/app-shell/command-palette.tsx)
+- [context/current-feature.md](file:///Y:/foundary/context/current-feature.md)
+- [context/agent-handoff.md](file:///Y:/foundary/context/agent-handoff.md)
+
+Verification:
+- Run `npm run lint` - Passed successfully with 0 errors/warnings.
+- Run `npm run build` - Next.js Turbopack build compiled, typechecked, and output static HTML routes successfully.
+- Manual verification of client-side local storage round-trips, file download export, and schema validation during JSON file imports.
+
+Notes:
+- Added a unified, versioned (v1) localStorage workspace state schema.
+- Added validation and normalization logic to safely load state and discard/throw errors on corrupted schema imports.
+- Added explicit `.hydrate()` and `.reset()` methods to all 4 execution Zustand stores.
+- Created `useWorkspacePersistence` coordinator hook to handle initial client-side hydration and reactively autosave updates.
+- Added premium workspace management UI (Export, Import, Reset) inside a subtle database trigger TopBar dropdown and integrated matching actions into the Command Palette.
+
+Risks / Follow-ups:
+- Ensure other features added in the future add support to the persistence schema if they represent execution state that needs to survive refresh.
+
 ## 2026-05-28 - Super Agent - Foundary Agent Kickoff Skill
 
 Task:

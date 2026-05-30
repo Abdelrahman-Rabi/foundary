@@ -22,3 +22,10 @@ export type Venture = {
   createdAt: string
   updatedAt: string
 }
+
+export type CreateVentureInput = {
+  name: string
+  description: string
+  stage: VentureStage
+}
+

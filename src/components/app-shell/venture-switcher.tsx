@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Plus } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useVentureStore } from "@/stores/venture-store"
+import { useUiStore } from "@/stores/ui-store"
 import { cn } from "@/lib/utils"
 
 type VentureSwitcherProps = {
@@ -32,6 +33,7 @@ export function VentureSwitcher({ collapsed }: VentureSwitcherProps) {
   const mode = useVentureStore((state) => state.mode)
   const setActiveVenture = useVentureStore((state) => state.setActiveVenture)
   const setPortfolioMode = useVentureStore((state) => state.setPortfolioMode)
+  const openQuickCreateVenture = useUiStore((state) => state.openQuickCreateVenture)
 
   const activeVenture =
     ventures.find((venture) => venture.id === activeVentureId) ?? null
@@ -117,6 +119,11 @@ export function VentureSwitcher({ collapsed }: VentureSwitcherProps) {
             </span>
           </DropdownMenuItem>
         ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={openQuickCreateVenture}>
+          <Plus className="size-3.5 text-muted-foreground mr-1.5" strokeWidth={1.8} />
+          <span className="text-xs font-medium text-foreground">New venture</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -173,6 +173,11 @@ Each venture has:
 - dashboard metrics
 - AI insights
 
+After local-first continuity, the next product phase extends this from seeded
+demo ventures into local-first venture setup. Users should be able to create a
+new venture context that behaves like a first-class local workspace object
+without turning Foundary into an account, settings, or CRM system.
+
 ---
 
 ## 2. Issues System
@@ -345,6 +350,7 @@ Data layer should remain:
 - lightweight
 - frontend-driven
 - browser-persisted for local workspace continuity
+- capable of holding custom local venture contexts
 
 ---
 

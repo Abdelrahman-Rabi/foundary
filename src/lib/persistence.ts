@@ -3,6 +3,7 @@
 import type { Issue, IssueFilters } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
 import type { RoadmapFilters } from "@/stores/roadmap-store"
+import type { Venture } from "@/types/venture"
 
 export const PERSISTENCE_VERSION = 1
 export const PERSISTENCE_KEY = "foundary_workspace_state"
@@ -10,6 +11,7 @@ export const PERSISTENCE_KEY = "foundary_workspace_state"
 export interface WorkspaceState {
   version: number
   venture: {
+    ventures?: Venture[]
     activeVentureId: string | null
     mode: "portfolio" | "venture"
   }
@@ -45,16 +47,82 @@ export function validateAndNormalizeState(raw: unknown): WorkspaceState {
   const version = typeof rawState.version === "number" ? rawState.version : PERSISTENCE_VERSION
 
   // 2. Venture Store Validation
-  const venture = { activeVentureId: null as string | null, mode: "portfolio" as "portfolio" | "venture" }
+  const venture: {
+    ventures?: Venture[]
+    activeVentureId: string | null
+    mode: "portfolio" | "venture"
+  } = {
+    activeVentureId: null,
+    mode: "portfolio"
+  }
+
   if (rawState.venture && typeof rawState.venture === "object") {
     const rawVenture = rawState.venture as Record<string, unknown>
-    if (typeof rawVenture.activeVentureId === "string" || rawVenture.activeVentureId === null) {
-      venture.activeVentureId = rawVenture.activeVentureId
-    }
-    if (rawVenture.mode === "portfolio" || rawVenture.mode === "venture") {
-      venture.mode = rawVenture.mode as "portfolio" | "venture"
+    const hasVentures = Array.isArray(rawVenture.ventures)
+
+    if (hasVentures) {
+      const venturesArray: Venture[] = []
+      for (const item of rawVenture.ventures as unknown[]) {
+        if (!item || typeof item !== "object") {
+          throw new Error("Invalid venture structure: venture item must be an object")
+        }
+        const ventItem = item as Record<string, unknown>
+        if (
+          typeof ventItem.id !== "string" ||
+          typeof ventItem.name !== "string" ||
+          typeof ventItem.slug !== "string" ||
+          typeof ventItem.description !== "string" ||
+          !["idea", "validation", "mvp", "growth"].includes(ventItem.stage as string) ||
+          !["strong", "stable", "at-risk", "critical"].includes(ventItem.health as string) ||
+          !["high", "moderate", "slow"].includes(ventItem.momentum as string) ||
+          typeof ventItem.color !== "string" ||
+          typeof ventItem.icon !== "string" ||
+          typeof ventItem.activeRoadmapCount !== "number" ||
+          typeof ventItem.activeIssueCount !== "number" ||
+          typeof ventItem.overdueIssueCount !== "number" ||
+          typeof ventItem.progress !== "number" ||
+          typeof ventItem.confidence !== "number" ||
+          typeof ventItem.createdAt !== "string" ||
+          typeof ventItem.updatedAt !== "string"
+        ) {
+          throw new Error("Invalid venture data structure: missing or malformed required venture fields")
+        }
+        venturesArray.push(item as Venture)
+      }
+      venture.ventures = venturesArray
+
+      if (typeof rawVenture.activeVentureId === "string" || rawVenture.activeVentureId === null) {
+        const activeId = rawVenture.activeVentureId
+        if (activeId === null || venturesArray.some(v => v.id === activeId)) {
+          venture.activeVentureId = activeId
+        } else {
+          venture.activeVentureId = null
+        }
+      }
+      if (rawVenture.mode === "portfolio" || rawVenture.mode === "venture") {
+        if (rawVenture.mode === "venture" && venture.activeVentureId !== null) {
+          venture.mode = "venture"
+        } else {
+          venture.mode = "portfolio"
+          venture.activeVentureId = null
+        }
+      }
+    } else {
+      // Backward compatibility: rawVenture.ventures is absent
+      if (typeof rawVenture.activeVentureId === "string" || rawVenture.activeVentureId === null) {
+        venture.activeVentureId = rawVenture.activeVentureId
+      }
+      if (rawVenture.mode === "portfolio" || rawVenture.mode === "venture") {
+        if (rawVenture.mode === "venture" && typeof venture.activeVentureId === "string") {
+          venture.mode = "venture"
+        } else {
+          venture.mode = "portfolio"
+          venture.activeVentureId = null
+        }
+      }
     }
   }
+
 
   // 3. Issues Validation
   const issuesArray: Issue[] = []

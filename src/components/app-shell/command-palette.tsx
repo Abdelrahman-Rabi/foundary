@@ -38,6 +38,7 @@ export function CommandPalette() {
   const openQuickCreateRoadmap = useUiStore(
     (state) => state.openQuickCreateRoadmap
   )
+  const openQuickCreateVenture = useUiStore((state) => state.openQuickCreateVenture)
   const assistantPanelOpen = useUiStore((state) => state.assistantPanelOpen)
   const setAssistantPanelOpen = useUiStore(
     (state) => state.setAssistantPanelOpen
@@ -91,6 +92,17 @@ export function CommandPalette() {
         icon: GitBranchPlus,
         run: () => {
           openQuickCreateRoadmap()
+          close()
+        },
+      },
+      {
+        id: "create-venture",
+        label: "New Venture",
+        description: "Create a new local venture context.",
+        keywords: ["create", "venture", "startup"],
+        icon: FilePlus2,
+        run: () => {
+          openQuickCreateVenture()
           close()
         },
       },
@@ -197,6 +209,7 @@ export function CommandPalette() {
     openDrawer,
     openQuickCreateIssue,
     openQuickCreateRoadmap,
+    openQuickCreateVenture,
     router,
     setActiveVenture,
     setAssistantPanelOpen,

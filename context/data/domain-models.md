@@ -142,6 +142,30 @@ Each venture should have:
 - different issue patterns
 - different AI observations
 
+Custom local ventures may be created after the local-first continuity phase.
+They should use the same `Venture` model as seeded demo ventures and remain
+frontend-only local workspace state.
+
+Minimum creation input:
+
+```ts
+type CreateVentureInput = {
+  name: string
+  description: string
+  stage: "idea" | "validation" | "mvp" | "growth"
+}
+```
+
+Generated fields should include:
+- stable local id
+- duplicate-safe slug
+- compact lettermark icon
+- UI-safe color
+- stage-aware health, momentum, progress, and confidence defaults
+
+Custom ventures should be reset when demo data is reset and should round-trip
+through workspace export/import when valid.
+
 ---
 
 # Recommended Initial Ventures

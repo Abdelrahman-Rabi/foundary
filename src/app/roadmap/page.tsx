@@ -4,7 +4,6 @@ import { useMemo } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
 import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import { RoadmapBoard } from "@/features/roadmap/components/roadmap-board"
 import { RoadmapConfidenceSummary } from "@/features/roadmap/components/roadmap-confidence-summary"
 import { RoadmapHeader } from "@/features/roadmap/components/roadmap-header"
@@ -21,6 +20,7 @@ import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export default function RoadmapPage() {
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const filters = useRoadmapStore((state) => state.filters)

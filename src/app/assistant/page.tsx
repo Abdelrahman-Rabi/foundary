@@ -20,7 +20,6 @@ import {
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
@@ -28,6 +27,7 @@ import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export default function AssistantPage() {
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)
@@ -55,7 +55,7 @@ export default function AssistantPage() {
           activeVentureId,
         }
       ),
-    [activeVentureId, issues, mode, roadmapItems]
+    [activeVentureId, issues, mode, roadmapItems, ventures]
   )
   const signals = useMemo(
     () =>

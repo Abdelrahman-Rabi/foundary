@@ -134,6 +134,20 @@ Load:
 /context/current-feature.md
 ```
 
+## Venture Setup Work
+
+Load:
+
+```txt
+/context/features/feature-venture-setup.md
+/context/features/feature-navigation.md
+/context/data/domain-models.md
+/context/current-feature.md
+```
+
+Only load dashboard, issues, roadmap, or AI specs when implementing behavior in
+those surfaces.
+
 ---
 
 # Implementation Order

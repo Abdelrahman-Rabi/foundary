@@ -17,6 +17,7 @@ type UiStore = {
   commandPaletteOpen: boolean
   quickCreateIssueOpen: boolean
   quickCreateRoadmapOpen: boolean
+  quickCreateVentureOpen: boolean
   activeDrawer: ActiveDrawer
   issuesViewMode: IssuesViewMode
   setSidebarCollapsed: (collapsed: boolean) => void
@@ -28,6 +29,8 @@ type UiStore = {
   closeQuickCreateIssue: () => void
   openQuickCreateRoadmap: () => void
   closeQuickCreateRoadmap: () => void
+  openQuickCreateVenture: () => void
+  closeQuickCreateVenture: () => void
   openDrawer: (drawer: Exclude<ActiveDrawer, null>) => void
   closeDrawer: () => void
   setIssuesViewMode: (mode: IssuesViewMode) => void
@@ -42,6 +45,7 @@ export const useUiStore = create<UiStore>((set) => ({
   commandPaletteOpen: false,
   quickCreateIssueOpen: false,
   quickCreateRoadmapOpen: false,
+  quickCreateVentureOpen: false,
   activeDrawer: null,
   issuesViewMode: "list",
   setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
@@ -51,11 +55,14 @@ export const useUiStore = create<UiStore>((set) => ({
   setMobileNavOpen: (open) => set({ mobileNavOpen: open }),
   setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
   openQuickCreateIssue: () =>
-    set({ quickCreateIssueOpen: true, quickCreateRoadmapOpen: false }),
+    set({ quickCreateIssueOpen: true, quickCreateRoadmapOpen: false, quickCreateVentureOpen: false }),
   closeQuickCreateIssue: () => set({ quickCreateIssueOpen: false }),
   openQuickCreateRoadmap: () =>
-    set({ quickCreateRoadmapOpen: true, quickCreateIssueOpen: false }),
+    set({ quickCreateRoadmapOpen: true, quickCreateIssueOpen: false, quickCreateVentureOpen: false }),
   closeQuickCreateRoadmap: () => set({ quickCreateRoadmapOpen: false }),
+  openQuickCreateVenture: () =>
+    set({ quickCreateVentureOpen: true, quickCreateIssueOpen: false, quickCreateRoadmapOpen: false }),
+  closeQuickCreateVenture: () => set({ quickCreateVentureOpen: false }),
   openDrawer: (drawer) => set({ activeDrawer: drawer }),
   closeDrawer: () => set({ activeDrawer: null }),
   setIssuesViewMode: (mode) => set({ issuesViewMode: mode }),
@@ -63,6 +70,6 @@ export const useUiStore = create<UiStore>((set) => ({
     set((prev) => ({
       issuesViewMode: state.issuesViewMode !== undefined ? state.issuesViewMode : prev.issuesViewMode,
     })),
-  reset: () => set({ issuesViewMode: "list" }),
+  reset: () => set({ issuesViewMode: "list", quickCreateVentureOpen: false }),
 }))
 

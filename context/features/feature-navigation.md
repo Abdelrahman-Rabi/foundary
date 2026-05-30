@@ -112,6 +112,10 @@ Users constantly switch venture contexts.
 The shell must support:
 > rapid context switching without friction.
 
+When local-first venture setup is active, the venture switcher may also expose
+a compact "New venture" action. This should feel like adding an operational
+context, not entering a settings or administration area.
+
 ---
 
 ## 3. Operational Calmness
@@ -316,6 +320,7 @@ Must support:
 - persistent visibility
 - low-friction access
 - venture context clarity
+- compact local venture creation when enabled by the current phase
 
 ---
 
@@ -342,6 +347,12 @@ Users should never feel:
 - lost
 - context-swapped unexpectedly
 - forced into reload-heavy transitions
+
+Creating a venture from this surface should:
+- add the venture to the local workspace
+- make it immediately selectable
+- switch into the new venture context after creation
+- preserve the existing compact dropdown rhythm
 
 ---
 

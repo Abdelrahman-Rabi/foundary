@@ -83,6 +83,8 @@ Demo Optimization
 README & Narrative
   ↓
 Local-First Execution Continuity
+  ↓
+Venture Setup
 ```
 
 This sequence minimizes:
@@ -910,6 +912,105 @@ By end of Phase 11:
 - reset returns the seeded demo state
 - export / import can round-trip workspace state
 - the app still feels lightweight, premium, and non-enterprise
+
+---
+
+# Phase 12 / Product Phase 3 - Venture Setup
+
+## Goal
+
+Allow a user to create a new local venture context and use it across Foundary
+without adding backend, account, team, or settings complexity.
+
+This phase turns venture awareness from seeded-demo behavior into a usable
+local workspace capability.
+
+---
+
+# Required Tasks
+
+## Venture Creation
+
+Build:
+```txt
+Compact create venture action
+Name / description / stage input
+Generated slug, icon, color, health, momentum, progress, confidence
+Duplicate-safe local slug handling
+```
+
+Preferred entry points:
+- venture switcher dropdown
+- command palette
+
+Avoid:
+- settings page
+- onboarding wizard
+- venture detail route
+
+---
+
+## Venture Store And Persistence
+
+Update:
+```txt
+Venture store owns seeded and custom ventures
+Custom ventures persist in local workspace state
+Export / import round-trips custom ventures
+Reset restores seeded demo ventures only
+```
+
+Invalid imported venture records must not overwrite current state or crash the
+app.
+
+---
+
+## Cross-Surface Integration
+
+Ensure custom ventures work across:
+```txt
+App shell venture switcher
+Dashboard portfolio and active venture views
+Issues list / board / quick create
+Roadmap board / quick create / linked issue options
+Assistant signals and empty guidance
+```
+
+New ventures with no work should show quiet operational empty states and direct
+paths to first issue or first roadmap initiative.
+
+---
+
+# Important Scope Rules
+
+This phase remains:
+- frontend-only
+- local-first
+- mock-data grounded
+- compact and operational
+
+Do NOT add:
+- backend APIs
+- auth
+- team invitations
+- permissions
+- billing
+- settings-heavy UX
+- portfolio CRM fields
+- logo upload or asset storage
+
+---
+
+# Success Criteria
+
+By end of Product Phase 3:
+- a user can create a venture locally
+- the venture appears in the switcher immediately
+- selecting the venture updates every major surface
+- issue and roadmap quick-create attach to the new venture
+- refresh/export/import preserve the custom venture
+- reset returns to seeded demo state
+- empty venture states feel useful, not fake or noisy
 
 ---
 

@@ -25,6 +25,7 @@ The application should feel:
 
 ### Core Areas
 - Venture switching
+- Local-first venture creation
 - Dashboard
 - Issues system
 - Roadmap system
@@ -146,7 +147,7 @@ Purpose:
 
 ## Supported Ventures
 
-Initial mocked ventures:
+Seeded demo ventures:
 
 ```ts
 [
@@ -162,6 +163,30 @@ Each venture should contain:
 - metrics
 - AI insights
 - health signals
+
+Users may add custom local ventures after the MVP continuity phase. Custom
+ventures should behave as first-class venture contexts across the shell,
+dashboard, issues, roadmap, assistant, and local workspace persistence.
+
+Custom venture creation remains local-first. It does not imply backend
+accounts, team management, organization settings, permissions, billing, or CRM
+records.
+
+Minimum custom venture input:
+
+```ts
+type CreateVentureInput = {
+  name: string
+  description: string
+  stage: "idea" | "validation" | "mvp" | "growth"
+}
+```
+
+Generated venture defaults should remain believable and restrained:
+- generated id, slug, icon, and color
+- stable initial health
+- stage-aware momentum/confidence
+- zero issue and roadmap counts until work exists
 
 ---
 
@@ -548,6 +573,7 @@ DO NOT:
 - simulate production infrastructure
 
 Local-first persistence should cover:
+- custom venture records
 - issue records and filters
 - roadmap records and filters
 - venture context
@@ -558,6 +584,10 @@ Workspace utilities should support:
 - reset to seeded demo data
 - export current workspace state
 - import valid workspace state without crashing on invalid JSON
+
+Reset should remove custom local ventures and restore the seeded demo ventures.
+Export/import should round-trip custom ventures and their linked issue/roadmap
+records when valid.
 
 ---
 

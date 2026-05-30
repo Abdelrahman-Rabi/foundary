@@ -3,7 +3,6 @@
 import { useMemo } from "react"
 
 import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import {
   getAssistantSignals,
   sortSignals,
@@ -29,6 +28,7 @@ import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useVentureStore } from "@/stores/venture-store"
 
 export function useDashboardData() {
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)
@@ -89,5 +89,5 @@ export function useDashboardData() {
       aiSignals,
       ventures,
     }
-  }, [activeVentureId, issues, mode, roadmapItems])
+  }, [activeVentureId, issues, mode, roadmapItems, ventures])
 }

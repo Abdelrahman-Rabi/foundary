@@ -10,7 +10,6 @@ import {
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import { Button } from "@/components/ui/button"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
@@ -22,6 +21,7 @@ export function AssistantPanelShell() {
   const open = useUiStore((state) => state.assistantPanelOpen)
   const setOpen = useUiStore((state) => state.setAssistantPanelOpen)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const mode = useVentureStore((state) => state.mode)

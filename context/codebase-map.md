@@ -419,6 +419,26 @@ Source of truth:
 src/stores/venture-store.ts
 ```
 
+When implementing local-first venture setup, also load:
+
+```txt
+context/features/feature-venture-setup.md
+context/features/feature-navigation.md
+context/data/domain-models.md
+```
+
+Likely touch points:
+
+```txt
+src/types/venture.ts
+src/data/ventures.ts
+src/stores/venture-store.ts
+src/lib/persistence.ts
+src/hooks/use-workspace-persistence.ts
+src/components/app-shell/venture-switcher.tsx
+src/components/app-shell/command-palette.tsx
+```
+
 ### Drawer System
 
 All global drill-downs flow through:

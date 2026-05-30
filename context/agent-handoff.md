@@ -59,6 +59,121 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-05-30 - Implementation Agent A - Conflict Marker Cleanup
+
+Task:
+Cleaned up committed/merged conflict markers in `command-palette.tsx` that caused Vercel deployment builds to fail.
+
+Changed:
+- [src/components/app-shell/command-palette.tsx](file:///y:/foundary/src/components/app-shell/command-palette.tsx)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+- Run `npm run build` - Passed successfully (compiled Next.js and static routes successfully)
+
+Notes:
+- Removed a leftover `=======` conflict marker and extra empty line.
+- The working tree build is fully verified and clean.
+
+Risks / Follow-ups:
+- None.
+
+## 2026-05-30 - Implementation Agent A - Phase 3 Venture Import Backward Compatibility
+
+Task:
+Added backward compatibility to venture validation to preserve the active seeded venture context for older saved states that do not contain the `venture.ventures` list.
+
+Changed:
+- [src/lib/persistence.ts](file:///y:/foundary/src/lib/persistence.ts)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+- Run `npm run build` - Passed successfully (compiled Next.js and static routes successfully)
+
+Notes:
+- Correctly parses older Phase 2 state containing `activeVentureId` and `mode` without rejecting or resetting context.
+- Maintains strict validation and active ID checking for newer exports that contain the `ventures` list.
+
+Risks / Follow-ups:
+- None.
+
+## 2026-05-30 - Implementation Agent A - Phase 3 Venture Import Hardening
+
+Task:
+Hardened validation of imported venture state to strictly check all required venture fields and fall back safely if activeVentureId points to a missing venture.
+
+Changed:
+- [src/lib/persistence.ts](file:///y:/foundary/src/lib/persistence.ts)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+- Run `npm run build` - Passed successfully (compiled Next.js and static routes successfully)
+
+Notes:
+- Rejects any malformed venture imports by throwing an error in `validateAndNormalizeState` to prevent app crashes and state overwriting.
+- Safe activeVentureId resolution handles missing active ventures by resetting context to portfolio mode.
+
+Risks / Follow-ups:
+- None.
+
+## 2026-05-30 - Implementation Agent A - Phase 3 Local-First Venture Setup
+
+Task:
+Implemented Phase 3 local-first venture setup allowing users to create, switch, and persist custom ventures.
+
+Changed:
+- [src/types/venture.ts](file:///y:/foundary/src/types/venture.ts)
+- [src/stores/venture-store.ts](file:///y:/foundary/src/stores/venture-store.ts)
+- [src/lib/persistence.ts](file:///y:/foundary/src/lib/persistence.ts)
+- [src/hooks/use-workspace-persistence.ts](file:///y:/foundary/src/hooks/use-workspace-persistence.ts)
+- [src/features/ventures/components/quick-create-venture.tsx](file:///y:/foundary/src/features/ventures/components/quick-create-venture.tsx)
+- [src/components/app-shell/app-shell.tsx](file:///y:/foundary/src/components/app-shell/app-shell.tsx)
+- [src/components/app-shell/venture-switcher.tsx](file:///y:/foundary/src/components/app-shell/venture-switcher.tsx)
+- [src/components/app-shell/command-palette.tsx](file:///y:/foundary/src/components/app-shell/command-palette.tsx)
+- [src/features/dashboard/hooks/use-dashboard-data.ts](file:///y:/foundary/src/features/dashboard/hooks/use-dashboard-data.ts)
+- [src/app/issues/page.tsx](file:///y:/foundary/src/app/issues/page.tsx)
+- [src/app/roadmap/page.tsx](file:///y:/foundary/src/app/roadmap/page.tsx)
+- [src/components/app-shell/assistant-panel-shell.tsx](file:///y:/foundary/src/components/app-shell/assistant-panel-shell.tsx)
+- [src/app/assistant/page.tsx](file:///y:/foundary/src/app/assistant/page.tsx)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+- Run `npm run build` - Passed successfully (compiled Next.js and static routes successfully)
+
+Notes:
+- Custom ventures are saved under `foundary_workspace_state` and round-trip through refresh/export/import.
+- Reset demo data removes custom ventures and returns to the seeded ventures list.
+
+Risks / Follow-ups:
+- Verify client-side interactions on the local dev server.
+
+## 2026-05-30 - Codex - Phase 3 Venture Setup Specs
+
+Task:
+Prepared context and specifications for the next product phase: local-first venture setup.
+
+Changed:
+- `AGENTS.md`
+- `context/current-feature.md`
+- `context/codebase-map.md`
+- `context/project-overview.md`
+- `context/project-specs.md`
+- `context/implementation-roadmap.md`
+- `context/features/feature-venture-setup.md`
+- `context/features/feature-navigation.md`
+- `context/data/domain-models.md`
+- `context/agent-handoff.md`
+
+Verification:
+- `git diff --check -- <phase-3-spec-docs>` passed.
+
+Notes:
+- Scope was planning/specification only. No implementation files were changed.
+- Phase 3 is framed as the next product phase after local-first continuity, distinct from the original MVP roadmap's old Dashboard Phase 3 label.
+
+Risks / Follow-ups:
+- Implementation agents must avoid backend, settings, team management, and CRM expansion.
+
 ## 2026-05-30 - Codex - Phase Two Documentation Alignment
 
 Task:

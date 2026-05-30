@@ -1,36 +1,58 @@
-# Current Feature - Local-First Execution Continuity
+# Current Feature - Phase 3 Venture Setup Planning
 
 ## Current Objective
 
-Implement local-first execution continuity for the existing Foundary MVP.
-This ensures user actions survive page refreshes, and provides clean utilities for resetting demo data, exporting workspace state, and importing workspace state.
+Prepare the context and specifications for the next Foundary product phase:
+local-first venture setup.
+
+This phase should define how users can create a new venture context without
+introducing backend, auth, team management, settings-heavy UX, or portfolio CRM
+complexity.
 
 ---
 
 ## Expected Product Behavior
 
-- **Venture context** survives refresh.
-- **Creating and moving issues** survives refresh.
-- **Creating roadmap items** survives refresh.
-- **Issue filters, roadmap filters, and list / board mode** survive refresh.
-- **Assistant inspected and dismissed signal states** survive refresh.
-- **Reset demo data** restores seeded mock data.
-- **Export/import workspace state** round-trips the persisted state.
-- **Invalid import JSON** must not overwrite current state or crash the app.
+- **Create venture** from a compact shell-level or command-palette entry point.
+- **New venture appears in the venture switcher** immediately.
+- **New venture becomes the active context** after creation.
+- **Dashboard, issues, roadmap, and assistant** all handle the custom venture.
+- **Empty venture states** guide users toward first issue or first roadmap item.
+- **Local-first persistence** includes custom ventures in refresh/export/import.
+- **Reset demo data** returns to seeded ventures only.
+- **Invalid imported ventures** must not overwrite current state or crash the app.
 
 ---
 
 ## Technical Approach
 
-1. **Persistence Utility (`src/lib/persistence.ts`)**: Versioned local storage helper with read/write/clear/export/import and validation/normalization logic.
-2. **Store Hydration/Reset**: Explicit `.hydrate()` and `.reset()` methods added to Zustand stores:
-   - `useVentureStore`
-   - `useIssueStore`
-   - `useRoadmapStore`
-   - `useAssistantStore`
-   - `useUiStore`
-3. **App Shell Coordinator Hook (`src/hooks/use-workspace-persistence.ts`)**: Hydrates stores once on client mount and subscribes/autosaves store changes to localStorage.
-4. **UI Access Points**: Integrated workspace database trigger dropdown in `src/components/app-shell/top-bar.tsx` and custom commands inside the command palette `src/components/app-shell/command-palette.tsx`.
+1. **Feature spec**: Use `context/features/feature-venture-setup.md` as the source of truth for Phase 3 planning.
+2. **Venture store expansion**: Plan for `useVentureStore` to own seeded and custom ventures instead of treating `src/data/ventures.ts` as the only runtime lookup source.
+3. **Persistence schema update**: Plan for custom ventures to become part of the versioned local workspace state.
+4. **Shell entry points**: Prefer a compact venture switcher action and command palette command.
+5. **Cross-feature empty states**: Dashboard, issues, roadmap, and assistant should all respond coherently to a newly created venture with no work yet.
+
+---
+
+## Required Context For Implementation Agents
+
+Load:
+
+```txt
+context/features/feature-venture-setup.md
+context/features/feature-navigation.md
+context/data/domain-models.md
+context/current-feature.md
+```
+
+Load additional feature specs only when modifying that surface:
+
+```txt
+Dashboard: context/features/feature-dashboard.md
+Issues: context/features/feature-issues.md
+Roadmap: context/features/feature-roadmap.md
+Assistant: context/features/feature-ai-assistant.md
+```
 
 ---
 
@@ -41,3 +63,6 @@ This ensures user actions survive page refreshes, and provides clean utilities f
 - Real-time / Comments / Notifications
 - Real LLM integration
 - Settings-heavy UX pages
+- Team invites / organization management
+- Venture CRM profiles
+- Venture detail routes

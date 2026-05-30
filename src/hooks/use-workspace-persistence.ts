@@ -23,6 +23,7 @@ export function useWorkspacePersistence() {
   const isHydratedRef = useRef(false)
 
   // Select store states
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const issueFilters = useIssueStore((state) => state.filters)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
@@ -70,13 +71,13 @@ export function useWorkspacePersistence() {
 
     saveWorkspaceState({
       version: PERSISTENCE_VERSION,
-      venture: { activeVentureId, mode },
+      venture: { ventures, activeVentureId, mode },
       issues: { issues, filters: issueFilters },
       roadmap: { roadmapItems, filters: roadmapFilters },
       assistant: { inspectedSignalIds, dismissedSignalIds },
       preferences: { issuesViewMode },
     })
-  }, [isHydrated, issues, issueFilters, roadmapItems, roadmapFilters, activeVentureId, mode, inspectedSignalIds, dismissedSignalIds, issuesViewMode])
+  }, [isHydrated, ventures, issues, issueFilters, roadmapItems, roadmapFilters, activeVentureId, mode, inspectedSignalIds, dismissedSignalIds, issuesViewMode])
 
   // 3. Reset Workspace
   const resetWorkspace = useCallback(() => {
@@ -94,14 +95,14 @@ export function useWorkspacePersistence() {
   const exportWorkspace = useCallback(() => {
     const state = {
       version: PERSISTENCE_VERSION,
-      venture: { activeVentureId, mode },
+      venture: { ventures, activeVentureId, mode },
       issues: { issues, filters: issueFilters },
       roadmap: { roadmapItems, filters: roadmapFilters },
       assistant: { inspectedSignalIds, dismissedSignalIds },
       preferences: { issuesViewMode },
     }
     exportWorkspaceState(state)
-  }, [activeVentureId, mode, issues, issueFilters, roadmapItems, roadmapFilters, inspectedSignalIds, dismissedSignalIds, issuesViewMode])
+  }, [ventures, activeVentureId, mode, issues, issueFilters, roadmapItems, roadmapFilters, inspectedSignalIds, dismissedSignalIds, issuesViewMode])
 
   // 5. Import Workspace
   const importWorkspace = useCallback((rawState: unknown) => {

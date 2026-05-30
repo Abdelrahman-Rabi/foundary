@@ -13,8 +13,8 @@ import { useShellShortcuts } from "@/components/app-shell/use-shell-shortcuts"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QuickCreateIssue } from "@/features/issues/components/quick-create-issue"
 import { QuickCreateRoadmapItem } from "@/features/roadmap/components/quick-create-roadmap-item"
+import { QuickCreateVenture } from "@/features/ventures/components/quick-create-venture"
 import { users } from "@/data/users"
-import { ventures } from "@/data/ventures"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
@@ -44,12 +44,15 @@ export function AppShell({ children }: AppShellProps) {
   const quickCreateRoadmapOpen = useUiStore(
     (state) => state.quickCreateRoadmapOpen
   )
+  const quickCreateVentureOpen = useUiStore((state) => state.quickCreateVentureOpen)
   const closeQuickCreateIssue = useUiStore((state) => state.closeQuickCreateIssue)
   const closeQuickCreateRoadmap = useUiStore(
     (state) => state.closeQuickCreateRoadmap
   )
+  const closeQuickCreateVenture = useUiStore((state) => state.closeQuickCreateVenture)
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
+  const ventures = useVentureStore((state) => state.ventures)
   const selectSignal = useAssistantStore((state) => state.selectSignal)
 
   useEffect(() => {
@@ -121,7 +124,7 @@ export function AppShell({ children }: AppShellProps) {
         <AppDrawer />
         <MobileNav />
         <CommandPalette />
-        {quickCreateIssueOpen || quickCreateRoadmapOpen ? (
+        {quickCreateIssueOpen || quickCreateRoadmapOpen || quickCreateVentureOpen ? (
           <div className="fixed inset-0 z-40 bg-background/70 px-3 pt-24 backdrop-blur-[2px] lg:pl-72 lg:pr-8">
             <div className="mx-auto max-w-[1500px]">
               <QuickCreateIssue
@@ -151,6 +154,11 @@ export function AppShell({ children }: AppShellProps) {
                 onCreated={(roadmapId) =>
                   openDrawer({ type: "roadmap", id: roadmapId })
                 }
+              />
+              <QuickCreateVenture
+                key={quickCreateVentureOpen ? "venture-open" : "venture-closed"}
+                open={quickCreateVentureOpen}
+                onClose={closeQuickCreateVenture}
               />
             </div>
           </div>

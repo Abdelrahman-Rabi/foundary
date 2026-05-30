@@ -33,6 +33,7 @@ type UiStore = {
   setIssuesViewMode: (mode: IssuesViewMode) => void
   hydrate: (state: Partial<Pick<UiStore, "issuesViewMode">>) => void
   reset: () => void
+
 }
 
 export const useUiStore = create<UiStore>((set) => ({

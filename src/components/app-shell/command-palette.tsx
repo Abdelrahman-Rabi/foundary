@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Bot, FilePlus2, GitBranchPlus, PanelRight, Search, Download, Upload, RefreshCw } from "lucide-react"
+=======
+
 import { usePathname, useRouter } from "next/navigation"
 
 import { appRoutes } from "@/components/app-shell/route-metadata"
@@ -46,6 +48,7 @@ export function CommandPalette() {
   const setPortfolioMode = useVentureStore((state) => state.setPortfolioMode)
   const setActiveVenture = useVentureStore((state) => state.setActiveVenture)
   const { exportWorkspace, importWorkspace, resetWorkspace } = useWorkspacePersistence()
+
 
   useEffect(() => {
     if (open) {
@@ -170,6 +173,7 @@ export function CommandPalette() {
         },
       },
       {
+
         id: "venture-portfolio",
         label: "Portfolio Context",
         description: "Show all venture operations.",

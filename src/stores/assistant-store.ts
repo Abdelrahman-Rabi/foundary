@@ -32,6 +32,7 @@ type AssistantStore = {
   restoreSignal: (signalId: string) => void
   hydrate: (state: Partial<Pick<AssistantStore, "inspectedSignalIds" | "dismissedSignalIds">>) => void
   reset: () => void
+
 }
 
 const defaultFilters: AssistantFilters = {
@@ -77,4 +78,5 @@ export const useAssistantStore = create<AssistantStore>((set) => ({
       dismissedSignalIds: state.dismissedSignalIds !== undefined ? state.dismissedSignalIds : prev.dismissedSignalIds,
     })),
   reset: () => set({ inspectedSignalIds: [], dismissedSignalIds: [] }),
+
 }))

@@ -16,6 +16,7 @@ type VentureStore = {
   getActiveVenture: () => Venture | null
   hydrate: (state: Partial<Pick<VentureStore, "activeVentureId" | "mode">>) => void
   reset: () => void
+
 }
 
 export const useVentureStore = create<VentureStore>((set, get) => ({
@@ -40,4 +41,5 @@ export const useVentureStore = create<VentureStore>((set, get) => ({
       mode: state.mode !== undefined ? state.mode : prev.mode,
     })),
   reset: () => set({ activeVentureId: null, mode: "portfolio" }),
+
 }))

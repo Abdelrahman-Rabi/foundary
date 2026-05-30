@@ -17,6 +17,7 @@ type VentureStore = {
   createVenture: (input: CreateVentureInput) => Venture
   hydrate: (state: Partial<Pick<VentureStore, "ventures" | "activeVentureId" | "mode">>) => void
   reset: () => void
+
 }
 
 const VENTURE_COLORS = [

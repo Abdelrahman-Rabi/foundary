@@ -41,6 +41,7 @@ type IssueStore = {
   getIssuesByVenture: (ventureId: string) => Issue[]
   hydrate: (state: Partial<Pick<IssueStore, "issues" | "filters">>) => void
   reset: () => void
+
 }
 
 type CreateIssueInput = {
@@ -116,4 +117,5 @@ export const useIssueStore = create<IssueStore>((set, get) => ({
       filters: state.filters !== undefined ? { ...prev.filters, ...state.filters } : prev.filters,
     })),
   reset: () => set({ issues: initialIssues, filters: defaultFilters }),
+
 }))

@@ -1,9 +1,17 @@
 "use client"
 
 import { useState } from "react"
+import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   issuePriorities,
   issueTypes,
@@ -52,6 +60,10 @@ export function QuickCreateIssue({
   const ventureRoadmapItems = roadmapItems.filter(
     (item) => item.ventureId === ventureId
   )
+
+  const selectedVenture = ventures.find((v) => v.id === ventureId)
+  const selectedOwner = users.find((u) => u.id === ownerId)
+  const selectedRoadmap = roadmapItems.find((r) => r.id === roadmapId)
 
   function handleCreateIssue() {
     if (!title.trim() || !ventureId || !ownerId) {
@@ -107,65 +119,104 @@ export function QuickCreateIssue({
           placeholder="Issue title..."
           className="h-8 border-border/60 bg-background/50"
         />
-        <select
-          value={type}
-          onChange={(event) => setType(event.target.value as IssueType)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {issueTypes.map((issueType) => (
-            <option key={issueType} value={issueType}>
-              {typeLabels[issueType]}
-            </option>
-          ))}
-        </select>
-        <select
-          value={priority}
-          onChange={(event) => setPriority(event.target.value as IssuePriority)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {issuePriorities.map((issuePriority) => (
-            <option key={issuePriority} value={issuePriority}>
-              {priorityLabels[issuePriority]}
-            </option>
-          ))}
-        </select>
-        <select
-          value={ventureId}
-          onChange={(event) => {
-            setVentureId(event.target.value)
-            setRoadmapId("")
-          }}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {ventures.map((venture) => (
-            <option key={venture.id} value={venture.id}>
-              {venture.name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={ownerId}
-          onChange={(event) => setOwnerId(event.target.value)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={roadmapId}
-          onChange={(event) => setRoadmapId(event.target.value)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          <option value="">No roadmap link</option>
-          {ventureRoadmapItems.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.title}
-            </option>
-          ))}
-        </select>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{typeLabels[type]}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={type} onValueChange={(val) => setType(val as IssueType)}>
+              {issueTypes.map((issueType) => (
+                <DropdownMenuRadioItem key={issueType} value={issueType}>
+                  {typeLabels[issueType]}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{priorityLabels[priority]}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={priority} onValueChange={(val) => setPriority(val as IssuePriority)}>
+              {issuePriorities.map((issuePriority) => (
+                <DropdownMenuRadioItem key={issuePriority} value={issuePriority}>
+                  {priorityLabels[issuePriority]}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{selectedVenture?.name ?? "Select Venture"}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup
+              value={ventureId}
+              onValueChange={(val) => {
+                setVentureId(val)
+                setRoadmapId("")
+              }}
+            >
+              {ventures.map((venture) => (
+                <DropdownMenuRadioItem key={venture.id} value={venture.id}>
+                  {venture.name}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{selectedOwner?.name ?? "Select Owner"}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={ownerId} onValueChange={setOwnerId}>
+              {users.map((user) => (
+                <DropdownMenuRadioItem key={user.id} value={user.id}>
+                  {user.name}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{selectedRoadmap?.title ?? "No roadmap link"}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={roadmapId} onValueChange={setRoadmapId}>
+              <DropdownMenuRadioItem value="">No roadmap link</DropdownMenuRadioItem>
+              {ventureRoadmapItems.map((item) => (
+                <DropdownMenuRadioItem key={item.id} value={item.id}>
+                  {item.title}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Button className="h-8" onClick={handleCreateIssue}>
           Create
         </Button>

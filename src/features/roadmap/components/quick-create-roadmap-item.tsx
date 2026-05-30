@@ -1,9 +1,17 @@
 "use client"
 
 import { useState } from "react"
+import { ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   roadmapTimeframes,
   timeframeLabels,
@@ -43,6 +51,9 @@ export function QuickCreateRoadmapItem({
   if (!open) {
     return null
   }
+
+  const selectedVenture = ventures.find((v) => v.id === ventureId)
+  const selectedOwner = users.find((u) => u.id === ownerId)
 
   function handleCreate() {
     if (!title.trim() || !goal.trim() || !ventureId) {
@@ -100,39 +111,61 @@ export function QuickCreateRoadmapItem({
           placeholder="Strategic goal..."
           className="h-8 border-border/60 bg-background/50"
         />
-        <select
-          value={ventureId}
-          onChange={(event) => setVentureId(event.target.value)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {ventures.map((venture) => (
-            <option key={venture.id} value={venture.id}>
-              {venture.name}
-            </option>
-          ))}
-        </select>
-        <select
-          value={timeframe}
-          onChange={(event) => setTimeframe(event.target.value as RoadmapTimeframe)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {roadmapTimeframes.map((item) => (
-            <option key={item} value={item}>
-              {timeframeLabels[item]}
-            </option>
-          ))}
-        </select>
-        <select
-          value={ownerId}
-          onChange={(event) => setOwnerId(event.target.value)}
-          className="h-8 rounded-md border border-border/60 bg-background/50 px-2 text-xs text-foreground"
-        >
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{selectedVenture?.name ?? "Select Venture"}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={ventureId} onValueChange={setVentureId}>
+              {ventures.map((venture) => (
+                <DropdownMenuRadioItem key={venture.id} value={venture.id}>
+                  {venture.name}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{timeframeLabels[timeframe]}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={timeframe} onValueChange={(val) => setTimeframe(val as RoadmapTimeframe)}>
+              {roadmapTimeframes.map((item) => (
+                <DropdownMenuRadioItem key={item} value={item}>
+                  {timeframeLabels[item]}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
+              <span className="truncate">{selectedOwner?.name ?? "Select Owner"}</span>
+              <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
+            <DropdownMenuRadioGroup value={ownerId} onValueChange={setOwnerId}>
+              {users.map((user) => (
+                <DropdownMenuRadioItem key={user.id} value={user.id}>
+                  {user.name}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Input
           value={confidence}
           onChange={(event) => setConfidence(event.target.value)}

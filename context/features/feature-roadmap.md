@@ -19,6 +19,7 @@ The Roadmap experience should feel:
 - outcome-oriented
 - confidence-aware
 - operationally intelligent
+- continuous across refreshes
 
 Unlike the Issues System, the Roadmap should feel:
 - less tactical
@@ -78,10 +79,27 @@ The Roadmap should answer:
 |---|---|
 | What are we trying to achieve? | Strategic alignment |
 | Which initiatives matter most? | Prioritization |
+| What changed since I last opened the workspace? | Local continuity |
 | Which roadmap items are risky? | Confidence visibility |
 | What is progressing well? | Momentum awareness |
 | What should be reconsidered? | Venture discipline |
 | How does execution connect to outcomes? | Strategic coherence |
+
+---
+
+# Local-First Continuity
+
+Roadmap state should persist locally across refreshes.
+
+Persist:
+- roadmap items
+- quick-created initiatives
+- timeframe/status/progress/confidence edits
+- linked issue relationships
+- roadmap filters
+
+Reset demo data should restore seeded roadmap items and default roadmap filters.
+Importing invalid workspace state must not overwrite current roadmap state.
 
 ---
 

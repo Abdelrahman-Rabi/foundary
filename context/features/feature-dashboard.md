@@ -13,6 +13,11 @@ It provides:
 - operational risk visibility
 - AI-native intelligence summaries
 
+Dashboard metrics should derive from the current local workspace state. When
+issues, roadmap items, venture context, filters, or assistant signal state are
+restored from local-first persistence, the dashboard should reflect that state
+without a separate backend sync layer.
+
 The dashboard should feel:
 - calm
 - executive-readable

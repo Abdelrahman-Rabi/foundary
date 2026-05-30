@@ -39,6 +39,7 @@ The system prioritizes:
 - outcomes over output
 - clarity over configurability
 - operational momentum over bureaucracy
+- local-first continuity over backend infrastructure
 
 ---
 
@@ -343,6 +344,7 @@ Data layer should remain:
 - mocked
 - lightweight
 - frontend-driven
+- browser-persisted for local workspace continuity
 
 ---
 

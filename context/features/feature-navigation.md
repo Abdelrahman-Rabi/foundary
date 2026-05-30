@@ -11,6 +11,7 @@ It creates:
 - operational stability
 - navigation clarity
 - workflow flow-state
+- local workspace continuity controls
 
 The navigation experience should feel:
 - calm
@@ -61,6 +62,20 @@ The navigation system should answer:
 | What can I access quickly? | Operational efficiency |
 | How do I switch contexts rapidly? | Momentum preservation |
 | What requires attention? | Operational awareness |
+| Is my local workspace state saved? | Continuity confidence |
+
+---
+
+# Local Workspace Controls
+
+The app shell may expose compact local-first utilities for:
+- saved-state visibility
+- resetting seeded demo data
+- exporting workspace state
+- importing valid workspace state
+
+These controls should stay subtle, shell-level, and utility-like. They should
+not become a settings page or backend account surface.
 
 ---
 

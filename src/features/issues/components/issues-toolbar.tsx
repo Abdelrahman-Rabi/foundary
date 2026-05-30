@@ -1,6 +1,6 @@
 "use client"
 
-import { SlidersHorizontal, X } from "lucide-react"
+import { SlidersHorizontal, X, ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -10,6 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -185,37 +187,47 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <select
-            value={filters.sortBy}
-            onChange={(event) =>
-              setSorting(
-                event.target.value as IssueSortBy,
-                filters.sortDirection
-              )
-            }
-            className="h-8 rounded-md border border-border/60 bg-card/40 px-2 text-xs text-foreground"
-            aria-label="Sort issues by"
-          >
-            {Object.entries(sortLabels).map(([value, label]) => (
-              <option key={value} value={value}>
-                Sort: {label}
-              </option>
-            ))}
-          </select>
-          <select
-            value={filters.sortDirection}
-            onChange={(event) =>
-              setSorting(filters.sortBy, event.target.value as SortDirection)
-            }
-            className="h-8 rounded-md border border-border/60 bg-card/40 px-2 text-xs text-foreground"
-            aria-label="Sort direction"
-          >
-            {Object.entries(sortDirectionLabels).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="h-8 border-border/60 bg-card/40 text-xs font-normal text-foreground select-none">
+                Sort: {sortLabels[filters.sortBy]}
+                <ChevronDown className="size-3.5 opacity-60 ml-1" strokeWidth={1.8} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuRadioGroup
+                value={filters.sortBy}
+                onValueChange={(value) => setSorting(value as IssueSortBy, filters.sortDirection)}
+              >
+                {Object.entries(sortLabels).map(([value, label]) => (
+                  <DropdownMenuRadioItem key={value} value={value}>
+                    {label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="h-8 border-border/60 bg-card/40 text-xs font-normal text-foreground select-none">
+                {sortDirectionLabels[filters.sortDirection]}
+                <ChevronDown className="size-3.5 opacity-60 ml-1" strokeWidth={1.8} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuRadioGroup
+                value={filters.sortDirection}
+                onValueChange={(value) => setSorting(filters.sortBy, value as SortDirection)}
+              >
+                {Object.entries(sortDirectionLabels).map(([value, label]) => (
+                  <DropdownMenuRadioItem key={value} value={value}>
+                    {label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {activeFilterCount > 0 || filters.search ? (
             <Button
               variant="ghost"

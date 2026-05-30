@@ -26,6 +26,7 @@ The AI system should feel:
 - strategic
 - believable
 - quietly useful
+- stable across refreshes
 
 ---
 
@@ -84,6 +85,20 @@ The AI system should answer:
 | Which initiatives are weak? | Strategic evaluation |
 | What should be split? | Scope refinement |
 | What should be stopped? | Venture discipline |
+
+---
+
+# Local-First Continuity
+
+Assistant state should preserve lightweight user intent across refreshes.
+
+Persist:
+- inspected signal IDs
+- dismissed signal IDs
+
+AI analysis itself should remain deterministic and derived from current issue,
+roadmap, venture, and mock insight state. Do not persist fake chat transcripts,
+LLM responses, or streaming state.
 
 ---
 

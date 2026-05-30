@@ -1,8 +1,15 @@
 "use client"
 
-import { AlertTriangle, ArrowRight, GitBranch, MoveRight, Sparkles } from "lucide-react"
+import { AlertTriangle, ArrowRight, GitBranch, MoveRight, Sparkles, ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   IssuePriorityBadge,
   IssueStatusBadge,
@@ -84,22 +91,32 @@ export function IssueRow({
 
       <div className="flex items-center gap-2">
         <IssueStatusBadge status={issue.status} />
-        <select
-          value={issue.status}
-          className="h-7 w-7 rounded-md border border-border/50 bg-background/50 text-[0px] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
-          aria-label="Update issue status"
-          onClick={(event) => event.stopPropagation()}
-          onChange={(event) => {
-            event.stopPropagation()
-            updateIssueStatus(issue.id, event.target.value as typeof issue.status)
-          }}
-        >
-          {issueStatuses.map((status) => (
-            <option key={status} value={status}>
-              {statusLabels[status]}
-            </option>
-          ))}
-        </select>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-sm"
+              className="h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+              onClick={(event) => event.stopPropagation()}
+              aria-label="Update issue status"
+            >
+              <ChevronDown className="size-3" strokeWidth={1.8} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-36" onClick={(event) => event.stopPropagation()}>
+            <DropdownMenuRadioGroup
+              value={issue.status}
+              onValueChange={(value) => updateIssueStatus(issue.id, value as typeof issue.status)}
+            >
+              {issueStatuses.map((status) => (
+                <DropdownMenuRadioItem key={status} value={status}>
+                  {statusLabels[status]}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <IssuePriorityBadge priority={issue.priority} />
       <IssueTypeBadge type={issue.type} />

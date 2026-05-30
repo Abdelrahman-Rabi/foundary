@@ -12,6 +12,7 @@ This ensures user actions survive page refreshes, and provides clean utilities f
 - **Venture context** survives refresh.
 - **Creating and moving issues** survives refresh.
 - **Creating roadmap items** survives refresh.
+- **Issue filters, roadmap filters, and list / board mode** survive refresh.
 - **Assistant inspected and dismissed signal states** survive refresh.
 - **Reset demo data** restores seeded mock data.
 - **Export/import workspace state** round-trips the persisted state.
@@ -27,6 +28,7 @@ This ensures user actions survive page refreshes, and provides clean utilities f
    - `useIssueStore`
    - `useRoadmapStore`
    - `useAssistantStore`
+   - `useUiStore`
 3. **App Shell Coordinator Hook (`src/hooks/use-workspace-persistence.ts`)**: Hydrates stores once on client mount and subscribes/autosaves store changes to localStorage.
 4. **UI Access Points**: Integrated workspace database trigger dropdown in `src/components/app-shell/top-bar.tsx` and custom commands inside the command palette `src/components/app-shell/command-palette.tsx`.
 

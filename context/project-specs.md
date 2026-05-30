@@ -35,6 +35,8 @@ The application should feel:
 - Global app shell
 - Contextual drawers
 - Venture-aware metrics
+- Local-first workspace persistence
+- Reset / export / import workspace utilities
 
 ---
 
@@ -47,6 +49,7 @@ DO NOT implement:
 - comments system
 - real backend
 - real database
+- backend database persistence
 - websocket infrastructure
 - real AI integrations
 - activity feeds
@@ -525,6 +528,7 @@ Use Zustand for:
 - UI state
 - filters
 - assistant context
+- local-first hydration and reset state
 
 ---
 
@@ -536,11 +540,24 @@ Use:
 - mocked JSON
 - local frontend stores
 - deterministic seeded datasets
+- versioned browser localStorage for current workspace continuity
 
 DO NOT:
 - create backend APIs
 - add database complexity
 - simulate production infrastructure
+
+Local-first persistence should cover:
+- issue records and filters
+- roadmap records and filters
+- venture context
+- issues list / board view mode
+- assistant inspected and dismissed signal state
+
+Workspace utilities should support:
+- reset to seeded demo data
+- export current workspace state
+- import valid workspace state without crashing on invalid JSON
 
 ---
 

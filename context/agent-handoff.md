@@ -48,11 +48,9 @@ Review Agent
 
 ## Open Coordination Notes
 
-- Current working tree contains pre-existing app-shell, issues, roadmap, and
-  UI-store changes that are not documented here yet.
-- Treat `src/components/app-shell/*`, `src/app/issues/page.tsx`,
-  `src/app/roadmap/page.tsx`, and `src/stores/ui-store.ts` as potentially
-  merge-sensitive until those changes are reviewed or committed.
+- Current source working tree contains issue and roadmap UI changes outside this
+  docs pass. Treat `src/features/issues/*` and `src/features/roadmap/*` as
+  user/agent-owned until reviewed or committed.
 - New agents should start with `AGENTS.md`, `context/agent-onboarding.md`,
   `context/codebase-map.md`, `context/current-feature.md`, and only the relevant
   feature spec.
@@ -60,6 +58,35 @@ Review Agent
 ---
 
 ## Handoff Log
+
+## 2026-05-30 - Codex - Phase Two Documentation Alignment
+
+Task:
+Updated core and feature documentation to reflect local-first execution continuity after Phase Two completion.
+
+Changed:
+- `context/project-overview.md`
+- `context/project-specs.md`
+- `context/implementation-roadmap.md`
+- `context/current-feature.md`
+- `context/features/feature-navigation.md`
+- `context/features/feature-dashboard.md`
+- `context/features/feature-issues.md`
+- `context/features/feature-roadmap.md`
+- `context/features/feature-ai-assistant.md`
+- `README.md`
+- `product-note.md`
+- `context/agent-handoff.md`
+
+Verification:
+- `git diff --check -- <changed-docs>` passed.
+
+Notes:
+- Scope was docs-only.
+- Source UI changes already present in issues/roadmap feature files were left untouched.
+
+Risks / Follow-ups:
+- None.
 
 ## 2026-05-29 - Antigravity - Local-First Execution Continuity (Review Fixes)
 

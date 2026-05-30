@@ -20,6 +20,7 @@ The Issues experience should feel:
 - operationally focused
 - lightweight
 - premium
+- continuous across refreshes
 
 This is one of the MOST important product areas because it creates:
 > execution credibility.
@@ -66,6 +67,24 @@ The Issues System should answer:
 | What is overdue? | Delivery coordination |
 | Which roadmap initiatives are affected? | Strategic visibility |
 | Which ventures are overloaded? | Portfolio balance |
+
+---
+
+# Local-First Continuity
+
+Issue state should persist locally across refreshes.
+
+Persist:
+- issue records
+- status moves
+- quick-created issues
+- filters
+- search
+- sort state
+- list / board view mode
+
+Reset demo data should restore seeded issues and default issue preferences.
+Importing invalid workspace state must not overwrite current issue state.
 
 ---
 

@@ -91,6 +91,18 @@ export function useWorkspacePersistence() {
     useUiStore.getState().reset()
   }, [])
 
+  // 3b. Clear Workspace (Blank Slate)
+  const clearWorkspace = useCallback(() => {
+    // Clear localStorage
+    clearWorkspaceState()
+    // Reset all stores to empty/blank states
+    useVentureStore.getState().clear()
+    useIssueStore.getState().clear()
+    useRoadmapStore.getState().clear()
+    useAssistantStore.getState().clear()
+    useUiStore.getState().reset()
+  }, [])
+
   // 4. Export Workspace
   const exportWorkspace = useCallback(() => {
     const state = {
@@ -125,6 +137,7 @@ export function useWorkspacePersistence() {
   return {
     isHydrated,
     resetWorkspace,
+    clearWorkspace,
     exportWorkspace,
     importWorkspace,
   }

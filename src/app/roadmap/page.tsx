@@ -54,6 +54,11 @@ export default function RoadmapPage() {
     () => getConfidenceSummary(visibleRoadmapItems),
     [visibleRoadmapItems]
   )
+  const filteredInsights = useMemo(() => {
+    const ventureIds = new Set(ventures.map((v) => v.id))
+    return aiInsights.filter((insight) => !insight.ventureId || ventureIds.has(insight.ventureId))
+  }, [ventures])
+
   const contextLabel =
     mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
 
@@ -77,7 +82,7 @@ export default function RoadmapPage() {
         groupedItems={groupedItems}
         ventures={ventures}
         issues={issues}
-        insights={aiInsights}
+        insights={filteredInsights}
         hasActiveFilters={
           Boolean(filters.search.trim()) ||
           filters.status !== "all" ||

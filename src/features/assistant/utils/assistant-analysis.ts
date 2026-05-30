@@ -59,6 +59,11 @@ export function getScopedAssistantData(
   insights: AiInsight[],
   context: { mode: "portfolio" | "venture"; activeVentureId: string | null }
 ) {
+  const ventureIds = new Set(ventures.map((v) => v.id))
+  const validInsights = insights.filter(
+    (insight) => !insight.ventureId || ventureIds.has(insight.ventureId)
+  )
+
   if (context.mode === "venture" && context.activeVentureId) {
     return {
       issues: issues.filter((issue) => issue.ventureId === context.activeVentureId),
@@ -66,13 +71,13 @@ export function getScopedAssistantData(
         (item) => item.ventureId === context.activeVentureId
       ),
       ventures: ventures.filter((venture) => venture.id === context.activeVentureId),
-      insights: insights.filter(
+      insights: validInsights.filter(
         (insight) => insight.ventureId === context.activeVentureId
       ),
     }
   }
 
-  return { issues, roadmapItems, ventures, insights }
+  return { issues, roadmapItems, ventures, insights: validInsights }
 }
 
 export function getInsightSignals(

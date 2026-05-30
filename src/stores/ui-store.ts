@@ -71,6 +71,15 @@ export const useUiStore = create<UiStore>((set) => ({
     set((prev) => ({
       issuesViewMode: state.issuesViewMode !== undefined ? state.issuesViewMode : prev.issuesViewMode,
     })),
-  reset: () => set({ issuesViewMode: "list", quickCreateVentureOpen: false }),
+  reset: () =>
+    set({
+      assistantPanelOpen: false,
+      mobileNavOpen: false,
+      commandPaletteOpen: false,
+      quickCreateIssueOpen: false,
+      quickCreateRoadmapOpen: false,
+      quickCreateVentureOpen: false,
+      activeDrawer: null,
+      issuesViewMode: "list",
+    }),
 }))
-

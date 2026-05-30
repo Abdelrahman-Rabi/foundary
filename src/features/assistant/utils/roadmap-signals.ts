@@ -80,11 +80,15 @@ export function getRoadmapRecommendationKind(
   confidence: number,
   missingOutcome: boolean
 ): AiRecommendationKind {
-  if (item.status === "killed" || confidence < 30) {
+  if (item.status === "killed") {
     return "kill"
   }
 
   if (blockedCount > 0 || overdueCount > 0) {
+    return "reduce-scope"
+  }
+
+  if (confidence < 30) {
     return "reduce-scope"
   }
 

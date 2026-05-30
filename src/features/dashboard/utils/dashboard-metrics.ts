@@ -99,13 +99,19 @@ export function getScopedRoadmapItems(
 
 export function getScopedAiInsights(
   insights: AiInsight[],
-  context: DashboardContext
+  context: DashboardContext,
+  ventures: Venture[] = []
 ) {
+  const ventureIds = new Set(ventures.map((v) => v.id))
+  const validInsights = insights.filter(
+    (insight) => !insight.ventureId || ventureIds.has(insight.ventureId)
+  )
+
   if (context.mode === "venture" && context.activeVentureId) {
-    return insights.filter((insight) => insight.ventureId === context.activeVentureId)
+    return validInsights.filter((insight) => insight.ventureId === context.activeVentureId)
   }
 
-  return insights
+  return validInsights
 }
 
 export function isIssueOverdue(issue: Issue, today = DASHBOARD_TODAY) {

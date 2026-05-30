@@ -1,4 +1,7 @@
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
+import { useUiStore } from "@/stores/ui-store"
 import {
   getHealthLabel,
   getRiskLevelForVenture,
@@ -17,6 +20,8 @@ const riskClassName = {
 }
 
 export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
+  const openQuickCreateVenture = useUiStore((state) => state.openQuickCreateVenture)
+
   return (
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -30,8 +35,9 @@ export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
       </div>
 
       <div className="space-y-3">
-        {ventures.map((venture) => {
-          const risk = getRiskLevelForVenture(venture)
+        {ventures.length > 0 ? (
+          ventures.map((venture) => {
+            const risk = getRiskLevelForVenture(venture)
 
           return (
             <div
@@ -100,7 +106,25 @@ export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
               </div>
             </div>
           )
-        })}
+        })
+      ) : (
+        <div className="rounded-lg border border-dashed border-border/60 bg-background/25 p-6 text-center">
+          <p className="text-sm font-medium text-foreground">No ventures yet</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Create your first venture context to begin execution tracking.
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-4 gap-1.5"
+            onClick={openQuickCreateVenture}
+          >
+            <Plus className="size-3.5" strokeWidth={1.8} />
+            Create venture
+          </Button>
+        </div>
+      )}
       </div>
     </section>
   )

@@ -59,7 +59,7 @@ type RoadmapStore = {
   getRoadmapItemsByTimeframe: (timeframe: RoadmapTimeframe) => RoadmapItem[]
   hydrate: (state: Partial<Pick<RoadmapStore, "roadmapItems" | "filters">>) => void
   reset: () => void
-
+  clear: () => void
 }
 
 const defaultFilters: RoadmapFilters = {
@@ -172,5 +172,5 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       filters: state.filters !== undefined ? { ...prev.filters, ...state.filters } : prev.filters,
     })),
   reset: () => set({ roadmapItems: initialRoadmapItems, filters: defaultFilters }),
-
+  clear: () => set({ roadmapItems: [], filters: defaultFilters }),
 }))

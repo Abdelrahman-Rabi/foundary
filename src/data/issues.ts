@@ -25,7 +25,7 @@ export const issues: Issue[] = [
   {
     id: "issue-sentra-referral-flow",
     ventureId: "venture-sentra",
-    roadmapId: "roadmap-sentra-referrals",
+    roadmapId: "roadmap-sentra-referral-foundation",
     title: "Launch referral onboarding flow",
     description:
       "Ship the referral entry point for qualified workspace invitations.",
@@ -155,7 +155,7 @@ export const issues: Issue[] = [
   {
     id: "issue-sentra-referral-cohort-review",
     ventureId: "venture-sentra",
-    roadmapId: "roadmap-sentra-referrals",
+    roadmapId: "roadmap-sentra-referral-foundation",
     title: "Review referral activation cohorts",
     description:
       "Compare referral-sourced activation quality against paid onboarding cohorts.",

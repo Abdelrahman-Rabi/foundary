@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, PanelLeft, Sparkles, Database, Download, Upload, RefreshCw } from "lucide-react"
+import { Menu, PanelLeft, Sparkles, Database, Download, Upload, RefreshCw, Trash2 } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useRef } from "react"
 
@@ -33,7 +33,7 @@ export function TopBar() {
   const contextLabel =
     mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
 
-  const { exportWorkspace, importWorkspace, resetWorkspace } = useWorkspacePersistence()
+  const { exportWorkspace, importWorkspace, resetWorkspace, clearWorkspace } = useWorkspacePersistence()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleImportClick = () => {
@@ -61,6 +61,12 @@ export function TopBar() {
   const handleResetClick = () => {
     if (confirm("Are you sure you want to reset all workspace data to seeded mock defaults? This will erase all local modifications.")) {
       resetWorkspace()
+    }
+  }
+
+  const handleClearClick = () => {
+    if (confirm("Are you sure you want to remove all demo data and start clean? This will permanently delete all ventures, issues, and roadmap items.")) {
+      clearWorkspace()
     }
   }
 
@@ -135,6 +141,14 @@ export function TopBar() {
             >
               <RefreshCw className="size-3.5 text-destructive" />
               <span>Reset Demo Data</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleClearClick}
+              variant="destructive"
+              className="gap-2 text-destructive focus:bg-destructive/10 dark:focus:bg-destructive/20"
+            >
+              <Trash2 className="size-3.5 text-destructive" />
+              <span>Start Clean Platform</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

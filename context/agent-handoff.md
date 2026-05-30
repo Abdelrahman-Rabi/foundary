@@ -59,6 +59,56 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-05-30 - Antigravity - Start Clean Platform Feature
+
+Task:
+Implemented a feature allowing users to wipe all mock/demo data and start fresh with an empty canvas.
+
+Changed:
+- [src/stores/venture-store.ts](file:///y:/foundary/src/stores/venture-store.ts)
+- [src/stores/issue-store.ts](file:///y:/foundary/src/stores/issue-store.ts)
+- [src/stores/roadmap-store.ts](file:///y:/foundary/src/stores/roadmap-store.ts)
+- [src/stores/assistant-store.ts](file:///y:/foundary/src/stores/assistant-store.ts)
+- [src/hooks/use-workspace-persistence.ts](file:///y:/foundary/src/hooks/use-workspace-persistence.ts)
+- [src/components/app-shell/top-bar.tsx](file:///y:/foundary/src/components/app-shell/top-bar.tsx)
+- [src/components/app-shell/command-palette.tsx](file:///y:/foundary/src/components/app-shell/command-palette.tsx)
+- [src/features/dashboard/components/venture-health-panel.tsx](file:///y:/foundary/src/features/dashboard/components/venture-health-panel.tsx)
+- [src/features/dashboard/utils/dashboard-metrics.ts](file:///y:/foundary/src/features/dashboard/utils/dashboard-metrics.ts)
+- [src/features/dashboard/hooks/use-dashboard-data.ts](file:///y:/foundary/src/features/dashboard/hooks/use-dashboard-data.ts)
+- [src/features/assistant/utils/assistant-analysis.ts](file:///y:/foundary/src/features/assistant/utils/assistant-analysis.ts)
+- [src/app/roadmap/page.tsx](file:///y:/foundary/src/app/roadmap/page.tsx)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+- Run `npm run build` - Passed successfully (compiled Next.js routes)
+
+Notes:
+- Added `.clear()` to the stores.
+- Added a "Start Clean Platform" destructive item to the Local Workspace TopBar dropdown and the Command Palette.
+- Added a friendly empty state fallback when no ventures are loaded.
+- Filtered static/mock AI insights by active ventures so they are hidden when starting clean.
+
+Risks / Follow-ups:
+- None.
+
+## 2026-05-30 - Implementation Agent A - Demo Data Correction (Referral Issues Linkage)
+
+Task:
+Fixed demo data mismatch where completed referral issues pointed to the active Mobile Referral Expansion initiative instead of the completed Referral Foundation Release initiative.
+
+Changed:
+- [src/data/issues.ts](file:///y:/foundary/src/data/issues.ts)
+
+Verification:
+- Run `npm run lint` - Passed (exit code 0)
+
+Notes:
+- Mapped `issue-sentra-referral-flow` and `issue-sentra-referral-cohort-review` to `roadmap-sentra-referral-foundation` to align with the visual and strategic metrics layout.
+- The "View linked issues" button on the Strategic Roadmap drawer now correctly filters and lists these issues.
+
+Risks / Follow-ups:
+- None.
+
 ## 2026-05-30 - Implementation Agent A - Conflict Marker Cleanup
 
 Task:

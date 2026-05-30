@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { EmptyState } from "@/components/shared/empty-state"
 import { AiInsightCard } from "@/features/assistant/components/ai-insight-card"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
+import { AiSignalList } from "@/features/assistant/components/ai-signal-list"
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
 import {
   getAssistantSignals,
@@ -13,7 +14,6 @@ import {
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
 import { aiInsights } from "@/data/ai-insights"
-import { ventures } from "@/data/ventures"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
@@ -27,6 +27,7 @@ type AssistantDrawerContentProps = {
 export function AssistantDrawerContent({
   insightId,
 }: AssistantDrawerContentProps) {
+  const ventures = useVentureStore((state) => state.ventures)
   const issues = useIssueStore((state) => state.issues)
   const roadmapItems = useRoadmapStore((state) => state.roadmapItems)
   const openDrawer = useUiStore((state) => state.openDrawer)
@@ -54,11 +55,19 @@ export function AssistantDrawerContent({
       scoped.insights
     )
   )
+  const isInspectingSignal = Boolean(insightId)
   const signal =
-    signals.find((item) => item.id === insightId) ??
-    signals.find((item) => item.id === selectedSignalId) ??
-    signals[0] ??
-    null
+    isInspectingSignal
+      ? signals.find((item) => item.id === insightId) ??
+        signals.find((item) => item.id === selectedSignalId) ??
+        null
+      : null
+
+  function handleInspectSignal(signalId: string) {
+    selectSignal(signalId)
+    markInspected(signalId)
+    openDrawer({ type: "assistant", id: signalId })
+  }
 
   function handleOpenSource(sourceSignal: AiSignal) {
     selectSignal(sourceSignal.id)
@@ -85,12 +94,12 @@ export function AssistantDrawerContent({
             Operational intelligence
           </p>
           <h2 className="mt-2 text-base font-semibold leading-6 text-foreground">
-            {signal?.title ?? "Assistant signal"}
+            {signal?.title ?? "Operational signals"}
           </h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {signal
               ? `${signal.ventureName} / ${signal.sourceLabel}`
-              : "Contextual analysis derived from current issue and roadmap state."}
+              : `${signals.length} contextual signals from current issue and roadmap state.`}
           </p>
         </div>
       </header>
@@ -112,6 +121,13 @@ export function AssistantDrawerContent({
               <AiInsightCard signal={signal} onOpenSource={handleOpenSource} />
             )}
           </motion.div>
+        ) : signals.length > 0 ? (
+          <AiSignalList
+            signals={signals}
+            emptyText="No operational signal available."
+            onOpenSource={handleOpenSource}
+            onOpenInsight={handleInspectSignal}
+          />
         ) : (
           <EmptyState
             title="No operational signal available."

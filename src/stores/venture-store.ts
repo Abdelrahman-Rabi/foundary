@@ -17,7 +17,7 @@ type VentureStore = {
   createVenture: (input: CreateVentureInput) => Venture
   hydrate: (state: Partial<Pick<VentureStore, "ventures" | "activeVentureId" | "mode">>) => void
   reset: () => void
-
+  clear: () => void
 }
 
 const VENTURE_COLORS = [
@@ -132,5 +132,6 @@ export const useVentureStore = create<VentureStore>((set, get) => ({
       mode: state.mode !== undefined ? state.mode : prev.mode,
     })),
   reset: () => set({ ventures: seededVentures, activeVentureId: null, mode: "portfolio" }),
+  clear: () => set({ ventures: [], activeVentureId: null, mode: "portfolio" }),
 }))
 

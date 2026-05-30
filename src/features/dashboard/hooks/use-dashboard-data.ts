@@ -43,7 +43,7 @@ export function useDashboardData() {
     const scopedVentures = getScopedVentures(syncedVentures, context)
     const scopedIssues = getScopedIssues(issues, context)
     const scopedRoadmapItems = getScopedRoadmapItems(syncedRoadmapItems, context)
-    const scopedInsights = getScopedAiInsights(aiInsights, context)
+    const scopedInsights = getScopedAiInsights(aiInsights, context, ventures)
     const activeVenture =
       ventures.find((venture) => venture.id === activeVentureId) ?? null
     const aiSignals = sortSignals(

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Bot, FilePlus2, GitBranchPlus, PanelRight, Search, Download, Upload, RefreshCw } from "lucide-react"
+import { Bot, FilePlus2, GitBranchPlus, PanelRight, Search, Download, Upload, RefreshCw, Trash2 } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { appRoutes } from "@/components/app-shell/route-metadata"
@@ -46,7 +46,7 @@ export function CommandPalette() {
   const ventures = useVentureStore((state) => state.ventures)
   const setPortfolioMode = useVentureStore((state) => state.setPortfolioMode)
   const setActiveVenture = useVentureStore((state) => state.setActiveVenture)
-  const { exportWorkspace, importWorkspace, resetWorkspace } = useWorkspacePersistence()
+  const { exportWorkspace, importWorkspace, resetWorkspace, clearWorkspace } = useWorkspacePersistence()
 
 
   useEffect(() => {
@@ -183,6 +183,19 @@ export function CommandPalette() {
         },
       },
       {
+        id: "clear-workspace",
+        label: "Start Clean Platform",
+        description: "Remove all demo data and start clean.",
+        keywords: ["clear", "clean", "delete", "empty", "erase", "reset"],
+        icon: Trash2,
+        run: () => {
+          if (confirm("Are you sure you want to remove all demo data and start clean? This will permanently delete all ventures, issues, and roadmap items.")) {
+            clearWorkspace()
+          }
+          close()
+        },
+      },
+      {
         id: "venture-portfolio",
         label: "Portfolio Context",
         description: "Show all venture operations.",
@@ -220,6 +233,7 @@ export function CommandPalette() {
     exportWorkspace,
     importWorkspace,
     resetWorkspace,
+    clearWorkspace,
   ])
 
   const filteredActions = actions.filter((action) => {

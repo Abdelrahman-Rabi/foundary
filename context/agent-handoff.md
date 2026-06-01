@@ -59,6 +59,153 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-05-31 - Codex - PLG Reviewer Flow Polish
+
+Task:
+Polished the first reviewer workflow so the dashboard risk, venture health
+cards, roadmap overview, and drill-down drawers read as one connected product
+story.
+
+Changed:
+- `src/features/dashboard/components/risk-panel.tsx`
+- `src/features/dashboard/components/venture-health-panel.tsx`
+- `src/features/dashboard/components/roadmap-overview-panel.tsx`
+- `src/features/dashboard/utils/dashboard-metrics.ts`
+- `src/features/issues/components/issue-drawer-content.tsx`
+- `src/features/roadmap/components/roadmap-drawer-content.tsx`
+- `context/agent-handoff.md`
+
+Verification:
+- `npm run lint` passed.
+- `npm run build` passed after allowing the build to fetch `next/font` Google
+  font assets.
+- Browser check passed for `/dashboard` reviewer copy, top-risk click-through,
+  issue drawer strategic linkage, linked roadmap drawer, and console errors.
+- Browser recheck of `Start Clean Platform` was attempted, but the in-app
+  browser automation timed out during menu/tab interaction after the main flow
+  verification. Start-clean code paths were not changed in this slice.
+
+Notes:
+- Renamed dashboard risk framing to roadmap confidence risk.
+- Added compact venture story lines for Sentra, Reson8, and Internal Ops.
+- Renamed drawer sections toward strategic linkage and operational
+  intelligence language.
+
+Risks / Follow-ups:
+- Re-run an interactive start-clean check if the browser automation session is
+  refreshed; this slice did not modify start-clean behavior.
+
+## 2026-05-31 - Codex - PLG Demo Story Coherence
+
+Task:
+Tuned the seeded demo data into a reviewer-first PLG story across the three
+default ventures.
+
+Changed:
+- `src/data/ventures.ts`
+- `src/data/roadmap.ts`
+- `src/data/issues.ts`
+- `src/data/ai-insights.ts`
+- `src/app/dashboard/page.tsx`
+- `context/agent-handoff.md`
+
+Verification:
+- `npm run lint` passed.
+- `npm run build` passed after allowing the build to fetch `next/font` Google
+  font assets.
+- Browser check passed after clearing local workspace state: `/dashboard`,
+  `/roadmap`, `/issues`, and `/assistant` surfaced the updated Sentra, Reson8,
+  and Internal Ops story terms.
+- Browser check passed for `Start Clean Platform`; demo state was restored
+  afterward.
+- Browser console error check returned no errors.
+
+Notes:
+- Sentra now reads as growth pressure with activation analytics risk and a
+  completed referral foundation win.
+- Reson8 now reads as validation uncertainty with a retention threshold,
+  split/continue decision, and killed broadcast-loop learning.
+- Internal Ops now reads as stable studio operating leverage with meeting
+  intelligence and contained metrics scope.
+- Changed the dashboard next-best-action risk description to include the actual
+  top risk title.
+
+Risks / Follow-ups:
+- A future PLG polish pass could tune dashboard panel copy beyond seeded data,
+  but no new UI system was added in this slice.
+
+## 2026-05-31 - Codex - PLG Activation UI Slice
+
+Task:
+Implemented the first visible PLG activation slice so first-time visitors get a
+clear dashboard next action plus useful empty states across issues, roadmap, and
+assistant.
+
+Changed:
+- `src/components/shared/next-best-action.tsx`
+- `src/app/dashboard/page.tsx`
+- `src/features/dashboard/components/dashboard-header.tsx`
+- `src/features/issues/hooks/use-issues-data.ts`
+- `src/app/issues/page.tsx`
+- `src/features/issues/components/issue-list.tsx`
+- `src/features/issues/components/issue-board.tsx`
+- `src/features/issues/components/issue-column.tsx`
+- `src/app/roadmap/page.tsx`
+- `src/features/roadmap/components/roadmap-board.tsx`
+- `src/features/roadmap/components/roadmap-column.tsx`
+- `src/app/assistant/page.tsx`
+- `context/agent-handoff.md`
+
+Verification:
+- `npm run lint` passed.
+- `npm run build` passed after allowing the build to fetch `next/font` Google
+  font assets.
+- Browser check passed for populated demo `/dashboard`, `/issues`, `/roadmap`,
+  and `/assistant`.
+- Browser check passed for start-clean empty states on `/dashboard`, `/issues`,
+  `/roadmap`, and `/assistant`; seeded demo state was restored afterward.
+- Browser console error check returned no errors.
+
+Notes:
+- Added a shared `NextBestAction` component and wired it to existing quick
+  create, drawer, and route flows without adding new global state.
+- Issues and roadmap now distinguish true empty contexts from filtered-empty
+  results.
+- Assistant empty states now use setup/clarity language for empty workspaces
+  instead of implying fake risk.
+
+Risks / Follow-ups:
+- Broader seeded-data story tuning remains a later PLG phase; this slice focused
+  on visible activation UI and empty-state clarity.
+
+## 2026-05-31 - Codex - PLG Activation Roadmap
+
+Task:
+Prepared the phased PLG implementation roadmap for making Foundary easier to
+discover and use without support, demos, tours, or chatbot onboarding.
+
+Changed:
+- `AGENTS.md`
+- `context/codebase-map.md`
+- `context/current-feature.md`
+- `context/implementation-roadmap.md`
+- `context/features/feature-plg-activation.md`
+- `context/agent-handoff.md`
+
+Verification:
+- `git diff --check -- AGENTS.md context\codebase-map.md context\current-feature.md context\implementation-roadmap.md context\features\feature-plg-activation.md` passed.
+
+Notes:
+- Added Product Phase 4 / Phase 13 for PLG Activation with sub-phases covering
+  first impression audit, demo story coherence, next-best-action guidance,
+  empty states, product copy, and activation verification.
+- Updated startup routing so future agents load the PLG feature spec when
+  working on first-time visitor discoverability.
+
+Risks / Follow-ups:
+- Implementation should start with a first-impression audit before changing UI
+  so the PLG work improves activation without becoming tutorial-heavy.
+
 ## 2026-05-30 - Antigravity - Start Clean Platform Feature
 
 Task:

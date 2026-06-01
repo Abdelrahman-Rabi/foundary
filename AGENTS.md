@@ -148,6 +148,20 @@ Load:
 Only load dashboard, issues, roadmap, or AI specs when implementing behavior in
 those surfaces.
 
+## PLG Activation Work
+
+Load:
+
+```txt
+/context/features/feature-plg-activation.md
+/context/features/feature-navigation.md
+/context/data/domain-models.md
+/context/current-feature.md
+```
+
+Only load dashboard, issues, roadmap, or AI specs when changing behavior in
+those surfaces.
+
 ---
 
 # Implementation Order
@@ -163,6 +177,7 @@ Foundation
 → AI Layer
 → Synchronization
 → Polish
+→ PLG Activation
 ```
 
 Do NOT:

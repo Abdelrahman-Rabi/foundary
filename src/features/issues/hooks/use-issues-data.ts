@@ -11,7 +11,7 @@ import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
 import { useVentureStore } from "@/stores/venture-store"
-import type { Issue, IssueStatus } from "@/types/issue"
+import type { Issue, IssueFilters, IssueStatus } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
 import type { User } from "@/types/user"
 import type { Venture } from "@/types/venture"
@@ -36,6 +36,20 @@ function groupIssues(issues: Issue[]) {
   return groups
 }
 
+function hasActiveIssueFilters(filters: IssueFilters) {
+  return (
+    filters.search.trim().length > 0 ||
+    filters.ventureIds.length > 0 ||
+    filters.priorities.length > 0 ||
+    filters.statuses.length > 0 ||
+    filters.types.length > 0 ||
+    filters.ownerIds.length > 0 ||
+    filters.roadmapIds.length > 0 ||
+    filters.overdueOnly ||
+    filters.roadmapLinkedOnly
+  )
+}
+
 export function useIssuesData({
   users,
   ventures,
@@ -54,6 +68,10 @@ export function useIssuesData({
     const activeVenture =
       ventures.find((venture) => venture.id === activeVentureId) ?? null
     const filteredIssues = filterIssues(issues, filters, users)
+    const scopedIssueCount =
+      mode === "venture" && activeVentureId
+        ? issues.filter((issue) => issue.ventureId === activeVentureId).length
+        : issues.length
     const scopedIssues =
       mode === "venture" && activeVentureId
         ? filteredIssues.filter((issue) => issue.ventureId === activeVentureId)
@@ -64,6 +82,8 @@ export function useIssuesData({
       activeVenture,
       visibleIssues,
       groupedIssues: groupIssues(visibleIssues),
+      scopedIssueCount,
+      hasActiveFilters: hasActiveIssueFilters(filters),
       roadmapItems: roadmapItems as RoadmapItem[],
       issuesViewMode,
       mode,

@@ -1,8 +1,10 @@
 "use client"
 
+import { GitPullRequest, Map } from "lucide-react"
 import { useEffect, useMemo } from "react"
 
 import { PageContainer } from "@/components/layout/page-container"
+import { NextBestAction } from "@/components/shared/next-best-action"
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
 import { AiOperationalInsight } from "@/features/assistant/components/ai-operational-insight"
 import { AiRecommendationBlock } from "@/features/assistant/components/ai-recommendation-block"
@@ -33,6 +35,10 @@ export default function AssistantPage() {
   const mode = useVentureStore((state) => state.mode)
   const activeVentureId = useVentureStore((state) => state.activeVentureId)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const openQuickCreateIssue = useUiStore((state) => state.openQuickCreateIssue)
+  const openQuickCreateRoadmap = useUiStore(
+    (state) => state.openQuickCreateRoadmap
+  )
   const selectSignal = useAssistantStore((state) => state.selectSignal)
   const markInspected = useAssistantStore((state) => state.markInspected)
   const dismissedSignalIds = useAssistantStore((state) => state.dismissedSignalIds)
@@ -94,6 +100,8 @@ export default function AssistantPage() {
     (signal) => signal.recommendationKind === "clarify"
   )
   const prioritySignals = visibleSignals.slice(0, 5)
+  const hasExecutionContext =
+    scoped.issues.length > 0 || scoped.roadmapItems.length > 0
 
   function handleInspectSignal(signalId: string) {
     selectSignal(signalId)
@@ -139,10 +147,18 @@ export default function AssistantPage() {
                   onOpenSource={handleOpenSource}
                 />
               ))
-            ) : (
+            ) : hasExecutionContext ? (
               <AiSignalEmptyState
                 title="No operational priorities detected."
-                description="Signals will appear when execution risk, clarity gaps, or roadmap confidence changes."
+                description="Signals will appear when delivery risk, clarity gaps, or roadmap confidence changes."
+              />
+            ) : (
+              <NextBestAction
+                icon={GitPullRequest}
+                title="No operational signal yet."
+                description="Capture the first execution issue so assistant signals can identify pressure, clarity gaps, and delivery risk."
+                actionLabel="Create issue"
+                onAction={openQuickCreateIssue}
               />
             )}
           </div>
@@ -177,8 +193,16 @@ export default function AssistantPage() {
                   onOpenInsight={handleInspectSignal}
                 />
               ))
-            ) : (
+            ) : hasExecutionContext ? (
               <AiSignalEmptyState title="No roadmap decisions require attention." />
+            ) : (
+              <NextBestAction
+                icon={Map}
+                title="No roadmap decisions yet."
+                description="Define a validation initiative to give Foundary a strategic object for confidence and prioritization signals."
+                actionLabel="Add roadmap initiative"
+                onAction={openQuickCreateRoadmap}
+              />
             )}
           </div>
         </AssistantSection>

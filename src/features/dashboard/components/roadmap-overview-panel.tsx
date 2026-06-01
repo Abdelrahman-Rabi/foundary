@@ -58,7 +58,7 @@ export function RoadmapOverviewPanel({
                   {item.title}
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {getVentureName(ventures, item.ventureId)} / {item.linkedIssueIds.length} linked issue
+                  {getVentureName(ventures, item.ventureId)} / {item.linkedIssueIds.length} execution link
                   {item.linkedIssueIds.length === 1 ? "" : "s"}
                 </p>
               </div>
@@ -77,7 +77,7 @@ export function RoadmapOverviewPanel({
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Progress</span>
+                  <span className="text-muted-foreground">Execution</span>
                   <span className="text-foreground">{item.progress}%</span>
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted/60">

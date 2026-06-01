@@ -134,7 +134,7 @@ export function RoadmapDrawerContent({
           <div className="flex items-center gap-2">
             <Target className="size-4 text-muted-foreground" />
             <h3 className="text-sm font-medium text-foreground">
-              Strategic goal
+              Strategic outcome
             </h3>
           </div>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -146,7 +146,7 @@ export function RoadmapDrawerContent({
               updateRoadmapItem(item.id, { goal: event.target.value })
             }
             rows={3}
-            aria-label="Roadmap strategic goal"
+            aria-label="Roadmap strategic outcome"
             className="mt-3 w-full resize-none rounded-lg border border-border/60 bg-background/50 p-3 text-sm leading-6 text-foreground placeholder:text-muted-foreground"
           />
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -240,7 +240,7 @@ export function RoadmapDrawerContent({
             <div className="flex items-center gap-2">
               <GitBranch className="size-4 text-muted-foreground" />
               <h3 className="text-sm font-medium text-foreground">
-                Linked issues
+                Execution links
               </h3>
             </div>
             <span className="text-xs text-muted-foreground">
@@ -256,7 +256,7 @@ export function RoadmapDrawerContent({
               className="h-8 px-2 text-xs"
               onClick={handleViewLinkedIssues}
             >
-              View linked issues
+              View execution links
             </Button>
           </div>
 
@@ -270,7 +270,7 @@ export function RoadmapDrawerContent({
 
         <section className="px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">
-            AI strategic insights
+            Operational intelligence
           </h3>
           <div className="mt-3">
             <AiRoadmapAnalysis

@@ -36,7 +36,7 @@ export function RoadmapColumn({
       }[timeframe]
   const emptyDescription = hasActiveFilters
     ? "Try loosening the roadmap filters for this context."
-    : "Roadmap initiatives will appear here when this timeframe has strategic focus."
+    : "Strategic initiatives will appear here when this timeframe has a clear outcome."
 
   return (
     <section className="flex min-h-[440px] flex-col rounded-lg border border-border/60 bg-card/35">

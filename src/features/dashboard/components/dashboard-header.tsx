@@ -20,9 +20,11 @@ export function DashboardHeader({
   const contextLabel =
     mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
   const summary =
-    mode === "portfolio"
-      ? `${attentionCount} venture${attentionCount === 1 ? "" : "s"} require attention.`
-      : `${contextLabel} is ${activeVenture?.health ?? "stable"} with ${activeVenture?.confidence ?? 0}% confidence.`
+    scopedVentures.length === 0
+      ? "No venture context is active yet. Create a venture or reset demo data to begin shaping operational signal."
+      : mode === "portfolio"
+        ? `${attentionCount} venture${attentionCount === 1 ? "" : "s"} require attention. Review venture health, execution pressure, and roadmap confidence from one operating view.`
+        : `${contextLabel} is ${activeVenture?.health ?? "stable"} with ${activeVenture?.confidence ?? 0}% roadmap confidence. Use the highest-signal work below to decide the next operating move.`
 
   return (
     <header className="flex items-start justify-between gap-6 border-b border-border/60 pb-5">
@@ -34,8 +36,7 @@ export function DashboardHeader({
           Dashboard
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          {summary} Review the work that needs attention and move directly into
-          the affected context.
+          {summary}
         </p>
       </div>
       <Button

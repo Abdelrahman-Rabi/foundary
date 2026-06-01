@@ -1,8 +1,10 @@
 "use client"
 
+import { AlertTriangle, GitPullRequest, Map, Plus, Sparkles } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 import { PageContainer } from "@/components/layout/page-container"
+import { NextBestAction } from "@/components/shared/next-best-action"
 import { AiInsightsPanel } from "@/features/dashboard/components/ai-insights-panel"
 import { AttentionPanel } from "@/features/dashboard/components/attention-panel"
 import { DashboardHeader } from "@/features/dashboard/components/dashboard-header"
@@ -31,6 +33,13 @@ export default function DashboardPage() {
   const setIssueFilters = useIssueStore((state) => state.setFilters)
   const resetIssueFilters = useIssueStore((state) => state.resetFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const openQuickCreateIssue = useUiStore((state) => state.openQuickCreateIssue)
+  const openQuickCreateRoadmap = useUiStore(
+    (state) => state.openQuickCreateRoadmap
+  )
+  const openQuickCreateVenture = useUiStore(
+    (state) => state.openQuickCreateVenture
+  )
   const selectSignal = useAssistantStore((state) => state.selectSignal)
   const markInspected = useAssistantStore((state) => state.markInspected)
   const {
@@ -38,6 +47,8 @@ export default function DashboardPage() {
     activeVenture,
     scopedVentures,
     kpiMetrics,
+    scopedIssues,
+    scopedRoadmapItems,
     statusCounts,
     roadmapOverviewItems,
     risks,
@@ -110,6 +121,66 @@ export default function DashboardPage() {
     openFilteredIssues(status.issueFilter)
   }
 
+  const renderNextAction = () => {
+    if (ventures.length === 0) {
+      return (
+        <NextBestAction
+          icon={Plus}
+          title="Create the first venture context"
+          description="Start with a local venture so Foundary can organize issues, roadmap confidence, and operational signals around one company."
+          actionLabel="Create venture"
+          onAction={openQuickCreateVenture}
+        />
+      )
+    }
+
+    if (scopedIssues.length === 0 && scopedRoadmapItems.length === 0) {
+      return (
+        <NextBestAction
+          icon={GitPullRequest}
+          title="Capture the first execution signal"
+          description="Add a blocker, validation task, or delivery risk to turn this empty venture into an operating workspace."
+          actionLabel="Create issue"
+          onAction={openQuickCreateIssue}
+        />
+      )
+    }
+
+    if (risks[0]) {
+      return (
+        <NextBestAction
+          icon={AlertTriangle}
+          title="Inspect the highest delivery risk"
+          description={`${risks[0].title}: ${risks[0].suggestedAction}`}
+          actionLabel="Inspect risk"
+          onAction={() => openDashboardSource(risks[0])}
+        />
+      )
+    }
+
+    if (aiSignals[0]) {
+      return (
+        <NextBestAction
+          icon={Sparkles}
+          title="Review the strongest operational signal"
+          description={aiSignals[0].reason}
+          actionLabel="Review signal"
+          onAction={() => openAssistantSignal(aiSignals[0])}
+        />
+      )
+    }
+
+    return (
+      <NextBestAction
+        icon={Map}
+        title="Define the next validation initiative"
+        description="Add a roadmap initiative to connect venture direction, execution confidence, and follow-up work."
+        actionLabel="Add roadmap initiative"
+        onAction={openQuickCreateRoadmap}
+      />
+    )
+  }
+
   return (
     <PageContainer>
       <DashboardHeader
@@ -118,6 +189,8 @@ export default function DashboardPage() {
         scopedVentures={scopedVentures}
         onAnalyzeContext={() => openDrawer({ type: "assistant" })}
       />
+
+      {renderNextAction()}
 
       <KpiRow metrics={kpiMetrics} onSelectMetric={handleMetricSelect} />
 

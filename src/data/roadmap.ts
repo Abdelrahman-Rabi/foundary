@@ -4,11 +4,11 @@ export const roadmapItems: RoadmapItem[] = [
   {
     id: "roadmap-sentra-onboarding",
     ventureId: "venture-sentra",
-    title: "AI-Powered Onboarding Optimization",
+    title: "Activation Analytics Recovery",
     description:
-      "Improve activation by adapting onboarding steps to workspace intent.",
+      "Stabilize onboarding analytics before expanding adaptive activation experiments.",
     timeframe: "now",
-    goal: "Reduce first-session drop-off for qualified workspaces.",
+    goal: "Restore trustworthy activation signal before the next growth experiment.",
     status: "at-risk",
     ownerId: "user-sarah-chen",
     linkedIssueIds: [
@@ -20,7 +20,7 @@ export const roadmapItems: RoadmapItem[] = [
     confidenceTrend: "declining",
     impact: "high",
     riskLevel: "high",
-    targetMetric: "Activation rate +12%",
+    targetMetric: "Reliable activation events above 95%",
     aiInsightIds: ["insight-sentra-analytics-risk"],
     createdAt: "2026-05-01T09:00:00.000Z",
     updatedAt: "2026-05-24T10:00:00.000Z",
@@ -36,10 +36,8 @@ export const roadmapItems: RoadmapItem[] = [
     status: "active",
     ownerId: "user-lina-haddad",
     linkedIssueIds: [
-      "issue-sentra-referral-flow",
       "issue-sentra-mobile-conversion-copy",
       "issue-sentra-referral-abuse-guardrails",
-      "issue-sentra-referral-cohort-review",
     ],
     progress: 74,
     confidence: 88,
@@ -54,11 +52,11 @@ export const roadmapItems: RoadmapItem[] = [
   {
     id: "roadmap-reson8-retention",
     ventureId: "venture-reson8",
-    title: "Creator Engagement Validation",
+    title: "Creator Retention Signal Validation",
     description:
-      "Validate whether repeat collaboration loops drive creator retention.",
+      "Decide whether repeat collaboration behavior is strong enough to justify delivery investment.",
     timeframe: "now",
-    goal: "Identify the strongest retained-creator behavior signal.",
+    goal: "Define the retained-creator threshold for a continue, split, or stop decision.",
     status: "at-risk",
     ownerId: "user-sarah-chen",
     linkedIssueIds: [
@@ -72,7 +70,7 @@ export const roadmapItems: RoadmapItem[] = [
     confidenceTrend: "stable",
     impact: "high",
     riskLevel: "high",
-    targetMetric: "Validated retention trigger",
+    targetMetric: "Retained-creator threshold defined",
     aiInsightIds: ["insight-reson8-validation-criteria"],
     createdAt: "2026-05-05T09:00:00.000Z",
     updatedAt: "2026-05-24T10:00:00.000Z",
@@ -82,9 +80,9 @@ export const roadmapItems: RoadmapItem[] = [
     ventureId: "venture-internal-ops",
     title: "AI Meeting Intelligence Rollout",
     description:
-      "Create a structured operating summary for venture review meetings.",
+      "Turn venture review meetings into structured summaries and follow-up issue capture.",
     timeframe: "now",
-    goal: "Reduce manual follow-up tracking after operating meetings.",
+    goal: "Reduce missed follow-ups after weekly venture operating meetings.",
     status: "active",
     ownerId: "user-maya-rodriguez",
     linkedIssueIds: [
@@ -107,9 +105,9 @@ export const roadmapItems: RoadmapItem[] = [
     ventureId: "venture-reson8",
     title: "Creator Pricing Signal Discovery",
     description:
-      "Test whether collaboration intent improves when creators see clearer package guidance.",
+      "Hold monetization discovery until retention confidence is strong enough to justify pricing work.",
     timeframe: "later",
-    goal: "Validate pricing clarity as a lever before expanding monetization work.",
+    goal: "Identify whether pricing clarity should follow the retention decision.",
     status: "planned",
     ownerId: "user-omar-khaled",
     linkedIssueIds: [],
@@ -118,7 +116,7 @@ export const roadmapItems: RoadmapItem[] = [
     confidenceTrend: "stable",
     impact: "medium",
     riskLevel: "medium",
-    targetMetric: "Pricing comprehension signal identified",
+    targetMetric: "Pricing discovery gate defined",
     aiInsightIds: [],
     createdAt: "2026-05-18T09:00:00.000Z",
     updatedAt: "2026-05-24T10:00:00.000Z",
@@ -128,7 +126,7 @@ export const roadmapItems: RoadmapItem[] = [
     ventureId: "venture-internal-ops",
     title: "Founder Hiring Workflow Automation",
     description:
-      "Explore lightweight automation for founder candidate handoffs and follow-up tracking.",
+      "Map founder candidate handoffs without turning studio hiring into a heavy workflow system.",
     timeframe: "later",
     goal: "Reduce manual coordination in early founder hiring loops.",
     status: "planned",
@@ -173,9 +171,9 @@ export const roadmapItems: RoadmapItem[] = [
     ventureId: "venture-reson8",
     title: "Broadcast Collaboration Loop",
     description:
-      "Stop the broadcast-style collaboration loop after weak retained-creator signal.",
+      "Preserve the stop decision from a broadcast-style loop that failed to produce retained-creator signal.",
     timeframe: "later",
-    goal: "Preserve learning from a low-signal retention path.",
+    goal: "Keep the low-signal path closed and fold learnings into retention validation.",
     status: "killed",
     ownerId: "user-maya-rodriguez",
     linkedIssueIds: ["issue-reson8-archive-broadcast-test"],
@@ -194,7 +192,7 @@ export const roadmapItems: RoadmapItem[] = [
     ventureId: "venture-internal-ops",
     title: "Studio Metrics Dashboard",
     description:
-      "Define a lean operating metrics surface for weekly portfolio review.",
+      "Define a lean metrics surface for portfolio review without expanding into BI reporting.",
     timeframe: "next",
     goal: "Improve portfolio review focus without adding reporting overhead.",
     status: "planned",

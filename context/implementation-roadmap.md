@@ -85,6 +85,8 @@ README & Narrative
 Local-First Execution Continuity
   ↓
 Venture Setup
+  ↓
+PLG Activation
 ```
 
 This sequence minimizes:
@@ -1011,6 +1013,165 @@ By end of Product Phase 3:
 - refresh/export/import preserve the custom venture
 - reset returns to seeded demo state
 - empty venture states feel useful, not fake or noisy
+
+---
+
+# Phase 13 / Product Phase 4 - PLG Activation
+
+## Goal
+
+Make Foundary understandable and useful for a first-time visitor without a
+support call, onboarding demo, product tour, or chatbot explanation.
+
+This phase turns the existing product into a self-discoverable PLG experience by
+improving first impression, demo story, empty states, and next-best-action
+guidance.
+
+---
+
+# Required Tasks
+
+## First Impression Audit
+
+Review:
+```txt
+Dashboard first viewport
+Venture switcher and local workspace controls
+Seeded demo data story
+Issues and roadmap empty states
+Assistant priority surfaces
+Start clean platform flow
+New venture creation flow
+```
+
+Identify where a new visitor may not understand:
+- what Foundary is
+- what the current venture status means
+- what to click first
+- how issues, roadmap, dashboard, and assistant connect
+
+---
+
+## Demo Story And Data Coherence
+
+Tune seeded data so each venture has a believable operating story.
+
+Ensure:
+```txt
+Ventures have distinct situations
+Issues support roadmap narratives
+Roadmap items expose strategic tradeoffs
+AI signals reference real execution conditions
+Dashboard metrics summarize the connected story
+```
+
+The demo should feel like a living venture workspace, not placeholder content.
+
+---
+
+## Next Best Action Pattern
+
+Add a lightweight contextual action pattern across core surfaces.
+
+Examples:
+```txt
+Inspect top risk
+Create first issue
+Add first roadmap initiative
+Review confidence signal
+Start from a clean venture
+```
+
+Rules:
+- one clear action per context
+- no onboarding checklist
+- no gamification
+- no tutorial system
+- no interruption of normal workflows
+
+---
+
+## Empty State Upgrade
+
+Improve clean/custom venture states across:
+```txt
+Dashboard
+Issues
+Roadmap
+Assistant
+```
+
+Empty states should:
+- explain what belongs in the surface
+- offer one direct action
+- avoid fake risk or invented AI certainty
+- use concise venture-aware language
+
+---
+
+## Product Copy And Label Pass
+
+Sharpen labels and microcopy around Foundary's mental model.
+
+Prefer:
+```txt
+Venture health
+Execution pressure
+Roadmap confidence
+Attention needed
+Operational signal
+Validation initiative
+Delivery risk
+```
+
+Avoid:
+```txt
+Generic task-manager wording
+Enterprise reporting language
+Playful onboarding language
+Chatbot framing
+```
+
+---
+
+# Important Scope Rules
+
+This phase remains:
+- frontend-only
+- local-first
+- product-led through in-app clarity
+- calm, compact, and operational
+
+Do NOT add:
+- onboarding tours
+- coach marks
+- support widgets
+- chatbot onboarding
+- backend analytics
+- account setup
+- team invites
+- billing or plans
+- settings-heavy setup
+
+---
+
+# Success Criteria
+
+By end of Product Phase 4:
+- a new visitor understands Foundary's purpose from the dashboard
+- seeded demo data tells a coherent venture execution story
+- clean/custom ventures guide the user to useful first actions
+- empty states feel helpful rather than dead
+- the app shows strong PM/product judgment without adding support-heavy UX
+- existing power-user workflows remain fast and unobstructed
+
+The reviewer should feel:
+
+> "This product explains itself through the work."
+
+NOT:
+
+> "This product needs an onboarding walkthrough to make sense."
 
 ---
 

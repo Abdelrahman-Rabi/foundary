@@ -13,10 +13,14 @@ import {
   useSensors,
 } from "@dnd-kit/core"
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable"
+import { Plus } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
+import { EmptyState } from "@/components/shared/empty-state"
 import { IssueCardPreview } from "@/features/issues/components/issue-card"
 import { IssueColumn } from "@/features/issues/components/issue-column"
 import { issueStatuses } from "@/features/issues/utils/issue-utils"
+import { NextBestAction } from "@/components/shared/next-best-action"
 import { useIssueStore } from "@/stores/issue-store"
 import type { Issue, IssueStatus } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
@@ -28,6 +32,10 @@ type IssueBoardProps = {
   ventures: Venture[]
   users: User[]
   roadmapItems: RoadmapItem[]
+  scopedIssueCount: number
+  hasActiveFilters: boolean
+  contextLabel: string
+  onOpenQuickCreate: () => void
 }
 
 export function IssueBoard({
@@ -35,8 +43,13 @@ export function IssueBoard({
   ventures,
   users,
   roadmapItems,
+  scopedIssueCount,
+  hasActiveFilters,
+  contextLabel,
+  onOpenQuickCreate,
 }: IssueBoardProps) {
   const updateIssueStatus = useIssueStore((state) => state.updateIssueStatus)
+  const resetFilters = useIssueStore((state) => state.resetFilters)
   const [activeIssueId, setActiveIssueId] = useState<string | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -76,6 +89,34 @@ export function IssueBoard({
     if (currentStatus !== nextStatus) {
       updateIssueStatus(String(active.id), nextStatus)
     }
+  }
+
+  const visibleIssueCount = Object.values(groupedIssues).flat().length
+
+  if (visibleIssueCount === 0 && scopedIssueCount === 0 && !hasActiveFilters) {
+    return (
+      <NextBestAction
+        icon={Plus}
+        title={`No board work in ${contextLabel.toLowerCase()} yet.`}
+        description="Create the first execution issue to start shaping backlog, planned work, and delivery pressure."
+        actionLabel="Create issue"
+        onAction={onOpenQuickCreate}
+      />
+    )
+  }
+
+  if (visibleIssueCount === 0 && hasActiveFilters) {
+    return (
+      <EmptyState
+        title="No board issues match the current filters."
+        description="Clear filters to return to the full execution board for this context."
+        action={
+          <Button variant="outline" className="h-8" onClick={resetFilters}>
+            Clear filters
+          </Button>
+        }
+      />
+    )
   }
 
   return (

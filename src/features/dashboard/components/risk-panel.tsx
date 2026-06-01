@@ -18,9 +18,11 @@ export function RiskPanel({ risks, onOpenRisk }: RiskPanelProps) {
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Portfolio risk</h2>
+          <h2 className="text-sm font-medium text-foreground">
+            Roadmap confidence risk
+          </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Operational concerns that may need intervention.
+            Execution signals that can change venture confidence.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">{risks.length} signals</span>
@@ -69,10 +71,11 @@ export function RiskPanel({ risks, onOpenRisk }: RiskPanelProps) {
         ) : (
           <div className="rounded-lg border border-border/50 bg-background/35 p-3">
             <p className="text-sm text-muted-foreground">
-              No active delivery risks detected.
+              No active roadmap confidence risks detected.
             </p>
             <p className="mt-1 text-xs leading-5 text-muted-foreground">
-              Current issue and roadmap signals do not require intervention.
+              Current issue and roadmap signals do not require an operating
+              decision.
             </p>
           </div>
         )}

@@ -16,6 +16,8 @@ export default function IssuesPage() {
   const {
     visibleIssues,
     groupedIssues,
+    scopedIssueCount,
+    hasActiveFilters,
     roadmapItems,
     issuesViewMode,
     contextLabel,
@@ -36,6 +38,10 @@ export default function IssuesPage() {
           ventures={ventures}
           users={users}
           roadmapItems={roadmapItems}
+          scopedIssueCount={scopedIssueCount}
+          hasActiveFilters={hasActiveFilters}
+          contextLabel={contextLabel}
+          onOpenQuickCreate={openQuickCreateIssue}
         />
       ) : (
         <IssueBoard
@@ -43,6 +49,10 @@ export default function IssuesPage() {
           ventures={ventures}
           users={users}
           roadmapItems={roadmapItems}
+          scopedIssueCount={scopedIssueCount}
+          hasActiveFilters={hasActiveFilters}
+          contextLabel={contextLabel}
+          onOpenQuickCreate={openQuickCreateIssue}
         />
       )}
     </PageContainer>

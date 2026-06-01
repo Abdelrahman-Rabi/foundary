@@ -567,6 +567,20 @@ src/stores/ui-store.ts
 src/stores/venture-store.ts
 ```
 
+PLG activation task:
+
+```txt
+context/features/feature-plg-activation.md
+context/features/feature-navigation.md
+context/data/domain-models.md
+src/data/*
+src/features/dashboard/*
+src/features/issues/*
+src/features/roadmap/*
+src/features/assistant/*
+src/components/shared/empty-state.tsx
+```
+
 Synchronization task:
 
 ```txt

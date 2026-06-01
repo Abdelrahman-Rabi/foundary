@@ -63,7 +63,7 @@ export function IssueColumn({
           </SortableContext>
         ) : (
           <div className="rounded-lg border border-dashed border-border/60 p-3 text-xs text-muted-foreground">
-            No issues in {statusLabels[status].toLowerCase()}.
+            No {statusLabels[status].toLowerCase()} execution work.
           </div>
         )}
       </div>

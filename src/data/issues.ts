@@ -5,9 +5,9 @@ export const issues: Issue[] = [
     id: "issue-sentra-analytics-ingestion",
     ventureId: "venture-sentra",
     roadmapId: "roadmap-sentra-onboarding",
-    title: "Refactor onboarding analytics ingestion pipeline",
+    title: "Unblock onboarding analytics ingestion",
     description:
-      "Stabilize analytics ingestion before expanding onboarding experiments.",
+      "Resolve the analytics ingestion failure blocking reliable activation reads.",
     type: "tech-debt",
     priority: "urgent",
     status: "in-progress",
@@ -39,7 +39,10 @@ export const issues: Issue[] = [
     confidence: 86,
     effort: "medium",
     blocked: false,
-    acceptanceCriteria: ["Referral entry point is visible", "Activation event is tracked"],
+    acceptanceCriteria: [
+      "Referral entry point is visible",
+      "Referral activation quality is reviewed",
+    ],
     aiInsightIds: [],
     createdAt: "2026-05-08T09:00:00.000Z",
     updatedAt: "2026-05-23T12:00:00.000Z",
@@ -50,7 +53,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-sentra-onboarding",
     title: "Define activation event taxonomy",
     description:
-      "Align activation, referral, and onboarding events before running new growth experiments.",
+      "Align activation, referral, and onboarding events before the next adaptive onboarding experiment.",
     type: "research",
     priority: "high",
     status: "planned",
@@ -82,7 +85,10 @@ export const issues: Issue[] = [
     confidence: 58,
     effort: "medium",
     blocked: false,
-    acceptanceCriteria: [],
+    acceptanceCriteria: [
+      "Activation threshold drafted",
+      "Repeat collaboration behavior defined",
+    ],
     aiInsightIds: ["insight-reson8-validation-criteria"],
     createdAt: "2026-05-12T09:00:00.000Z",
     updatedAt: "2026-05-24T10:00:00.000Z",
@@ -115,7 +121,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-sentra-referrals",
     title: "Tighten mobile referral conversion copy",
     description:
-      "Refine mobile referral prompts to reduce drop-off before account creation.",
+      "Refine mobile referral prompts for the next expansion after the referral foundation release.",
     type: "experiment",
     priority: "medium",
     status: "planned",
@@ -137,7 +143,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-sentra-referrals",
     title: "Define referral abuse guardrails",
     description:
-      "Create lightweight detection rules before expanding referral incentives.",
+      "Create lightweight guardrails before expanding referral incentives beyond the proven foundation.",
     type: "research",
     priority: "medium",
     status: "backlog",
@@ -180,7 +186,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-reson8-retention",
     title: "Complete creator positioning interviews",
     description:
-      "Run structured interviews to clarify the strongest repeat-collaboration narrative.",
+      "Complete blocked interviews needed to identify the strongest repeat-collaboration narrative.",
     type: "research",
     priority: "urgent",
     status: "in-progress",
@@ -201,7 +207,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-reson8-retention",
     title: "Define retention signal threshold",
     description:
-      "Set the decision threshold for whether creator collaboration behavior is strong enough to continue.",
+      "Set the continue/split/stop threshold for creator collaboration behavior.",
     type: "research",
     priority: "urgent",
     status: "planned",
@@ -222,7 +228,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-reson8-retention",
     title: "Prototype creator onboarding variant",
     description:
-      "Create a lightweight onboarding path for creators entering through collaboration invites.",
+      "Prototype the onboarding path only after the retained-creator signal threshold is clear.",
     type: "experiment",
     priority: "high",
     status: "in-review",
@@ -233,7 +239,10 @@ export const issues: Issue[] = [
     confidence: 61,
     effort: "medium",
     blocked: false,
-    acceptanceCriteria: ["Prototype reviewed", "Primary friction points tagged"],
+    acceptanceCriteria: [
+      "Prototype reviewed",
+      "Friction points mapped back to retention threshold",
+    ],
     aiInsightIds: [],
     createdAt: "2026-05-14T09:00:00.000Z",
     updatedAt: "2026-05-24T10:00:00.000Z",
@@ -243,7 +252,7 @@ export const issues: Issue[] = [
     ventureId: "venture-reson8",
     title: "Kill low-signal notification loop",
     description:
-      "Stop work on the notification loop that did not improve creator return intent.",
+      "Record the stop decision for the notification loop that did not improve creator return intent.",
     type: "experiment",
     priority: "low",
     status: "killed",
@@ -264,7 +273,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-reson8-broadcast-loop",
     title: "Archive broadcast collaboration test",
     description:
-      "Close the low-signal broadcast loop and preserve learnings for the next retention review.",
+      "Archive the broadcast loop and preserve learnings for the retention threshold review.",
     type: "experiment",
     priority: "low",
     status: "killed",
@@ -284,7 +293,7 @@ export const issues: Issue[] = [
     ventureId: "venture-internal-ops",
     title: "Map hiring workflow automation handoffs",
     description:
-      "Document the handoffs needed for a lightweight founder hiring workflow.",
+      "Document the founder hiring handoffs that can be automated without adding process weight.",
     type: "feature",
     priority: "medium",
     status: "planned",
@@ -305,7 +314,7 @@ export const issues: Issue[] = [
     ventureId: "venture-internal-ops",
     title: "Clean up venture knowledge base taxonomy",
     description:
-      "Reduce duplicated operating docs and clarify how venture teams find current playbooks.",
+      "Reduce duplicated studio playbooks so venture teams can find the current operating guidance.",
     type: "tech-debt",
     priority: "low",
     status: "backlog",
@@ -326,7 +335,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-internal-meeting-intelligence",
     title: "Sync meeting action items into issue capture",
     description:
-      "Test whether operating meeting action items can be transformed into draft execution work.",
+      "Test whether operating meeting action items can become draft execution work without manual re-entry.",
     type: "experiment",
     priority: "high",
     status: "in-progress",
@@ -348,7 +357,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-internal-meeting-intelligence",
     title: "Publish meeting intelligence rollout notes",
     description:
-      "Document the approved operating summary format for venture review meetings.",
+      "Publish the approved operating summary format for weekly venture review meetings.",
     type: "feature",
     priority: "medium",
     status: "done",
@@ -370,7 +379,7 @@ export const issues: Issue[] = [
     roadmapId: "roadmap-internal-metrics-dashboard",
     title: "Finalize studio metrics dashboard scope",
     description:
-      "Define the minimum operating metrics needed for the next portfolio review.",
+      "Define the minimum operating metrics needed for sharper portfolio review decisions.",
     type: "research",
     priority: "medium",
     status: "planned",

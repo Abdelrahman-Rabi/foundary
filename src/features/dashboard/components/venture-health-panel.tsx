@@ -19,6 +19,22 @@ const riskClassName = {
   high: "border-destructive/50 text-destructive",
 }
 
+function getVentureStory(venture: Venture) {
+  if (venture.id === "venture-sentra") {
+    return "Growth momentum is strong, but activation analytics are holding back confidence."
+  }
+
+  if (venture.id === "venture-reson8") {
+    return "Retention validation is active, with a threshold decision still unresolved."
+  }
+
+  if (venture.id === "venture-internal-ops") {
+    return "Studio operating leverage is stable and scoped around review cadence."
+  }
+
+  return venture.description
+}
+
 export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
   const openQuickCreateVenture = useUiStore((state) => state.openQuickCreateVenture)
 
@@ -28,7 +44,7 @@ export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
         <div>
           <h2 className="text-sm font-medium text-foreground">Venture health</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Momentum, load, and confidence by venture.
+            Momentum, execution load, and confidence by venture.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">{ventures.length} visible</span>
@@ -57,6 +73,9 @@ export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {venture.stage} / {venture.momentum} momentum
+                  </p>
+                  <p className="mt-2 max-w-xl text-xs leading-5 text-muted-foreground">
+                    {getVentureStory(venture)}
                   </p>
                 </div>
                 <Badge

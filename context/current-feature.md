@@ -1,36 +1,43 @@
-# Current Feature - Phase 3 Venture Setup Planning
+# Current Feature - Phase 4 PLG Activation Planning
 
 ## Current Objective
 
-Prepare the context and specifications for the next Foundary product phase:
-local-first venture setup.
+Prepare the context and phased implementation roadmap for the next Foundary
+product phase: PLG activation and first-time visitor discoverability.
 
-This phase should define how users can create a new venture context without
-introducing backend, auth, team management, settings-heavy UX, or portfolio CRM
-complexity.
+This phase should make Foundary easier to understand and use for someone seeing
+it for the first time, without introducing support-heavy onboarding, product
+tours, chatbot guidance, backend analytics, account setup, or settings-heavy UX.
 
 ---
 
 ## Expected Product Behavior
 
-- **Create venture** from a compact shell-level or command-palette entry point.
-- **New venture appears in the venture switcher** immediately.
-- **New venture becomes the active context** after creation.
-- **Dashboard, issues, roadmap, and assistant** all handle the custom venture.
-- **Empty venture states** guide users toward first issue or first roadmap item.
-- **Local-first persistence** includes custom ventures in refresh/export/import.
-- **Reset demo data** returns to seeded ventures only.
-- **Invalid imported ventures** must not overwrite current state or crash the app.
+- **First dashboard impression** explains venture health, execution pressure,
+  roadmap confidence, and attention areas without a walkthrough.
+- **Seeded demo data** tells a coherent venture operating story across ventures,
+  issues, roadmap items, and assistant signals.
+- **Next-best-action guidance** gives users one clear contextual move without
+  turning into an onboarding checklist.
+- **Clean/custom venture empty states** explain what belongs in each surface and
+  offer direct first actions.
+- **Product copy** feels venture-aware, strategic, compact, and PM-led.
+- **Existing workflows** remain fast for returning users.
 
 ---
 
 ## Technical Approach
 
-1. **Feature spec**: Use `context/features/feature-venture-setup.md` as the source of truth for Phase 3 planning.
-2. **Venture store expansion**: Plan for `useVentureStore` to own seeded and custom ventures instead of treating `src/data/ventures.ts` as the only runtime lookup source.
-3. **Persistence schema update**: Plan for custom ventures to become part of the versioned local workspace state.
-4. **Shell entry points**: Prefer a compact venture switcher action and command palette command.
-5. **Cross-feature empty states**: Dashboard, issues, roadmap, and assistant should all respond coherently to a newly created venture with no work yet.
+1. **Feature spec**: Use `context/features/feature-plg-activation.md` as the
+   source of truth for Phase 4 planning.
+2. **Implementation roadmap**: Follow Phase 13 in
+   `context/implementation-roadmap.md`.
+3. **Demo data coherence**: Tune seeded ventures, issues, roadmap items, and AI
+   insights together rather than changing copy in isolation.
+4. **Next-best-action pattern**: Reuse existing dashboard, empty state,
+   quick-create, drawer, and command palette flows before adding new UI.
+5. **Activation verification**: Test fresh demo state, start-clean state, and
+   custom venture state as separate first-time paths.
 
 ---
 
@@ -39,7 +46,7 @@ complexity.
 Load:
 
 ```txt
-context/features/feature-venture-setup.md
+context/features/feature-plg-activation.md
 context/features/feature-navigation.md
 context/data/domain-models.md
 context/current-feature.md
@@ -58,11 +65,13 @@ Assistant: context/features/feature-ai-assistant.md
 
 ## Explicitly Out Of Scope
 
-- Backend APIs / Database
-- Auth / RBAC
-- Real-time / Comments / Notifications
-- Real LLM integration
-- Settings-heavy UX pages
+- Product tours / onboarding walkthroughs
+- Coach marks / tutorial overlays
+- Support widgets / chatbot onboarding
+- Backend analytics / event tracking
+- Account setup / auth / RBAC
 - Team invites / organization management
-- Venture CRM profiles
-- Venture detail routes
+- Billing / plans
+- Real AI provider integration
+- Settings-heavy UX pages
+- Venture CRM profiles or venture detail routes

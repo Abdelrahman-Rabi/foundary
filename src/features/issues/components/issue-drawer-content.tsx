@@ -151,7 +151,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                   openDrawer({ type: "assistant", id: strongestSignal.id })
                 }
               >
-                Inspect AI signal
+                Inspect operational signal
               </Button>
             ) : null}
           </div>
@@ -283,7 +283,9 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">
-          <h3 className="text-sm font-medium text-foreground">Linked roadmap</h3>
+          <h3 className="text-sm font-medium text-foreground">
+            Strategic linkage
+          </h3>
           {roadmap ? (
             <div className="mt-3 rounded-lg border border-border/60 bg-muted/20 p-3">
               <div className="flex items-start gap-2">
@@ -307,20 +309,22 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                     className="mt-3 h-8 px-2 text-xs"
                     onClick={() => openDrawer({ type: "roadmap", id: roadmap.id })}
                   >
-                    Open roadmap
+                    Open linked roadmap
                   </Button>
                 </div>
               </div>
             </div>
           ) : (
             <p className="mt-3 text-sm text-muted-foreground">
-              No linked roadmap initiative.
+              No strategic roadmap linkage yet.
             </p>
           )}
         </section>
 
         <section className="px-5 py-4">
-          <h3 className="text-sm font-medium text-foreground">AI issue context</h3>
+          <h3 className="text-sm font-medium text-foreground">
+            Operational intelligence
+          </h3>
           <div className="mt-3 space-y-3">
             {allSignals.length > 0 ? (
               allSignals.map((signal) =>

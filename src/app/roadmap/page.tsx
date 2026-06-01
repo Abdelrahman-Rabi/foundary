@@ -26,6 +26,7 @@ export default function RoadmapPage() {
   const filters = useRoadmapStore((state) => state.filters)
   const setSearch = useRoadmapStore((state) => state.setSearch)
   const setFilters = useRoadmapStore((state) => state.setFilters)
+  const resetFilters = useRoadmapStore((state) => state.resetFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
   const openQuickCreateRoadmap = useUiStore(
     (state) => state.openQuickCreateRoadmap
@@ -61,6 +62,17 @@ export default function RoadmapPage() {
 
   const contextLabel =
     mode === "portfolio" || !activeVenture ? "Portfolio" : activeVenture.name
+  const scopedRoadmapCount = useMemo(
+    () =>
+      mode === "venture" && activeVentureId
+        ? roadmapItems.filter((item) => item.ventureId === activeVentureId).length
+        : roadmapItems.length,
+    [activeVentureId, mode, roadmapItems]
+  )
+  const hasActiveFilters =
+    Boolean(filters.search.trim()) ||
+    filters.status !== "all" ||
+    filters.confidence !== "all"
 
   return (
     <PageContainer>
@@ -83,11 +95,11 @@ export default function RoadmapPage() {
         ventures={ventures}
         issues={issues}
         insights={filteredInsights}
-        hasActiveFilters={
-          Boolean(filters.search.trim()) ||
-          filters.status !== "all" ||
-          filters.confidence !== "all"
-        }
+        hasActiveFilters={hasActiveFilters}
+        scopedRoadmapCount={scopedRoadmapCount}
+        contextLabel={contextLabel}
+        onOpenQuickCreate={openQuickCreateRoadmap}
+        onClearFilters={resetFilters}
         onOpenRoadmapItem={(roadmapId) =>
           openDrawer({ type: "roadmap", id: roadmapId })
         }

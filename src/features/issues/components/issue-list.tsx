@@ -1,8 +1,11 @@
 "use client"
 
+import { Plus } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { EmptyState } from "@/components/shared/empty-state"
 import { IssueRow } from "@/features/issues/components/issue-row"
+import { NextBestAction } from "@/components/shared/next-best-action"
 import { useIssueStore } from "@/stores/issue-store"
 import type { Issue } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
@@ -14,6 +17,10 @@ type IssueListProps = {
   ventures: Venture[]
   users: User[]
   roadmapItems: RoadmapItem[]
+  scopedIssueCount: number
+  hasActiveFilters: boolean
+  contextLabel: string
+  onOpenQuickCreate: () => void
 }
 
 export function IssueList({
@@ -21,10 +28,26 @@ export function IssueList({
   ventures,
   users,
   roadmapItems,
+  scopedIssueCount,
+  hasActiveFilters,
+  contextLabel,
+  onOpenQuickCreate,
 }: IssueListProps) {
   const resetFilters = useIssueStore((state) => state.resetFilters)
 
   if (issues.length === 0) {
+    if (scopedIssueCount === 0 && !hasActiveFilters) {
+      return (
+        <NextBestAction
+          icon={Plus}
+          title={`No execution issues in ${contextLabel.toLowerCase()} yet.`}
+          description="Capture the first blocker, validation task, or delivery risk so Foundary can start building operational signal."
+          actionLabel="Create issue"
+          onAction={onOpenQuickCreate}
+        />
+      )
+    }
+
     return (
       <EmptyState
         title="No issues match the current filters."

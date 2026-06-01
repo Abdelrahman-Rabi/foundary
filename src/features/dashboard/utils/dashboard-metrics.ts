@@ -244,6 +244,43 @@ function getRoadmapRiskSeverity(status: RoadmapStatus, riskLevel: RiskLevel) {
   return riskLevel
 }
 
+function getIssueRiskCopy(issue: Issue) {
+  if (issue.id === "issue-sentra-analytics-ingestion") {
+    return {
+      explanation:
+        "Activation analytics are blocked, so Sentra cannot trust onboarding experiment results.",
+      suggestedAction:
+        "Resolve ingestion and event taxonomy before adding new growth scope.",
+    }
+  }
+
+  if (issue.id === "issue-reson8-positioning-interviews") {
+    return {
+      explanation:
+        "Blocked interviews are delaying the creator retention threshold decision.",
+      suggestedAction:
+        "Unblock interviews before widening prototype delivery scope.",
+    }
+  }
+
+  if (issue.id === "issue-reson8-message-threshold") {
+    return {
+      explanation:
+        "The continue, split, or stop threshold is not yet decision-ready.",
+      suggestedAction:
+        "Define the retained-creator signal before adding delivery work.",
+    }
+  }
+
+  return {
+    explanation: issue.blocked
+      ? "Execution is blocked and may affect linked roadmap confidence."
+      : "Issue risk is elevated based on priority, date, or confidence.",
+    suggestedAction:
+      "Clarify the blocker and reduce active scope before adding work.",
+  }
+}
+
 const severityRank: Record<RiskLevel, number> = {
   high: 0,
   medium: 1,
@@ -261,18 +298,20 @@ export function getDashboardRisks(
       (issue) =>
         issue.blocked || issue.riskLevel === "high" || isIssueOverdue(issue)
     )
-    .map((issue) => ({
-      id: `risk-${issue.id}`,
-      title: issue.title,
-      ventureName: getVentureName(ventures, issue.ventureId),
-      severity: issue.riskLevel,
-      explanation: issue.blocked
-        ? "Execution is blocked and may affect linked roadmap confidence."
-        : "Issue risk is elevated based on priority, date, or confidence.",
-      suggestedAction: "Clarify the blocker and reduce active scope before adding work.",
-      sourceType: "issue" as const,
-      sourceId: issue.id,
-    }))
+    .map((issue) => {
+      const copy = getIssueRiskCopy(issue)
+
+      return {
+        id: `risk-${issue.id}`,
+        title: issue.title,
+        ventureName: getVentureName(ventures, issue.ventureId),
+        severity: issue.riskLevel,
+        explanation: copy.explanation,
+        suggestedAction: copy.suggestedAction,
+        sourceType: "issue" as const,
+        sourceId: issue.id,
+      }
+    })
 
   const roadmapRisks = roadmapItems
     .filter((item) => item.status === "at-risk" || item.confidence < 50)
@@ -282,7 +321,8 @@ export function getDashboardRisks(
       ventureName: getVentureName(ventures, item.ventureId),
       severity: getRoadmapRiskSeverity(item.status, item.riskLevel),
       explanation: "Roadmap confidence is weak or declining.",
-      suggestedAction: "Reassess linked execution work and validation criteria.",
+      suggestedAction:
+        "Review linked execution work and the decision criteria behind it.",
       sourceType: "roadmap" as const,
       sourceId: item.id,
     }))

@@ -59,6 +59,33 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-02 - Codex - Interview Problem-Solution Doc
+
+Task:
+Created and revised a concise interviewer-facing document explaining the core
+problems Foundary solves and how the solution maps to venture studio operations.
+
+Changed:
+- `context/problem-solution-space.md`
+- `README.md`
+- `context/agent-handoff.md`
+- `assets/The Venture Builder Problem.png`
+- `assets/The Philosophy Shift.png`
+- `assets/The Product Adaptations.png`
+- `assets/The Operating Model.png`
+
+Verification:
+- `git diff --check -- context\problem-solution-space.md README.md context\agent-handoff.md assets\"The Venture Builder Problem.png" assets\"The Philosophy Shift.png" assets\"The Product Adaptations.png" assets\"The Operating Model.png"` passed.
+
+Notes:
+- Framed the doc around four interviewer illustrations: Venture Builder
+  Problem, Philosophy Shift, Product Adaptations, and Operating Model.
+- Connected it from README delivery notes without adding it to required agent
+  startup context.
+
+Risks / Follow-ups:
+- None.
+
 ## 2026-05-31 - Codex - PLG Reviewer Flow Polish
 
 Task:

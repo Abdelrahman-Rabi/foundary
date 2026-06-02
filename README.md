@@ -124,6 +124,7 @@ This scope is deliberate. The prototype is meant to demonstrate a coherent produ
 ## Delivery Notes
 
 - Product rationale: see `product-note.md`.
+- Problem breakdown: see `context/problem-solution-space.md`.
 - AI-assisted development process: see `ai-usage-note.md`.
 
 # Foundary

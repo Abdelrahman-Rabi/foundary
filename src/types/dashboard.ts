@@ -1,5 +1,6 @@
-import type { VentureHealthState, VentureMomentum, DecisionPressure, CapacityPressure, StudioDecision } from "@/types/venture"
-import type { IssueFilters, RiskLevel } from "@/types/issue"
+import type { VentureHealthState, VentureMomentum, DecisionPressure, CapacityPressure, StudioDecision, VenturePhase, ValidationGateStatus } from "@/types/venture"
+import type { IssueFilters, RiskLevel, OperatorFunction, EvidenceRole, Issue } from "@/types/issue"
+import type { AnalystSignal } from "@/types/ai"
 
 export type VentureHealth = {
   ventureId: string
@@ -18,7 +19,6 @@ export type VentureHealth = {
   recommendedDecision?: StudioDecision
   updatedAt: string
 }
-
 
 export type DashboardMetrics = {
   totalIssues: number
@@ -52,3 +52,62 @@ export type DashboardSignal = DashboardSource & {
   title: string
   severity: RiskLevel
 }
+
+export type CommandCenterDecision = {
+  ventureId: string
+  ventureName: string
+  recommendedDecision: StudioDecision
+  decisionPressure: DecisionPressure
+  reason: string
+  gateName?: string
+}
+
+export type ValidationRiskSummary = {
+  gateId: string
+  gateName: string
+  ventureId: string
+  ventureName: string
+  status: ValidationGateStatus
+  confidence: number
+  assumption: string
+  evidenceSignalIds: string[]
+}
+
+export type CapacityPressureSummary = {
+  id: string
+  function: OperatorFunction
+  pressure: CapacityPressure
+  totalAllocationPercent: number
+  affectedVentureIds: string[]
+  affectedVentureNames: string[]
+  contentionReason: string
+  downstreamImpact: string
+  sourceIssueIds: string[]
+  sourceRoadmapIds: string[]
+}
+
+export type ExecutionEvidenceSummary = {
+  ventureId: string
+  evidenceRoleCounts: Record<EvidenceRole, number>
+  recentEvidenceIssues: Issue[]
+}
+
+export type CommandCenterData = {
+  topDecision: CommandCenterDecision | null
+  attentionQueue: Array<{
+    ventureId: string
+    ventureName: string
+    ventureSlug: string
+    phase?: VenturePhase
+    gateName?: string
+    validationConfidence: number
+    decisionPressure: DecisionPressure
+    capacityPressure: CapacityPressure
+    recommendedDecision: StudioDecision
+  }>
+  validationRisks: ValidationRiskSummary[]
+  capacityPressures: CapacityPressureSummary[]
+  evidenceSummary: ExecutionEvidenceSummary | null
+  analystRecommendation: AnalystSignal | null
+}
+

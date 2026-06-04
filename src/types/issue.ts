@@ -1,3 +1,5 @@
+import type { ConfidenceImpact, StudioDecision } from "@/types/venture"
+
 export type IssueType =
   | "feature"
   | "bug"
@@ -18,6 +20,24 @@ export type IssueStatus =
 export type RiskLevel = "low" | "medium" | "high"
 
 export type IssueEffort = "small" | "medium" | "large"
+
+export type EvidenceRole =
+  | "prove"
+  | "disprove"
+  | "unblock"
+  | "de-risk"
+  | "capacity-cost"
+
+export type EvidenceStrength = "weak" | "moderate" | "strong" | "negative"
+
+export type OperatorFunction = "product" | "design" | "engineering" | "gtm" | "partner"
+
+export type OperatorImpact = {
+  function: OperatorFunction
+  effort: "low" | "medium" | "high"
+  capacityPercent?: number
+  note: string
+}
 
 export type IssueSortBy =
   | "priority"
@@ -46,6 +66,14 @@ export type Issue = {
   effort: IssueEffort
   blocked: boolean
   acceptanceCriteria?: string[]
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  evidenceRole?: EvidenceRole
+  evidenceStrength?: EvidenceStrength
+  confidenceImpact?: ConfidenceImpact
+  operatorImpact?: OperatorImpact
+  decisionImpact?: StudioDecision
   aiInsightIds: string[]
   createdAt: string
   updatedAt: string
@@ -64,3 +92,4 @@ export type IssueFilters = {
   sortBy: IssueSortBy
   sortDirection: SortDirection
 }
+

@@ -20,6 +20,11 @@ const recommendationLabels: Record<AiRecommendationKind, string> = {
   prioritize: "Prioritize",
   clarify: "Clarify",
   "reduce-scope": "Reduce scope",
+  narrow: "Narrow",
+  pause: "Pause",
+  "staff-up": "Staff up",
+  defer: "Defer",
+  "partner-review": "Partner review",
 }
 
 const recommendationClassName: Record<AiRecommendationKind, string> = {
@@ -29,7 +34,13 @@ const recommendationClassName: Record<AiRecommendationKind, string> = {
   prioritize: "border-info/40 text-info",
   clarify: "border-warning/50 text-warning",
   "reduce-scope": "border-warning/50 text-warning",
+  narrow: "border-warning/50 text-warning",
+  pause: "border-warning/50 text-warning",
+  "staff-up": "border-info/40 text-info",
+  defer: "border-muted-foreground/40 text-muted-foreground",
+  "partner-review": "border-info/40 text-info",
 }
+
 
 export function AiRiskBadge({
   severity,

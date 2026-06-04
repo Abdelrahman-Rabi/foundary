@@ -153,10 +153,16 @@ function getRoadmapAction(kind: AiRecommendationKind) {
     prioritize: "Focus the highest-impact linked work before adding new initiative scope.",
     clarify: "Define outcome criteria before expanding execution work.",
     "reduce-scope": "Reduce active scope until the confidence signal stabilizes.",
+    narrow: "Narrow the initiative focus to core validation targets before another build cycle.",
+    pause: "Pause execution on this initiative until validation gate conditions are met.",
+    "staff-up": "Allocate additional studio operator capacity to unblock active execution.",
+    defer: "Defer new initiative scope and maintain steady-state operations.",
+    "partner-review": "Escalate the initiative to a studio partner review session.",
   }
 
   return actions[kind]
 }
+
 
 function withDedupe(signal: AiSignal): AiSignal {
   return { ...signal, dedupeKey: getSignalDedupeKey(signal) }

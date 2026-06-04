@@ -1,4 +1,4 @@
-import type { VentureHealthState, VentureMomentum } from "@/types/venture"
+import type { VentureHealthState, VentureMomentum, DecisionPressure, CapacityPressure, StudioDecision } from "@/types/venture"
 import type { IssueFilters, RiskLevel } from "@/types/issue"
 
 export type VentureHealth = {
@@ -11,8 +11,14 @@ export type VentureHealth = {
   completedThisWeek: number
   activeInitiatives: number
   riskScore: number
+  validationConfidence?: number
+  gate?: string
+  decisionPressure?: DecisionPressure
+  capacityPressure?: CapacityPressure
+  recommendedDecision?: StudioDecision
   updatedAt: string
 }
+
 
 export type DashboardMetrics = {
   totalIssues: number

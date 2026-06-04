@@ -56,12 +56,18 @@ function recommendationRank(kind?: AiRecommendationKind) {
 
   const rank: Record<AiRecommendationKind, number> = {
     kill: 6,
+    "partner-review": 6,
     "reduce-scope": 5,
+    narrow: 5,
+    pause: 5,
     split: 4,
     clarify: 3,
     prioritize: 2,
+    "staff-up": 2,
     continue: 1,
+    defer: 1,
   }
+
 
   return rank[kind]
 }

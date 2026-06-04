@@ -1,4 +1,5 @@
 import type { RiskLevel } from "@/types/issue"
+import type { StudioDecision } from "@/types/venture"
 
 export type AiEntityType = "issue" | "roadmap" | "venture" | "portfolio"
 
@@ -16,6 +17,11 @@ export type AiRecommendationKind =
   | "prioritize"
   | "clarify"
   | "reduce-scope"
+  | "narrow"
+  | "pause"
+  | "staff-up"
+  | "defer"
+  | "partner-review"
 
 export type AiInsight = {
   id: string
@@ -41,3 +47,20 @@ export type AiSignalSourceAction = {
   drawerType?: "issue" | "roadmap" | "assistant"
   route?: string
 }
+
+export type AnalystSignal = {
+  id: string
+  ventureId: string
+  gateId?: string
+  evidenceSignalId?: string
+  issueId?: string
+  roadmapId?: string
+  recommendedDecision: StudioDecision
+  title: string
+  message: string
+  reason: string
+  suggestedAction: string
+  severity: RiskLevel
+  createdAt: string
+}
+

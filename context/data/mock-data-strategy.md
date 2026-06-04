@@ -1,25 +1,35 @@
-# Mock Data Strategy — Foundary
+# Mock Data Strategy - Foundary
 
 ## Purpose
 
-This document defines:
-- mock dataset philosophy
-- operational realism strategy
-- seeded venture scenarios
-- relationship coherence rules
-- AI insight generation patterns
-- portfolio storytelling logic
+This document defines the seeded data strategy for Foundary's Studio Operating
+Intelligence repositioning.
 
-The mock data system is one of the MOST important parts of the assignment because:
-> believable operational data creates perceived product sophistication.
+It covers:
+- mock dataset philosophy
+- seeded studio operating narrative
+- venture scenarios
+- validation gate coherence
+- execution evidence relationships
+- operator capacity tension
+- Studio Analyst signal patterns
+- Command Center storytelling logic
+
+The mock data system is one of the most important parts of Foundary because:
+
+> believable studio data creates perceived product sophistication.
 
 The goal is NOT:
 - random demo content
-- placeholder lorem ipsum
-- disconnected entities
+- placeholder data
+- disconnected issues and roadmap items
+- generic AI summaries
+- fake enterprise reporting
 
 The goal IS:
-> a believable AI-native venture operating environment.
+
+> a believable venture studio operating environment where decisions, gates,
+> evidence, capacity, and analyst recommendations connect.
 
 ---
 
@@ -27,48 +37,54 @@ The goal IS:
 
 ## Most Important Principle
 
-The data should feel:
-- operationally alive
-- strategically coherent
-- interconnected
-- contextually intelligent
-- venture-aware
+The data should show that Foundary prevents wasted execution.
 
 Reviewers should feel:
-> "This looks like a real venture studio environment."
+
+> This product catches when a venture is consuming studio capacity without enough
+> evidence.
 
 NOT:
-> "This is demo filler data."
+
+> This is a polished demo workspace.
 
 ---
 
-# What Good Mock Data Achieves
+# Product Spine In Data
 
-Strong mock data creates:
-- believable dashboards
-- meaningful AI insights
-- realistic roadmap risk
-- operational storytelling
-- sophisticated demo flows
-- venture differentiation
+Seeded data must support:
 
-This dramatically increases:
-> perceived product maturity.
+```txt
+Portfolio Decisions
+-> Validation Gates
+-> Execution Evidence
+-> Operator Capacity
+-> Studio Analyst Recommendations
+```
+
+Every seeded venture should have:
+- lifecycle phase
+- current validation gate
+- evidence signals
+- linked issues
+- linked roadmap bets
+- operator capacity context
+- recommended studio move
+- analyst signal
 
 ---
 
 # Mock Data System Goals
 
-The data layer should support:
-
 | Goal | Why |
 |---|---|
-| Venture realism | Makes product believable |
-| AI realism | Enables contextual insights |
-| Cross-system synchronization | Product feels alive |
-| Strategic storytelling | Demo quality |
-| Operational tension | Creates interesting scenarios |
-| Portfolio differentiation | Ventures feel distinct |
+| Decision clarity | Command Center needs one obvious top move |
+| Validation realism | Gates must distinguish evidence from activity |
+| Evidence linkage | Issues and roadmap work must have consequence |
+| Capacity tension | Studio-specific pain must be visible |
+| Analyst credibility | Recommendations need source objects |
+| Venture differentiation | Each venture must tell a different operating story |
+| Local-first stability | Demo state must remain deterministic |
 
 ---
 
@@ -76,229 +92,255 @@ The data layer should support:
 
 ## Recommended Structure
 
+Existing files may remain:
+
 ```txt
-/data
-  ├── ventures.ts
-  ├── users.ts
-  ├── issues.ts
-  ├── roadmap.ts
-  ├── ai-insights.ts
-  ├── dashboard-metrics.ts
-  ├── venture-health.ts
-  ├── activity-feed.ts
-  ├── tags.ts
-  └── generators/
-        ├── issue-generator.ts
-        ├── roadmap-generator.ts
-        ├── insight-generator.ts
-        └── metrics-generator.ts
+src/data/ventures.ts
+src/data/users.ts
+src/data/issues.ts
+src/data/roadmap.ts
+src/data/ai-insights.ts
+src/data/tags.ts
+src/data/index.ts
 ```
 
----
+Future files may be added when implementation needs them:
 
-# Important Strategy
+```txt
+src/data/validation-gates.ts
+src/data/evidence-signals.ts
+src/data/operator-capacity.ts
+```
 
-Use:
-- mostly handcrafted data
-- selectively generated data
-- deterministic datasets
+Prefer:
+- handcrafted core data
+- deterministic relationships
+- derived metrics
+- stable IDs
 
 Avoid:
 - fully random generation
-- generic fake data libraries
-- incoherent relationships
+- fake-data libraries
+- incoherent issue-roadmap-gate links
+- adding many files before the UI needs them
 
 ---
 
-# Core Venture Strategy
+# Seeded Studio Narrative
 
-## Most Important Principle
+The seeded portfolio should tell one clear story:
 
-Each venture must feel:
-> operationally unique.
+```txt
+A studio partner opens Foundary before the weekly operating review.
 
-This is critical for:
-- dashboard richness
-- AI behavior
-- portfolio realism
-- venture-aware storytelling
+Sentra has the strongest evidence but is creating design/product capacity strain.
+Reson8 is still consuming engineering effort despite weak validation evidence.
+Internal Ops is stable and freeing operating leverage.
+
+The recommended move is to narrow Reson8, protect Sentra capacity, and keep
+Internal Ops steady.
+```
+
+This should be visible from the Command Center without a long explanation.
 
 ---
 
-# Recommended Venture Profiles
+# Seeded Venture Strategy
 
 ## 1. Sentra
 
-### Profile
+## Studio Role
+
+Higher-confidence growth opportunity with activation upside and capacity strain.
+
+## Suggested State
 
 ```txt
-Stage: Growth
-Momentum: High
-Risk: Moderate
-Execution Speed: Fast
+Phase: Build or Scale
+Current gate: Activation quality / growth readiness
+Validation confidence: moderate-high
+Decision pressure: medium
+Recommended move: continue or staff-up with capacity protection
+Capacity pressure: design or product watch / overloaded
 ```
 
-### Narrative
+## Narrative
 
 Sentra is:
-- scaling aggressively
-- shipping rapidly
-- dealing with infrastructure strain
-- prioritizing growth initiatives
+- showing stronger activation or growth evidence
+- worth continued studio attention
+- creating design/product capacity strain
+- at risk if capacity is pulled into weaker ventures
 
-### Operational Characteristics
+## Required Data Signals
 
-High:
-- issue volume
-- roadmap velocity
-- experimentation
+Include:
+- at least one strong or moderate positive evidence signal
+- roadmap bet linked to activation or growth
+- issues that prove or de-risk the activation gate
+- at least one capacity-cost issue or operator pressure signal
+- analyst recommendation that says continue/staff-up/protect capacity
 
-Medium:
-- delivery risk
-
-Low:
-- uncertainty
-
----
-
-## Example Work
+## Example Gate
 
 ```txt
-AI onboarding optimization
-Mobile conversion improvements
-Referral system rollout
-Infrastructure stabilization
-Analytics reliability fixes
+Gate:
+Activation readiness
+
+Assumption:
+New users can reach first value quickly enough to support growth spend.
+
+Required evidence:
+- activation cohort reaches target threshold
+- setup completion improves in target segment
+- instrumentation is reliable
+
+Recommended move:
+Continue with capacity protection.
 ```
 
----
-
-# Sentra AI Insight Style
+## Example Evidence Roles
 
 ```txt
-Risk:
-Moderate operational strain caused by overlapping growth initiatives.
+prove:
+Activation cohort analysis confirms setup completion lift.
 
-Suggested Action:
-Reduce concurrent experiments impacting onboarding performance.
+de-risk:
+Analytics reliability fix improves confidence in activation data.
+
+capacity-cost:
+Design iteration work is consuming scarce design capacity.
 ```
 
 ---
 
 # 2. Reson8
 
-## Profile
+## Studio Role
+
+Validation uncertainty with active execution and sunk-cost risk.
+
+## Suggested State
 
 ```txt
-Stage: Validation
-Momentum: Moderate
-Risk: High
-Execution Speed: Medium
+Phase: Validate
+Current gate: Retention / repeat-use signal
+Validation confidence: low or at-risk
+Decision pressure: high
+Recommended move: narrow or pause
+Capacity pressure: engineering and product active despite weak evidence
 ```
-
----
 
 ## Narrative
 
 Reson8 is:
-- validating PMF
-- experimenting heavily
-- uncertain strategically
-- refining positioning
+- strategically interesting but not yet validated
+- still running active execution work
+- lacking strong retention or repeat-use evidence
+- consuming engineering/product capacity that may not be justified
 
----
+## Required Data Signals
 
-## Operational Characteristics
+Include:
+- weak or negative evidence signal
+- roadmap bet linked to retention or positioning
+- active issues linked to the weak gate
+- at least one capacity-cost issue
+- analyst recommendation that says narrow before another build cycle
 
-High:
-- research work
-- roadmap uncertainty
-- strategic pivots
-
-Medium:
-- delivery velocity
-
-Low:
-- execution predictability
-
----
-
-## Example Work
+## Example Gate
 
 ```txt
-Experiment onboarding variants
-Creator collaboration workflows
-Messaging validation research
-Retention analysis
-Discovery sprint planning
+Gate:
+Repeat-use retention signal
+
+Assumption:
+Target creators will return weekly to manage collaboration workflows.
+
+Required evidence:
+- repeat-use signal from target ICP
+- interview evidence that the workflow is urgent
+- activation path completed by a meaningful cohort
+
+Recommended move:
+Narrow before another build cycle.
 ```
 
----
-
-# Reson8 AI Insight Style
+## Example Evidence Roles
 
 ```txt
-Risk:
-The roadmap initiative lacks measurable validation criteria.
+disprove:
+Retention interviews show weak repeat-use intent.
 
-Suggested Action:
-Split strategic discovery from implementation delivery.
+unblock:
+Add cohort instrumentation before evaluating the onboarding loop.
+
+capacity-cost:
+Engineering continues onboarding polish before retention evidence improves.
 ```
 
 ---
 
 # 3. Internal Ops
 
-## Profile
+## Studio Role
+
+Stable studio leverage with contained scope and freed capacity.
+
+## Suggested State
 
 ```txt
-Stage: MVP
-Momentum: Stable
-Risk: Low
-Execution Speed: Moderate
+Phase: Build or Scale
+Current gate: Operating leverage
+Validation confidence: stable
+Decision pressure: low
+Recommended move: defer new scope or continue steady-state
+Capacity pressure: healthy
 ```
-
----
 
 ## Narrative
 
-Internal Ops focuses on:
-- operational enablement
-- workflow improvements
-- internal tooling
+Internal Ops is:
+- improving studio operating leverage
+- stable and low-drama
+- not the highest intervention area
+- freeing PM or partner attention for higher-pressure ventures
 
----
+## Required Data Signals
 
-## Operational Characteristics
+Include:
+- stable evidence signal
+- roadmap bet linked to leverage or internal workflow
+- completed or de-risking issues
+- low capacity pressure
+- analyst recommendation that says defer new scope or continue steady-state
 
-High:
-- process optimization
-- tooling improvements
-
-Low:
-- strategic volatility
-
----
-
-## Example Work
+## Example Gate
 
 ```txt
-Hiring workflow automation
-Knowledge base improvements
-Meeting intelligence summaries
-Internal analytics tooling
+Gate:
+Studio operating leverage
+
+Assumption:
+Internal workflow automation reduces repeated coordination load.
+
+Required evidence:
+- meeting prep time reduced
+- repeated status updates automated
+- no new coordination burden introduced
+
+Recommended move:
+Continue steady-state; defer new scope.
 ```
 
----
-
-# Internal Ops AI Insight Style
+## Example Evidence Roles
 
 ```txt
-Observation:
-Operational execution remains stable with low delivery risk.
+prove:
+Meeting intelligence rollout reduces prep time across operating reviews.
 
-Suggested Action:
-Continue incremental rollout of workflow automation tooling.
+de-risk:
+Internal metrics scope stays contained.
 ```
 
 ---
@@ -311,61 +353,105 @@ Users should feel:
 - role-specific
 - operationally credible
 - cross-functional
+- studio-native
 
 Avoid:
 - fake startup stereotypes
 - excessive user count
+- assigning every person to every venture without logic
 
 ---
 
 # Recommended Team Composition
 
-## Venture Product Lead
-
 ```txt
 Sarah Chen
-Focus:
-Portfolio coordination and roadmap alignment
-```
+Role: Venture Product Lead
+Capacity: product
+Focus: validation planning and roadmap decisions
 
----
-
-## AI Engineer
-
-```txt
 Omar Khaled
-Focus:
-AI workflows and experimentation
-```
+Role: AI Engineer
+Capacity: engineering
+Focus: instrumentation and AI workflows
 
----
-
-## Product Designer
-
-```txt
 Lina Haddad
-Focus:
-UX refinement and onboarding
+Role: Product Designer
+Capacity: design
+Focus: activation, onboarding, and UX research
+
+Maya Rodriguez
+Role: Studio Operator
+Capacity: partner / product
+Focus: portfolio visibility and operating reviews
+
+Noah Patel
+Role: GTM Operator
+Capacity: gtm
+Focus: pilots, customer development, and launch experiments
 ```
+
+Users should appear across ventures in ways that create believable capacity
+contention.
 
 ---
 
-## Studio Operator
+# Validation Gate Dataset Strategy
+
+## Required Gate Coverage
+
+Each seeded venture should have at least one current gate.
+
+Recommended additional historical gates:
+- one passed gate for Sentra
+- one failed or killed learning for Reson8
+- one stable passed gate for Internal Ops
+
+## Gate Quality Rules
+
+Each gate should include:
+- assumption
+- required evidence
+- evidence signals
+- confidence
+- status
+- decision pressure
+- recommended decision
+- linked issues
+- linked roadmap bets
+
+Avoid:
+- generic gate names
+- gates without linked work
+- confidence values that do not match the story
+
+---
+
+# Execution Evidence Dataset Strategy
+
+## Required Evidence Roles
+
+Seeded issues and roadmap items should include a mix of:
 
 ```txt
-Maya Rodriguez
-Focus:
-Portfolio visibility and operational health
+prove
+disprove
+unblock
+de-risk
+capacity-cost
 ```
 
----
+## Important Rule
 
-# Important User Rules
+Do not make every completed issue positive.
 
-Users should:
-- appear across ventures
-- own related work consistently
-- reinforce operational realism
+Some completed work should have:
+- neutral confidence impact
+- negative confidence impact
+- capacity-cost interpretation
+- evidence that narrows or kills a direction
+
+This makes the product feel strategically mature.
 
 ---
 
@@ -375,113 +461,52 @@ Users should:
 
 Issues should communicate:
 - active execution
+- evidence collection
 - delivery complexity
-- operational tension
+- capacity cost
 - venture momentum
+- decision pressure
 
----
+## Recommended Distribution
 
-# Recommended Issue Distribution
-
-## Sentra
-
-```txt
-Total Issues: 38
-
-Distribution:
-- Features: High
-- Bugs: Medium
-- Experiments: Medium
-- Tech Debt: High
-```
-
----
-
-## Reson8
+Sentra:
 
 ```txt
-Total Issues: 24
-
-Distribution:
-- Research: High
-- Experiments: High
-- Features: Medium
+Higher issue volume
+More growth/build work
+Several proof/de-risk issues
+Some capacity-cost pressure
 ```
 
----
-
-## Internal Ops
+Reson8:
 
 ```txt
-Total Issues: 16
-
-Distribution:
-- Automation Features: Medium
-- Internal Improvements: High
-- Bugs: Low
+Moderate issue volume
+More research/experiment work
+Active implementation despite weak gate
+Clear capacity-cost issue
 ```
 
----
+Internal Ops:
 
-# Important Issue Rules
+```txt
+Lower issue volume
+More leverage/de-risk work
+Stable completed work
+Low urgent pressure
+```
 
-The dataset MUST include:
+## Required Issue Scenarios
+
+Include:
 - overdue work
 - blocked work
 - recently completed wins
 - stalled initiatives
 - killed experiments
 - urgent operational fixes
-
-This creates:
-> believable operational conditions.
-
----
-
-# Recommended Issue Scenarios
-
-## High-Risk Issue
-
-```txt
-Title:
-Refactor onboarding analytics ingestion pipeline
-
-Characteristics:
-- overdue
-- blocked
-- urgent
-- linked to critical roadmap initiative
-- missing acceptance criteria
-```
-
----
-
-## Successful Execution Issue
-
-```txt
-Title:
-Launch referral onboarding flow
-
-Characteristics:
-- completed
-- high impact
-- linked to active roadmap item
-- strong confidence
-```
-
----
-
-## Discovery-Oriented Issue
-
-```txt
-Title:
-Validate creator retention assumptions
-
-Characteristics:
-- research
-- medium confidence
-- linked to validation roadmap initiative
-```
+- evidence-linked research
+- capacity-cost execution
 
 ---
 
@@ -489,290 +514,193 @@ Characteristics:
 
 ## Goal
 
-Roadmap items should create:
+Roadmap items should read as:
+
+> venture bets or validation initiatives.
+
+They should create:
 - strategic visibility
-- portfolio intelligence
-- believable operational uncertainty
+- gate linkage
+- confidence tension
+- portfolio decision clarity
 
----
+## Required Roadmap Variety
 
-# Required Roadmap Variety
+The roadmap must include:
+- high-confidence bet
+- uncertain validation initiative
+- at-risk bet
+- recently completed bet
+- killed or narrowed learning
 
-The roadmap MUST include:
-- strong initiatives
-- uncertain initiatives
-- delayed initiatives
-- recently completed work
-- killed initiatives
+## Recommended Roadmap Composition
 
----
-
-# Recommended Roadmap Composition
-
-## Sentra
-
-### Example Initiatives
+Sentra:
 
 ```txt
-AI-Powered Onboarding Optimization
+Activation Quality Program
 Mobile Referral Expansion
-Infrastructure Reliability Program
+Analytics Reliability Foundation
 ```
 
----
-
-## Reson8
-
-### Example Initiatives
+Reson8:
 
 ```txt
-Creator Engagement Validation
+Creator Retention Validation
+Collaboration Workflow Narrowing
 Messaging Positioning Experiments
-Retention Discovery Sprint
 ```
 
----
-
-## Internal Ops
-
-### Example Initiatives
+Internal Ops:
 
 ```txt
-AI Meeting Intelligence Rollout
-Hiring Operations Automation
-Internal Metrics Dashboard
+Studio Meeting Intelligence
+Hiring Workflow Automation
+Internal Metrics Scope Control
 ```
-
----
-
-# Important Roadmap Rules
 
 Each roadmap item should have:
+- bet type
+- linked gate when relevant
+- expected evidence
 - linked issues
-- different confidence levels
-- realistic progress
-- strategic goals
-- believable risk
+- confidence
+- capacity impact when relevant
 
 ---
 
-# Confidence Strategy
+# Operator Capacity Dataset Strategy
 
-## Strong Initiative
+## Goal
+
+Capacity data should make studio-specific resource contention visible.
+
+## Required Function Coverage
+
+Use:
 
 ```txt
-Progress: 74%
-Confidence: 88%
-Risk: Low
+product
+design
+engineering
+gtm
+partner
 ```
 
----
-
-## Uncertain Initiative
+## Recommended Capacity Story
 
 ```txt
-Progress: 31%
-Confidence: 42%
-Risk: High
+Design:
+Watch / overloaded due to Sentra activation and Reson8 onboarding tests.
+
+Engineering:
+Overloaded or watch due to Reson8 build work with weak validation confidence.
+
+Product:
+Watch due to Reson8 validation planning and Sentra growth decisions.
+
+GTM:
+Healthy or watch depending on Sentra growth/pilot work.
+
+Partner:
+Watch only where partner-review decisions are needed.
 ```
 
----
+## Capacity Rules
 
-## At-Risk Initiative
+Capacity pressure should be believable, not mathematically perfect.
+
+Suggested interpretation:
 
 ```txt
-Progress: 58%
-Confidence: 39%
-Risk: High
-Blocked Issues: 4
+0-85%      healthy
+86-105%    watch
+106%+      overloaded
 ```
 
----
-
-# AI Insight Strategy
-
-## Most Important Principle
-
-AI insights should feel:
-> contextually intelligent.
-
-NOT:
-> generic AI filler text.
+Never imply real scheduling precision.
 
 ---
 
-# AI Tone Philosophy
+# Studio Analyst Dataset Strategy
 
-AI should sound:
-- concise
-- operational
-- strategic
-- analytical
-- calm
+## Goal
 
-Avoid:
-- hype
-- conversational AI tone
-- excessive verbosity
-- playful personality
+Analyst signals should feel:
 
----
+> source-linked and decision-ready.
 
-# Recommended AI Categories
+They should not feel like generic AI summaries.
 
-## 1. Risk Detection
+## Required Analyst Signals
 
-```txt
-Risk Level: High
+At minimum include:
+- one top portfolio recommendation
+- one Reson8 sunk-cost risk
+- one Sentra capacity protection recommendation
+- one Internal Ops steady-state / defer recommendation
+- one evidence gap signal
+- one capacity tradeoff signal
 
-Reason:
-The roadmap initiative contains multiple blocked implementation issues and lacks measurable success criteria.
+## Analyst Output Rules
 
-Suggested Action:
-Separate validation milestones from delivery milestones.
-
-Confidence:
-84%
-```
-
----
-
-## 2. Priority Recommendation
-
-```txt
-Recommendation:
-Elevate issue priority to High.
-
-Reason:
-The issue directly impacts onboarding conversion for an active growth initiative.
-```
-
----
-
-## 3. Acceptance Criteria Warning
-
-```txt
-Observation:
-The issue lacks measurable acceptance criteria.
-
-Suggested Action:
-Define completion conditions before implementation begins.
-```
-
----
-
-## 4. Roadmap Confidence Analysis
-
-```txt
-Roadmap Confidence Declining
-
-Reason:
-Execution velocity slowed over the last sprint cycle and blocked issues increased.
-
-Suggested Action:
-Reduce concurrent initiative scope.
-```
-
----
-
-# AI Realism Rules
-
-AI recommendations should:
-- reference actual issue conditions
-- reference roadmap relationships
-- mention operational context
-- vary in severity
-- vary in confidence
+Signals should reference:
+- venture
+- gate
+- evidence signal
+- issue or roadmap source
+- capacity tradeoff
+- recommended decision
 
 Avoid:
 - repetitive phrasing
-- generic summaries
-- disconnected analysis
+- generic "review this carefully" text
+- recommendations without source objects
+- excessive confidence certainty
 
 ---
 
-# Dashboard Data Strategy
+# Command Center Data Strategy
 
 ## Goal
 
-Dashboard data should communicate:
-- operational visibility
-- strategic awareness
-- venture differentiation
+The first dashboard/Command Center viewport should make the new wedge obvious.
 
-NOT:
-- analytics overload
+It should show:
+- top studio decision
+- portfolio attention queue
+- validation risk
+- capacity pressure
+- execution evidence summary
+- analyst recommendation
 
----
-
-# Required Dashboard States
-
-The dashboard should contain:
-- healthy metrics
-- warning signals
-- active execution
-- portfolio variation
-
----
-
-# Recommended KPI Distribution
+## Recommended First Screen Story
 
 ```txt
-Total Issues: 78
-Overdue Issues: 11
-Blocked Issues: 7
-Active Roadmap Items: 13
-Killed Initiatives: 3
-Average Confidence: 71%
+Top decision:
+Reson8 needs a narrow decision before another build cycle.
+
+Reason:
+Retention evidence is weak while engineering work remains active.
+
+Capacity:
+Engineering/product attention is competing with higher-confidence Sentra work.
+
+Next move:
+Pause broad build work and run targeted retention interviews.
 ```
 
----
+## Attention Queue Ordering
 
-# Important Dashboard Rules
+Recommended order:
+1. Reson8
+2. Sentra
+3. Internal Ops
 
-Dashboard metrics should:
-- align with roadmap state
-- align with issue counts
-- reflect venture momentum
-- support AI recommendations
-
-Everything must feel:
-> interconnected.
-
----
-
-# Activity Feed Strategy
-
-## Goal
-
-The activity feed should make the system feel:
-> operationally alive.
-
----
-
-# Recommended Activity Variety
-
-Include:
-- issue movement
-- roadmap updates
-- killed experiments
-- AI observations
-- completed initiatives
-- blocked work
-
----
-
-# Example Activity Events
-
-```txt
-Sentra roadmap confidence increased to 84%.
-
-Reson8 initiative moved to At Risk.
-
-AI assistant flagged missing validation metrics.
-
-Referral onboarding rollout completed.
-```
+Rationale:
+- Reson8 has highest decision pressure
+- Sentra has capacity pressure but stronger evidence
+- Internal Ops is stable and lower intervention
 
 ---
 
@@ -780,124 +708,87 @@ Referral onboarding rollout completed.
 
 ## Important Principle
 
-All timestamps should feel:
-- recent
-- believable
-- operationally active
+All timestamps should feel recent and operationally active.
 
----
+## Recommended Distribution
 
-# Recommended Timeline Distribution
-
-## Recent Activity
-
-```txt
 Today:
-- issue updates
-- status movement
-- AI observations
-```
+- analyst signal generated
+- issue moved or blocked
+- capacity pressure updated
 
----
+Past 7 days:
+- evidence signals observed
+- roadmap bet confidence changed
+- issues completed or killed
 
-## Medium-Term Activity
+Past 30 days:
+- passed or failed gate learning
+- killed experiment
+- completed foundation work
 
-```txt
-Past 7 Days:
-- roadmap changes
-- completed work
-- blocked work
-```
-
----
-
-## Historical Activity
-
-```txt
-Past 30 Days:
-- killed initiatives
-- completed roadmap milestones
-- strategic pivots
-```
+Avoid stale data where every item appears created on the same day.
 
 ---
 
 # Demo Storytelling Strategy
 
-## Most Important Principle
-
-The data should support:
-> a compelling operational narrative.
-
----
-
-# Recommended Hero Demo Flow
+## New Hero Demo Flow
 
 ```txt
-Dashboard
-  ↓
-Risk Observation
-  ↓
-Roadmap Initiative
-  ↓
-Linked Issues
-  ↓
-AI Recommendation
-  ↓
-Operational Insight
+Command Center
+  -> Top studio decision
+  -> Validation gate risk
+  -> Execution evidence source
+  -> Operator capacity tradeoff
+  -> Studio Analyst recommendation
 ```
 
-This flow creates:
-> perceived product sophistication.
+This should replace the old:
 
----
+```txt
+Dashboard -> Risk -> Roadmap -> Issue -> AI
+```
 
-# Strategic Operational Tension
+The new demo should communicate:
 
-The dataset should intentionally include:
-- success
-- uncertainty
-- blocked execution
-- strategic ambiguity
-- roadmap confidence shifts
-
-This makes the product feel:
-> real.
+> Foundary helps studios decide where to continue, narrow, pause, kill, staff up,
+> defer, or escalate.
 
 ---
 
 # Data Generation Strategy
 
-## Recommended Approach
-
-### Handcrafted Core Data
+## Handcrafted Core Data
 
 Manually create:
 - ventures
-- roadmap initiatives
+- validation gates
+- roadmap bets
 - strategic issues
-- AI insights
+- evidence signals
+- operator allocations
+- analyst signals
 
----
+## Programmatic Or Derived Data
 
-## Programmatic Expansion
+Derive:
+- counts
+- status summaries
+- Command Center attention ranking
+- capacity signals
+- venture health
+- analyst grouping
 
-Generate:
-- supporting issues
-- activity feed items
-- derived metrics
-- timestamps
+Avoid fully random generation.
 
 ---
 
 # Deterministic Data Rules
 
-Avoid:
-- fully random generators
-- unpredictable datasets
-
 Use:
 - stable seeded data
+- stable IDs
 - deterministic relationships
 - coherent scenarios
 
@@ -905,87 +796,76 @@ This improves:
 - debugging
 - demos
 - UI consistency
-- AI credibility
-
----
-
-# Derived Metric Rules
-
-## Overdue Issue Logic
-
-Issue becomes overdue when:
-- due date passed
-- not done
-- not killed
-
----
-
-## Venture Risk Score
-
-Increase risk when:
-- blocked issues increase
-- roadmap confidence declines
-- overdue work rises
-- many urgent issues exist
-
----
-
-## Roadmap Confidence
-
-Reduce confidence when:
-- linked issues blocked
-- roadmap stalled
-- initiative overdue
-- too many unresolved risks
+- analyst credibility
+- local-first reset behavior
 
 ---
 
 # UI-Oriented Data Rules
 
-## Important Principle
-
 The data should improve:
 - layout quality
 - information hierarchy
-- dashboard balance
+- Command Center balance
 - board realism
-
----
-
-# Avoid
+- drawer usefulness
 
 Avoid:
 - extremely long titles
 - inconsistent metadata
 - unrealistic counts
 - empty relationships
+- all ventures having the same status
+- every signal being high severity
+
+Preferred content style:
+- concise operational language
+- studio-native terminology
+- strategic naming
+- evidence-oriented phrasing
 
 ---
 
-# Preferred Content Style
+# Clean And Custom Venture Rules
 
-Prefer:
-- concise operational language
-- believable startup terminology
-- strategic naming
-- execution-oriented phrasing
+Start-clean and custom venture states must not invent:
+- fake gates
+- fake evidence
+- fake capacity pressure
+- fake analyst certainty
+
+Empty states should explain what belongs in the surface and offer one direct
+first action.
+
+Example:
+
+```txt
+No evidence linked yet.
+Start with the first assumption, validation gate, or execution item.
+```
 
 ---
 
 # Final Mock Data Philosophy
 
 The mock dataset should feel like:
-> a real venture studio actively coordinating multiple startups.
+
+> a venture studio actively deciding where scarce attention, talent, and capital
+> should go.
 
 The data should reinforce:
+- decision clarity
+- validation confidence
+- execution evidence
+- operator leverage
+- Studio Analyst reasoning
 - venture-awareness
-- AI-native workflows
-- operational clarity
-- strategic execution
-- portfolio intelligence
+- premium operational realism
 
 The reviewer should feel:
-> "This environment looks operationally believable and strategically coherent."
+
+> This environment exposes the operating pain of a venture studio.
 
 NOT:
-> "This is static demo content."
+
+> This is static demo content.

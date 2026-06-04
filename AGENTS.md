@@ -11,6 +11,7 @@ This file defines:
 Product philosophy and specifications live inside:
 - `/context/project-overview.md`
 - `/context/project-specs.md`
+- `/context/strategy/*`
 - `/context/features/*`
 
 Do NOT duplicate those rules here.
@@ -122,6 +123,9 @@ Load:
 /context/current-feature.md
 ```
 
+For Phase 14 work, this surface is framed as Studio Analyst even if route or
+component names still say assistant.
+
 ---
 
 ## Navigation / Layout Work
@@ -162,6 +166,45 @@ Load:
 Only load dashboard, issues, roadmap, or AI specs when changing behavior in
 those surfaces.
 
+## Studio Operating Intelligence Work
+
+Load:
+
+```txt
+/context/strategy/studio-operating-intelligence.md
+/context/current-feature.md
+```
+
+Then load only the feature layer required by the task:
+
+```txt
+Command Center:
+/context/features/feature-studio-command-center.md
+
+Validation Gates:
+/context/features/feature-validation-gates.md
+
+Execution Evidence:
+/context/features/feature-execution-evidence.md
+
+Operator Capacity:
+/context/features/feature-operator-capacity.md
+
+Studio Analyst:
+/context/features/feature-ai-assistant.md
+/context/data/ai-behavior-rules.md
+```
+
+Load data context when changing models, seeded data, or derived intelligence:
+
+```txt
+/context/data/domain-models.md
+/context/data/mock-data-strategy.md
+```
+
+Only load old dashboard, issues, roadmap, or AI specs when implementation needs
+compatibility with the existing route/component behavior.
+
 ---
 
 # Implementation Order
@@ -178,6 +221,7 @@ Foundation
 → Synchronization
 → Polish
 → PLG Activation
+→ Studio Operating Intelligence
 ```
 
 Do NOT:
@@ -228,6 +272,8 @@ Never introduce:
 - chatbot-style AI
 - Mini Jira behavior
 - unnecessary abstractions
+- real scheduling systems
+- finance, bill-back, or cap-table systems
 
 ---
 
@@ -240,3 +286,5 @@ The product should feel:
 - venture-aware
 - premium
 - strategically coherent
+- decision-ready
+- evidence-backed

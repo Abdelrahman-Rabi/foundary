@@ -87,6 +87,8 @@ Local-First Execution Continuity
 Venture Setup
   ↓
 PLG Activation
+  ↓
+Studio Operating Intelligence Repositioning
 ```
 
 This sequence minimizes:
@@ -1172,6 +1174,581 @@ The reviewer should feel:
 NOT:
 
 > "This product needs an onboarding walkthrough to make sense."
+
+---
+
+# Phase 14 / Product Phase 5 - Studio Operating Intelligence Repositioning
+
+## Goal
+
+Reposition Foundary from a venture execution workspace into a studio operating
+intelligence layer for deciding where to spend time, talent, and capital.
+
+This phase should make Foundary feel like:
+
+> a studio command center for preventing wasted execution.
+
+The product should move from:
+
+```txt
+Ventures -> Issues -> Roadmap -> Dashboard -> AI insights
+```
+
+to:
+
+```txt
+Portfolio Decisions
+  -> Validation Gates
+  -> Execution Evidence
+  -> Operator Capacity
+  -> Studio Analyst Recommendations
+```
+
+This is a strategic repositioning phase, not a request to add enterprise
+systems.
+
+---
+
+# Required Context
+
+Load:
+
+```txt
+context/strategy/studio-operating-intelligence.md
+context/project-overview.md
+context/project-specs.md
+context/current-feature.md
+```
+
+As feature specs are created, implementation agents should load only the specs
+needed for the current slice:
+
+```txt
+context/features/feature-studio-command-center.md
+context/features/feature-validation-gates.md
+context/features/feature-execution-evidence.md
+context/features/feature-operator-capacity.md
+context/features/feature-ai-assistant.md
+context/data/domain-models.md
+context/data/mock-data-strategy.md
+```
+
+---
+
+# Phase 14.1 - Strategy And Context Alignment
+
+## Goal
+
+Create a stable context foundation so future agents understand the pivot before
+changing UI or data.
+
+## Required Tasks
+
+Update or create:
+
+```txt
+context/project-overview.md
+context/project-specs.md
+context/strategy/studio-operating-intelligence.md
+context/current-feature.md
+AGENTS.md
+```
+
+Ensure the product spine is consistent:
+
+```txt
+Portfolio Decisions
+-> Validation Gates
+-> Execution Evidence
+-> Operator Capacity
+-> Studio Analyst Recommendations
+```
+
+## Success Criteria
+
+- Foundary's new positioning is clear.
+- The old venture execution workspace framing is no longer the north star.
+- Execution Evidence is a first-class product layer.
+- Future agents know this is a repositioning, not a broad feature grab.
+
+---
+
+# Phase 14.2 - Feature Specification Foundation
+
+## Goal
+
+Create focused feature contracts before implementation begins.
+
+## Required Feature Specs
+
+Create:
+
+```txt
+context/features/feature-studio-command-center.md
+context/features/feature-validation-gates.md
+context/features/feature-execution-evidence.md
+context/features/feature-operator-capacity.md
+```
+
+Update:
+
+```txt
+context/features/feature-ai-assistant.md
+context/features/feature-dashboard.md
+context/features/feature-issues.md
+context/features/feature-roadmap.md
+```
+
+The older dashboard/issues/roadmap specs may remain as implementation history,
+but they should point toward the new product meaning:
+
+```txt
+Dashboard -> Studio Command Center
+Issues -> Execution Evidence
+Roadmap -> Venture Bets / Validation Initiatives
+AI Assistant -> Studio Analyst
+```
+
+## Success Criteria
+
+- Each new feature layer has clear purpose, scope, UI expectations, data needs,
+  and anti-patterns.
+- Existing feature specs no longer pull implementation back toward generic PM
+  behavior.
+- The next implementation agent can work from one feature spec at a time.
+
+---
+
+# Phase 14.3 - Domain Model Expansion
+
+## Goal
+
+Define the lightweight data model needed for the new strategy without adding
+backend architecture.
+
+## Required Tasks
+
+Update:
+
+```txt
+context/data/domain-models.md
+context/data/mock-data-strategy.md
+```
+
+Define model direction for:
+
+```txt
+Venture lifecycle phase
+Studio decision state
+Validation gate
+Assumption
+Evidence signal
+Execution evidence linkage
+Operator function
+Operator allocation
+Operator impact
+Studio Analyst signal
+```
+
+Implementation should prefer incremental type additions and derived utilities
+before creating new stores.
+
+## Success Criteria
+
+- Data concepts are clear before UI work begins.
+- Issues and roadmap items have a defined path to link to gates, assumptions,
+  evidence signals, and operator cost.
+- Mock data has enough structure to tell a studio operating story.
+- No backend, finance, or scheduling systems are introduced.
+
+---
+
+# Phase 14.4 - Seeded Studio Operating Story
+
+## Goal
+
+Tune seeded data around a specific studio operating narrative.
+
+## Required Story Direction
+
+Use the seeded ventures to show distinct operating conditions:
+
+```txt
+Sentra:
+Higher-confidence growth opportunity with activation upside and capacity strain.
+
+Reson8:
+Validation uncertainty with active execution and sunk-cost risk.
+
+Internal Ops:
+Stable studio leverage with contained scope and freed capacity.
+```
+
+## Required Relationships
+
+Seeded data should connect:
+
+```txt
+Ventures
+Lifecycle phases
+Validation gates
+Assumptions
+Evidence signals
+Issues
+Roadmap bets
+Operator allocations
+Studio Analyst recommendations
+```
+
+## Success Criteria
+
+- The demo shows a studio partner what decision matters next.
+- Execution work reads as evidence, not activity.
+- Reson8 clearly demonstrates the sunk-cost risk.
+- Sentra clearly demonstrates capacity tradeoff against higher confidence.
+- Internal Ops clearly demonstrates operating leverage.
+
+---
+
+# Phase 14.5 - Studio Command Center Redesign
+
+## Goal
+
+Refactor the dashboard experience into the primary portfolio decision surface.
+
+## Required Components
+
+Build or adapt:
+
+```txt
+Top studio decision
+Portfolio attention queue
+Validation risk panel
+Operator capacity panel
+Execution evidence summary
+Studio Analyst recommendation block
+```
+
+The first viewport should answer:
+
+```txt
+Which venture needs attention?
+Which gate is weak?
+Which execution work is evidence?
+Which capacity is constrained?
+Which studio move is recommended?
+```
+
+## Important UX Rules
+
+Command Center should feel:
+- compact
+- decisive
+- studio-native
+- calm
+- evidence-backed
+
+Avoid:
+- generic KPI-first dashboard
+- passive reporting
+- enterprise analytics density
+- decorative status cards
+
+## Success Criteria
+
+- A reviewer understands the new product wedge from the first screen.
+- The top decision is obvious without explanation.
+- Every panel supports a studio operating decision.
+- Existing venture switching still works.
+
+---
+
+# Phase 14.6 - Validation Gates
+
+## Goal
+
+Introduce lifecycle phase and validation gate context across the product.
+
+## Required Tasks
+
+Add lightweight support for:
+
+```txt
+Explore / Validate / Build / Scale phases
+Current validation gate per venture
+Gate confidence
+Required evidence
+Missing evidence
+Recommended decision
+Gate-linked issues and roadmap bets
+```
+
+## Surface Integration
+
+Validation gate context should appear in:
+
+```txt
+Command Center
+Venture attention queue
+Issue drawer
+Roadmap drawer
+Studio Analyst recommendations
+```
+
+## Success Criteria
+
+- Users can see why a venture should continue, narrow, pause, or kill.
+- Execution progress is clearly separated from validation confidence.
+- Gate status affects Command Center attention ranking.
+- Gates do not become a heavy workflow engine.
+
+---
+
+# Phase 14.7 - Execution Evidence Linkage
+
+## Goal
+
+Refactor issues and roadmap items into evidence-bearing execution objects.
+
+## Required Tasks
+
+Issues and roadmap items should be able to link to:
+
+```txt
+Validation gates
+Assumptions
+Evidence signals
+Operator impact
+Studio decisions
+```
+
+Issue and roadmap drawers should explain:
+
+```txt
+What this work is testing
+Which gate it supports
+Whether it proves, disproves, unblocks, de-risks, or consumes capacity
+What confidence or capacity impact it has
+```
+
+## Important UX Rules
+
+Keep execution workflows:
+- fast
+- compact
+- editable
+- drag-and-drop friendly
+- familiar enough for builders
+
+But avoid:
+- generic task-manager language
+- evidence metadata overload
+- turning every issue into a long form
+
+## Success Criteria
+
+- Issues and roadmap work no longer feel disconnected from the venture decision.
+- A completed issue does not automatically imply progress unless evidence
+  supports it.
+- Roadmap items read as venture bets or validation initiatives.
+- Command Center can reference specific evidence links.
+
+---
+
+# Phase 14.8 - Operator Capacity Layer
+
+## Goal
+
+Make shared operator capacity visible across ventures.
+
+## Required Tasks
+
+Add lightweight capacity data and UI for:
+
+```txt
+Product
+Design
+Engineering
+GTM
+Partner / studio leadership
+```
+
+Surface:
+
+```txt
+Function-level load
+Venture allocation
+Over-capacity warnings
+Venture-to-venture contention
+Downstream impact on gates or bets
+```
+
+## Important Scope Rules
+
+Do NOT add:
+- calendar scheduling
+- utilization bureaucracy
+- approvals
+- staff management
+- enterprise resource planning
+
+## Success Criteria
+
+- Users can see when a venture is consuming scarce capacity.
+- Capacity pressure influences Studio Analyst recommendations.
+- The UI remains lightweight and operational.
+
+---
+
+# Phase 14.9 - Studio Analyst Repositioning
+
+## Goal
+
+Refocus AI from assistant-style operational summaries into studio analyst
+recommendations.
+
+## Required Tasks
+
+Update AI behavior and copy to support:
+
+```txt
+Recommended studio move
+Evidence gap summary
+Sunk-cost risk detection
+Validation confidence explanation
+Capacity contention explanation
+Execution evidence links
+```
+
+Preferred recommendation language:
+
+```txt
+Continue
+Narrow
+Pause
+Kill
+Staff up
+Defer
+Partner review
+```
+
+## Important UX Rules
+
+Avoid:
+- chat bubbles
+- assistant avatars
+- fake conversations
+- generic "AI says" framing
+- decorative summaries
+
+Prefer:
+- structured analyst blocks
+- decision recommendations
+- evidence-backed reasoning
+- linked source objects
+
+## Success Criteria
+
+- Studio Analyst outputs directly support portfolio decisions.
+- Recommendations explain evidence and capacity tradeoffs.
+- AI feels embedded and operational, not chatbot-like.
+
+---
+
+# Phase 14.10 - Navigation, Copy, And Verification
+
+## Goal
+
+Complete the repositioning by aligning navigation, labels, empty states, and the
+demo flow.
+
+## Required Tasks
+
+Tune product language:
+
+```txt
+Dashboard -> Command Center
+Issues -> Evidence
+Roadmap -> Bets / Validation Initiatives
+AI Assistant -> Studio Analyst
+Venture health -> Decision pressure
+Roadmap confidence -> Validation confidence
+Next best action -> Recommended studio move
+```
+
+Names can change gradually where route churn would be distracting, but visible
+copy should reinforce the new mental model.
+
+## Verification Flow
+
+Verify:
+
+```txt
+Fresh demo state opens to a clear Command Center
+Top decision links to supporting evidence
+Gate context is visible in relevant drawers
+Capacity pressure appears in the Command Center
+Studio Analyst recommends a studio move
+Start clean platform still shows useful empty states
+Custom venture creation still works
+Export / import still preserves valid workspace state
+```
+
+## Success Criteria
+
+- The product no longer demos as a generic PM dashboard.
+- The seeded story explains the venture studio pain without a long verbal setup.
+- Existing local-first workflows still work.
+- No excluded enterprise systems were added.
+
+---
+
+# Important Scope Rules For Phase 14
+
+This phase remains:
+- frontend-only
+- local-first
+- mocked-data grounded
+- compact
+- operational
+- reviewer-demo optimized
+
+Do NOT add:
+- backend APIs
+- auth
+- RBAC
+- team invitations
+- real multi-tenant security
+- billing
+- LP reporting
+- cap-table workflows
+- bill-back workflows
+- calendar scheduling
+- enterprise resource planning
+- settings-heavy setup
+
+---
+
+# Phase 14 Success Criteria
+
+By end of Product Phase 5:
+- Foundary opens as a Studio Command Center.
+- A reviewer can see which venture needs attention and why.
+- Validation gates explain whether execution is justified.
+- Issues and roadmap items read as execution evidence.
+- Operator capacity pressure is visible.
+- Studio Analyst recommends a clear studio move.
+- Sentra, Reson8, and Internal Ops tell a coherent operating story.
+- The app still feels calm, fast, premium, local-first, and non-enterprise.
+
+The reviewer should feel:
+
+> "This product understands how venture studios decide where to spend attention,
+> talent, and capital."
+
+NOT:
+
+> "This is a polished project management dashboard."
 
 ---
 

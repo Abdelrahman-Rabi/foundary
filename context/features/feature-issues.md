@@ -1,9 +1,39 @@
 # Feature Specification — Issues System
 
+## Phase 14 Alignment
+
+For Studio Operating Intelligence work, the issues route is being reframed as
+Execution Evidence.
+
+Primary source of truth:
+
+```txt
+context/features/feature-execution-evidence.md
+```
+
+Use this issues spec for existing `/issues` route behavior, list/board/drawer
+ownership, quick-create patterns, filters, and drag-and-drop interaction
+standards. When product meaning conflicts, prefer the Execution Evidence
+framing:
+
+```txt
+Issues -> Execution Evidence
+Issue progress -> Evidence impact
+Issue risk -> Gate / capacity risk
+AI insights -> Studio Analyst notes
+Roadmap linkage -> Venture bet / validation initiative linkage
+```
+
+Issues should remain fast and lightweight, but Phase 14 issues should help
+explain whether work proves, disproves, unblocks, de-risks, or merely consumes
+capacity against a studio decision.
+
+---
+
 ## Purpose
 
 The Issues System is:
-> the operational execution layer of Foundary.
+> the operational execution evidence layer of Foundary.
 
 This is where venture teams:
 - coordinate delivery
@@ -12,6 +42,7 @@ This is where venture teams:
 - prioritize work
 - reduce operational ambiguity
 - maintain momentum
+- connect work to validation gates and studio decisions
 
 The Issues experience should feel:
 - alive
@@ -23,7 +54,7 @@ The Issues experience should feel:
 - continuous across refreshes
 
 This is one of the MOST important product areas because it creates:
-> execution credibility.
+> execution credibility with strategic consequence.
 
 ---
 
@@ -33,7 +64,7 @@ The Issues System is NOT:
 > enterprise workflow management.
 
 It IS:
-> high-velocity venture execution coordination.
+> high-velocity venture execution coordination connected to evidence.
 
 The product should optimize for:
 - small elite teams
@@ -41,11 +72,13 @@ The product should optimize for:
 - rapid iteration
 - low-friction workflows
 - operational clarity
+- evidence-backed decisions
 
 Avoid:
 - process bureaucracy
 - excessive workflow configuration
 - enterprise ticketing behavior
+- mandatory evidence metadata on every issue
 
 ---
 
@@ -67,6 +100,7 @@ The Issues System should answer:
 | What is overdue? | Delivery coordination |
 | Which roadmap initiatives are affected? | Strategic visibility |
 | Which ventures are overloaded? | Portfolio balance |
+| What does this work prove or cost? | Studio decision support |
 
 ---
 

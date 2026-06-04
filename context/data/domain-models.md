@@ -1,34 +1,41 @@
-# Domain Models — Foundary
+# Domain Models - Foundary
 
 ## Purpose
 
-This document defines:
+This document defines Foundary's domain model direction for the Studio
+Operating Intelligence repositioning.
+
+It covers:
 - core domain entities
 - data relationships
-- operational state models
-- derived intelligence models
+- validation gate models
+- execution evidence models
+- operator capacity models
+- Studio Analyst signal models
 - synchronization logic
 - mock data architecture
 
-These domain models are intentionally optimized for:
+These models are intentionally optimized for:
 - frontend-first architecture
 - mocked operational realism
-- AI-native workflows
+- local-first continuity
 - venture-aware execution
+- evidence-backed studio decisions
 - believable product sophistication
 
 The system should model:
-> venture operations, not generic task management.
+
+> studio operating intelligence, not generic task management.
 
 ---
 
 # Domain Modeling Philosophy
 
 The data architecture should prioritize:
-
 - clarity
 - interoperability
 - venture-awareness
+- evidence linkage
 - AI contextualization
 - frontend simplicity
 - believable operational behavior
@@ -38,6 +45,34 @@ Avoid:
 - backend-driven complexity
 - unnecessary relational depth
 - infrastructure-oriented schemas
+- finance or cap-table modeling
+- scheduling-system complexity
+
+Models in this document are directional. Implementation may migrate toward them
+incrementally using existing `src/types/*`, seeded data, stores, and derived
+utilities.
+
+---
+
+# Product Spine
+
+Foundary's data model should support:
+
+```txt
+Portfolio Decisions
+-> Validation Gates
+-> Execution Evidence
+-> Operator Capacity
+-> Studio Analyst Recommendations
+```
+
+Every major entity should either:
+- belong to a venture
+- support a validation gate
+- act as execution evidence
+- describe operator capacity
+- support a studio decision
+- provide analyst reasoning
 
 ---
 
@@ -45,13 +80,32 @@ Avoid:
 
 ```txt
 Workspace
-  └── Ventures
-        ├── Issues
-        ├── Roadmap Items
-        ├── AI Insights
-        ├── Health Signals
-        └── Metrics
+  -> Ventures
+      -> Validation Gates
+          -> Assumptions
+          -> Evidence Signals
+          -> Linked Issues
+          -> Linked Roadmap Bets
+      -> Issues / Execution Evidence
+      -> Roadmap Bets / Validation Initiatives
+      -> Operator Allocations
+      -> Studio Analyst Signals
+      -> Decision Pressure / Health
 ```
+
+The old relationship model was:
+
+```txt
+Venture -> Issues / Roadmap / AI / Metrics
+```
+
+The new model is:
+
+```txt
+Venture -> Gates -> Evidence -> Capacity -> Decision
+```
+
+Issues and roadmap items still exist, but their strategic meaning changes.
 
 ---
 
@@ -59,15 +113,76 @@ Workspace
 
 | Entity | Purpose |
 |---|---|
-| Venture | Top-level operational context |
-| Issue | Execution workflow item |
-| RoadmapItem | Strategic initiative |
-| AIInsight | Embedded operational intelligence |
-| VentureHealth | Venture operational status |
-| DashboardMetric | Aggregated visibility layer |
+| Venture | Top-level studio operating context |
+| ValidationGate | Phase-aware decision gate |
+| Assumption | Optional first-class statement being tested |
+| EvidenceSignal | Signal that affects validation confidence |
+| Issue | Fast execution item that may act as evidence |
+| RoadmapItem | Venture bet or validation initiative |
+| OperatorAllocation | Shared capacity allocation by venture/function |
+| OperatorImpact | Capacity impact attached to work |
+| CapacitySignal | Derived cross-venture capacity pressure |
+| AnalystSignal | Studio Analyst recommendation or observation |
+| VentureHealth | Derived venture status and decision pressure |
+| CommandCenterData | Derived portfolio decision surface data |
 | User | Lightweight ownership representation |
-| Tag | Issue categorization |
-| ActivityEvent | Derived operational events |
+| Tag | Lightweight categorization |
+| ActivityEvent | Derived operational event |
+
+---
+
+# Shared Types
+
+## Venture Phase
+
+```ts
+type VenturePhase =
+  | "explore"
+  | "validate"
+  | "build"
+  | "scale"
+```
+
+Phase mapping from older venture stages:
+
+```txt
+idea -> explore
+validation -> validate
+mvp -> build
+growth -> scale
+```
+
+## Studio Decision
+
+```ts
+type StudioDecision =
+  | "continue"
+  | "narrow"
+  | "pause"
+  | "kill"
+  | "staff-up"
+  | "defer"
+  | "partner-review"
+```
+
+## Decision Pressure
+
+```ts
+type DecisionPressure =
+  | "low"
+  | "medium"
+  | "high"
+  | "critical"
+```
+
+## Confidence Impact
+
+```ts
+type ConfidenceImpact =
+  | "increase"
+  | "decrease"
+  | "neutral"
+```
 
 ---
 
@@ -76,13 +191,15 @@ Workspace
 ## Purpose
 
 Represents:
-> an independent startup or operational initiative inside the venture studio ecosystem.
+
+> an independent startup or operational initiative inside the venture studio
+> ecosystem.
 
 Every major system object should be venture-aware.
 
 ---
 
-## Venture Type
+## Venture Type Direction
 
 ```ts
 type Venture = {
@@ -90,7 +207,6 @@ type Venture = {
 
   name: string
   slug: string
-
   description: string
 
   stage:
@@ -98,6 +214,8 @@ type Venture = {
     | "validation"
     | "mvp"
     | "growth"
+
+  phase?: VenturePhase
 
   health:
     | "strong"
@@ -113,6 +231,10 @@ type Venture = {
   color: string
   icon: string
 
+  currentGateId?: string
+  recommendedDecision?: StudioDecision
+  decisionPressure?: DecisionPressure
+
   activeRoadmapCount: number
   activeIssueCount: number
   overdueIssueCount: number
@@ -125,28 +247,30 @@ type Venture = {
 }
 ```
 
+`stage` may remain for existing compatibility. `phase` should become the Studio
+Operating Intelligence phase model.
+
 ---
 
 # Venture Design Notes
-
-## Important Principles
 
 Ventures should feel:
 - operationally alive
 - strategically distinct
 - contextually meaningful
+- decision-bearing
 
 Each venture should have:
-- unique operational characteristics
-- different roadmap maturity
-- different issue patterns
-- different AI observations
+- lifecycle phase
+- current validation gate
+- distinct evidence situation
+- distinct capacity situation
+- clear recommended studio move
 
-Custom local ventures may be created after the local-first continuity phase.
-They should use the same `Venture` model as seeded demo ventures and remain
-frontend-only local workspace state.
+Custom local ventures may be created and should remain frontend-only local
+workspace state.
 
-Minimum creation input:
+Minimum creation input remains:
 
 ```ts
 type CreateVentureInput = {
@@ -161,102 +285,230 @@ Generated fields should include:
 - duplicate-safe slug
 - compact lettermark icon
 - UI-safe color
-- stage-aware health, momentum, progress, and confidence defaults
+- stage-aware health, momentum, progress, confidence, and phase defaults
 
-Custom ventures should be reset when demo data is reset and should round-trip
-through workspace export/import when valid.
+Custom ventures should not receive fake gates, fake evidence, or fake analyst
+certainty until work exists.
 
 ---
 
-# Recommended Initial Ventures
+# Recommended Seeded Venture Roles
 
-```ts
-[
-  {
-    name: "Sentra",
-    stage: "growth"
-  },
-  {
-    name: "Reson8",
-    stage: "validation"
-  },
-  {
-    name: "Internal Ops",
-    stage: "mvp"
-  }
-]
+```txt
+Sentra:
+Higher-confidence growth opportunity with activation upside and capacity strain.
+
+Reson8:
+Validation uncertainty with active execution and sunk-cost risk.
+
+Internal Ops:
+Stable studio leverage with contained scope and freed capacity.
 ```
 
 ---
 
-# 2. User Model
+# 2. Validation Gate Model
 
 ## Purpose
 
-Represents lightweight ownership and execution accountability.
+Represents:
 
-This is NOT a full authentication system.
+> the phase-aware evidence threshold that determines whether a venture deserves
+> more studio commitment.
+
+Validation gates separate validation confidence from execution activity.
 
 ---
 
-## User Type
+## Validation Gate Type
 
 ```ts
-type User = {
+type ValidationGateStatus =
+  | "healthy"
+  | "watch"
+  | "at-risk"
+  | "blocked"
+  | "passed"
+  | "failed"
+
+type ValidationGate = {
   id: string
+  ventureId: string
 
+  phase: VenturePhase
   name: string
-  role: string
+  description: string
 
-  avatar: string
+  assumption: string
+  requiredEvidence: string[]
+  evidenceSignalIds: string[]
 
-  activeVentureIds: string[]
+  linkedIssueIds: string[]
+  linkedRoadmapIds: string[]
 
-  createdAt: string
+  confidence: number
+  status: ValidationGateStatus
+  decisionPressure: DecisionPressure
+
+  recommendedDecision: StudioDecision
+  decisionReason: string
+
+  updatedAt: string
 }
 ```
 
 ---
 
-# Recommended Mock Users
+# Validation Gate Philosophy
 
-```ts
-[
-  {
-    name: "Sarah Chen",
-    role: "Venture Product Lead"
-  },
-  {
-    name: "Omar Khaled",
-    role: "AI Engineer"
-  },
-  {
-    name: "Maya Rodriguez",
-    role: "Studio Operator"
-  },
-  {
-    name: "Lina Haddad",
-    role: "Product Designer"
-  }
-]
-```
+Gates should answer:
+- what assumption is being tested
+- what evidence is required
+- what evidence exists
+- what evidence is missing
+- whether execution is justified
+- which studio move is recommended
+
+Avoid:
+- approval workflows
+- permission systems
+- stage-gate bureaucracy
+- blocking edits to issues or roadmap items
 
 ---
 
-# 3. Issue Model
+# 3. Assumption Model
 
 ## Purpose
 
 Represents:
-> operational execution work.
 
-Issues are the core execution layer of the product.
+> a venture belief that must be supported or challenged by evidence.
+
+Assumptions can remain strings on `ValidationGate` until the UI requires
+first-class assumption management.
 
 ---
 
-# Issue Type
+## Optional Assumption Type
 
 ```ts
+type Assumption = {
+  id: string
+  ventureId: string
+  gateId: string
+
+  statement: string
+
+  status:
+    | "untested"
+    | "testing"
+    | "supported"
+    | "challenged"
+    | "invalidated"
+
+  evidenceSignalIds: string[]
+
+  updatedAt: string
+}
+```
+
+Do not introduce an assumption store unless the product needs editable
+assumption objects.
+
+---
+
+# 4. Evidence Signal Model
+
+## Purpose
+
+Represents:
+
+> an observed signal that affects validation confidence.
+
+Evidence signals can be seeded, derived, or later user-created.
+
+---
+
+## Evidence Signal Type
+
+```ts
+type EvidenceStrength =
+  | "weak"
+  | "moderate"
+  | "strong"
+  | "negative"
+
+type EvidenceSignal = {
+  id: string
+  ventureId: string
+  gateId: string
+
+  title: string
+  summary: string
+
+  signalType:
+    | "customer-interview"
+    | "activation"
+    | "retention"
+    | "conversion"
+    | "revenue"
+    | "technical-risk"
+    | "capacity"
+    | "market"
+    | "qualitative"
+
+  strength: EvidenceStrength
+  confidenceImpact: ConfidenceImpact
+
+  sourceIssueIds: string[]
+  sourceRoadmapIds: string[]
+
+  observedAt: string
+}
+```
+
+---
+
+# Evidence Signal Philosophy
+
+Signals should feel:
+- believable
+- directional
+- source-linked
+- useful for decisions
+
+Avoid:
+- fake precision
+- invented evidence in clean states
+- long research-report behavior
+- standalone evidence database complexity
+
+---
+
+# 5. Issue Model
+
+## Purpose
+
+Represents:
+
+> fast execution work that may also act as execution evidence.
+
+Issues remain the high-velocity execution layer, but their strategic role is to
+show how work supports or challenges a venture decision.
+
+---
+
+## Issue Type Direction
+
+```ts
+type EvidenceRole =
+  | "prove"
+  | "disprove"
+  | "unblock"
+  | "de-risk"
+  | "capacity-cost"
+
 type Issue = {
   id: string
 
@@ -288,9 +540,7 @@ type Issue = {
     | "killed"
 
   ownerId: string
-
   dueDate?: string
-
   tags: string[]
 
   riskLevel:
@@ -306,8 +556,16 @@ type Issue = {
     | "large"
 
   blocked: boolean
-
   acceptanceCriteria?: string[]
+
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  evidenceRole?: EvidenceRole
+  evidenceStrength?: EvidenceStrength
+  confidenceImpact?: ConfidenceImpact
+  operatorImpact?: OperatorImpact
+  decisionImpact?: StudioDecision
 
   aiInsightIds: string[]
 
@@ -316,64 +574,52 @@ type Issue = {
 }
 ```
 
+Evidence fields should be optional. Quick create must remain fast.
+
 ---
 
 # Issue Modeling Philosophy
 
 Issues should support:
 - operational realism
-- believable AI analysis
+- quick capture
 - roadmap synchronization
-- risk visibility
+- validation linkage
+- capacity interpretation
+- Studio Analyst reasoning
 
 Avoid:
-- excessive enterprise workflow states
-- deeply nested issue hierarchies
+- mandatory evidence metadata on every issue
+- enterprise workflow states
+- deep issue hierarchies
 - story-point complexity
+- assuming done work means validation progress
 
 ---
 
-# Important Derived Behaviors
-
-## High Risk Issues
-
-Issues become high risk when:
-- overdue
-- no acceptance criteria
-- linked to critical roadmap items
-- blocked
-- urgent + low confidence
-
----
-
-## Confidence Calculation
-
-Confidence should derive from:
-- completion progress
-- blocked state
-- issue age
-- roadmap linkage
-- overdue state
-
-This allows:
-> believable AI recommendations.
-
----
-
-# 4. Roadmap Item Model
+# 6. Roadmap Item Model
 
 ## Purpose
 
 Represents:
-> strategic venture initiatives.
 
-Roadmap items are outcome-oriented, not ticket-oriented.
+> a venture bet or validation initiative.
+
+Roadmap items are outcome-oriented and evidence-aware, not generic planning
+cards.
 
 ---
 
-# Roadmap Item Type
+## Roadmap Item Type Direction
 
 ```ts
+type RoadmapBetType =
+  | "validation"
+  | "growth"
+  | "delivery"
+  | "risk-reduction"
+  | "leverage"
+
 type RoadmapItem = {
   id: string
 
@@ -397,7 +643,6 @@ type RoadmapItem = {
     | "killed"
 
   ownerId: string
-
   linkedIssueIds: string[]
 
   progress: number
@@ -415,6 +660,15 @@ type RoadmapItem = {
 
   targetMetric?: string
 
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  betType?: RoadmapBetType
+  expectedEvidence?: string[]
+  confidenceImpact?: ConfidenceImpact
+  operatorImpact?: OperatorImpact
+  decisionImpact?: StudioDecision
+
   aiInsightIds: string[]
 
   createdAt: string
@@ -427,158 +681,209 @@ type RoadmapItem = {
 # Roadmap Philosophy
 
 Roadmap items should emphasize:
+- venture bets
+- validation initiatives
 - strategic direction
-- validation
+- evidence expectations
 - confidence
 - outcomes
-- momentum
 
 NOT:
 - detailed sprint planning
 - engineering estimation
 - delivery bureaucracy
+- timeline-heavy planning
 
 ---
 
-# Important Derived Behaviors
+# 7. Operator Capacity Models
 
-## Progress Computation
+## Purpose
 
-Roadmap progress should derive from:
-- linked issue completion
-- issue statuses
-- blocked issue count
+Represent:
 
----
+> shared studio capacity and function-level contention across ventures.
 
-## Confidence Computation
-
-Confidence should decrease when:
-- too many blocked issues
-- roadmap overdue
-- high-risk issues exist
-- acceptance criteria missing
-- initiative is stagnant
+Capacity models should explain where scarce operator time is spent and whether
+that spend is justified by evidence.
 
 ---
 
-# 5. AI Insight Model
+## Operator Types
+
+```ts
+type OperatorFunction =
+  | "product"
+  | "design"
+  | "engineering"
+  | "gtm"
+  | "partner"
+
+type CapacityPressure =
+  | "healthy"
+  | "watch"
+  | "overloaded"
+```
+
+---
+
+## Operator Impact
+
+Attached to issues, roadmap items, evidence signals, and analyst outputs.
+
+```ts
+type OperatorImpact = {
+  function: OperatorFunction
+  effort: "low" | "medium" | "high"
+  capacityPercent?: number
+  note: string
+}
+```
+
+---
+
+## Operator Allocation
+
+Venture-level seeded or derived capacity.
+
+```ts
+type OperatorAllocation = {
+  id: string
+  ventureId: string
+  function: OperatorFunction
+  operatorName?: string
+  allocationPercent: number
+  pressure: CapacityPressure
+  impact: string
+  linkedIssueIds: string[]
+  linkedRoadmapIds: string[]
+  updatedAt: string
+}
+```
+
+---
+
+## Capacity Signal
+
+Derived signal for Command Center and Studio Analyst surfaces.
+
+```ts
+type CapacitySignal = {
+  id: string
+  function: OperatorFunction
+  pressure: CapacityPressure
+  totalAllocationPercent: number
+  affectedVentureIds: string[]
+  contentionReason: string
+  downstreamImpact: string
+  recommendedDecision?: StudioDecision
+  sourceIssueIds: string[]
+  sourceRoadmapIds: string[]
+}
+```
+
+---
+
+# Operator Capacity Philosophy
+
+Capacity should show:
+- overloaded functions
+- cross-venture contention
+- high-effort work against weak evidence
+- capacity protection for higher-confidence work
+
+Avoid:
+- calendars
+- timesheets
+- staffing workflows
+- utilization reports
+- bill-back logic
+- cap-table implications
+- fake precision
+
+---
+
+# 8. Studio Analyst Signal Model
 
 ## Purpose
 
 Represents:
-> embedded operational intelligence.
 
-AI insights should feel:
-- contextual
-- concise
-- believable
-- operationally useful
+> a source-linked analyst recommendation or observation that supports a studio
+> decision.
+
+The Studio Analyst replaces generic assistant summaries with decision-oriented
+intelligence.
 
 ---
 
-# AI Insight Type
+## Analyst Signal Type
+
+Existing `AIInsight` may remain temporarily. Future model direction:
 
 ```ts
-type AIInsight = {
+type AnalystSignal = {
   id: string
+  ventureId?: string
 
-  ventureId: string
-
-  entityType:
-    | "issue"
-    | "roadmap"
-    | "venture"
-    | "portfolio"
-
-  entityId: string
-
-  type:
-    | "risk"
-    | "priority"
-    | "recommendation"
-    | "warning"
-    | "summary"
+  signalType:
+    | "studio-decision"
+    | "evidence-gap"
+    | "sunk-cost-risk"
+    | "capacity-tradeoff"
+    | "gate-confidence"
+    | "execution-risk"
 
   title: string
+  summary: string
 
-  message: string
+  recommendedDecision?: StudioDecision
+  confidence: "low" | "medium" | "high"
+  severity: "low" | "medium" | "high"
 
-  confidence: number
-
-  severity:
-    | "low"
-    | "medium"
-    | "high"
+  gateIds: string[]
+  evidenceSignalIds: string[]
+  issueIds: string[]
+  roadmapIds: string[]
+  capacitySignalIds: string[]
 
   suggestedAction?: string
-
   createdAt: string
 }
 ```
 
 ---
 
-# AI Insight Philosophy
+# Analyst Signal Philosophy
 
-AI should NOT:
-- behave conversationally
-- simulate generic chat
-- generate noisy text
+Analyst signals should:
+- recommend studio moves
+- cite gates, evidence, and capacity where available
+- explain sunk-cost risk
+- be concise and source-linked
 
-AI SHOULD:
-- surface operational signals
-- identify delivery concerns
-- reinforce strategic awareness
-
----
-
-# Example AI Insights
-
-## Risk Detection
-
-```txt
-Risk Level: High
-
-Reason:
-The roadmap initiative contains multiple blocked issues and lacks measurable validation criteria.
-
-Suggested Action:
-Split validation work from implementation delivery.
-
-Confidence:
-84%
-```
+Avoid:
+- chatbot transcripts
+- fake streaming state
+- generic task summaries
+- recommendations without evidence
 
 ---
 
-## Priority Suggestion
-
-```txt
-Recommendation:
-Elevate priority to High.
-
-Reason:
-This issue directly impacts a growth-stage roadmap initiative with declining confidence.
-```
-
----
-
-# 6. Venture Health Model
+# 9. Venture Health / Decision Pressure Model
 
 ## Purpose
 
 Represents:
-> operational health visibility at venture level.
 
-Used heavily in:
-- dashboard
-- AI assistant
-- portfolio overview
+> derived venture status interpreted through gates, evidence, and capacity.
+
+Health is no longer just operational status. It should indicate decision
+pressure.
 
 ---
 
-# Venture Health Type
+## Venture Health Type Direction
 
 ```ts
 type VentureHealth = {
@@ -595,15 +900,19 @@ type VentureHealth = {
     | "moderate"
     | "slow"
 
+  validationConfidence: number
   roadmapConfidence: number
+
+  currentGateId?: string
+  recommendedDecision?: StudioDecision
+  decisionPressure: DecisionPressure
 
   overdueIssues: number
   blockedIssues: number
-
   completedThisWeek: number
-
   activeInitiatives: number
 
+  capacityPressure?: CapacityPressure
   riskScore: number
 
   updatedAt: string
@@ -615,90 +924,153 @@ type VentureHealth = {
 # Venture Health Philosophy
 
 Health should communicate:
-- operational clarity
-- execution momentum
-- portfolio confidence
+- validation confidence
+- execution evidence
+- capacity strain
+- decision urgency
 
 NOT:
 - vanity analytics
+- generic traffic-light status
+- task completion alone
 
 ---
 
-# 7. Dashboard Metrics Model
+# 10. Command Center Data Model
 
 ## Purpose
 
-Aggregated operational visibility layer.
+Represents:
+
+> derived portfolio decision data for the Studio Command Center.
+
+This should usually be derived from ventures, gates, issues, roadmap items,
+capacity, and analyst signals. Avoid a separate persisted dashboard store unless
+user-editable state requires it.
 
 ---
 
-# Dashboard Metric Type
+## Command Center Type Direction
 
 ```ts
-type DashboardMetrics = {
-  totalIssues: number
+type CommandCenterDecision = {
+  ventureId: string
+  phase: VenturePhase
+  gateId?: string
+  recommendedDecision: StudioDecision
+  pressure: DecisionPressure
+  reason: string
+  evidenceIds: string[]
+  roadmapIds: string[]
+  issueIds: string[]
+  capacityImpact?: OperatorImpact
+}
 
-  overdueIssues: number
-  blockedIssues: number
-
-  activeRoadmapItems: number
-  killedRoadmapItems: number
-
-  completedIssues: number
-
-  roadmapConfidenceAverage: number
-
-  ventureDistribution: {
-    ventureId: string
-    issueCount: number
-  }[]
-
-  updatedAt: string
+type CommandCenterData = {
+  topDecision?: CommandCenterDecision
+  attentionQueue: CommandCenterDecision[]
+  validationRisks: ValidationGate[]
+  capacitySignals: CapacitySignal[]
+  analystSignals: AnalystSignal[]
 }
 ```
 
 ---
 
-# Dashboard Modeling Philosophy
+# 11. User Model
 
-Dashboard metrics should feel:
-- strategically useful
-- executive-readable
-- lightweight
-- calm
+## Purpose
 
-Avoid:
-- analytics overload
-- enterprise BI behavior
+Represents lightweight ownership and execution accountability.
+
+This is NOT a full authentication system.
 
 ---
 
-# 8. Activity Event Model
+## User Type
+
+```ts
+type User = {
+  id: string
+  name: string
+  role: string
+  avatar: string
+  activeVentureIds: string[]
+  createdAt: string
+}
+```
+
+Recommended role language may include:
+- Venture Product Lead
+- Studio Operator
+- Product Designer
+- AI Engineer
+- GTM Operator
+- Studio Partner
+
+---
+
+# 12. Tag Model
+
+## Purpose
+
+Lightweight issue and evidence categorization.
+
+---
+
+## Tag Type
+
+```ts
+type Tag = {
+  id: string
+  label: string
+  color: string
+}
+```
+
+Recommended tags:
+
+```txt
+AI
+Growth
+Infrastructure
+Onboarding
+Retention
+Mobile
+Analytics
+Research
+Performance
+Validation
+Capacity
+GTM
+```
+
+---
+
+# 13. Activity Event Model
 
 ## Purpose
 
 Represents derived operational activity.
 
-Used for:
-- timeline signals
-- operational awareness
-- recent activity UI
+Used for timeline signals, operating awareness, and analyst source context.
 
 ---
 
-# Activity Event Type
+## Activity Event Type
 
 ```ts
 type ActivityEvent = {
   id: string
-
   ventureId: string
-
   actorId: string
 
   entityType:
     | "issue"
     | "roadmap"
+    | "gate"
+    | "evidence"
+    | "capacity"
 
   entityId: string
 
@@ -709,63 +1081,15 @@ type ActivityEvent = {
     | "completed"
     | "killed"
     | "blocked"
+    | "linked"
+    | "unlinked"
 
   message: string
-
   createdAt: string
 }
 ```
 
----
-
-# Activity Philosophy
-
-Activity should:
-- reinforce operational realism
-- make ventures feel alive
-- support async awareness
-
-Avoid:
-- noisy social feed behavior
-
----
-
-# 9. Tag Model
-
-## Purpose
-
-Lightweight issue categorization.
-
----
-
-# Tag Type
-
-```ts
-type Tag = {
-  id: string
-
-  label: string
-  color: string
-}
-```
-
----
-
-# Recommended Tags
-
-```ts
-[
-  "AI",
-  "Growth",
-  "Infrastructure",
-  "Onboarding",
-  "Retention",
-  "Mobile",
-  "Analytics",
-  "Research",
-  "Performance"
-]
-```
+Activity should reinforce operational realism, not become a noisy social feed.
 
 ---
 
@@ -775,36 +1099,58 @@ type Tag = {
 
 ```txt
 Venture
- ├── Issues
- ├── RoadmapItems
- ├── AIInsights
- ├── VentureHealth
- └── DashboardMetrics
+  -> ValidationGates
+  -> Issues
+  -> RoadmapItems
+  -> OperatorAllocations
+  -> AnalystSignals
+  -> VentureHealth
 ```
 
----
+## Validation Gate Relationships
+
+```txt
+ValidationGate
+  -> belongs to Venture
+  -> may represent Assumption
+  -> links to EvidenceSignals
+  -> links to Issues
+  -> links to RoadmapItems
+  -> informs StudioDecision
+```
 
 ## Issue Relationships
 
 ```txt
 Issue
- ├── belongs to Venture
- ├── optionally linked to RoadmapItem
- ├── assigned to User
- ├── linked to AIInsights
- └── generates ActivityEvents
+  -> belongs to Venture
+  -> optionally links to RoadmapItem
+  -> optionally links to ValidationGate
+  -> optionally links to EvidenceSignals
+  -> may carry OperatorImpact
+  -> informs AnalystSignals
 ```
-
----
 
 ## Roadmap Relationships
 
 ```txt
 RoadmapItem
- ├── belongs to Venture
- ├── contains Issues
- ├── linked to AIInsights
- └── affects DashboardMetrics
+  -> belongs to Venture
+  -> links to Issues
+  -> optionally links to ValidationGate
+  -> optionally links to EvidenceSignals
+  -> may carry OperatorImpact
+  -> informs AnalystSignals
+```
+
+## Capacity Relationships
+
+```txt
+OperatorAllocation
+  -> belongs to Venture
+  -> links to Issues and RoadmapItems
+  -> derives CapacitySignals
+  -> informs StudioDecision
 ```
 
 ---
@@ -815,31 +1161,52 @@ RoadmapItem
 
 Switching venture should update:
 - issues
-- roadmap
-- metrics
-- AI insights
-- health indicators
+- roadmap items
+- validation gate context
+- evidence summaries
+- capacity signals
+- analyst signals
+- Command Center scope
 
 Immediately and globally.
-
----
 
 ## Issue Synchronization
 
 Issue updates should affect:
 - roadmap progress
-- dashboard counts
-- venture health
-- AI recommendations
-
----
+- validation gate context
+- execution evidence summary
+- capacity interpretation
+- analyst recommendations
+- Command Center attention queue
 
 ## Roadmap Synchronization
 
 Roadmap updates should affect:
-- venture confidence
-- dashboard health
-- AI insights
+- linked issue interpretation
+- validation confidence
+- execution evidence summary
+- capacity pressure
+- analyst recommendations
+- Command Center top decision
+
+## Gate Synchronization
+
+Gate changes should affect:
+- venture decision pressure
+- Command Center ranking
+- issue and roadmap drawer context
+- analyst recommendations
+
+## Capacity Synchronization
+
+Capacity changes should affect:
+- Command Center top decision
+- portfolio attention queue
+- analyst capacity tradeoffs
+- gate confidence interpretation when work consumes capacity without evidence
+
+Prefer derived calculations over fragile circular store updates.
 
 ---
 
@@ -848,6 +1215,7 @@ Roadmap updates should affect:
 ## Important Principle
 
 Mock data quality heavily affects:
+
 > perceived product sophistication.
 
 The data should feel:
@@ -855,79 +1223,86 @@ The data should feel:
 - interconnected
 - strategically coherent
 - operationally believable
+- studio-native
+- decision-oriented
 
----
+## Required Relationships
 
-# Mock Data Requirements
+Mock data should connect:
+- ventures
+- lifecycle phases
+- validation gates
+- assumptions
+- evidence signals
+- issues
+- roadmap bets
+- operator allocations
+- analyst signals
 
-## Issues
+## Seeded Venture Stories
 
-Create:
-- active delivery work
-- blocked work
-- overdue work
-- completed wins
-- killed experiments
+```txt
+Sentra:
+Higher-confidence growth opportunity with activation upside and capacity strain.
 
----
+Reson8:
+Validation uncertainty with active execution and sunk-cost risk.
 
-## Roadmaps
-
-Create:
-- strong initiatives
-- uncertain initiatives
-- high-risk initiatives
-- recently completed initiatives
-
----
-
-## AI Insights
-
-Create:
-- believable risk observations
-- nuanced recommendations
-- contextual warnings
-
-Avoid:
-- repetitive AI phrasing
-- generic AI outputs
+Internal Ops:
+Stable studio leverage with contained scope and freed capacity.
+```
 
 ---
 
 # Derived Intelligence Rules
 
-## AI Risk Detection Rules
+## Gate Confidence Rules
 
-Increase risk when:
-- blocked = true
-- overdue = true
-- no acceptance criteria
-- urgent + low confidence
-- roadmap confidence declining
+Increase confidence when:
+- required evidence exists
+- strong evidence signals appear
+- linked work produces meaningful learning
+- blocked evidence collection is resolved
 
----
+Decrease confidence when:
+- required evidence is missing
+- weak or negative signals appear
+- execution continues without learning
+- capacity is consumed without confidence movement
 
-## Roadmap Confidence Rules
+Do not increase validation confidence just because issues are done.
 
-Reduce confidence when:
-- linked issues blocked
-- overdue work increases
-- roadmap stagnates
-- too many urgent issues
+## Capacity Pressure Rules
 
----
+Suggested interpretation:
 
-## Venture Momentum Rules
+```txt
+0-85%      healthy
+86-105%    watch
+106%+      overloaded
+```
 
-Momentum increases when:
-- roadmap progress improves
-- issue completion velocity rises
-- blocked work decreases
+Capacity pressure is strongest when interpreted with validation confidence:
 
-Momentum decreases when:
-- overdue work rises
-- roadmap confidence drops
-- many issues become stalled
+```txt
+high capacity + high confidence -> protect capacity or staff up
+high capacity + low confidence -> narrow, pause, or partner review
+low capacity + high confidence -> continue efficiently
+low capacity + low confidence -> defer or clarify gate
+```
+
+## Studio Analyst Rules
+
+Analyst signals should prefer:
+- gate-backed reasoning
+- evidence-backed recommendations
+- capacity tradeoff explanation
+- source object links
+
+Avoid:
+- generic AI outputs
+- recommendations without evidence
+- chatbot-like phrasing
 
 ---
 
@@ -935,29 +1310,50 @@ Momentum decreases when:
 
 ## Recommended Store Separation
 
+Existing stores remain valid:
+
 ```txt
-/use-venture-store
-/use-issues-store
-/use-roadmap-store
-/use-dashboard-store
-/use-ai-store
-/use-ui-store
+useVentureStore
+useIssueStore
+useRoadmapStore
+useAssistantStore
+useUiStore
 ```
+
+Potential future additions:
+
+```txt
+useValidationGateStore
+useCapacityStore
+```
+
+Add future stores only when the state is:
+- user-editable
+- persisted
+- shared across distant surfaces
+- too complex to derive cleanly
+
+Prefer typed mock data and derived utilities first.
 
 ---
 
-# Store Philosophy
+# Local-First Persistence
 
-Stores should remain:
-- lightweight
-- composable
-- frontend-oriented
-- predictable
+Persist user-editable state:
+- ventures
+- issues
+- roadmap items
+- filters and view modes
+- assistant / analyst inspected and dismissed signal state
+- future gates, evidence, and capacity only when user-editable
 
-Avoid:
-- excessive abstraction
-- enterprise state patterns
-- premature optimization
+Do not persist:
+- fake AI transcripts
+- generated reasoning
+- derived Command Center data
+- derived capacity signals unless explicitly user-authored
+
+Invalid imports must not overwrite current valid state.
 
 ---
 
@@ -965,13 +1361,17 @@ Avoid:
 
 Every domain model should reinforce:
 - venture-awareness
-- operational clarity
-- strategic execution
-- AI-native behavior
+- decision clarity
+- validation confidence
+- execution evidence
+- operator leverage
+- Studio Analyst reasoning
 - believable sophistication
 
 The system should feel like:
-> a living venture operating environment.
+
+> a living studio operating environment.
 
 NOT:
+
 > a collection of disconnected CRUD entities.

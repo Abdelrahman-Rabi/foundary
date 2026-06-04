@@ -59,6 +59,53 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-04 - Codex - Studio Operating Intelligence Context Pivot
+
+Task:
+Repositioned Foundary's context base from a venture project tracker toward a
+studio operating intelligence layer for portfolio decisions, validation gates,
+execution evidence, operator capacity, and Studio Analyst recommendations.
+
+Changed:
+- `AGENTS.md`
+- `context/project-overview.md`
+- `context/project-specs.md`
+- `context/implementation-roadmap.md`
+- `context/current-feature.md`
+- `context/codebase-map.md`
+- `context/strategy/studio-operating-intelligence.md`
+- `context/data/domain-models.md`
+- `context/data/mock-data-strategy.md`
+- `context/data/ai-behavior-rules.md`
+- `context/features/feature-studio-command-center.md`
+- `context/features/feature-validation-gates.md`
+- `context/features/feature-execution-evidence.md`
+- `context/features/feature-operator-capacity.md`
+- `context/features/feature-ai-assistant.md`
+- `context/features/feature-dashboard.md`
+- `context/features/feature-issues.md`
+- `context/features/feature-roadmap.md`
+- `context/agent-handoff.md`
+
+Verification:
+- `git diff --check` passed for the Phase 14 context files listed above.
+
+Notes:
+- Phase 14 should use this spine as the implementation source of truth:
+  Portfolio Decisions -> Validation Gates -> Execution Evidence -> Operator
+  Capacity -> Studio Analyst Recommendations.
+- `/dashboard` remains the route, but the intended product surface is the
+  Studio Command Center.
+- `/issues` and `/roadmap` should become execution evidence and venture
+  bet/validation initiative surfaces, not generic task and plan trackers.
+- `/assistant` can remain the route, but user-facing behavior should read as
+  Studio Analyst recommendations.
+
+Risks / Follow-ups:
+- No runtime code was changed in this docs pass.
+- Implementation should begin with mock data/domain shape updates before visual
+  Command Center composition so the demo story stays coherent.
+
 ## 2026-06-02 - Codex - Interview Problem-Solution Doc
 
 Task:

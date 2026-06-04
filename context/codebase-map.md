@@ -19,10 +19,10 @@ Foundary is a Next.js App Router application.
 src/app
   layout.tsx       Root layout, fonts, global AppShell
   page.tsx         Redirects to /dashboard
-  dashboard/       Operational overview route
-  issues/          Issue execution route
-  roadmap/         Strategic roadmap route
-  assistant/       Operational intelligence route
+  dashboard/       Command Center / operational overview route
+  issues/          Execution Evidence / issue execution route
+  roadmap/         Venture Bets / strategic roadmap route
+  assistant/       Studio Analyst / operational intelligence route
 ```
 
 The root layout wraps every route in:
@@ -60,6 +60,19 @@ fetching architecture unless a plan explicitly authorizes it.
 
 ### `/dashboard`
 
+Phase 14 meaning:
+
+```txt
+Studio Command Center
+```
+
+This route should increasingly answer:
+- which venture needs attention
+- which validation gate is weak
+- which execution work is evidence
+- which operator capacity is constrained
+- which studio move is recommended
+
 Start here:
 
 ```txt
@@ -71,13 +84,13 @@ src/features/dashboard/components/*
 
 Owns:
 
-- portfolio and active venture overview
+- portfolio and active venture decision overview
 - KPI row
-- venture health
+- venture health / decision pressure
 - risk and attention panels
 - issue status counts
-- roadmap overview
-- dashboard-facing AI signals
+- roadmap / venture bet overview
+- dashboard-facing Studio Analyst signals
 
 Connection points:
 
@@ -91,11 +104,22 @@ Connection points:
 Use dashboard specs:
 
 ```txt
+context/features/feature-studio-command-center.md
 context/features/feature-dashboard.md
 context/current-feature.md
 ```
 
 ### `/issues`
+
+Phase 14 meaning:
+
+```txt
+Execution Evidence
+```
+
+This route should remain fast for issue execution, while gradually showing how
+work proves, disproves, unblocks, de-risks, or consumes capacity against a
+studio decision.
 
 Start here:
 
@@ -115,6 +139,7 @@ Owns:
 - quick create issue
 - issue drawer content
 - status updates and board movement
+- execution evidence indicators and drawer context when implemented
 
 Connection points:
 
@@ -127,11 +152,22 @@ Connection points:
 Use issues specs:
 
 ```txt
+context/features/feature-execution-evidence.md
 context/features/feature-issues.md
 context/current-feature.md
 ```
 
 ### `/roadmap`
+
+Phase 14 meaning:
+
+```txt
+Venture Bets / Validation Initiatives
+```
+
+This route should keep Now / Next / Later board behavior, while gradually
+framing roadmap items as bets linked to gates, assumptions, evidence, and
+operator impact.
 
 Start here:
 
@@ -151,6 +187,7 @@ Owns:
 - quick create roadmap item
 - roadmap drawer content
 - roadmap issue linkage UI
+- venture bet / validation initiative context when implemented
 
 Connection points:
 
@@ -163,13 +200,26 @@ Connection points:
 Use roadmap specs:
 
 ```txt
+context/features/feature-execution-evidence.md
 context/features/feature-roadmap.md
 context/current-feature.md
 ```
 
 Only load issue specs if the task changes issue-roadmap synchronization behavior.
+Only load validation/capacity specs if the task changes gate or operator impact
+behavior.
 
 ### `/assistant`
+
+Phase 14 meaning:
+
+```txt
+Studio Analyst
+```
+
+This route may remain `/assistant`, but visible behavior should move toward
+source-linked analyst recommendations for continue, narrow, pause, kill, staff
+up, defer, or partner-review decisions.
 
 Start here:
 
@@ -187,8 +237,8 @@ Owns:
 - delivery risk summaries
 - roadmap recommendations
 - clarity gaps
-- assistant signal inspection
-- assistant drawer content
+- Studio Analyst signal inspection
+- assistant / analyst drawer content
 
 Connection points:
 
@@ -323,6 +373,14 @@ src/data/tags.ts
 src/data/index.ts
 ```
 
+Phase 14 may add:
+
+```txt
+src/data/validation-gates.ts
+src/data/evidence-signals.ts
+src/data/operator-capacity.ts
+```
+
 Domain types live in:
 
 ```txt
@@ -334,6 +392,16 @@ src/types/dashboard.ts
 src/types/user.ts
 src/types/tag.ts
 src/types/index.ts
+```
+
+Phase 14 model additions should usually start in the closest existing type file:
+
+```txt
+src/types/venture.ts     phases, gates, decisions, venture health
+src/types/issue.ts       execution evidence and operator impact
+src/types/roadmap.ts     venture bets and validation initiatives
+src/types/ai.ts          Studio Analyst signals
+src/types/dashboard.ts   Command Center derived data
 ```
 
 When adding data fields, update the matching type and mock data together.
@@ -393,16 +461,22 @@ src/features/assistant
 src/features/synchronization
 ```
 
-Dashboard uses a hook plus metric utilities.
+Dashboard uses a hook plus metric utilities. In Phase 14, this route is the
+likely implementation home for Command Center panels until a dedicated feature
+folder is justified.
 
-Issues uses a hook plus filter/sort utilities.
+Issues uses a hook plus filter/sort utilities. In Phase 14, this remains the
+execution workflow home while gaining evidence context.
 
-Roadmap uses board components plus roadmap utilities.
+Roadmap uses board components plus roadmap utilities. In Phase 14, this remains
+the Now / Next / Later board while roadmap items become venture bets.
 
 Assistant uses signal-generation utilities and presentational signal components.
+In Phase 14, visible product behavior should be Studio Analyst.
 
 Synchronization contains shared calculations that connect issues, roadmap, and
-venture health. Treat it as cross-feature logic.
+venture health. Phase 14 may extend it to gates, evidence, capacity, and Command
+Center ranking. Treat it as cross-feature logic.
 
 ---
 
@@ -476,7 +550,51 @@ This affects:
 
 Change with care.
 
-### Assistant Signals
+### Studio Operating Intelligence
+
+Phase 14 introduces a new product spine:
+
+```txt
+Portfolio Decisions
+  -> Validation Gates
+  -> Execution Evidence
+  -> Operator Capacity
+  -> Studio Analyst Recommendations
+```
+
+Likely cross-feature touch points:
+
+```txt
+src/types/venture.ts
+src/types/issue.ts
+src/types/roadmap.ts
+src/types/ai.ts
+src/types/dashboard.ts
+src/data/*
+src/features/dashboard/*
+src/features/issues/components/issue-drawer-content.tsx
+src/features/roadmap/components/roadmap-drawer-content.tsx
+src/features/assistant/utils/assistant-analysis.ts
+src/features/synchronization/utils/sync-utils.ts
+```
+
+Use these specs as the primary routing layer:
+
+```txt
+context/strategy/studio-operating-intelligence.md
+context/features/feature-studio-command-center.md
+context/features/feature-validation-gates.md
+context/features/feature-execution-evidence.md
+context/features/feature-operator-capacity.md
+context/features/feature-ai-assistant.md
+context/data/domain-models.md
+context/data/mock-data-strategy.md
+```
+
+Do not add backend, scheduling, finance, bill-back, cap-table, or enterprise
+resource planning systems for this phase.
+
+### Assistant / Studio Analyst Signals
 
 Signal generation starts at:
 
@@ -493,7 +611,9 @@ src/features/assistant/utils/portfolio-signals.ts
 src/features/assistant/utils/signal-dedupe.ts
 ```
 
-Assistant is embedded operational intelligence, not a chatbot.
+Assistant is embedded operational intelligence, not a chatbot. In Phase 14,
+visible product behavior should be Studio Analyst: source-linked recommendations
+grounded in gates, execution evidence, and capacity tradeoffs.
 
 ---
 
@@ -522,6 +642,7 @@ Before changing one of these, inspect all directly affected feature surfaces.
 Dashboard task:
 
 ```txt
+context/features/feature-studio-command-center.md
 context/features/feature-dashboard.md
 src/app/dashboard/page.tsx
 src/features/dashboard/hooks/use-dashboard-data.ts
@@ -531,6 +652,7 @@ src/features/dashboard/components/*
 Issues task:
 
 ```txt
+context/features/feature-execution-evidence.md
 context/features/feature-issues.md
 src/app/issues/page.tsx
 src/features/issues/hooks/use-issues-data.ts
@@ -541,6 +663,7 @@ src/stores/issue-store.ts
 Roadmap task:
 
 ```txt
+context/features/feature-execution-evidence.md
 context/features/feature-roadmap.md
 src/app/roadmap/page.tsx
 src/features/roadmap/components/*
@@ -556,6 +679,27 @@ src/app/assistant/page.tsx
 src/features/assistant/utils/assistant-analysis.ts
 src/features/assistant/components/*
 ```
+
+Studio Operating Intelligence task:
+
+```txt
+context/strategy/studio-operating-intelligence.md
+context/features/feature-studio-command-center.md
+context/features/feature-validation-gates.md
+context/features/feature-execution-evidence.md
+context/features/feature-operator-capacity.md
+context/features/feature-ai-assistant.md
+context/data/domain-models.md
+context/data/mock-data-strategy.md
+src/data/*
+src/types/*
+src/features/dashboard/*
+src/features/issues/*
+src/features/roadmap/*
+src/features/assistant/*
+```
+
+Load only the needed subset for the current slice.
 
 Navigation or shell task:
 

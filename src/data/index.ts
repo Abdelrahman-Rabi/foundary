@@ -4,3 +4,8 @@ export { roadmapItems } from "@/data/roadmap"
 export { tags } from "@/data/tags"
 export { users } from "@/data/users"
 export { ventures } from "@/data/ventures"
+export { validationGates } from "@/data/validation-gates"
+export { evidenceSignals } from "@/data/evidence-signals"
+export { operatorAllocations, capacitySignals } from "@/data/operator-capacity"
+export { analystSignals } from "@/data/analyst-signals"
+

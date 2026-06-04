@@ -59,6 +59,43 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-04 - Antigravity - Phase 14.3 Domain Model Expansion
+
+Task:
+Implemented lightweight frontend-only domain model structures for validation gates, evidence signals, operator capacity, and Studio Analyst recommendations, and seeded corresponding default data matching the Sentra, Reson8, and Internal Ops narrative.
+
+Changed:
+- `src/types/venture.ts`
+- `src/types/issue.ts`
+- `src/types/roadmap.ts`
+- `src/types/ai.ts`
+- `src/types/dashboard.ts`
+- `src/features/assistant/components/ai-badges.tsx`
+- `src/features/assistant/utils/roadmap-signals.ts`
+- `src/features/assistant/utils/signal-dedupe.ts`
+- `src/data/validation-gates.ts` [NEW]
+- `src/data/evidence-signals.ts` [NEW]
+- `src/data/operator-capacity.ts` [NEW]
+- `src/data/analyst-signals.ts` [NEW]
+- `src/data/ventures.ts`
+- `src/data/issues.ts`
+- `src/data/roadmap.ts`
+- `src/data/index.ts`
+
+Verification:
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0)
+
+Notes:
+- Added necessary Phase 14 optional fields across Venture, Issue, RoadmapItem, AiInsight, and VentureHealth types to preserve quick-create compatibility.
+- Seeded Sentra with build phase and active growth readiness gate; Reson8 with validate phase and retention validation uncertainty gate; Internal Ops with leverage gate.
+- Linked issues and roadmap items to validation gates and assigned operator allocations matching default story roles.
+- Corrected `OperatorAllocation.function` and `CapacitySignal.function` in `src/types/venture.ts` to use the `OperatorFunction` union from `src/types/issue.ts`.
+- Corrected capacity signals in `src/data/operator-capacity.ts` to `watch` and renamed IDs to `contention` to align with the 80% allocation semantics.
+
+Risks / Follow-ups:
+- The data is now available to synchronize and display in Command Center, Validation Gates, Execution Evidence, Operator Capacity, and Studio Analyst screens.
+
 ## 2026-06-04 - Codex - Studio Operating Intelligence Context Pivot
 
 Task:

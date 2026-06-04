@@ -1,4 +1,5 @@
-import type { RiskLevel } from "@/types/issue"
+import type { RiskLevel, OperatorImpact } from "@/types/issue"
+import type { ConfidenceImpact, StudioDecision } from "@/types/venture"
 
 export type RoadmapTimeframe = "now" | "next" | "later"
 
@@ -12,6 +13,13 @@ export type RoadmapStatus =
 export type ConfidenceTrend = "improving" | "stable" | "declining"
 
 export type RoadmapImpact = "low" | "medium" | "high"
+
+export type RoadmapBetType =
+  | "validation"
+  | "growth"
+  | "delivery"
+  | "risk-reduction"
+  | "leverage"
 
 export type RoadmapItem = {
   id: string
@@ -29,7 +37,16 @@ export type RoadmapItem = {
   impact: RoadmapImpact
   riskLevel: RiskLevel
   targetMetric?: string
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  betType?: RoadmapBetType
+  expectedEvidence?: string[]
+  confidenceImpact?: ConfidenceImpact
+  operatorImpact?: OperatorImpact
+  decisionImpact?: StudioDecision
   aiInsightIds: string[]
   createdAt: string
   updatedAt: string
 }
+

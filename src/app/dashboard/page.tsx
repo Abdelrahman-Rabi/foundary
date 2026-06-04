@@ -15,9 +15,18 @@ import { RiskPanel } from "@/features/dashboard/components/risk-panel"
 import { RoadmapOverviewPanel } from "@/features/dashboard/components/roadmap-overview-panel"
 import { VentureHealthPanel } from "@/features/dashboard/components/venture-health-panel"
 import { useDashboardData } from "@/features/dashboard/hooks/use-dashboard-data"
+
+import { TopStudioDecision } from "@/features/dashboard/components/top-studio-decision"
+import { AttentionQueueCard } from "@/features/dashboard/components/attention-queue-card"
+import { ValidationRiskPanel } from "@/features/dashboard/components/validation-risk-panel"
+import { OperatorCapacityPanel } from "@/features/dashboard/components/operator-capacity-panel"
+import { ExecutionEvidenceSummary } from "@/features/dashboard/components/execution-evidence-summary"
+import { AnalystRecommendationCard } from "@/features/dashboard/components/analyst-recommendation-card"
+
 import type { AiSignal } from "@/features/assistant/utils/assistant-analysis"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
+import { useVentureStore } from "@/stores/venture-store"
 import { useUiStore } from "@/stores/ui-store"
 import type {
   AttentionItem,
@@ -40,8 +49,10 @@ export default function DashboardPage() {
   const openQuickCreateVenture = useUiStore(
     (state) => state.openQuickCreateVenture
   )
+  const setActiveVenture = useVentureStore((state) => state.setActiveVenture)
   const selectSignal = useAssistantStore((state) => state.selectSignal)
   const markInspected = useAssistantStore((state) => state.markInspected)
+  
   const {
     mode,
     activeVenture,
@@ -56,6 +67,7 @@ export default function DashboardPage() {
     operationalActivity,
     aiSignals,
     ventures,
+    commandCenterData,
   } = useDashboardData()
 
   const openDashboardSource = (
@@ -119,6 +131,10 @@ export default function DashboardPage() {
 
   const handleStatusSelect = (status: StatusCount) => {
     openFilteredIssues(status.issueFilter)
+  }
+
+  const handleOpenAnalystSignal = () => {
+    openDrawer({ type: "assistant" })
   }
 
   const renderNextAction = () => {
@@ -190,8 +206,56 @@ export default function DashboardPage() {
         onAnalyzeContext={() => openDrawer({ type: "assistant" })}
       />
 
+
+
+      {/* 1. Leading Decision-First Section */}
+      <div className="space-y-5">
+        <TopStudioDecision
+          decision={commandCenterData.topDecision}
+          onVentureSelect={setActiveVenture}
+        />
+
+        <div className="grid gap-5 lg:grid-cols-2">
+          <AttentionQueueCard
+            attentionQueue={commandCenterData.attentionQueue}
+            activeVentureId={activeVenture?.id ?? null}
+            onVentureSelect={setActiveVenture}
+          />
+          <AnalystRecommendationCard
+            recommendation={commandCenterData.analystRecommendation}
+            onOpenAssistant={handleOpenAnalystSignal}
+            onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
+            onOpenRoadmap={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
+          />
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          <ValidationRiskPanel
+            risks={commandCenterData.validationRisks}
+            onOpenGate={() => {
+              openDrawer({ type: "assistant" })
+            }}
+          />
+          <OperatorCapacityPanel
+            pressures={commandCenterData.capacityPressures}
+            onOpenSignalSource={openDashboardSource}
+          />
+          <ExecutionEvidenceSummary
+            summary={commandCenterData.evidenceSummary}
+            onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
+          />
+        </div>
+      </div>
+
       {renderNextAction()}
 
+      <div className="border-t border-border pt-6 mt-8">
+        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block mb-4">
+          Secondary Operational Views
+        </span>
+      </div>
+
+      {/* 2. Secondary Context / Legacy Dashboard Views */}
       <KpiRow metrics={kpiMetrics} onSelectMetric={handleMetricSelect} />
 
       <div className="grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
@@ -232,3 +296,4 @@ export default function DashboardPage() {
     </PageContainer>
   )
 }
+

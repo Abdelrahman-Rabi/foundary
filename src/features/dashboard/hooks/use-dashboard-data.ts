@@ -19,6 +19,7 @@ import {
   getScopedVentures,
   getStatusCounts,
 } from "@/features/dashboard/utils/dashboard-metrics"
+import { getCommandCenterData } from "@/features/dashboard/utils/command-center-metrics"
 import {
   getSyncedRoadmapItems,
   getSyncedVentureHealth,
@@ -55,6 +56,13 @@ export function useDashboardData() {
       )
     ).slice(0, 5)
 
+    const commandCenterData = getCommandCenterData(
+      ventures,
+      issues,
+      syncedRoadmapItems,
+      context
+    )
+
     return {
       mode,
       activeVenture,
@@ -88,6 +96,8 @@ export function useDashboardData() {
       ),
       aiSignals,
       ventures,
+      commandCenterData,
     }
   }, [activeVentureId, issues, mode, roadmapItems, ventures])
 }
+

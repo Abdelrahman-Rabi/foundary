@@ -59,7 +59,83 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-04 - Antigravity - Phase 14.5 Command Center Follow-up & Data-Integrity Fixes
+
+Task:
+Implemented focused follow-up and data-integrity fixes for Phase 14.5 to filter seeded Command Center data and capacity source links out of start-clean/custom-only workspaces, resolve invalid drawer ID actions, and make the layout strictly decision-first.
+
+Changed:
+- `src/features/dashboard/utils/command-center-metrics.ts`
+- `src/features/dashboard/components/analyst-recommendation-card.tsx`
+- `src/app/dashboard/page.tsx`
+
+Verification:
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0, static pages generated successfully)
+- Verified that empty states and custom-only/partial workspaces do not leak seeded Reson8/Sentra command center records or capacity source links.
+
+Notes:
+- Derived a set of current venture IDs in `getCommandCenterData` and filtered all static data (validation gates, operator allocations, capacity signals, evidence signals, and analyst signals) through it.
+- Filtered `sourceIssueIds` and `sourceRoadmapIds` inside capacity signals and active allocations map to only retain records matching the current active ventures.
+- Prevented opening the assistant drawer with invalid IDs by removing arguments from `onOpenAssistant` and `onOpenGate` click actions, allowing them to open the base assistant drawer instead.
+- Relocated the legacy next-best-action `renderNextAction()` block below the Studio Command Center panels, making `TopStudioDecision` the first primary content in the layout.
+
+## 2026-06-04 - Antigravity - Phase 14.5 Studio Command Center
+
+Task:
+Refactored the `/dashboard` route into a decision-first Studio Command Center (Phase 14.5) to surface critical portfolio decisions, validation gates, execution evidence, operator capacity, and Studio Analyst recommendations at the top, while moving legacy metrics and cards as secondary context below.
+
+Changed:
+- `src/types/dashboard.ts`
+- `src/features/dashboard/utils/command-center-metrics.ts` [NEW]
+- `src/features/dashboard/hooks/use-dashboard-data.ts`
+- `src/features/dashboard/components/top-studio-decision.tsx` [NEW]
+- `src/features/dashboard/components/attention-queue-card.tsx` [NEW]
+- `src/features/dashboard/components/validation-risk-panel.tsx` [NEW]
+- `src/features/dashboard/components/operator-capacity-panel.tsx` [NEW]
+- `src/features/dashboard/components/execution-evidence-summary.tsx` [NEW]
+- `src/features/dashboard/components/analyst-recommendation-card.tsx` [NEW]
+- `src/app/dashboard/page.tsx`
+
+Verification:
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0, successfully generated static pages and compiled typescript check)
+
+Notes:
+- Designed a decision-first view matching HSL harmonious color palettes and premium aesthetic styling.
+- Enabled switchable venture scoping across all panels with responsive layouts.
+- Dynamic venture priority scoring and attention queue sorting.
+- Handled empty states cleanly for custom ventures.
+- Removed unused imports and fixed typescript explicit `any` warnings.
+
+Risks / Follow-ups:
+- Drawers and links are fully active. Clicking on Analyst card recommendation triggers the assistant drawer, clicking on issue links triggers the issue drawer, and clicking on roadmap links triggers the roadmap drawer.
+
+## 2026-06-04 - Antigravity - Phase 14.4 Seeded Studio Operating Story
+
+Task:
+Aligned and audited Foundary's default seeded mock dataset to tell a single, coherent studio operating intelligence story: Reson8 needs narrowing/pausing before another build cycle due to weak retention evidence; Sentra is a high-confidence opportunity needing capacity protection; Internal Ops is stable operating leverage that should keep steady-state.
+
+Changed:
+- `src/data/analyst-signals.ts`
+
+Verification:
+- `npx eslint src/data/analyst-signals.ts` - Passed (exit code 0)
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0)
+- Verified referential integrity of all IDs (`ventureId`, `gateId`, `validationGateId`, `evidenceSignalIds`, `sourceIssueIds`, `sourceRoadmapIds`, `linkedIssueIds`, and `linkedRoadmapIds`).
+
+Notes:
+- Expanded `analystSignals` to include exactly the 6 required analyst signals with narrative links to active gates, evidence, and operator capacity context.
+- Hard-linked every analyst signal structurally to default mock data source IDs (`gateId`, `evidenceSignalId`, `issueId`, and `roadmapId`).
+- Corrected `analyst-sentra-capacity` suggested action copy to remove utilization/percentage-based scheduling language, focusing instead on qualitative design focus boundaries.
+- Confirmed that quick-create and start-clean states compile/run fine and do not invent fake gates, evidence, or analyst signals.
+
+Risks / Follow-ups:
+- The data is now ready for presentation in the Studio Command Center (Phase 14.5).
+
 ## 2026-06-04 - Antigravity - Phase 14.3 Domain Model Expansion
+
 
 Task:
 Implemented lightweight frontend-only domain model structures for validation gates, evidence signals, operator capacity, and Studio Analyst recommendations, and seeded corresponding default data matching the Sentra, Reson8, and Internal Ops narrative.

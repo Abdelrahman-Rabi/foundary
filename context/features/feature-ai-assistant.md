@@ -1,826 +1,668 @@
-# Feature Specification — AI Assistant System
+# Feature Specification - Studio Analyst
 
 ## Purpose
 
-The AI Assistant System is:
-> the embedded operational intelligence layer of Foundary.
+The Studio Analyst is Foundary's embedded intelligence layer for venture studio
+decisions.
 
-Its role is NOT to:
-- replace users
-- simulate AGI
-- act like a chatbot
-- create flashy AI theatrics
+It replaces the old AI Assistant framing with analyst-backed recommendations
+grounded in:
+- portfolio decisions
+- validation gates
+- execution evidence
+- operator capacity
+- venture context
 
-Its role IS to:
-- reduce ambiguity
-- surface operational risks
-- improve execution clarity
-- support strategic decisions
-- reinforce venture awareness
-- provide contextual intelligence
+The Studio Analyst should answer:
+- which studio move is recommended
+- what evidence supports that move
+- what evidence is missing
+- whether execution is outpacing validation
+- whether capacity is being spent well
+- which source objects explain the recommendation
 
-The AI system should feel:
-- calm
-- embedded
-- operational
-- strategic
-- believable
-- quietly useful
-- stable across refreshes
+The Studio Analyst should feel like:
 
----
+> a concise operating analyst embedded inside the product.
 
-# AI Philosophy
+It should NOT feel like:
 
-## Core Principle
-
-The AI assistant should behave like:
-> venture operating intelligence.
-
-NOT:
-> conversational AI entertainment.
-
-This distinction is extremely important.
+> a chatbot, companion, or generic AI assistant.
 
 ---
 
-# AI Should Help Users
+# Strategic Role
 
-- understand execution risk
-- identify ambiguity
-- improve prioritization
-- evaluate roadmap confidence
-- detect operational bottlenecks
-- make better venture decisions
-
----
-
-# AI Should NOT
-
-- behave emotionally
-- use conversational filler
-- generate long essays
-- simulate autonomous agents
-- pretend to be human
-- overwhelm users with analysis
-- create constant interruptions
-
----
-
-# Core UX Goals
-
-Users should feel:
-- supported
-- informed
-- strategically aware
-- operationally confident
-
-The AI system should answer:
-
-| Question | Purpose |
-|---|---|
-| What is risky? | Operational awareness |
-| What lacks clarity? | Execution quality |
-| What may slip? | Delivery visibility |
-| Which initiatives are weak? | Strategic evaluation |
-| What should be split? | Scope refinement |
-| What should be stopped? | Venture discipline |
-
----
-
-# Local-First Continuity
-
-Assistant state should preserve lightweight user intent across refreshes.
-
-Persist:
-- inspected signal IDs
-- dismissed signal IDs
-
-AI analysis itself should remain deterministic and derived from current issue,
-roadmap, venture, and mock insight state. Do not persist fake chat transcripts,
-LLM responses, or streaming state.
-
----
-
-# Experience Principles
-
-## 1. Embedded Intelligence
-
-AI should feel:
-- integrated into workflows
-- context-aware
-- ambient
-
-NOT:
-- isolated in a chatbot window
-
-The AI should appear:
-- within issues
-- within roadmap items
-- within dashboard insights
-- within operational context
-
----
-
-## 2. Concise Operational Output
-
-AI outputs should be:
-- compact
-- readable
-- strategically useful
-- operationally actionable
-
-Avoid:
-- verbose explanations
-- excessive reasoning chains
-- generic AI language
-
----
-
-## 3. Calm Strategic Tone
-
-AI tone should feel:
-- operational
-- focused
-- confident
-- restrained
-
-Avoid:
-- excitement
-- humor
-- emotional tone
-- marketing language
-
----
-
-## 4. Believable Intelligence
-
-The AI should feel:
-> operationally intelligent.
-
-NOT:
-> magically omniscient.
-
-Avoid:
-- fake predictive certainty
-- unrealistic AI claims
-- exaggerated intelligence
-
----
-
-# AI System Architecture Philosophy
-
-## AI Type
-
-The system uses:
-> mocked operational intelligence.
-
-There is NO requirement for:
-- real LLM integration
-- inference infrastructure
-- streaming responses
-- conversational memory
-- autonomous agents
-
-The focus is:
-> believable product behavior.
-
----
-
-# AI Context Sources
-
-AI insights should derive from:
-- issue metadata
-- roadmap state
-- overdue work
-- linked dependencies
-- confidence changes
-- venture conditions
-- execution patterns
-
----
-
-# AI Operating Areas
-
-The AI system operates across:
-- Issues
-- Roadmap
-- Dashboard
-- Venture health visibility
-
----
-
-# Core AI Behaviors
-
-# 1. Issue Summarization
-
-## Purpose
-
-Help users:
-- quickly understand issues
-- reduce scanning overhead
-- improve async collaboration
-
----
-
-# Example Output
+The Studio Analyst is the final reasoning layer in the Studio Operating
+Intelligence spine:
 
 ```txt
-Summary:
-User onboarding redesign initiative focused on reducing first-session drop-off through simplified activation flow improvements.
+Portfolio Decisions
+-> Validation Gates
+-> Execution Evidence
+-> Operator Capacity
+-> Studio Analyst Recommendations
+```
+
+Its job is to synthesize the other layers into a clear studio move.
+
+Generic AI tools answer:
+
+> What can I summarize for you?
+
+Foundary's Studio Analyst should answer:
+
+> What should the studio do next, and what evidence justifies it?
+
+---
+
+# Route And Implementation Context
+
+Primary route:
+
+```txt
+/assistant
+```
+
+The route may remain `/assistant` during transition, but visible product
+language and behavior should move toward Studio Analyst.
+
+The Analyst also appears inside:
+
+```txt
+/dashboard   -> Command Center analyst recommendation
+/issues      -> issue evidence and risk analysis
+/roadmap     -> bet / gate analysis
+App Shell    -> contextual analyst panel
+Drawers      -> source-linked analyst notes
+```
+
+Likely implementation areas:
+
+```txt
+src/app/assistant/page.tsx
+src/features/assistant/components/*
+src/features/assistant/utils/assistant-analysis.ts
+src/features/assistant/utils/issue-signals.ts
+src/features/assistant/utils/roadmap-signals.ts
+src/features/assistant/utils/portfolio-signals.ts
+src/features/assistant/utils/signal-dedupe.ts
+src/features/dashboard/*
+src/features/issues/components/issue-drawer-content.tsx
+src/features/roadmap/components/roadmap-drawer-content.tsx
+src/components/app-shell/assistant-panel-shell.tsx
+src/components/app-shell/app-drawer.tsx
+src/stores/assistant-store.ts
+```
+
+Implementation should reuse existing assistant infrastructure and deterministic
+mock analysis. Do not add real LLM integration.
+
+---
+
+# Required Context
+
+Load before implementation:
+
+```txt
+context/strategy/studio-operating-intelligence.md
+context/project-overview.md
+context/project-specs.md
+context/features/feature-ai-assistant.md
+context/data/ai-behavior-rules.md
+context/current-feature.md
+```
+
+Load additionally when touching:
+
+```txt
+Command Center:
+context/features/feature-studio-command-center.md
+
+Validation gates:
+context/features/feature-validation-gates.md
+
+Execution evidence:
+context/features/feature-execution-evidence.md
+
+Operator capacity:
+context/features/feature-operator-capacity.md
+
+Domain data:
+context/data/domain-models.md
+context/data/mock-data-strategy.md
+```
+
+Note: `context/data/ai-behavior-rules.md` may still use AI Assistant language
+until it is updated. When the two files differ, this feature spec is the source
+of truth for Phase 14 Studio Analyst behavior.
+
+---
+
+# Core Product Principle
+
+The Studio Analyst should recommend decisions, not perform generic AI
+summarization.
+
+Every important analyst output should connect at least two of:
+- venture
+- validation gate
+- execution evidence
+- operator capacity
+- studio decision
+- source issue or roadmap item
+
+Avoid analyst outputs that are merely:
+- nice summaries
+- generic productivity advice
+- isolated risk notes
+- decorative AI copy
+
+---
+
+# Studio Decisions
+
+The Analyst should use this decision vocabulary:
+
+```ts
+type StudioDecision =
+  | "continue"
+  | "narrow"
+  | "pause"
+  | "kill"
+  | "staff-up"
+  | "defer"
+  | "partner-review"
+```
+
+## Decision Guidance
+
+| Decision | Use When |
+|---|---|
+| `continue` | Evidence supports another cycle of work |
+| `narrow` | Evidence is mixed; scope, ICP, or bet must tighten |
+| `pause` | Work should stop until evidence or capacity changes |
+| `kill` | Evidence is negative or insufficient enough to stop |
+| `staff-up` | Confidence is high enough to justify more capacity |
+| `defer` | Valid work exists but attention is better spent elsewhere |
+| `partner-review` | Strategic judgment is needed before more capacity is spent |
+
+---
+
+# Core Analyst Behaviors
+
+## 1. Recommended Studio Move
+
+## Purpose
+
+Surface the clearest next studio decision.
+
+## Required Inputs
+
+Use:
+- venture phase
+- validation gate status
+- validation confidence
+- execution evidence
+- operator capacity
+- linked issue and roadmap state
+
+## Example
+
+```txt
+Recommended move: Narrow
+
+Reason:
+Reson8 has active engineering work, but retention evidence remains below the
+Validate gate threshold.
+
+Capacity tradeoff:
+Engineering effort is now competing with Sentra activation work, where evidence
+confidence is stronger.
+
+Suggested action:
+Pause broad build work and run targeted retention interviews before another
+cycle.
 ```
 
 ---
 
-# Trigger Conditions
-
-Summaries may appear:
-- inside issue drawers
-- inside AI panels
-- on hover previews
-- within dashboard insights
-
----
-
-# UX Rules
-
-Summaries should:
-- remain concise
-- preserve operational clarity
-- avoid excessive detail
-
----
-
-# 2. Delivery Risk Detection
+## 2. Evidence Gap Analysis
 
 ## Purpose
 
-Surface:
-- execution concerns
-- operational blockers
-- delivery instability
+Explain what evidence is missing before a venture deserves more commitment.
 
-This is one of the MOST important AI behaviors.
+## Detection Signals
+
+Flag when:
+- a gate has required evidence missing
+- execution is active without linked evidence
+- roadmap bets lack expected evidence
+- issues are completed without confidence movement
+- assumptions are stale or untested
+
+## Example
+
+```txt
+Evidence gap:
+The retention gate lacks repeat-use evidence from the target ICP.
+
+Suggested action:
+Link the onboarding research tasks to the retention gate before extending build
+scope.
+```
 
 ---
 
-# Risk Detection Signals
+## 3. Sunk-Cost Risk Detection
 
-AI can evaluate:
-- overdue issues
-- blocked dependencies
-- missing acceptance criteria
-- excessive scope
-- unresolved research work
-- roadmap confidence decline
+## Purpose
+
+Detect when a venture keeps consuming capacity despite weak validation.
+
+## Detection Signals
+
+Increase sunk-cost risk when:
+- gate confidence is low
+- in-progress issues remain high
+- roadmap bets stay active
+- capacity pressure is high
+- evidence signals are weak or negative
+- work continues without confidence movement
+
+## Example
+
+```txt
+Sunk-cost risk: High
+
+Reason:
+Reson8 has active implementation work and high engineering effort, but the
+retention gate remains at-risk with weak supporting evidence.
+
+Recommended move:
+Narrow before another build cycle.
+```
 
 ---
 
-# Risk Levels
+## 4. Capacity Tradeoff Analysis
+
+## Purpose
+
+Explain whether scarce studio capacity is being spent well.
+
+## Detection Signals
+
+Analyze:
+- overloaded functions
+- cross-venture contention
+- high-effort issues
+- high-effort roadmap bets
+- capacity-cost evidence roles
+- high confidence vs low confidence ventures competing for capacity
+
+## Example
+
+```txt
+Capacity tradeoff:
+Design is overloaded across Sentra and Reson8.
+
+Sentra has stronger activation evidence, while Reson8 still lacks retention
+signal.
+
+Recommended move:
+Protect Sentra design capacity and narrow Reson8 scope.
+```
+
+---
+
+## 5. Gate Confidence Explanation
+
+## Purpose
+
+Explain why a gate is healthy, at risk, blocked, passed, or failed.
+
+## Required Inputs
+
+Use:
+- required evidence
+- evidence signals
+- linked issues
+- linked roadmap bets
+- confidence impact
+- stale or blocked work
+
+## Example
+
+```txt
+Gate confidence: At risk
+
+Reason:
+The activation gate has instrumentation work in progress, but no completed
+evidence signal has moved confidence yet.
+```
+
+---
+
+## 6. Source-Linked Analysis
+
+## Purpose
+
+Make analyst recommendations inspectable.
+
+Every important recommendation should link to source objects when available:
+- issue
+- roadmap item
+- validation gate
+- evidence signal
+- capacity signal
+
+Avoid recommendations that cannot be traced to product objects.
+
+---
+
+# Analyst Output Structure
+
+Preferred structure:
+
+```txt
+Recommended move:
+...
+
+Reason:
+...
+
+Evidence:
+...
+
+Capacity tradeoff:
+...
+
+Suggested action:
+...
+```
+
+Shorter contexts may use:
+
+```txt
+Observation:
+...
+
+Suggested action:
+...
+```
+
+Avoid long prose and hidden reasoning chains.
+
+---
+
+# Analyst Confidence
+
+Confidence should feel directional, not scientific.
 
 ```ts
-type RiskLevel =
-  | "low"
-  | "medium"
+type AnalystConfidence =
   | "high"
+  | "medium"
+  | "low"
 ```
 
----
+Numeric confidence may still appear where existing UI expects it, but it should
+not imply predictive certainty.
 
-# Example Output
+Guidance:
 
 ```txt
-Risk Level: High
-
-Reason:
-The initiative contains unresolved research dependencies and accumulated overdue implementation work.
-
-Suggested Action:
-Separate validation work from delivery execution.
+High: clear evidence and aligned capacity
+Medium: mixed signals or incomplete source data
+Low: sparse evidence or clean/custom venture state
 ```
 
 ---
 
-# UX Rules
+# Data Model Direction
 
-Risk insights should:
-- feel calm
-- avoid alarm fatigue
-- remain actionable
-- stay concise
-
-Avoid:
-- aggressive warnings
-- panic language
-- enterprise alert styling
-
----
-
-# 3. Missing Acceptance Criteria Detection
-
-## Purpose
-
-Help improve:
-- execution clarity
-- delivery readiness
-- scope definition
-
----
-
-# Detection Signals
-
-AI can identify:
-- vague issue descriptions
-- missing success metrics
-- unclear validation goals
-- undefined outcomes
-
----
-
-# Example Output
-
-```txt
-Missing Criteria Detected:
-The issue does not define measurable onboarding success metrics.
-```
-
----
-
-# Suggested Recommendations
-
-AI may suggest:
-- adding metrics
-- defining outcomes
-- splitting ambiguity
-- clarifying scope
-
----
-
-# 4. Priority Recommendations
-
-## Purpose
-
-Support:
-- execution prioritization
-- operational focus
-- delivery sequencing
-
----
-
-# Recommendation Signals
-
-AI may evaluate:
-- roadmap importance
-- overdue state
-- linked initiative risk
-- issue dependencies
-- venture momentum
-
----
-
-# Example Output
-
-```txt
-Suggested Priority: High
-
-Reason:
-The issue is linked to an active onboarding initiative with declining confidence.
-```
-
----
-
-# Important UX Rule
-
-Recommendations should feel:
-- advisory
-- contextual
-- operational
-
-NOT:
-- authoritative
-- prescriptive
-- absolute
-
----
-
-# 5. Continue / Split / Kill Recommendations
-
-## Purpose
-
-This is a CORE differentiator.
-
-The AI should help teams:
-- reduce wasted execution
-- improve focus
-- normalize strategic discipline
-
-This strongly aligns with:
-- venture-building philosophy
-- lean execution
-- rapid validation culture
-
----
-
-# Continue Recommendations
-
-Used when:
-- execution momentum is healthy
-- confidence remains stable
-- progress is consistent
-
----
-
-# Split Recommendations
-
-Used when:
-- scope is too broad
-- ambiguity is high
-- discovery and delivery are mixed
-
----
-
-# Kill Recommendations
-
-Used when:
-- confidence collapses
-- execution stagnates
-- validation weakens
-- strategic value decreases
-
----
-
-# Example Output
-
-```txt
-Recommendation: Split Initiative
-
-Reason:
-Research uncertainty and implementation delivery are currently combined into a single roadmap initiative.
-
-Suggested Structure:
-- Discovery validation initiative
-- Delivery implementation initiative
-
-Confidence:
-84%
-```
-
----
-
-# AI Dashboard Insights
-
-## Purpose
-
-Provide:
-- portfolio awareness
-- strategic observations
-- operational intelligence summaries
-
----
-
-# Example Dashboard Insights
-
-```txt
-Sentra execution confidence declined after accumulation of unresolved onboarding research work.
-```
-
-```txt
-Internal Ops momentum improved after reducing active work-in-progress load.
-```
-
-```txt
-Reson8 contains multiple roadmap initiatives with declining confidence trends.
-```
-
----
-
-# Insight Philosophy
-
-Insights should feel:
-- strategic
-- observational
-- concise
-- operationally grounded
-
----
-
-# AI Roadmap Analysis
-
-## Purpose
-
-Help users:
-- evaluate initiative health
-- understand uncertainty
-- identify execution risk
-
----
-
-# Roadmap AI Signals
-
-AI may analyze:
-- confidence decline
-- overdue execution
-- blocked dependencies
-- issue completion velocity
-- initiative fragmentation
-
----
-
-# Example Output
-
-```txt
-Confidence Trend: Declining
-
-Reason:
-Execution progress slowed after unresolved dependency accumulation across linked implementation tasks.
-```
-
----
-
-# AI UI Structure
-
-# Primary AI Presentation Modes
-
-## Embedded Insight Cards
-
-Used inside:
-- issue drawers
-- roadmap drawers
-- dashboard panels
-
----
-
-## Contextual Analysis Panels
-
-Used for:
-- risk visibility
-- recommendation summaries
-- confidence explanations
-
----
-
-## Lightweight Assistant Sidebar
-
-Optional persistent operational intelligence layer.
-
-Should feel:
-- quiet
-- supportive
-- contextual
-
----
-
-# AI UI Rules
-
-Avoid:
-- chat bubbles
-- avatars
-- typing animations
-- fake streaming
-- conversational windows
-- anthropomorphic behavior
-
-Prefer:
-- structured blocks
-- operational cards
-- concise panels
-- contextual insights
-
----
-
-# AI Response Structure
-
-## Recommended Format
-
-```txt
-Observation:
-...
-
-Reason:
-...
-
-Suggested Action:
-...
-
-Confidence:
-...
-```
-
----
-
-# AI Tone Guidelines
-
-## Must Feel
-
-- operational
-- calm
-- intelligent
-- concise
-- strategic
-
----
-
-## Must Avoid
-
-- excitement
-- emotional language
-- emoji usage
-- motivational copy
-- conversational filler
-- marketing tone
-
----
-
-# Example Good Output
-
-```txt
-Observation:
-Roadmap confidence declined due to unresolved onboarding dependencies.
-
-Suggested Action:
-Reduce active scope and prioritize dependency resolution.
-
-Confidence:
-79%
-```
-
----
-
-# Example Bad Output
-
-```txt
-🚨 Big problem detected!
-
-Your roadmap is struggling badly and needs immediate attention ASAP!
-```
-
----
-
-# AI Confidence Philosophy
-
-Confidence scores should feel:
-- lightweight
-- directional
-- believable
-
-NOT:
-- mathematically precise
-- predictive
-- scientific
-
----
-
-# Confidence Scale
+Existing `AIInsight` may evolve toward:
 
 ```ts
-0 → 100
+type AnalystSignal = {
+  id: string
+  ventureId?: string
+
+  signalType:
+    | "studio-decision"
+    | "evidence-gap"
+    | "sunk-cost-risk"
+    | "capacity-tradeoff"
+    | "gate-confidence"
+    | "execution-risk"
+
+  title: string
+  summary: string
+
+  recommendedDecision?: StudioDecision
+  confidence: "low" | "medium" | "high"
+  severity: "low" | "medium" | "high"
+
+  gateIds: string[]
+  evidenceSignalIds: string[]
+  issueIds: string[]
+  roadmapIds: string[]
+  capacitySignalIds: string[]
+
+  suggestedAction?: string
+  createdAt: string
+}
 ```
 
----
-
-# Confidence Interpretation
-
-| Range | Meaning |
-|---|---|
-| 80–100 | Strong confidence |
-| 60–79 | Moderate confidence |
-| 40–59 | Uncertain |
-| 0–39 | High risk |
+Implementation can keep the existing `AIInsight` type temporarily and map it to
+Studio Analyst language. Do not force a full type migration before the UI needs
+it.
 
 ---
 
-# AI Synchronization Rules
+# Surface Requirements
 
-# Issue Changes Affect
+## Studio Command Center
 
-- AI risk analysis
-- priority recommendations
-- roadmap confidence
-- venture health
+Show:
+- one primary analyst recommendation
+- recommended studio move
+- reason
+- evidence basis
+- capacity tradeoff
+- source links
 
----
+This should reinforce the top studio decision, not compete with it.
 
-# Roadmap Changes Affect
+## Studio Analyst Route
 
-- confidence analysis
-- strategic recommendations
-- dashboard observations
+The `/assistant` route should become the deeper analyst surface.
 
----
+It should organize signals by:
+- recommended moves
+- evidence gaps
+- capacity tradeoffs
+- validation risks
+- source-linked analysis
 
-# Overdue Work Affects
+Avoid presenting a chat interface.
 
-- risk escalation
-- confidence decline
-- delivery concern signals
+## App Shell Analyst Panel
 
----
+The side panel should remain compact and contextual.
 
-# Venture Switching Affects
+It should show:
+- top analyst signal
+- relevant source links
+- quick path to deeper analyst route or drawer
 
-- AI operational context
-- dashboard observations
-- roadmap recommendations
-- issue analysis
+## Issue Drawer
 
-Transitions should feel:
-- instant
-- contextual
-- stable
+Show analyst notes related to:
+- evidence role
+- missing criteria
+- gate linkage
+- capacity impact
+- risk to studio decision
 
----
+## Roadmap Drawer
 
-# Suggested AI Components
-
-```txt
-AiInsightCard
-AiRiskPanel
-AiRecommendationBlock
-AiConfidenceIndicator
-AiIssueSummary
-AiRoadmapAnalysis
-AiOperationalInsights
-AiRecommendationBadge
-AiAttentionPanel
-```
-
----
-
-# Visual Design Rules
-
-## Must Feel
-
-- embedded
-- premium
-- calm
-- operational
-- strategically intelligent
-
----
-
-## Must Avoid
-
-- chatbot styling
-- flashy AI branding
-- glowing animations
-- anthropomorphic AI
-- noisy notifications
-- excessive AI surfaces
-
----
-
-# Motion Rules
-
-Motion should feel:
-- restrained
-- subtle
-- contextual
-
-Use motion for:
-- insight reveal
-- contextual transitions
-- confidence updates
-- panel transitions
-
-Avoid:
-- typing animations
-- streaming theatrics
-- flashy AI movement
+Show analyst notes related to:
+- bet confidence
+- linked gate
+- missing evidence
+- execution outpacing validation
+- capacity tradeoff
 
 ---
 
 # Empty States
 
-AI empty states should feel:
-- intentional
-- calm
-- operational
+## No Analyst Signals
+
+```txt
+No analyst signals yet.
+Add ventures, gates, evidence, or capacity context to generate studio recommendations.
+```
+
+## Clean Platform
+
+```txt
+No studio decisions to analyze.
+Create a venture and capture the first gate or evidence item.
+```
+
+## New Custom Venture
+
+```txt
+No analyst recommendation yet.
+Start by defining the venture's current assumption or first validation gate.
+```
+
+Do not invent fake recommendations for empty states.
+
+---
+
+# Local-First Continuity
+
+Persist lightweight user intent:
+- inspected signal IDs
+- dismissed signal IDs
+- selected analyst signal if already supported
+
+Do not persist:
+- fake chat transcripts
+- LLM responses
+- streaming state
+- autonomous agent memory
+
+Analyst analysis should remain deterministic and derived from current local
+workspace state.
+
+---
+
+# Seeded Demo Requirements
+
+## Sentra
+
+Analyst story:
+- higher-confidence growth / activation work
+- design or product capacity needs protection
+- recommended move: continue or staff-up with capacity protection
 
 Example:
 
 ```txt
-No significant operational risks detected.
+Continue with capacity protection.
+Sentra has stronger activation evidence, but design load is crossing watch
+threshold.
 ```
 
-NOT:
+## Reson8
+
+Analyst story:
+- validation confidence is weak
+- active execution continues
+- capacity cost is visible
+- recommended move: narrow or pause
+
+Example:
 
 ```txt
-🤖 Everything looks amazing today!
+Narrow before another build cycle.
+Retention evidence is weak while engineering remains active.
+```
+
+## Internal Ops
+
+Analyst story:
+- stable operating leverage
+- contained scope
+- capacity may be reallocated
+- recommended move: defer or continue steady-state
+
+Example:
+
+```txt
+Defer new Internal Ops scope.
+Current leverage work is stable and can free PM attention for higher-pressure
+ventures.
 ```
 
 ---
 
-# Loading States
+# UI Rules
 
-Use:
-- subtle shimmer
-- lightweight placeholders
-- calm transitions
+## Avoid
 
-Loading should feel:
-- stable
-- premium
-- non-disruptive
+- chat bubbles
+- avatars
+- typing animations
+- fake streaming
+- conversational windows
+- anthropomorphic copy
+- glowing AI branding
+- long generated prose
+- autonomous agent theatrics
+
+## Prefer
+
+- structured analyst blocks
+- decision badges
+- evidence links
+- confidence indicators
+- source chips
+- compact recommendation panels
+- contextual drawer sections
+
+---
+
+# Copy Guidelines
+
+Prefer:
+- Studio Analyst
+- Recommended move
+- Evidence gap
+- Capacity tradeoff
+- Sunk-cost risk
+- Gate confidence
+- Source evidence
+- Narrow before build cycle
+- Continue with capacity protection
+
+Avoid:
+- AI assistant
+- ask AI
+- chat with AI
+- AI says
+- magic insight
+- productivity summary
+- generated response
+
+Some internal component names may remain `assistant` until refactored. Visible
+product copy should move toward Studio Analyst language.
 
 ---
 
@@ -834,37 +676,57 @@ DO NOT:
 - overload users with analysis
 - create overly verbose recommendations
 - use anthropomorphic language
-- pretend AI is always correct
-- generate excessive insights
+- pretend analyst recommendations are always correct
+- recommend decisions without source evidence
+- summarize task status without connecting to gates, evidence, or capacity
+- add real LLM infrastructure
+
+---
+
+# Verification
+
+For implementation work, verify:
+- `/assistant` uses Studio Analyst framing in visible copy
+- Command Center analyst block recommends a studio move
+- Reson8 analyst signal recommends narrow or pause with gate/evidence reasoning
+- Sentra analyst signal references capacity protection or staff-up logic
+- Internal Ops analyst signal remains stable and low-noise
+- issue drawer analyst note cites evidence/gate context when present
+- roadmap drawer analyst note cites gate/evidence/capacity context when present
+- clean platform state does not invent analyst certainty
+- custom venture state offers a direct first action
+- dismissed / inspected signal state still persists
+
+Suggested checks:
+
+```txt
+npm run lint
+npm run build
+```
+
+For UI changes, also browser-check:
+
+```txt
+/assistant
+/dashboard
+/issues
+/roadmap
+```
 
 ---
 
 # Success Criteria
 
-The AI Assistant succeeds when users feel:
+The Studio Analyst succeeds when a reviewer understands:
 
-> "The system helps me make better operational decisions."
+> Foundary recommends what the studio should do next and shows the evidence
+> behind that recommendation.
 
-AND:
+It fails if the reviewer thinks:
 
-> "The intelligence feels contextual and believable."
+> This is a generic AI summary panel.
 
-NOT:
+The desired product feeling is:
 
-> "This is another flashy AI chatbot."
-
----
-
-# Final AI Assistant North Star
-
-The AI Assistant should feel like:
-
-> "A quiet layer of operational intelligence embedded inside venture execution workflows."
-
-Every implementation decision should reinforce:
-- strategic clarity
-- operational usefulness
-- venture awareness
-- believable intelligence
-- calm UX
-- premium restraint
+> The intelligence is quiet, source-linked, and useful for continue, narrow,
+> pause, kill, staff-up, defer, or partner-review decisions.

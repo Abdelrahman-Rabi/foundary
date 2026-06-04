@@ -1,9 +1,45 @@
 # Feature Specification — Roadmap System
 
+## Phase 14 Alignment
+
+For Studio Operating Intelligence work, the roadmap route is being reframed as
+Venture Bets / Validation Initiatives.
+
+Primary source of truth for the execution-evidence meaning:
+
+```txt
+context/features/feature-execution-evidence.md
+```
+
+Also load when roadmap work touches gates or capacity:
+
+```txt
+context/features/feature-validation-gates.md
+context/features/feature-operator-capacity.md
+```
+
+Use this roadmap spec for existing `/roadmap` route behavior, board layout,
+Now/Next/Later grouping, drawer ownership, linked issue behavior, and roadmap
+interaction standards. When product meaning conflicts, prefer the Phase 14
+framing:
+
+```txt
+Roadmap -> Venture Bets / Validation Initiatives
+Roadmap item -> Venture bet
+Roadmap confidence -> Validation confidence
+Linked issues -> Execution evidence
+AI insights -> Studio Analyst notes
+```
+
+Roadmap items should represent bets or validation initiatives linked to gates,
+assumptions, expected evidence, operator impact, and studio decisions.
+
+---
+
 ## Purpose
 
 The Roadmap System is:
-> the strategic execution layer of Foundary.
+> the strategic venture bet and validation initiative layer of Foundary.
 
 This is where venture teams:
 - coordinate direction
@@ -11,6 +47,7 @@ This is where venture teams:
 - manage uncertainty
 - evaluate progress
 - connect execution to outcomes
+- connect bets to validation gates and evidence
 
 The Roadmap experience should feel:
 - calm
@@ -20,6 +57,7 @@ The Roadmap experience should feel:
 - confidence-aware
 - operationally intelligent
 - continuous across refreshes
+- evidence-backed
 
 Unlike the Issues System, the Roadmap should feel:
 - less tactical
@@ -35,7 +73,7 @@ The Roadmap is NOT:
 > delivery micromanagement.
 
 It IS:
-> strategic venture coordination.
+> strategic venture bet coordination.
 
 The roadmap should help teams answer:
 - what are we trying to achieve?
@@ -43,7 +81,9 @@ The roadmap should help teams answer:
 - where are we uncertain?
 - what is progressing?
 - what should be stopped?
-- where is execution confidence weak?
+- where is validation confidence weak?
+- what evidence should this bet produce?
+- what capacity is this bet consuming?
 
 ---
 
@@ -56,10 +96,11 @@ Traditional roadmaps optimize for:
 
 Foundary's roadmap optimizes for:
 - venture outcomes
-- execution confidence
+- validation confidence
 - strategic momentum
 - validation progress
 - uncertainty management
+- execution evidence
 
 This is a CORE differentiator.
 

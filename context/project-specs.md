@@ -1,36 +1,43 @@
-# Project Specifications — Foundary
+# Project Specifications - Foundary
 
 ## Product Summary
 
-Foundary is an AI-native venture execution platform inspired by Linear and adapted for venture studios managing multiple startups simultaneously.
+Foundary is a studio operating intelligence layer for venture studios deciding
+where to spend scarce time, talent, and capital across multiple ventures.
 
 The system is intentionally optimized for:
-- lean venture teams
-- async collaboration
-- rapid execution
-- operational clarity
-- venture-aware workflows
+- lean venture studios
+- async operating reviews
+- portfolio attention decisions
+- rapid validation cycles
+- shared operator capacity
+- evidence-based continue / narrow / pause / kill decisions
+- venture-aware execution workflows
 
 The application should feel:
 - calm
 - fast
 - focused
 - strategically intelligent
+- decision-ready
+- studio-native
 
 ---
 
 # Product Scope
 
-## Included in V1
+## Included in V1 / Current Product Direction
 
 ### Core Areas
+
 - Venture switching
 - Local-first venture creation
-- Dashboard
-- Issues system
-- Roadmap system
-- AI assistant panel
-- Mock operational intelligence
+- Studio Command Center
+- Validation gate visibility
+- Execution evidence across issues and roadmap work
+- Shared operator capacity mock data
+- Studio Analyst intelligence
+- Mock operational recommendations
 - Drag and drop workflows
 - Responsive desktop-first UI
 - Global app shell
@@ -38,6 +45,19 @@ The application should feel:
 - Venture-aware metrics
 - Local-first workspace persistence
 - Reset / export / import workspace utilities
+
+### Strategic Product Layers
+
+```txt
+Portfolio Decisions
+-> Validation Gates
+-> Execution Evidence
+-> Operator Capacity
+-> Studio Analyst Recommendations
+```
+
+These layers should guide naming, data modeling, UI hierarchy, and demo story
+decisions.
 
 ---
 
@@ -60,11 +80,16 @@ DO NOT implement:
 - settings pages
 - billing
 - multi-user collaboration
+- real multi-tenant security
+- real scheduling optimization
+- real finance, bill-back, or cap-table workflows
 
 The goal is:
-> believable operational sophistication.
+
+> believable studio operating intelligence.
 
 NOT:
+
 > production infrastructure completeness.
 
 ---
@@ -73,73 +98,94 @@ NOT:
 
 ## Application Structure
 
+The existing app routes may remain while their product meaning evolves:
+
 ```txt
 App Shell
- ├── Sidebar
- ├── Venture Switcher
- ├── Main Content
- └── AI Assistant Panel
+  - Sidebar
+  - Venture Switcher
+  - Main Content
+  - Studio Analyst / Intelligence Panel
 
 Pages
- ├── Dashboard
- ├── Issues
- ├── Roadmap
- └── AI Assistant
+  - Dashboard / Command Center
+  - Issues / Evidence
+  - Roadmap / Bets
+  - Assistant / Studio Analyst
 ```
+
+Route renaming can happen gradually. Implementation should prioritize product
+behavior and hierarchy over cosmetic route churn.
 
 ---
 
 # Core Routes
 
-## Dashboard
+## Command Center
+
 ```txt
 /dashboard
 ```
 
-Purpose:
-- operational overview
-- venture visibility
-- portfolio intelligence
+Product meaning:
+- portfolio decision command center
+- top studio decision
+- venture attention queue
+- validation risk
+- capacity pressure
+- execution evidence summary
+- Studio Analyst recommendation
 
----
+The route may still be `/dashboard`, but the screen should no longer read as a
+generic metrics dashboard.
 
-## Issues
+## Evidence
+
 ```txt
 /issues
 ```
 
-Purpose:
-- execution workflows
+Product meaning:
+- execution evidence workflow
 - issue management
 - delivery coordination
+- assumption and validation linkage
+- operator effort and impact visibility
 
-Views:
-- list view
-- board view
+Issues should still be fast and operational, but they must explain how work
+supports or challenges venture progress.
 
----
+## Roadmap / Bets
 
-## Roadmap
 ```txt
 /roadmap
 ```
 
-Purpose:
+Product meaning:
+- venture bets
+- validation initiatives
 - strategic planning
-- outcome tracking
-- roadmap visibility
+- confidence tracking
+- gate-linked roadmap work
 
----
+Roadmap items should represent bets or validation initiatives, not generic
+planning cards.
 
-## AI Assistant
+## Studio Analyst
+
 ```txt
 /assistant
 ```
 
-Purpose:
-- operational intelligence
-- contextual AI analysis
-- venture insights
+Product meaning:
+- embedded studio intelligence
+- evidence analysis
+- capacity contention analysis
+- sunk-cost risk detection
+- recommended studio moves
+
+The route may still be `/assistant`, but the product behavior should not be
+chatbot-like.
 
 ---
 
@@ -158,19 +204,24 @@ Seeded demo ventures:
 ```
 
 Each venture should contain:
+- lifecycle phase
+- current validation gate
+- current studio decision
 - issues
-- roadmap items
+- roadmap bets / initiatives
+- execution evidence
+- operator allocations
 - metrics
-- AI insights
-- health signals
+- Studio Analyst insights
+- health and confidence signals
 
-Users may add custom local ventures after the MVP continuity phase. Custom
-ventures should behave as first-class venture contexts across the shell,
-dashboard, issues, roadmap, assistant, and local workspace persistence.
+Users may add custom local ventures. Custom ventures should behave as
+first-class venture contexts across the shell, command center, evidence,
+roadmap, analyst surfaces, and local workspace persistence.
 
-Custom venture creation remains local-first. It does not imply backend
-accounts, team management, organization settings, permissions, billing, or CRM
-records.
+Custom venture creation remains local-first. It does not imply backend accounts,
+team management, organization settings, permissions, billing, CRM records, or
+legal entity management.
 
 Minimum custom venture input:
 
@@ -182,99 +233,215 @@ type CreateVentureInput = {
 }
 ```
 
+Future model direction:
+
+```ts
+type VenturePhase = "explore" | "validate" | "build" | "scale"
+
+type StudioDecision =
+  | "continue"
+  | "narrow"
+  | "pause"
+  | "kill"
+  | "staff-up"
+  | "defer"
+  | "partner-review"
+```
+
 Generated venture defaults should remain believable and restrained:
 - generated id, slug, icon, and color
-- stable initial health
-- stage-aware momentum/confidence
+- phase-aware health
+- stable initial confidence
+- no fake risk when no evidence exists
 - zero issue and roadmap counts until work exists
 
 ---
 
-# Dashboard Specifications
+# Studio Command Center Specifications
 
 ## Purpose
 
-The dashboard is:
+The Command Center is:
+- decision-first
+- portfolio-aware
 - executive-readable
 - operationally informative
 - strategically calm
+
+It should answer:
+- Which venture needs attention?
+- Which gate is weak?
+- Which execution work is evidence?
+- Which operator capacity is constrained?
+- Which studio decision should happen next?
 
 It should NOT feel:
 - cluttered
 - analytical-heavy
 - enterprise-like
+- passively report-driven
 
 ---
 
-## Required Dashboard Components
+## Required Command Center Components
 
-### KPI Cards
-Display:
-- total issues
-- overdue issues
-- active roadmap items
-- killed items
+### Top Studio Decision
 
----
+Display the highest-signal portfolio decision.
 
-### Venture Health Section
+Should include:
+- venture name
+- recommended decision
+- decision reason
+- linked validation gate
+- linked execution evidence
+- capacity implication
+- primary action
 
-Each venture should show:
-- momentum
-- risk level
-- execution health
-- roadmap progress
+Example:
 
----
+```txt
+Reson8 needs a narrow decision before another build cycle.
+Retention evidence is below gate threshold while engineering work remains active.
+```
 
-### Issues by Status
+### Portfolio Attention Queue
 
-Visual representation of:
-- backlog
-- planned
-- in progress
-- in review
-- done
-- killed
+Rank ventures by decision pressure.
 
-Charts are optional.
+Each row/card should show:
+- venture
+- lifecycle phase
+- current gate
+- confidence
+- capacity pressure
+- recommended move
+- attention reason
 
----
-
-### Roadmap Overview
-
-Display:
-- active roadmap initiatives
-- roadmap confidence
-- delivery health
-
----
-
-### Portfolio Risk Panel
+### Validation Risk Panel
 
 Surface:
-- blocked initiatives
-- delayed work
-- AI risk observations
+- weak gates
+- missing evidence
+- stale assumptions
+- confidence drops
+- execution activity with low evidence
+
+### Operator Capacity Panel
+
+Surface:
+- overloaded functions
+- venture-to-venture contention
+- allocation pressure
+- likely downstream impact
+
+This is lightweight capacity intelligence, not a scheduling system.
+
+### Execution Evidence Summary
+
+Surface:
+- issues linked to current gates
+- roadmap bets linked to assumptions
+- work that proves or disproves progress
+- work consuming capacity without enough evidence
+
+### Studio Analyst Recommendation
+
+Surface:
+- concise recommendation
+- reason
+- supporting evidence
+- suggested next studio move
 
 ---
 
-# Issues System Specifications
+# Validation Gate Specifications
 
 ## Purpose
 
-The issues system is:
-> the operational execution layer.
+Validation gates prevent the sunk-cost trap where teams keep building because
+tasks exist.
 
-It should feel:
-- alive
-- fast
-- responsive
-- workflow-oriented
+They should make it clear whether a venture has enough evidence to justify more
+operator time, engineering work, or capital.
 
 ---
 
-# Issue Data Model
+## Lifecycle Phases
+
+Supported phases:
+
+```ts
+type VenturePhase = "explore" | "validate" | "build" | "scale"
+```
+
+Phase meaning:
+- `explore`: problem discovery, market sizing, early founder/customer signal
+- `validate`: demand, retention, willingness to pay, ICP clarity
+- `build`: MVP scope, launch readiness, technical execution risk
+- `scale`: GTM repeatability, revenue signal, operational scaling
+
+---
+
+## Gate Data Model Direction
+
+```ts
+type ValidationGate = {
+  id: string
+  ventureId: string
+  phase: VenturePhase
+  name: string
+  assumption: string
+  requiredEvidence: string[]
+  evidenceSignalIds: string[]
+  linkedIssueIds: string[]
+  linkedRoadmapIds: string[]
+  confidence: number
+  status: "healthy" | "watch" | "at-risk" | "blocked" | "passed" | "failed"
+  recommendedDecision: StudioDecision
+  decisionReason: string
+  updatedAt: string
+}
+```
+
+This model may be implemented incrementally. Early versions can derive gate
+signals from seeded data, issues, roadmap items, and mock intelligence.
+
+---
+
+## Gate Behavior
+
+Each gate should clarify:
+- what assumption is being tested
+- what evidence is required
+- what evidence exists
+- what work is linked
+- what confidence level exists
+- what decision pressure exists
+- what should happen next
+
+Gate confidence should not be a decorative number. It should affect:
+- Command Center attention ranking
+- roadmap confidence
+- Studio Analyst recommendations
+- issue and roadmap drawer context
+- seeded demo story
+
+---
+
+# Execution Evidence Specifications
+
+## Purpose
+
+The execution layer should prove or disprove venture progress.
+
+Issues and roadmap items should no longer behave like generic delivery objects.
+They should link to validation gates, assumptions, evidence signals, and
+operator capacity impact.
+
+---
+
+# Issue Data Model Direction
 
 ```ts
 type Issue = {
@@ -309,10 +476,18 @@ type Issue = {
   tags: string[]
   roadmapId?: string
 
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  evidenceRole?: "prove" | "disprove" | "unblock" | "de-risk" | "capacity-cost"
+  operatorImpact?: OperatorImpact
+
   createdAt: string
   updatedAt: string
 }
 ```
+
+The existing issue model can evolve toward this incrementally.
 
 ---
 
@@ -326,13 +501,14 @@ Must support:
 - sorting
 - compact rows
 - inline metadata visibility
+- gate / assumption indicators when available
+- evidence role indicators when available
 
 The list should feel:
 - scannable
 - dense but breathable
 - operationally efficient
-
----
+- connected to venture decisions
 
 ## 2. Board View
 
@@ -350,40 +526,46 @@ Must support:
 - drag and drop
 - smooth transitions
 - responsive interactions
-
----
+- clear evidence/gate context on cards when useful
 
 ## 3. Issue Drawer
 
 Should open from:
 - list items
 - board cards
+- Command Center evidence links
+- Studio Analyst recommendations
 
 Contains:
 - full issue details
 - linked roadmap item
-- AI insights
+- linked validation gate
+- assumption or evidence role
+- operator impact
+- Studio Analyst context
 - editable metadata
 
 Use drawer pattern instead of page navigation.
 
 ---
 
-# Roadmap System Specifications
+# Roadmap / Bets Specifications
 
 ## Purpose
 
 The roadmap system is:
-> the strategic execution layer.
+
+> the strategic bet and validation initiative layer.
 
 It should feel:
 - calmer
 - more strategic
 - less operational than Issues
+- directly connected to validation confidence
 
 ---
 
-# Roadmap Data Model
+# Roadmap Data Model Direction
 
 ```ts
 type RoadmapItem = {
@@ -406,6 +588,11 @@ type RoadmapItem = {
     | "killed"
 
   linkedIssueIds: string[]
+  validationGateId?: string
+  assumptionId?: string
+  evidenceSignalIds?: string[]
+  betType?: "validation" | "growth" | "delivery" | "risk-reduction" | "leverage"
+  operatorImpact?: OperatorImpact
 
   progress: number
   confidence: number
@@ -431,6 +618,8 @@ Each roadmap card should display:
 - confidence
 - linked issue count
 - venture indicator
+- gate indicator when available
+- bet type when available
 
 ---
 
@@ -439,64 +628,135 @@ Each roadmap card should display:
 Users should be able to:
 - open roadmap drawer
 - view linked issues
+- view linked gate context
 - navigate between roadmap and issues
 - understand execution confidence
+- understand whether a bet is proving, disproving, or consuming capacity
 
 ---
 
-# AI Assistant Specifications
+# Operator Capacity Specifications
 
 ## Purpose
 
-The AI assistant should feel:
-> embedded operational intelligence.
+The capacity layer shows how scarce shared operators are allocated across the
+studio portfolio.
+
+It should make contention visible without becoming a full workforce planning
+tool.
+
+---
+
+## Operator Model Direction
+
+```ts
+type OperatorFunction =
+  | "product"
+  | "design"
+  | "engineering"
+  | "gtm"
+  | "partner"
+
+type OperatorImpact = {
+  function: OperatorFunction
+  effort: "low" | "medium" | "high"
+  capacityPercent?: number
+  note: string
+}
+
+type OperatorAllocation = {
+  id: string
+  ventureId: string
+  function: OperatorFunction
+  operatorName?: string
+  allocationPercent: number
+  pressure: "healthy" | "watch" | "overloaded"
+  impact: string
+}
+```
+
+---
+
+## Required Capacity Behaviors
+
+Capacity surfaces should show:
+- function-level load
+- venture allocation
+- contention between ventures
+- over-capacity warnings
+- downstream impact on gates or roadmap bets
+- execution work that is expensive relative to evidence quality
+
+Avoid:
+- calendar scheduling
+- utilization bureaucracy
+- approval workflows
+- enterprise resource planning density
+
+---
+
+# Studio Analyst Specifications
+
+## Purpose
+
+The Studio Analyst should feel:
+
+> embedded operating intelligence for studio decisions.
 
 NOT:
+
 > chatbot UX.
 
 ---
 
-# AI Behaviors
+# Analyst Behaviors
 
 Supported mocked behaviors:
-- summarize issue
+- recommend continue / narrow / pause / kill / staff-up / defer decisions
+- summarize evidence gaps
 - detect delivery risk
-- suggest priority
-- identify missing acceptance criteria
-- recommend continue / kill / split decisions
-- surface roadmap confidence concerns
+- detect sunk-cost risk
+- flag weak validation gates
+- flag operator contention
+- connect issues and roadmap items to gates
+- explain capacity-versus-confidence tradeoffs
+- identify missing acceptance or success criteria
 
 ---
 
-# AI Output Style
+# Analyst Output Style
 
-AI responses should feel:
+Analyst responses should feel:
 - concise
 - operational
 - strategic
+- evidence-backed
 - believable
 - low-noise
 
 ---
 
-# Example AI Response
+# Example Analyst Response
 
 ```txt
-Risk Level: High
+Recommended move: Narrow
 
 Reason:
-The issue lacks measurable success criteria and is linked to a high-priority roadmap initiative.
+Reson8 has active engineering work against the onboarding loop, but retention
+evidence remains below the Validate gate threshold.
 
-Suggested Action:
-Split discovery validation from implementation delivery.
+Capacity impact:
+Design and PM are already above healthy allocation, pulling attention from
+Sentra's higher-confidence activation work.
 
-Confidence:
-82%
+Suggested action:
+Pause broad build work and run targeted retention interviews before another
+cycle.
 ```
 
 ---
 
-# AI UI Rules
+# Analyst UI Rules
 
 Avoid:
 - chat bubbles
@@ -508,6 +768,8 @@ Prefer:
 - structured analysis blocks
 - contextual panels
 - embedded intelligence cards
+- evidence links
+- decision recommendations
 
 ---
 
@@ -515,11 +777,17 @@ Prefer:
 
 ## Sidebar Navigation
 
-Primary navigation:
+Current primary navigation may remain:
 - Dashboard
 - Issues
 - Roadmap
 - AI Assistant
+
+Product language should gradually move toward:
+- Command Center
+- Evidence
+- Bets
+- Studio Analyst
 
 Sidebar should:
 - remain persistent
@@ -537,10 +805,13 @@ Requirements:
 - low friction
 
 Switching ventures should update:
+- command center mode
 - metrics
-- roadmap
-- issues
-- AI context
+- validation gates
+- roadmap / bets
+- issues / evidence
+- capacity context
+- analyst context
 
 ---
 
@@ -552,8 +823,17 @@ Use Zustand for:
 - roadmap state
 - UI state
 - filters
-- assistant context
+- assistant / analyst context
 - local-first hydration and reset state
+
+Future domain state can be added incrementally for:
+- validation gates
+- evidence signals
+- operator capacity
+- studio decisions
+
+Prefer derived utilities before adding global stores. Add a store only when the
+state is user-editable, persisted, or shared across multiple distant surfaces.
 
 ---
 
@@ -579,9 +859,11 @@ Local-first persistence should cover:
 - venture context
 - issues list / board view mode
 - assistant inspected and dismissed signal state
+- future gate, evidence, capacity, and decision state when user-editable
 
 Workspace utilities should support:
 - reset to seeded demo data
+- start with clean local platform state
 - export current workspace state
 - import valid workspace state without crashing on invalid JSON
 
@@ -597,12 +879,24 @@ Data should feel:
 - operationally believable
 - strategically coherent
 - interconnected
+- studio-native
+- decision-oriented
 
 Relationships should exist between:
 - ventures
+- lifecycle phases
+- validation gates
+- assumptions
+- evidence signals
 - issues
-- roadmap items
-- AI insights
+- roadmap bets
+- operator allocations
+- analyst insights
+
+Seeded ventures should tell distinct studio operating stories:
+- Sentra: higher-confidence growth opportunity with capacity strain
+- Reson8: validation uncertainty with active execution and sunk-cost risk
+- Internal Ops: stable studio leverage with contained scope and freed capacity
 
 ---
 
@@ -616,11 +910,15 @@ Prefer:
 - hover actions
 - keyboard-friendly workflows
 - fast transitions
+- compact decision cards
+- evidence drill-downs
 
 Avoid:
 - full page reloads
 - modal overload
 - excessive confirmations
+- tutorial overlays
+- settings-style setup
 
 ---
 
@@ -674,12 +972,13 @@ This assignment is desktop-first.
 # Build Priorities
 
 Highest implementation priority:
-1. App shell quality
-2. Dashboard sophistication
-3. Issues workflow quality
-4. Roadmap clarity
-5. AI behavior realism
-6. Interaction polish
+1. Studio Command Center quality
+2. Validation gates and decision states
+3. Execution evidence linkage
+4. Operator capacity visibility
+5. Studio Analyst behavior realism
+6. Navigation and product-copy repositioning
+7. Interaction polish
 
 ---
 
@@ -695,6 +994,9 @@ DO NOT:
 - simulate production backend systems
 - create noisy dashboards
 - implement chatbot interfaces
+- make issues or roadmap feel disconnected from validation
+- add full finance, cap-table, or bill-back systems
+- overbuild resource planning
 
 ---
 
@@ -708,9 +1010,13 @@ The product should feel:
 - premium
 - modern
 - cohesive
+- decision-ready
 
 Users should feel:
-> "This system helps venture teams move quickly with clarity."
+
+> "This system shows which venture deserves the studio's next hour, person, and
+> dollar."
 
 NOT:
+
 > "This is another generic PM dashboard."

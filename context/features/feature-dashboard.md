@@ -1,17 +1,46 @@
 # Feature Specification — Dashboard
 
+## Phase 14 Alignment
+
+For Studio Operating Intelligence work, the dashboard route is being reframed as
+the Studio Command Center.
+
+Primary source of truth:
+
+```txt
+context/features/feature-studio-command-center.md
+```
+
+Use this dashboard spec only for existing `/dashboard` route behavior,
+component ownership, and historical dashboard patterns. When product meaning
+conflicts, prefer the Command Center framing:
+
+```txt
+Dashboard -> Studio Command Center
+Venture health -> Decision pressure
+Roadmap confidence -> Validation confidence
+AI insights -> Studio Analyst recommendations
+Issue / roadmap activity -> Execution evidence
+```
+
+The dashboard should no longer lead with generic KPIs. It should lead with the
+top studio decision, portfolio attention queue, validation risk, capacity
+pressure, execution evidence, and analyst recommendation.
+
+---
+
 ## Purpose
 
 The Dashboard is the:
-> strategic operational overview layer of Foundary.
+> strategic operating decision layer of Foundary.
 
 It provides:
-- venture visibility
-- portfolio awareness
-- execution clarity
-- roadmap health
-- operational risk visibility
-- AI-native intelligence summaries
+- portfolio decision visibility
+- venture attention ranking
+- validation confidence visibility
+- execution evidence summaries
+- operator capacity pressure
+- Studio Analyst recommendations
 
 Dashboard metrics should derive from the current local workspace state. When
 issues, roadmap items, venture context, filters, or assistant signal state are
@@ -24,6 +53,8 @@ The dashboard should feel:
 - operationally intelligent
 - focused
 - lightweight
+- decision-ready
+- evidence-backed
 
 It should NOT feel:
 - analytics-heavy
@@ -39,14 +70,14 @@ The Dashboard is NOT:
 > a reporting center.
 
 It IS:
-> a venture operations control layer.
+> a studio operating decision layer.
 
 The goal is to help users quickly understand:
-- what is moving
-- what is blocked
-- what needs attention
-- which ventures are healthy
-- where execution confidence is weak
+- which venture needs attention
+- which validation gate is weak
+- which execution work is evidence
+- where operator capacity is constrained
+- which studio move is recommended
 
 The dashboard should support:
 - fast operational scanning

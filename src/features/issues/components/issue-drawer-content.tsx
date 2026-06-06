@@ -1,9 +1,11 @@
 "use client"
 
 import { GitBranch, ChevronDown } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 import { EmptyState } from "@/components/shared/empty-state"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,11 +43,12 @@ import {
 } from "@/features/issues/utils/issue-utils"
 import { aiInsights } from "@/data/ai-insights"
 import { users } from "@/data/users"
-import { ventures } from "@/data/ventures"
 import { getSyncedRoadmapMetrics } from "@/features/synchronization/utils/sync-utils"
 import { useIssueStore } from "@/stores/issue-store"
 import { useRoadmapStore } from "@/stores/roadmap-store"
 import { useUiStore } from "@/stores/ui-store"
+import { useVentureStore } from "@/stores/venture-store"
+import { resolveValidationGateContext } from "@/features/synchronization/utils/validation-gate-resolver"
 import type { IssuePriority, IssueStatus, IssueType } from "@/types/issue"
 
 type IssueDrawerContentProps = {
@@ -61,6 +64,14 @@ function MetadataItem({ label, value }: { label: string; value: string }) {
   )
 }
 
+const STATUS_COLOR: Record<string, string> = {
+  blocked: "border-destructive/40 text-destructive bg-destructive/5",
+  failed: "border-destructive/40 text-destructive bg-destructive/5",
+  "at-risk": "border-destructive/40 text-destructive bg-destructive/5",
+  watch: "border-warning/40 text-warning bg-warning/5",
+  healthy: "border-success/40 text-success bg-success/5",
+}
+
 export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const issues = useIssueStore((state) => state.issues)
   const issue = useIssueStore((state) =>
@@ -73,6 +84,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
     (state) => state.unlinkIssueFromRoadmap
   )
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const ventures = useVentureStore((state) => state.ventures)
 
   if (!issue) {
     return (
@@ -106,6 +118,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
   const overdue = isIssueOverdue(issue)
   const missingCriteria =
     !issue.acceptanceCriteria || issue.acceptanceCriteria.length === 0
+  const gateContext = resolveValidationGateContext(issue.ventureId, ventures, issue.validationGateId)
 
   return (
     <div className="flex h-full flex-col">
@@ -280,6 +293,83 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
             placeholder="One measurable criterion per line..."
             className="mt-3 w-full resize-none rounded-lg border border-border/60 bg-background/50 p-3 text-sm leading-6 text-foreground placeholder:text-muted-foreground"
           />
+        </section>
+
+
+        <section className="border-b border-border/50 px-5 py-4">
+          <h3 className="text-sm font-medium text-foreground mb-3">
+            Validation Gate
+          </h3>
+          {gateContext ? (
+            <div className="space-y-3.5">
+              <div className="rounded-lg border border-border/60 bg-muted/20 p-3 space-y-2">
+                <div className="flex justify-between items-center flex-wrap gap-2">
+                  <span className="font-semibold text-sm text-foreground">
+                    {gateContext.gate.name}
+                  </span>
+                  <div className="flex items-center gap-1.5 font-mono">
+                    <Badge variant="outline" className="text-[9px] uppercase font-bold py-0 h-4 border-info/40 text-info bg-info/5">
+                      Phase: {gateContext.gate.phase}
+                    </Badge>
+                    <Badge variant="outline" className={cn("text-[9px] uppercase font-bold py-0 h-4", STATUS_COLOR[gateContext.gate.status])}>
+                      {gateContext.gate.status}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 text-xs pt-1 border-t border-border/20">
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase">Evidence Role</span>
+                    <span className="font-medium text-foreground capitalize">{issue.evidenceRole || "None"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase">Confidence Impact</span>
+                    <span className="font-medium text-foreground capitalize">{issue.confidenceImpact || "Neutral"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase">Decision Impact</span>
+                    <span className="font-medium text-foreground capitalize">{issue.decisionImpact || "None"}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-xs text-muted-foreground bg-muted/20 p-2.5 rounded border border-border/40">
+                <span className="font-semibold text-[10px] uppercase text-muted-foreground block mb-1">Tested Assumption</span>
+                {gateContext.gate.assumption}
+              </div>
+
+              {gateContext.gate.requiredEvidence.length > 0 && (
+                <div className="space-y-1">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Required Evidence</span>
+                  <ul className="text-xs space-y-1">
+                    {gateContext.qualitativeEvidenceList.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5 text-muted-foreground">
+                        <span className={cn(
+                          "inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0",
+                          item.status === "observed" ? "bg-success" : 
+                          item.status === "challenged" ? "bg-destructive" : 
+                          item.status === "pending" ? "bg-warning" : "bg-muted-foreground/40"
+                        )} />
+                        <span>
+                          {item.required}{" "}
+                          {item.status !== "missing" && (
+                            <span className="text-[10px] text-muted-foreground/60 italic font-mono">
+                              ({item.status})
+                            </span>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-xs text-muted-foreground bg-muted/10 p-3 rounded border border-border/40">
+              <p className="font-medium text-foreground mb-0.5">No validation gate linked yet.</p>
+              <p className="text-muted-foreground/85">Link this work to an assumption when it supports or challenges a validation milestone.</p>
+            </div>
+          )}
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">

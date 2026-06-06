@@ -59,6 +59,28 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-06 - Antigravity - Phase 14.6 Validation Gates
+
+Task:
+Implemented Validation Gates phase-aware derived context, visual risk panel enhancements, and drawer integration to surface assumptions, qualitative evidence checklists, decision pressure, and recommended moves across dashboard and drawer surfaces, while ensuring custom/clean ventures return calm empty states. Also resolved specific gate ID mappings on the dashboard risk cards and softened no-gate empty state messages.
+
+Changed:
+- `src/features/synchronization/utils/validation-gate-resolver.ts` [NEW]
+- `src/features/dashboard/components/validation-risk-panel.tsx`
+- `src/features/issues/components/issue-drawer-content.tsx`
+- `src/features/roadmap/components/roadmap-drawer-content.tsx`
+
+Verification:
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0, all TypeScript checks and static page generations successfully compiled)
+- Verified that start-clean and custom workspace configurations load calm "No validation gate linked." empty states, preventing seeded static gates from leaking.
+
+Notes:
+- Designed a reusable resolver utility (`resolveValidationGateContext`) to qualitative-check expected guidelines against active evidence signals to produce checklists.
+- Added details to dashboard validation gates cards showing assumptions, required evidence status, observed evidence strength, recommended move, and pressure.
+- Integrated validation gate details into issue drawer and roadmap drawer sections when valid gate ID linkages exist.
+- Adhered to React rules-of-hooks, keeping store hooks invocations strictly at the top of drawer components.
+
 ## 2026-06-04 - Antigravity - Phase 14.5 Command Center Follow-up & Data-Integrity Fixes
 
 Task:

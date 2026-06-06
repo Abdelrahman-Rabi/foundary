@@ -2,6 +2,7 @@
 
 import { GitBranch, Target, ChevronDown } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -39,7 +40,9 @@ import {
 } from "@/features/roadmap/utils/roadmap-utils"
 import { aiInsights } from "@/data/ai-insights"
 import { users } from "@/data/users"
-import { ventures } from "@/data/ventures"
+import { useVentureStore } from "@/stores/venture-store"
+import { resolveValidationGateContext } from "@/features/synchronization/utils/validation-gate-resolver"
+import { Badge } from "@/components/ui/badge"
 import {
   getSyncedRoadmapItems,
   getSyncedRoadmapMetrics,
@@ -51,6 +54,41 @@ import type {
   RoadmapStatus,
   RoadmapTimeframe,
 } from "@/types/roadmap"
+
+const STATUS_COLOR: Record<string, string> = {
+  blocked: "border-destructive/40 text-destructive bg-destructive/5",
+  failed: "border-destructive/40 text-destructive bg-destructive/5",
+  "at-risk": "border-destructive/40 text-destructive bg-destructive/5",
+  watch: "border-warning/40 text-warning bg-warning/5",
+  healthy: "border-success/40 text-success bg-success/5",
+}
+
+const COLOR_MAP: Record<string, string> = {
+  narrow: "border-warning/50 text-warning bg-warning/5",
+  pause: "border-warning/50 text-warning bg-warning/5",
+  kill: "border-destructive/50 text-destructive bg-destructive/5",
+  "staff-up": "border-info/40 text-info bg-info/5",
+  defer: "border-muted-foreground/40 text-muted-foreground bg-muted-foreground/5",
+  "partner-review": "border-destructive/50 text-destructive bg-destructive/5",
+  continue: "border-success/40 text-success bg-success/5",
+}
+
+const STRENGTH_COLOR: Record<string, string> = {
+  strong: "text-success",
+  moderate: "text-info",
+  weak: "text-warning",
+  negative: "text-destructive",
+}
+
+const DECISION_LABELS: Record<string, string> = {
+  continue: "Continue",
+  narrow: "Narrow",
+  pause: "Pause",
+  kill: "Stop",
+  "staff-up": "Staff Up",
+  defer: "Defer",
+  "partner-review": "Escalate",
+}
 
 type RoadmapDrawerContentProps = {
   roadmapId: string
@@ -69,6 +107,7 @@ export function RoadmapDrawerContent({
   const setIssueFilters = useIssueStore((state) => state.setFilters)
   const resetIssueFilters = useIssueStore((state) => state.resetFilters)
   const openDrawer = useUiStore((state) => state.openDrawer)
+  const ventures = useVentureStore((state) => state.ventures)
 
   if (!item) {
     return (
@@ -80,12 +119,12 @@ export function RoadmapDrawerContent({
       </div>
     )
   }
-
   const syncedItem =
     getSyncedRoadmapItems(roadmapItems, issues).find(
       (roadmapItem) => roadmapItem.id === item.id
     ) ?? item
   const venture = getVenture(ventures, item.ventureId)
+  const gateContext = resolveValidationGateContext(item.ventureId, ventures, item.validationGateId)
   const linkedIssues = getLinkedIssues(issues, item)
   const issueCompletion = getIssueCompletion(linkedIssues)
   const syncedMetrics = getSyncedRoadmapMetrics(item, issues)
@@ -165,6 +204,91 @@ export function RoadmapDrawerContent({
               className="mt-2 h-9 w-full rounded-lg border border-border/60 bg-background/50 px-3 text-sm text-foreground placeholder:text-muted-foreground"
             />
           </label>
+        </section>
+
+        <section className="border-b border-border/50 px-5 py-4">
+          <h3 className="text-sm font-medium text-foreground mb-3">
+            Validation Gate
+          </h3>
+          {gateContext ? (
+            <div className="space-y-3.5">
+              <div className="rounded-lg border border-border/60 bg-muted/20 p-3 space-y-2">
+                <div className="flex justify-between items-center flex-wrap gap-2">
+                  <span className="font-semibold text-sm text-foreground">
+                    {gateContext.gate.name}
+                  </span>
+                  <div className="flex items-center gap-1.5 font-mono">
+                    <Badge variant="outline" className="text-[9px] uppercase font-bold py-0 h-4 border-info/40 text-info bg-info/5">
+                      Phase: {gateContext.gate.phase}
+                    </Badge>
+                    <Badge variant="outline" className={cn("text-[9px] uppercase font-bold py-0 h-4", STATUS_COLOR[gateContext.gate.status])}>
+                      {gateContext.gate.status}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-border/20">
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase">Bet Type</span>
+                    <span className="font-medium text-foreground capitalize">{item.betType || "Validation"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase">Recommended Move</span>
+                    <Badge variant="outline" className={cn("h-4.5 text-[9px] py-0 px-1 font-semibold uppercase font-mono", COLOR_MAP[gateContext.gate.recommendedDecision])}>
+                      {DECISION_LABELS[gateContext.gate.recommendedDecision] || gateContext.gate.recommendedDecision}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {gateContext.gate.requiredEvidence.length > 0 && (
+                <div className="space-y-1">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Expected Evidence</span>
+                  <ul className="text-xs space-y-1">
+                    {gateContext.qualitativeEvidenceList.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5 text-muted-foreground">
+                        <span className={cn(
+                          "inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0",
+                          item.status === "observed" ? "bg-success" : 
+                          item.status === "challenged" ? "bg-destructive" : 
+                          item.status === "pending" ? "bg-warning" : "bg-muted-foreground/40"
+                        )} />
+                        <span>
+                          {item.required}{" "}
+                          {item.status !== "missing" && (
+                            <span className="text-[10px] text-muted-foreground/60 italic font-mono">
+                              ({item.status})
+                            </span>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {gateContext.observedSignals.length > 0 && (
+                <div className="space-y-1.5 border-t border-border/30 pt-2">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Current Evidence</span>
+                  <div className="space-y-1">
+                    {gateContext.observedSignals.map((signal) => (
+                      <div key={signal.id} className="text-xs leading-relaxed text-muted-foreground bg-muted/10 p-1.5 rounded">
+                        <span className={cn("font-bold capitalize mr-1 font-mono text-[10px]", STRENGTH_COLOR[signal.strength])}>
+                          {signal.strength}:
+                        </span>
+                        {signal.title}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-xs text-muted-foreground bg-muted/10 p-3 rounded border border-border/40">
+              <p className="font-medium text-foreground mb-0.5">No validation gate linked yet.</p>
+              <p className="text-muted-foreground/85 font-normal">Link this initiative to an active validation gate to track confidence against studio criteria.</p>
+            </div>
+          )}
         </section>
 
         <section className="border-b border-border/50 px-5 py-4">

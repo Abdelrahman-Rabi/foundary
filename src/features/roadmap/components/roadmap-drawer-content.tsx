@@ -43,6 +43,7 @@ import { users } from "@/data/users"
 import { useVentureStore } from "@/stores/venture-store"
 import { resolveValidationGateContext } from "@/features/synchronization/utils/validation-gate-resolver"
 import { Badge } from "@/components/ui/badge"
+import { evidenceSignals } from "@/data/evidence-signals"
 import {
   getSyncedRoadmapItems,
   getSyncedRoadmapMetrics,
@@ -73,12 +74,6 @@ const COLOR_MAP: Record<string, string> = {
   continue: "border-success/40 text-success bg-success/5",
 }
 
-const STRENGTH_COLOR: Record<string, string> = {
-  strong: "text-success",
-  moderate: "text-info",
-  weak: "text-warning",
-  negative: "text-destructive",
-}
 
 const DECISION_LABELS: Record<string, string> = {
   continue: "Continue",
@@ -126,6 +121,32 @@ export function RoadmapDrawerContent({
   const venture = getVenture(ventures, item.ventureId)
   const gateContext = resolveValidationGateContext(item.ventureId, ventures, item.validationGateId)
   const linkedIssues = getLinkedIssues(issues, item)
+  const matchingSignals = evidenceSignals.filter((es) => {
+    if (es.ventureId !== item.ventureId) return false
+    
+    const matchesGate = item.validationGateId && es.gateId === item.validationGateId
+    const matchesSignalId = item.evidenceSignalIds?.includes(es.id)
+    const matchesSourceRoadmap = es.sourceRoadmapIds?.includes(item.id)
+    const matchesLinkedIssue = es.sourceIssueIds?.some((id) =>
+      linkedIssues.some((issue) => issue.id === id)
+    )
+
+    return !!(matchesGate || matchesSignalId || matchesSourceRoadmap || matchesLinkedIssue)
+  })
+
+  const linkedIssueRoleCounts = {
+    prove: 0,
+    disprove: 0,
+    unblock: 0,
+    "de-risk": 0,
+    "capacity-cost": 0,
+  }
+  linkedIssues.forEach((issue) => {
+    if (issue.evidenceRole) {
+      linkedIssueRoleCounts[issue.evidenceRole]++
+    }
+  })
+
   const issueCompletion = getIssueCompletion(linkedIssues)
   const syncedMetrics = getSyncedRoadmapMetrics(item, issues)
   const insights = getRoadmapInsights(aiInsights, item)
@@ -208,15 +229,18 @@ export function RoadmapDrawerContent({
 
         <section className="border-b border-border/50 px-5 py-4">
           <h3 className="text-sm font-medium text-foreground mb-3">
-            Validation Gate
+            Venture Bet / Execution Evidence Context
           </h3>
           {gateContext ? (
             <div className="space-y-3.5">
-              <div className="rounded-lg border border-border/60 bg-muted/20 p-3 space-y-2">
+              <div className="rounded-lg border border-border/60 bg-muted/20 p-3 space-y-2.5">
                 <div className="flex justify-between items-center flex-wrap gap-2">
-                  <span className="font-semibold text-sm text-foreground">
-                    {gateContext.gate.name}
-                  </span>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-semibold">Validation Gate</span>
+                    <span className="font-semibold text-sm text-foreground">
+                      {gateContext.gate.name}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-1.5 font-mono">
                     <Badge variant="outline" className="text-[9px] uppercase font-bold py-0 h-4 border-info/40 text-info bg-info/5">
                       Phase: {gateContext.gate.phase}
@@ -227,37 +251,118 @@ export function RoadmapDrawerContent({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-border/20">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs pt-2 border-t border-border/20">
                   <div>
-                    <span className="text-[10px] text-muted-foreground block uppercase">Bet Type</span>
-                    <span className="font-medium text-foreground capitalize">{item.betType || "Validation"}</span>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Bet Type</span>
+                    <span className="font-medium text-foreground capitalize">{item.betType || "None"}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-muted-foreground block uppercase">Recommended Move</span>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Recommended Decision</span>
                     <Badge variant="outline" className={cn("h-4.5 text-[9px] py-0 px-1 font-semibold uppercase font-mono", COLOR_MAP[gateContext.gate.recommendedDecision])}>
                       {DECISION_LABELS[gateContext.gate.recommendedDecision] || gateContext.gate.recommendedDecision}
                     </Badge>
                   </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Confidence Impact</span>
+                    <span className="font-medium text-foreground capitalize">{item.confidenceImpact || "Neutral"}</span>
+                  </div>
+                  {item.operatorImpact && (
+                    <div>
+                      <span className="text-[10px] text-muted-foreground block uppercase font-mono">Operator Impact</span>
+                      <span className="font-medium text-foreground capitalize">{item.operatorImpact.function} / {item.operatorImpact.effort}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Linked Issue Roles Summary */}
+                <div className="pt-2 border-t border-border/20">
+                  <span className="text-[10px] text-muted-foreground block uppercase font-mono mb-1">Linked Issue Roles</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {Object.entries(linkedIssueRoleCounts).map(([role, count]) => {
+                      if (count === 0) return null
+                      return (
+                        <Badge key={role} variant="outline" className={cn("text-[9px] h-4.5 py-0 px-1 font-mono uppercase", 
+                          role === "prove" ? "bg-success/5 text-success border-success/20" :
+                          role === "disprove" ? "bg-destructive/5 text-destructive border-destructive/20" :
+                          role === "unblock" ? "bg-info/5 text-info border-info/20" :
+                          role === "de-risk" ? "bg-warning/5 text-warning border-warning/20" :
+                          "bg-muted-foreground/5 text-muted-foreground border-muted-foreground/20"
+                        )}>
+                          {role === "prove" ? "proving" : 
+                           role === "disprove" ? "challenging" : 
+                           role === "unblock" ? "unblocking" : 
+                           role === "de-risk" ? "de-risking" : 
+                           "capacity-cost"}: {count}
+                        </Badge>
+                      )
+                    })}
+                    {Object.values(linkedIssueRoleCounts).every((c) => c === 0) && (
+                      <span className="text-xs text-muted-foreground italic">No evidence roles assigned to linked issues</span>
+                    )}
+                  </div>
                 </div>
               </div>
 
+              {/* Expected Evidence (Roadmap Specific) */}
+              {item.expectedEvidence && item.expectedEvidence.length > 0 && (
+                <div className="space-y-1">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Expected Initiative Evidence</span>
+                  <ul className="text-xs space-y-1">
+                    {item.expectedEvidence.map((req, idx) => {
+                      const reqLower = req.toLowerCase()
+                      const matchingSignal = matchingSignals.find((sig) => {
+                        const sigTitleLower = sig.title.toLowerCase()
+                        if (reqLower.includes("retention") && (sigTitleLower.includes("broadcast") || sigTitleLower.includes("retention") || sigTitleLower.includes("interview"))) return true
+                        if (reqLower.includes("cohort") && sigTitleLower.includes("cohort")) return true
+                        if (reqLower.includes("interview") && sigTitleLower.includes("interview")) return true
+                        return false
+                      })
+
+                      const status = matchingSignal 
+                        ? (matchingSignal.strength === "negative" ? "challenged" : (matchingSignal.title.toLowerCase().includes("pending") ? "pending" : "observed"))
+                        : "missing"
+
+                      return (
+                        <li key={idx} className="flex items-start gap-1.5 text-muted-foreground">
+                          <span className={cn(
+                            "inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0",
+                            status === "observed" ? "bg-success" : 
+                            status === "challenged" ? "bg-destructive" : 
+                            status === "pending" ? "bg-warning" : "bg-muted-foreground/40"
+                          )} />
+                          <span>
+                            {req}{" "}
+                            {status !== "missing" && (
+                              <span className="text-[10px] text-muted-foreground/60 italic font-mono">
+                                ({status})
+                              </span>
+                            )}
+                          </span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )}
+
+              {/* Required Evidence (Validation Gate Specific) */}
               {gateContext.gate.requiredEvidence.length > 0 && (
                 <div className="space-y-1">
-                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Expected Evidence</span>
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Required Gate Evidence</span>
                   <ul className="text-xs space-y-1">
-                    {gateContext.qualitativeEvidenceList.map((item, idx) => (
+                    {gateContext.qualitativeEvidenceList.map((ev, idx) => (
                       <li key={idx} className="flex items-start gap-1.5 text-muted-foreground">
                         <span className={cn(
                           "inline-block w-1.5 h-1.5 rounded-full mt-1.5 shrink-0",
-                          item.status === "observed" ? "bg-success" : 
-                          item.status === "challenged" ? "bg-destructive" : 
-                          item.status === "pending" ? "bg-warning" : "bg-muted-foreground/40"
+                          ev.status === "observed" ? "bg-success" : 
+                          ev.status === "challenged" ? "bg-destructive" : 
+                          ev.status === "pending" ? "bg-warning" : "bg-muted-foreground/40"
                         )} />
                         <span>
-                          {item.required}{" "}
-                          {item.status !== "missing" && (
+                          {ev.required}{" "}
+                          {ev.status !== "missing" && (
                             <span className="text-[10px] text-muted-foreground/60 italic font-mono">
-                              ({item.status})
+                              ({ev.status})
                             </span>
                           )}
                         </span>
@@ -267,16 +372,24 @@ export function RoadmapDrawerContent({
                 </div>
               )}
 
-              {gateContext.observedSignals.length > 0 && (
-                <div className="space-y-1.5 border-t border-border/30 pt-2">
-                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Current Evidence</span>
-                  <div className="space-y-1">
-                    {gateContext.observedSignals.map((signal) => (
-                      <div key={signal.id} className="text-xs leading-relaxed text-muted-foreground bg-muted/10 p-1.5 rounded">
-                        <span className={cn("font-bold capitalize mr-1 font-mono text-[10px]", STRENGTH_COLOR[signal.strength])}>
-                          {signal.strength}:
-                        </span>
-                        {signal.title}
+              {/* Strict matching observed signals */}
+              {matchingSignals.length > 0 && (
+                <div className="space-y-1.5 border-t border-border/20 pt-2">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Observed Evidence Signals</span>
+                  <div className="space-y-2">
+                    {matchingSignals.map((signal) => (
+                      <div key={signal.id} className="text-xs bg-muted/10 p-2 rounded border border-border/20">
+                        <div className="flex justify-between items-center flex-wrap gap-1 mb-1">
+                          <span className="font-medium text-foreground">{signal.title}</span>
+                          <Badge variant="outline" className={cn("text-[9px] h-3.5 py-0 px-1 font-mono uppercase",
+                            signal.strength === "strong" || signal.strength === "moderate" ? "text-success border-success/20 bg-success/5" :
+                            signal.strength === "negative" ? "text-destructive border-destructive/20 bg-destructive/5" :
+                            "text-warning border-warning/20 bg-warning/5"
+                          )}>
+                            {signal.strength}
+                          </Badge>
+                        </div>
+                        <p className="text-[11px] text-muted-foreground leading-normal">{signal.summary}</p>
                       </div>
                     ))}
                   </div>
@@ -285,7 +398,7 @@ export function RoadmapDrawerContent({
             </div>
           ) : (
             <div className="text-xs text-muted-foreground bg-muted/10 p-3 rounded border border-border/40">
-              <p className="font-medium text-foreground mb-0.5">No validation gate linked yet.</p>
+              <p className="font-medium text-foreground mb-0.5">No execution evidence linked yet.</p>
               <p className="text-muted-foreground/85 font-normal">Link this initiative to an active validation gate to track confidence against studio criteria.</p>
             </div>
           )}

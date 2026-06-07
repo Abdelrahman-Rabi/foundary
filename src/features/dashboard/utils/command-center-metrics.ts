@@ -239,6 +239,7 @@ export function getCommandCenterData(
 
   if (targetVentureId) {
     const ventureIssues = issues.filter((i) => i.ventureId === targetVentureId)
+    const ventureRoadmaps = roadmapItems.filter((r) => r.ventureId === targetVentureId)
     const roleCounts: Record<EvidenceRole, number> = {
       prove: 0,
       disprove: 0,
@@ -255,12 +256,17 @@ export function getCommandCenterData(
 
     const recentIssues = ventureIssues
       .filter((i) => i.evidenceRole && ["done", "in-review", "in-progress"].includes(i.status))
-      .slice(0, 5)
+      .slice(0, 3)
+
+    const recentRoadmaps = ventureRoadmaps
+      .filter((r) => r.betType && ["active", "planned", "at-risk", "completed", "killed"].includes(r.status))
+      .slice(0, 2)
 
     evidenceSummary = {
       ventureId: targetVentureId,
       evidenceRoleCounts: roleCounts,
       recentEvidenceIssues: recentIssues,
+      recentEvidenceRoadmapItems: recentRoadmaps,
     }
   }
 

@@ -243,6 +243,7 @@ export default function DashboardPage() {
           <ExecutionEvidenceSummary
             summary={commandCenterData.evidenceSummary}
             onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
+            onOpenRoadmap={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
           />
         </div>
       </div>

@@ -59,6 +59,33 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-07 - Antigravity - Phase 14.7 Execution Evidence Linkage
+
+Task:
+Implemented Phase 14.7 - Execution Evidence Linkage by reframing issues and roadmap items visually as "Execution Evidence". Added compact evidence badges, confidence indicators, and capacity warning indicators to issue rows and cards. Refactored the issue drawer and roadmap drawer validation sections to display full execution evidence context including betType, expected evidence, gate, observed signals, linked issue role counts, confidence impact, and operator impact. Softened empty states to calm "No execution evidence linked yet" copies. Updated the Command Center summary panel to display a compact decision-level source stack of 2-3 source issues and 1-2 source roadmap bets with direct drawer click-through links.
+
+Changed:
+- `src/types/dashboard.ts`
+- `src/features/issues/components/issue-card.tsx`
+- `src/features/issues/components/issue-row.tsx`
+- `src/features/issues/components/issue-drawer-content.tsx`
+- `src/features/roadmap/components/roadmap-card.tsx`
+- `src/features/roadmap/components/roadmap-drawer-content.tsx`
+- `src/features/dashboard/utils/command-center-metrics.ts`
+- `src/features/dashboard/components/execution-evidence-summary.tsx`
+- `src/app/dashboard/page.tsx`
+
+Verification:
+- `npx tsc --noEmit` - Passed (exit code 0)
+- `npm run lint` - Passed (exit code 0, no ESLint warnings/errors)
+- `npm run build` - Passed (production build compiled successfully)
+- Browser verification - Passed for dashboard issue drawer click-through, dashboard roadmap drawer click-through, and start-clean/custom empty states
+
+Notes:
+- Calculated strict store-isolated matching signals and role counts on drawers and command center summary.
+- Soft empty states prevent custom/clean workspaces from leaking seeded gates or signals.
+- Direct click-through links in the Command Center open matching drawers.
+
 ## 2026-06-06 - Antigravity - Phase 14.6 Validation Gates
 
 Task:

@@ -1,6 +1,7 @@
 import type { VentureHealthState, VentureMomentum, DecisionPressure, CapacityPressure, StudioDecision, VenturePhase, ValidationGateStatus } from "@/types/venture"
 import type { IssueFilters, RiskLevel, OperatorFunction, EvidenceRole, Issue } from "@/types/issue"
 import type { AnalystSignal } from "@/types/ai"
+import type { RoadmapItem } from "@/types/roadmap"
 
 export type VentureHealth = {
   ventureId: string
@@ -90,6 +91,7 @@ export type ExecutionEvidenceSummary = {
   ventureId: string
   evidenceRoleCounts: Record<EvidenceRole, number>
   recentEvidenceIssues: Issue[]
+  recentEvidenceRoadmapItems: RoadmapItem[]
 }
 
 export type CommandCenterData = {

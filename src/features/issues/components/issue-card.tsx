@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities"
 import { AlertTriangle, GitBranch, Sparkles } from "lucide-react"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   IssuePriorityBadge,
   IssueRiskBadge,
@@ -127,16 +128,44 @@ function IssueCardContent({
         <span className="truncate">{venture?.name ?? "Unknown"}</span>
       </div>
 
-      <div className="mt-3 flex items-center justify-between gap-2">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/40 pt-2.5">
         {roadmap ? (
-          <div className="flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
             <GitBranch className="size-3 shrink-0" strokeWidth={1.8} />
-            <span className="truncate">{roadmap.title}</span>
+            <span className="truncate max-w-[100px]">{roadmap.title}</span>
           </div>
         ) : (
-          <span className="text-xs text-muted-foreground">No roadmap link</span>
+          <span className="text-[10px] text-muted-foreground">No bet link</span>
         )}
         <div className="flex shrink-0 items-center gap-1">
+          {issue.evidenceRole && (
+            <Badge variant="outline" className={cn("text-[8px] h-3.5 py-0 px-1 uppercase font-mono tracking-wider", 
+              issue.evidenceRole === "prove" ? "bg-success/5 text-success border-success/20" :
+              issue.evidenceRole === "disprove" ? "bg-destructive/5 text-destructive border-destructive/20" :
+              issue.evidenceRole === "unblock" ? "bg-info/5 text-info border-info/20" :
+              issue.evidenceRole === "de-risk" ? "bg-warning/5 text-warning border-warning/20" :
+              "bg-muted-foreground/5 text-muted-foreground border-muted-foreground/20"
+            )}>
+              {issue.evidenceRole === "prove" ? "proving" :
+               issue.evidenceRole === "disprove" ? "challenging" :
+               issue.evidenceRole === "unblock" ? "unblocking" :
+               issue.evidenceRole === "de-risk" ? "de-risking" :
+               "cost"}
+            </Badge>
+          )}
+          {issue.confidenceImpact && issue.confidenceImpact !== "neutral" && (
+            <span className={cn(
+              "font-bold text-[9px]",
+              issue.confidenceImpact === "increase" ? "text-success" : "text-destructive"
+            )}>
+              {issue.confidenceImpact === "increase" ? "▲" : "▼"}
+            </span>
+          )}
+          {issue.evidenceRole === "capacity-cost" && (
+            <span title="Capacity contention risk">
+              <AlertTriangle className="size-3 text-warning shrink-0" strokeWidth={2} />
+            </span>
+          )}
           {issue.blocked || overdue ? (
             <AlertTriangle className="size-3.5 text-warning" strokeWidth={1.8} />
           ) : null}

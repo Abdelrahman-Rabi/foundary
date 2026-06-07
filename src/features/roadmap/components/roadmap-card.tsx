@@ -8,6 +8,8 @@ import type { AiInsight } from "@/types/ai"
 import type { Issue } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
 import type { Venture } from "@/types/venture"
+import { Badge } from "@/components/ui/badge"
+import { evidenceSignals } from "@/data/evidence-signals"
 import {
   RoadmapConfidenceBadge,
   RoadmapStatusBadge,
@@ -42,6 +44,20 @@ export function RoadmapCard({
   const issueCompletion = getIssueCompletion(linkedIssues)
   const [insight] = getRoadmapInsights(insights, item)
 
+  // Strict store-isolated evidence signals filter
+  const matchingSignals = evidenceSignals.filter((es) => {
+    if (es.ventureId !== item.ventureId) return false
+    
+    const matchesGate = item.validationGateId && es.gateId === item.validationGateId
+    const matchesSignalId = item.evidenceSignalIds?.includes(es.id)
+    const matchesSourceRoadmap = es.sourceRoadmapIds?.includes(item.id)
+    const matchesLinkedIssue = es.sourceIssueIds?.some((id) =>
+      linkedIssues.some((issue) => issue.id === id)
+    )
+
+    return !!(matchesGate || matchesSignalId || matchesSourceRoadmap || matchesLinkedIssue)
+  })
+
   return (
     <motion.div
       layout
@@ -67,7 +83,7 @@ export function RoadmapCard({
               <p className="text-xs text-muted-foreground">
                 {venture?.name ?? "Unknown venture"}
               </p>
-              <h3 className="mt-1 text-sm font-medium leading-5 text-foreground">
+              <h3 className="mt-1 text-sm font-medium leading-5 text-foreground font-semibold">
                 {item.title}
               </h3>
             </div>
@@ -86,22 +102,28 @@ export function RoadmapCard({
             <RoadmapConfidence value={item.confidence} />
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-4 flex flex-wrap items-center gap-1.5">
             <RoadmapConfidenceBadge confidence={item.confidence} />
             <RoadmapTrendBadge trend={item.confidenceTrend} />
+            {item.betType && (
+              <Badge variant="outline" className="text-[9px] uppercase font-mono tracking-wider px-1 py-0 h-4 bg-muted/10 border-border">
+                {item.betType.replace("-", " ")}
+              </Badge>
+            )}
+            {matchingSignals.length > 0 && (
+              <Badge variant="outline" className="text-[9px] font-mono px-1 py-0 h-4 bg-info/5 text-info border-info/20">
+                {matchingSignals.length} evidence
+              </Badge>
+            )}
           </div>
 
-          <div className="mt-4 flex items-center justify-between gap-3 text-xs text-muted-foreground">
+          <div className="mt-4 flex items-center justify-between gap-3 text-xs text-muted-foreground border-t border-border/40 pt-2.5">
             <span className="flex items-center gap-1.5">
               <GitBranch className="size-3.5" />
-              {linkedIssues.length} linked issue
-              {linkedIssues.length === 1 ? "" : "s"}
+              {linkedIssues.length} issue{linkedIssues.length === 1 ? "" : "s"}
             </span>
             <span>
               {issueCompletion.completed} done
-              {issueCompletion.killed > 0
-                ? ` / ${issueCompletion.killed} killed`
-                : ""}
             </span>
           </div>
 

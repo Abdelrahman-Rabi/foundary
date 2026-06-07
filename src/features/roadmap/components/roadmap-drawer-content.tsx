@@ -1,6 +1,6 @@
 "use client"
 
-import { GitBranch, Target, ChevronDown } from "lucide-react"
+import { GitBranch, Target, ChevronDown, AlertTriangle } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 
@@ -266,13 +266,23 @@ export function RoadmapDrawerContent({
                     <span className="text-[10px] text-muted-foreground block uppercase font-mono">Confidence Impact</span>
                     <span className="font-medium text-foreground capitalize">{item.confidenceImpact || "Neutral"}</span>
                   </div>
-                  {item.operatorImpact && (
-                    <div>
-                      <span className="text-[10px] text-muted-foreground block uppercase font-mono">Operator Impact</span>
-                      <span className="font-medium text-foreground capitalize">{item.operatorImpact.function} / {item.operatorImpact.effort}</span>
-                    </div>
-                  )}
                 </div>
+
+                {item.operatorImpact && (
+                  <div className="pt-2 border-t border-border/20 text-xs">
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Bet Operator Capacity Impact</span>
+                    <div className="mt-0.5 font-medium text-foreground">
+                      <span className="capitalize">{item.operatorImpact.function}</span> /{" "}
+                      <span className="capitalize">{item.operatorImpact.effort} Effort</span>
+                      {item.operatorImpact.capacityPercent !== undefined && (
+                        <span> ({item.operatorImpact.capacityPercent}%)</span>
+                      )}
+                    </div>
+                    {item.operatorImpact.note && (
+                      <p className="text-[11px] text-muted-foreground mt-0.5 italic">{item.operatorImpact.note}</p>
+                    )}
+                  </div>
+                )}
 
                 {/* Linked Issue Roles Summary */}
                 <div className="pt-2 border-t border-border/20">
@@ -301,6 +311,15 @@ export function RoadmapDrawerContent({
                     )}
                   </div>
                 </div>
+
+                {/* Conditional Strategic Warning */}
+                {(item.confidence < 50 || item.confidenceTrend === "declining") && 
+                 (item.operatorImpact?.effort === "high" || linkedIssues.some(issue => issue.evidenceRole === "capacity-cost" || issue.operatorImpact?.effort === "high")) && (
+                  <div className="pt-2 border-t border-border/20 text-[11px] text-muted-foreground flex items-start gap-1.5 leading-normal">
+                    <AlertTriangle className="size-3.5 shrink-0 mt-0.5 text-warning" />
+                    <span>This initiative consumes active operator capacity despite lower validation confidence. Consider narrowing or pausing.</span>
+                  </div>
+                )}
               </div>
 
               {/* Expected Evidence (Roadmap Specific) */}

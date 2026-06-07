@@ -33,4 +33,12 @@ export const users: User[] = [
     activeVentureIds: ["venture-reson8", "venture-internal-ops"],
     createdAt: "2026-04-01T09:00:00.000Z",
   },
+  {
+    id: "user-noah-patel",
+    name: "Noah Patel",
+    role: "GTM Operator",
+    avatar: "NP",
+    activeVentureIds: ["venture-sentra"],
+    createdAt: "2026-04-01T09:00:00.000Z",
+  },
 ]

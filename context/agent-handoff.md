@@ -59,6 +59,51 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-07 - Antigravity - Phase 14.8 Operator Capacity Polish (Venture-Explicit Labels)
+
+Task:
+Polish pass on the Operator Capacity panel recommended move labels. Labels are now venture-explicit so users cannot misread which venture the action targets. Examples: "Pause Reson8", "Narrow Reson8", "Protect Sentra capacity". Implemented via a `buildDecisionLabel(decision, ventureNames)` helper that reads `press.affectedVentureNames` from the already-populated `CapacityPressureSummary` — no store changes, no type changes, no routing changes.
+
+Changed:
+- `src/features/dashboard/components/operator-capacity-panel.tsx`
+
+Verification:
+- `npx tsc --noEmit` - Passed (exit code 0)
+
+Notes:
+- Reducing actions (pause, narrow, defer, kill) target the last venture in `affectedVentureNames` — seeded data orders the protected venture first and the contested venture last.
+- Protective actions (staff-up) target the first venture in the list.
+- Single-venture pressures always use the sole name directly.
+- Zero-venture fallback retains previous generic labels for safety.
+
+---
+
+## 2026-06-07 - Antigravity - Phase 14.8 Operator Capacity Layer
+
+Task:
+Implemented Phase 14.8 - Operator Capacity Layer by adding Noah Patel as GTM Operator, seeding sparse narrative-driven GTM/partner allocations, upgrading the Command Center Operator Capacity Panel to show load %, function pressure, contention reason, downstream impact, and studio-decision recommended moves. Wired stores once to resolve truncated titles of related issues and roadmap bets. Added capacity context (Evidence-moving vs Capacity-cost labels, and warning copies) to the issue drawer, and expanded bet-level capacity impact / linked issue capacity counts / strategic warnings to the roadmap drawer. Added compact capacity cues to issue and roadmap cards.
+
+Changed:
+- `src/data/users.ts`
+- `src/data/operator-capacity.ts`
+- `src/types/dashboard.ts`
+- `src/features/dashboard/utils/command-center-metrics.ts`
+- `src/features/dashboard/components/operator-capacity-panel.tsx`
+- `src/features/issues/components/issue-drawer-content.tsx`
+- `src/features/issues/components/issue-card.tsx`
+- `src/features/roadmap/components/roadmap-drawer-content.tsx`
+- `src/features/roadmap/components/roadmap-card.tsx`
+
+Verification:
+- `npx tsc --noEmit` - Passed (exit code 0)
+- `npm run lint` - Passed (exit code 0, no ESLint warnings/errors)
+- `npm run build` - Passed (production build compiled successfully)
+- Verified workspace isolation: clean and custom workspaces safely hide seeded allocations and capacity metrics.
+
+Notes:
+- Sparse allocations kept GTM and Partner load focused on narrative correctness without being overcommitted or symmetrical.
+- Warnings conditionally show only for low-confidence/declining bets with linked capacity/effort pressure.
+
 ## 2026-06-07 - Antigravity - Phase 14.7 Execution Evidence Linkage
 
 Task:

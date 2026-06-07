@@ -161,8 +161,8 @@ function IssueCardContent({
               {issue.confidenceImpact === "increase" ? "▲" : "▼"}
             </span>
           )}
-          {issue.evidenceRole === "capacity-cost" && (
-            <span title="Capacity contention risk">
+          {(issue.evidenceRole === "capacity-cost" || issue.operatorImpact?.effort === "high") && (
+            <span title={issue.evidenceRole === "capacity-cost" ? "Capacity contention risk" : "High capacity effort work"}>
               <AlertTriangle className="size-3 text-warning shrink-0" strokeWidth={2} />
             </span>
           )}

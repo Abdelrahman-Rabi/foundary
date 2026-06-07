@@ -25,21 +25,29 @@ export function getPortfolioSignals(
       withDedupe({
         id: "portfolio-execution-risk",
         title: "Execution friction is affecting confidence",
+        signalType: "execution-risk",
         type: "risk",
         severity: blockedIssues.length > 0 ? "high" : "medium",
         confidence: 84,
+        analystConfidence: blockedIssues.length > 0 ? "high" : "medium",
         ventureName: "Portfolio",
         entityType: "portfolio",
         sourceType: "portfolio",
         sourceLabel: "Portfolio execution",
         sourceActionLabel: "Inspect signal",
         signalOrigin: "portfolio",
-        recommendationKind: "reduce-scope",
+        recommendedDecision: "narrow",
+        recommendationKind: "narrow",
         observation: `${blockedIssues.length} blocked and ${overdueIssues.length} overdue issues are active in the current context.`,
         reason:
           "Blocked or overdue work tends to reduce roadmap confidence before progress visibly stalls.",
         suggestedAction:
           "Reduce concurrent scope and resolve blocked execution paths before adding new work.",
+        gateIds: [],
+        evidenceSignalIds: [],
+        issueIds: [...blockedIssues, ...overdueIssues].map((issue) => issue.id),
+        roadmapIds: [],
+        capacitySignalIds: [],
       })
     )
   }
@@ -49,16 +57,19 @@ export function getPortfolioSignals(
       withDedupe({
         id: "portfolio-declining-roadmaps",
         title: "Roadmap confidence requires attention",
+        signalType: "sunk-cost-risk",
         type: "recommendation",
         severity: "medium",
         confidence: 79,
+        analystConfidence: "medium",
         ventureName: "Portfolio",
         entityType: "portfolio",
         sourceType: "portfolio",
         sourceLabel: "Portfolio roadmap",
         sourceActionLabel: "Inspect signal",
         signalOrigin: "portfolio",
-        recommendationKind: "split",
+        recommendedDecision: "narrow",
+        recommendationKind: "narrow",
         observation: `${decliningRoadmaps.length} initiative${
           decliningRoadmaps.length === 1 ? "" : "s"
         } show declining confidence.`,
@@ -66,6 +77,15 @@ export function getPortfolioSignals(
           "Declining confidence often indicates coupled discovery and delivery work.",
         suggestedAction:
           "Review linked issues and split validation work from implementation where ambiguity remains high.",
+        gateIds: decliningRoadmaps.flatMap((item) =>
+          item.validationGateId ? [item.validationGateId] : []
+        ),
+        evidenceSignalIds: decliningRoadmaps.flatMap(
+          (item) => item.evidenceSignalIds ?? []
+        ),
+        issueIds: [],
+        roadmapIds: decliningRoadmaps.map((item) => item.id),
+        capacitySignalIds: [],
       })
     )
   }
@@ -75,16 +95,19 @@ export function getPortfolioSignals(
       withDedupe({
         id: "portfolio-venture-health",
         title: "Venture health signal is uneven",
+        signalType: "studio-decision",
         type: "summary",
         severity: "medium",
         confidence: 74,
+        analystConfidence: "medium",
         ventureName: "Portfolio",
         entityType: "portfolio",
         sourceType: "portfolio",
         sourceLabel: "Portfolio health",
         sourceActionLabel: "Inspect signal",
         signalOrigin: "portfolio",
-        recommendationKind: "prioritize",
+        recommendedDecision: "continue",
+        recommendationKind: "continue",
         observation: `${atRiskVentures
           .map((venture) => venture.name)
           .join(", ")} need focused operating attention.`,
@@ -92,6 +115,11 @@ export function getPortfolioSignals(
           "Venture health combines confidence, momentum, overdue work, and roadmap progress.",
         suggestedAction:
           "Prioritize the highest-confidence path and defer lower-signal execution work.",
+        gateIds: [],
+        evidenceSignalIds: [],
+        issueIds: [],
+        roadmapIds: [],
+        capacitySignalIds: [],
       })
     )
   }

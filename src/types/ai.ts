@@ -3,6 +3,16 @@ import type { StudioDecision } from "@/types/venture"
 
 export type AiEntityType = "issue" | "roadmap" | "venture" | "portfolio"
 
+export type AnalystSignalType =
+  | "studio-decision"
+  | "evidence-gap"
+  | "sunk-cost-risk"
+  | "capacity-tradeoff"
+  | "gate-confidence"
+  | "execution-risk"
+
+export type AnalystConfidence = "low" | "medium" | "high"
+
 export type AiInsightType =
   | "risk"
   | "priority"
@@ -51,16 +61,25 @@ export type AiSignalSourceAction = {
 export type AnalystSignal = {
   id: string
   ventureId: string
+  signalType?: AnalystSignalType
   gateId?: string
   evidenceSignalId?: string
   issueId?: string
   roadmapId?: string
+  capacitySignalId?: string
+  gateIds?: string[]
+  evidenceSignalIds?: string[]
+  issueIds?: string[]
+  roadmapIds?: string[]
+  capacitySignalIds?: string[]
   recommendedDecision: StudioDecision
   title: string
   message: string
   reason: string
+  evidenceSummary?: string
+  capacityTradeoff?: string
   suggestedAction: string
+  confidence?: AnalystConfidence
   severity: RiskLevel
   createdAt: string
 }
-

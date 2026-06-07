@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 
+import { analystSignals } from "@/data/analyst-signals"
 import { aiInsights } from "@/data/ai-insights"
 import {
   getAssistantSignals,
@@ -52,7 +53,10 @@ export function useDashboardData() {
         scopedIssues,
         scopedRoadmapItems,
         scopedVentures,
-        scopedInsights
+        scopedInsights,
+        analystSignals.filter((signal) =>
+          scopedVentures.some((venture) => venture.id === signal.ventureId)
+        )
       )
     ).slice(0, 5)
 
@@ -100,4 +104,3 @@ export function useDashboardData() {
     }
   }, [activeVentureId, issues, mode, roadmapItems, ventures])
 }
-

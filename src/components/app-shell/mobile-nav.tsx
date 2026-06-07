@@ -1,6 +1,6 @@
 "use client"
 
-import { Bot } from "lucide-react"
+import { BrainCircuit } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { appRoutes } from "@/components/app-shell/route-metadata"
@@ -100,8 +100,8 @@ export function MobileNav() {
               setOpen(false)
             }}
           >
-            <Bot className="size-4" strokeWidth={1.8} />
-            Open assistant signal
+            <BrainCircuit className="size-4" strokeWidth={1.8} />
+            Open analyst signal
           </Button>
         </div>
       </SheetContent>

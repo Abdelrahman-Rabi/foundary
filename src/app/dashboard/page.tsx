@@ -134,6 +134,15 @@ export default function DashboardPage() {
   }
 
   const handleOpenAnalystSignal = () => {
+    const recommendation = commandCenterData.analystRecommendation
+
+    if (recommendation) {
+      selectSignal(recommendation.id)
+      markInspected(recommendation.id)
+      openDrawer({ type: "assistant", id: recommendation.id })
+      return
+    }
+
     openDrawer({ type: "assistant" })
   }
 
@@ -143,7 +152,7 @@ export default function DashboardPage() {
         <NextBestAction
           icon={Plus}
           title="Create the first venture context"
-          description="Start with a local venture so Foundary can organize issues, roadmap confidence, and operational signals around one company."
+          description="Start with a local venture so Foundary can organize issues, roadmap confidence, and analyst signals around one company."
           actionLabel="Create venture"
           onAction={openQuickCreateVenture}
         />
@@ -178,7 +187,7 @@ export default function DashboardPage() {
       return (
         <NextBestAction
           icon={Sparkles}
-          title="Review the strongest operational signal"
+          title="Review the strongest analyst signal"
           description={aiSignals[0].reason}
           actionLabel="Review signal"
           onAction={() => openAssistantSignal(aiSignals[0])}
@@ -297,4 +306,3 @@ export default function DashboardPage() {
     </PageContainer>
   )
 }
-

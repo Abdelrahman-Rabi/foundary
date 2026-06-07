@@ -59,6 +59,41 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-07 - Codex - Phase 14.9 Studio Analyst Repositioning
+
+Task:
+Implemented Phase 14.9 by repositioning `/assistant` and related analyst surfaces from assistant-style operational summaries into source-linked Studio Analyst recommendations. Normalized seeded `analystSignals` and derived issue/roadmap/portfolio signals into one analyst signal path with studio decision vocabulary, signal categories, directional confidence, evidence/capacity summaries, and source arrays.
+
+Changed:
+- `src/types/ai.ts`
+- `src/data/analyst-signals.ts`
+- `src/features/assistant/utils/*`
+- `src/features/assistant/components/*`
+- `src/app/assistant/page.tsx`
+- `src/components/app-shell/*`
+- `src/features/dashboard/components/analyst-recommendation-card.tsx`
+- `src/features/dashboard/hooks/use-dashboard-data.ts`
+- `src/app/dashboard/page.tsx`
+- `src/features/issues/components/issue-drawer-content.tsx`
+- `src/features/roadmap/components/roadmap-drawer-content.tsx`
+
+Verification:
+- `npx tsc --noEmit` - Passed (exit code 0)
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0; required network access for Next Google font fetch)
+- Browser checked `/assistant`: Studio Analyst framing, recommended studio moves, evidence gaps, validation risks, capacity tradeoffs, Reson8 narrow recommendation, Sentra capacity protection, and no visible `AI Assistant` label.
+- Browser checked `/dashboard`: Studio Analyst recommendation renders decision/evidence/capacity blocks; "View reasoning" opens the specific analyst drawer; Source Issue and Source Bet open the correct issue and roadmap drawers.
+- Browser checked Start Clean Platform via UI navigation: `/assistant` showed zero analyst signals, clean empty-state copy, and no seeded Sentra/Reson8 leakage; then Reset Demo Data restored seeded state.
+
+Notes:
+- Route and internal component/store names still use `assistant` where already established; visible product language now says Studio Analyst. Broad route/category renames remain Phase 14.10 scope.
+- Seeded domain records that refer to "AI summary" as an Internal Ops feature outcome were left unchanged because they describe venture evidence, not the analyst surface.
+
+Risks / Follow-ups:
+- Phase 14.10 should finish app-wide navigation/category copy for Dashboard, Issues, and Roadmap labels.
+
+---
+
 ## 2026-06-07 - Antigravity - Phase 14.8 Operator Capacity Polish (Venture-Explicit Labels)
 
 Task:

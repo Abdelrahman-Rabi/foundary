@@ -18,7 +18,7 @@ export function AiRoadmapAnalysis({
 }: AiRoadmapAnalysisProps) {
   if (signals.length === 0) {
     return (
-      <AiSignalEmptyState title="No strategic risk insight detected for this initiative." />
+      <AiSignalEmptyState title="No analyst recommendation yet." />
     )
   }
 

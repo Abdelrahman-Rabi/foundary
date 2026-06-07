@@ -21,6 +21,7 @@ import {
   sortSignals,
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
+import { analystSignals } from "@/data/analyst-signals"
 import { aiInsights } from "@/data/ai-insights"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
@@ -56,6 +57,7 @@ export default function AssistantPage() {
         getSyncedRoadmapItems(roadmapItems, issues),
         ventures,
         aiInsights,
+        analystSignals,
         {
           mode,
           activeVentureId,
@@ -70,7 +72,8 @@ export default function AssistantPage() {
           scoped.issues,
           scoped.roadmapItems,
           scoped.ventures,
-          scoped.insights
+          scoped.insights,
+          scoped.analystSignals
         )
       ),
     [scoped]
@@ -85,21 +88,20 @@ export default function AssistantPage() {
   )
   const highRiskSignals = visibleSignals.filter(
     (signal) =>
-      signal.severity === "high" ||
-      signal.reason.includes("blocked") ||
-      signal.reason.includes("overdue")
+      signal.signalType === "sunk-cost-risk" ||
+      signal.signalType === "gate-confidence" ||
+      signal.severity === "high"
   )
-  const roadmapRecommendations = visibleSignals.filter(
+  const recommendedMoves = visibleSignals.filter(
     (signal) =>
-      signal.entityType === "roadmap" &&
-      ["continue", "split", "kill", "prioritize", "reduce-scope", "clarify"].includes(
-        signal.recommendationKind ?? ""
-      )
+      signal.signalType === "studio-decision" || signal.recommendedDecision
   )
-  const claritySignals = visibleSignals.filter(
-    (signal) => signal.recommendationKind === "clarify"
+  const evidenceGapSignals = visibleSignals.filter(
+    (signal) => signal.signalType === "evidence-gap"
   )
-  const prioritySignals = visibleSignals.slice(0, 5)
+  const capacityTradeoffSignals = visibleSignals.filter(
+    (signal) => signal.signalType === "capacity-tradeoff"
+  )
   const hasExecutionContext =
     scoped.issues.length > 0 || scoped.roadmapItems.length > 0
 
@@ -133,13 +135,13 @@ export default function AssistantPage() {
 
       <div className="grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
         <AssistantSection
-          title="Operational priorities"
-          description="Highest-signal observations from current issue, roadmap, and venture state."
+          title="Recommended studio moves"
+          description="Continue, narrow, pause, kill, staff up, defer, or partner-review guidance from current source evidence."
           meta={`${visibleSignals.length} signals`}
         >
           <div className="space-y-3">
-            {prioritySignals.length > 0 ? (
-              prioritySignals.map((signal) => (
+            {recommendedMoves.length > 0 ? (
+              recommendedMoves.slice(0, 5).map((signal) => (
                 <AiOperationalInsight
                   key={signal.id}
                   signal={signal}
@@ -149,14 +151,22 @@ export default function AssistantPage() {
               ))
             ) : hasExecutionContext ? (
               <AiSignalEmptyState
-                title="No operational priorities detected."
-                description="Signals will appear when delivery risk, clarity gaps, or roadmap confidence changes."
+                title="No analyst signals yet."
+                description="Add ventures, gates, evidence, or capacity context to generate studio recommendations."
               />
             ) : (
               <NextBestAction
                 icon={GitPullRequest}
-                title="No operational signal yet."
-                description="Capture the first execution issue so assistant signals can identify pressure, clarity gaps, and delivery risk."
+                title={
+                  mode === "portfolio"
+                    ? "No studio decisions to analyze."
+                    : "No analyst recommendation yet."
+                }
+                description={
+                  mode === "portfolio"
+                    ? "Create a venture and capture the first gate or evidence item."
+                    : "Start by defining the venture's current assumption or first validation gate."
+                }
                 actionLabel="Create issue"
                 onAction={openQuickCreateIssue}
               />
@@ -165,8 +175,8 @@ export default function AssistantPage() {
         </AssistantSection>
 
         <AssistantSection
-          title="Delivery risk"
-          description="Blocked, overdue, or confidence-sensitive work."
+          title="Validation risks"
+          description="Sunk-cost risk, gate confidence, and execution outpacing validation."
           meta={`${highRiskSignals.length} high`}
         >
           <AiRiskPanel
@@ -179,13 +189,13 @@ export default function AssistantPage() {
 
       <div className="grid gap-5 xl:grid-cols-2">
         <AssistantSection
-          title="Roadmap decisions"
-          description="Continue, split, kill, reduce-scope, clarify, or prioritize guidance."
-          meta={`${roadmapRecommendations.length} recommendations`}
+          title="Evidence gaps"
+          description="Missing proof before the studio spends more execution capacity."
+          meta={`${evidenceGapSignals.length} gaps`}
         >
           <div className="space-y-3">
-            {roadmapRecommendations.length > 0 ? (
-              roadmapRecommendations.slice(0, 4).map((signal) => (
+            {evidenceGapSignals.length > 0 ? (
+              evidenceGapSignals.slice(0, 4).map((signal) => (
                 <AiRecommendationBlock
                   key={signal.id}
                   signal={signal}
@@ -194,12 +204,12 @@ export default function AssistantPage() {
                 />
               ))
             ) : hasExecutionContext ? (
-              <AiSignalEmptyState title="No roadmap decisions require attention." />
+              <AiSignalEmptyState title="No evidence gaps require attention." />
             ) : (
               <NextBestAction
                 icon={Map}
-                title="No roadmap decisions yet."
-                description="Define a validation initiative to give Foundary a strategic object for confidence and prioritization signals."
+                title="No analyst recommendation yet."
+                description="Start by defining the venture's current assumption or first validation gate."
                 actionLabel="Add roadmap initiative"
                 onAction={openQuickCreateRoadmap}
               />
@@ -208,13 +218,13 @@ export default function AssistantPage() {
         </AssistantSection>
 
         <AssistantSection
-          title="Clarity gaps"
-          description="Execution work that needs sharper criteria, outcome, or validation context."
-          meta={`${claritySignals.length} unclear`}
+          title="Capacity tradeoffs"
+          description="Operator contention, high-effort bets, and capacity-cost work affecting studio focus."
+          meta={`${capacityTradeoffSignals.length} tradeoffs`}
         >
           <AiSignalList
-            signals={claritySignals.slice(0, 5)}
-            emptyText="No missing clarity signals detected."
+            signals={capacityTradeoffSignals.slice(0, 5)}
+            emptyText="No capacity tradeoff signals detected."
             onOpenSource={handleOpenSource}
             onOpenInsight={handleInspectSignal}
           />

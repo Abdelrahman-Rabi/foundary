@@ -12,9 +12,9 @@ export function AssistantHeader({ mode, activeVenture }: AssistantHeaderProps) {
 
   return (
     <PageHeader
-      eyebrow={`${contextLabel} / Operational intelligence`}
-      title="AI Assistant"
-      description="Contextual execution analysis, risk signals, and strategic recommendations derived from current venture work."
+      eyebrow={`${contextLabel} / Studio Analyst`}
+      title="Studio Analyst"
+      description="Source-linked recommendations for studio moves, evidence gaps, validation confidence, and operator capacity tradeoffs."
     />
   )
 }

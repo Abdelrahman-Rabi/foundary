@@ -41,7 +41,8 @@ export function AiInsightCard({
             {signal.observation}
           </p>
           <p className="mt-2 text-xs text-muted-foreground">
-            {signal.ventureName} / {signal.sourceLabel}
+            {signal.ventureName} / {getSignalTypeLabel(signal.signalType)} /{" "}
+            {signal.sourceLabel}
           </p>
         </div>
         <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
@@ -55,7 +56,22 @@ export function AiInsightCard({
       {!compact ? (
         <div className="mt-3 grid gap-3 md:grid-cols-[1fr_140px]">
           <div className="space-y-2">
+            {signal.recommendedDecision ? (
+              <SignalText
+                label="Recommended move"
+                value={formatDecision(signal.recommendedDecision)}
+              />
+            ) : null}
             <SignalText label="Reason" value={signal.reason} />
+            {signal.evidenceSummary ? (
+              <SignalText label="Evidence" value={signal.evidenceSummary} />
+            ) : null}
+            {signal.capacityTradeoff ? (
+              <SignalText
+                label="Capacity tradeoff"
+                value={signal.capacityTradeoff}
+              />
+            ) : null}
             <SignalText label="Suggested action" value={signal.suggestedAction} />
           </div>
           <AiConfidenceIndicator confidence={signal.confidence} />
@@ -104,4 +120,24 @@ function SignalText({ label, value }: { label: string; value: string }) {
       <p className="mt-1 text-xs leading-5 text-foreground">{value}</p>
     </div>
   )
+}
+
+function formatDecision(value: string) {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function getSignalTypeLabel(type: AiSignal["signalType"]) {
+  const labels: Record<AiSignal["signalType"], string> = {
+    "studio-decision": "Studio move",
+    "evidence-gap": "Evidence gap",
+    "sunk-cost-risk": "Sunk-cost risk",
+    "capacity-tradeoff": "Capacity tradeoff",
+    "gate-confidence": "Gate confidence",
+    "execution-risk": "Execution risk",
+  }
+
+  return labels[type]
 }

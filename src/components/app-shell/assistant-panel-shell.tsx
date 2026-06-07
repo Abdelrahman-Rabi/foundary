@@ -9,6 +9,7 @@ import {
   getScopedAssistantData,
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
+import { analystSignals } from "@/data/analyst-signals"
 import { aiInsights } from "@/data/ai-insights"
 import { Button } from "@/components/ui/button"
 import { useAssistantStore } from "@/stores/assistant-store"
@@ -38,6 +39,7 @@ export function AssistantPanelShell() {
     getSyncedRoadmapItems(roadmapItems, issues),
     ventures,
     aiInsights,
+    analystSignals,
     { mode, activeVentureId }
   )
   const signal =
@@ -45,7 +47,8 @@ export function AssistantPanelShell() {
       scoped.issues,
       scoped.roadmapItems,
       scoped.ventures,
-      scoped.insights
+      scoped.insights,
+      scoped.analystSignals
     )[0] ?? null
 
   function inspectSignal(signalId: string) {
@@ -76,10 +79,10 @@ export function AssistantPanelShell() {
       <header className="flex h-14 items-center justify-between gap-3 border-b border-border/50 px-4">
         <div className="min-w-0">
           <p className="truncate text-sm font-medium text-foreground">
-            Assistant signal
+            Studio Analyst signal
           </p>
           <p className="truncate text-xs text-muted-foreground">
-            Current operational context
+            Current source-linked context
           </p>
         </div>
         <Button
@@ -102,7 +105,7 @@ export function AssistantPanelShell() {
           />
         ) : (
           <div className="rounded-lg border border-border/60 bg-muted/20 p-3 text-sm text-muted-foreground">
-            No significant operational signal in this context.
+            No analyst recommendation yet.
           </div>
         )}
       </div>

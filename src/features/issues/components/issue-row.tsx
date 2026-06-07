@@ -3,6 +3,8 @@
 import { AlertTriangle, ArrowRight, GitBranch, MoveRight, Sparkles, ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,14 +79,45 @@ export function IssueRow({
           />
           <span className="truncate font-medium text-foreground">{issue.title}</span>
         </div>
-        <div className="mt-1 flex min-w-0 items-center gap-2 text-xs text-muted-foreground">
+        <div className="mt-1 flex min-w-0 flex-wrap items-center gap-2 text-xs text-muted-foreground">
           {roadmap ? (
             <>
               <GitBranch className="size-3" strokeWidth={1.8} />
-              <span className="truncate">{roadmap.title}</span>
+              <span className="truncate max-w-[150px]">{roadmap.title}</span>
             </>
           ) : (
             <span>No roadmap link</span>
+          )}
+          {issue.evidenceRole && (
+            <>
+              <span className="text-muted-foreground/40">•</span>
+              <Badge variant="outline" className={cn("text-[9px] h-4 py-0 px-1 uppercase font-mono tracking-wider", 
+                issue.evidenceRole === "prove" ? "bg-success/5 text-success border-success/20" :
+                issue.evidenceRole === "disprove" ? "bg-destructive/5 text-destructive border-destructive/20" :
+                issue.evidenceRole === "unblock" ? "bg-info/5 text-info border-info/20" :
+                issue.evidenceRole === "de-risk" ? "bg-warning/5 text-warning border-warning/20" :
+                "bg-muted-foreground/5 text-muted-foreground border-muted-foreground/20"
+              )}>
+                {issue.evidenceRole === "prove" ? "proving" :
+                 issue.evidenceRole === "disprove" ? "challenging" :
+                 issue.evidenceRole === "unblock" ? "unblocking" :
+                 issue.evidenceRole === "de-risk" ? "de-risking" :
+                 "capacity cost"}
+              </Badge>
+            </>
+          )}
+          {issue.confidenceImpact && issue.confidenceImpact !== "neutral" && (
+            <span className={cn(
+              "font-bold text-[10px]",
+              issue.confidenceImpact === "increase" ? "text-success" : "text-destructive"
+            )} title={`Confidence impact: ${issue.confidenceImpact}`}>
+              {issue.confidenceImpact === "increase" ? "▲" : "▼"}
+            </span>
+          )}
+          {issue.evidenceRole === "capacity-cost" && (
+            <span title="Capacity contention risk">
+              <AlertTriangle className="size-3 text-warning shrink-0" strokeWidth={2} />
+            </span>
           )}
         </div>
       </div>

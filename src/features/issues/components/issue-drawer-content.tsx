@@ -1,6 +1,6 @@
 "use client"
 
-import { GitBranch, ChevronDown } from "lucide-react"
+import { GitBranch, ChevronDown, AlertTriangle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 import { EmptyState } from "@/components/shared/empty-state"
@@ -298,15 +298,18 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
 
         <section className="border-b border-border/50 px-5 py-4">
           <h3 className="text-sm font-medium text-foreground mb-3">
-            Validation Gate
+            Execution Evidence
           </h3>
           {gateContext ? (
             <div className="space-y-3.5">
               <div className="rounded-lg border border-border/60 bg-muted/20 p-3 space-y-2">
                 <div className="flex justify-between items-center flex-wrap gap-2">
-                  <span className="font-semibold text-sm text-foreground">
-                    {gateContext.gate.name}
-                  </span>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-semibold">Validation Gate</span>
+                    <span className="font-semibold text-sm text-foreground">
+                      {gateContext.gate.name}
+                    </span>
+                  </div>
                   <div className="flex items-center gap-1.5 font-mono">
                     <Badge variant="outline" className="text-[9px] uppercase font-bold py-0 h-4 border-info/40 text-info bg-info/5">
                       Phase: {gateContext.gate.phase}
@@ -317,20 +320,47 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 text-xs pt-1 border-t border-border/20">
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs pt-2 border-t border-border/20">
                   <div>
-                    <span className="text-[10px] text-muted-foreground block uppercase">Evidence Role</span>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Evidence Role</span>
                     <span className="font-medium text-foreground capitalize">{issue.evidenceRole || "None"}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-muted-foreground block uppercase">Confidence Impact</span>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Evidence Strength</span>
+                    <span className="font-medium text-foreground capitalize">{issue.evidenceStrength || "None"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Confidence Impact</span>
                     <span className="font-medium text-foreground capitalize">{issue.confidenceImpact || "Neutral"}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-muted-foreground block uppercase">Decision Impact</span>
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Decision Impact</span>
                     <span className="font-medium text-foreground capitalize">{issue.decisionImpact || "None"}</span>
                   </div>
                 </div>
+
+                {issue.operatorImpact && (
+                  <div className="pt-2 border-t border-border/20 text-xs">
+                    <span className="text-[10px] text-muted-foreground block uppercase font-mono">Operator Capacity Impact</span>
+                    <div className="mt-0.5 font-medium text-foreground">
+                      <span className="capitalize">{issue.operatorImpact.function}</span> /{" "}
+                      <span className="capitalize">{issue.operatorImpact.effort} Effort</span>
+                      {issue.operatorImpact.capacityPercent !== undefined && (
+                        <span> ({issue.operatorImpact.capacityPercent}%)</span>
+                      )}
+                    </div>
+                    {issue.operatorImpact.note && (
+                      <p className="text-[11px] text-muted-foreground mt-0.5 italic">{issue.operatorImpact.note}</p>
+                    )}
+                  </div>
+                )}
+
+                {issue.evidenceRole === "capacity-cost" && (
+                  <div className="pt-2 border-t border-border/20 text-[11px] text-warning flex items-start gap-1.5">
+                    <AlertTriangle className="size-3.5 shrink-0 mt-0.5" />
+                    <span>Incurs operator capacity pressure.</span>
+                  </div>
+                )}
               </div>
 
               <div className="text-xs text-muted-foreground bg-muted/20 p-2.5 rounded border border-border/40">
@@ -363,11 +393,34 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                   </ul>
                 </div>
               )}
+
+              {gateContext.observedSignals.length > 0 && (
+                <div className="space-y-1.5 border-t border-border/20 pt-2">
+                  <span className="font-semibold text-[10px] uppercase text-muted-foreground block">Observed Evidence Signals</span>
+                  <div className="space-y-2">
+                    {gateContext.observedSignals.map((signal) => (
+                      <div key={signal.id} className="text-xs bg-muted/10 p-2 rounded border border-border/20">
+                        <div className="flex justify-between items-center flex-wrap gap-1 mb-1">
+                          <span className="font-medium text-foreground">{signal.title}</span>
+                          <Badge variant="outline" className={cn("text-[9px] h-3.5 py-0 px-1 font-mono uppercase",
+                            signal.strength === "strong" || signal.strength === "moderate" ? "text-success border-success/20 bg-success/5" :
+                            signal.strength === "negative" ? "text-destructive border-destructive/20 bg-destructive/5" :
+                            "text-warning border-warning/20 bg-warning/5"
+                          )}>
+                            {signal.strength}
+                          </Badge>
+                        </div>
+                        <p className="text-[11px] text-muted-foreground leading-normal">{signal.summary}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-xs text-muted-foreground bg-muted/10 p-3 rounded border border-border/40">
-              <p className="font-medium text-foreground mb-0.5">No validation gate linked yet.</p>
-              <p className="text-muted-foreground/85">Link this work to an assumption when it supports or challenges a validation milestone.</p>
+              <p className="font-medium text-foreground mb-0.5">No execution evidence linked yet.</p>
+              <p className="text-muted-foreground/85">This work doesn&apos;t currently support or challenge a validation milestone.</p>
             </div>
           )}
         </section>

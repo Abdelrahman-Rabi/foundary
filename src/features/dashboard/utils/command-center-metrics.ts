@@ -202,6 +202,7 @@ export function getCommandCenterData(
         affectedVentureNames: names,
         contentionReason: cs.contentionReason,
         downstreamImpact: cs.downstreamImpact,
+        recommendedDecision: cs.recommendedDecision,
         sourceIssueIds: cs.sourceIssueIds,
         sourceRoadmapIds: cs.sourceRoadmapIds,
       }
@@ -212,6 +213,9 @@ export function getCommandCenterData(
     )
     capacityPressures = currentActiveAllocations.map((a) => {
       const vName = ventures.find((v) => v.id === a.ventureId)?.name ?? "Unknown"
+      const matchingSignal = activeCapacitySignals.find(
+        (cs) => cs.function === a.function && cs.affectedVentureIds.includes(a.ventureId)
+      )
       return {
         id: a.id,
         function: a.function as OperatorFunction,
@@ -220,7 +224,8 @@ export function getCommandCenterData(
         affectedVentureIds: [a.ventureId],
         affectedVentureNames: [vName],
         contentionReason: a.impact,
-        downstreamImpact: "Operator capacity contention splits design/delivery bandwidth.",
+        downstreamImpact: matchingSignal?.downstreamImpact ?? "Operator capacity contention splits design/delivery bandwidth.",
+        recommendedDecision: matchingSignal?.recommendedDecision,
         sourceIssueIds: a.linkedIssueIds.filter((id) => {
           const issue = issues.find((i) => i.id === id)
           return issue && currentVentureIds.has(issue.ventureId)

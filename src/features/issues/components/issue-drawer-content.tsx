@@ -323,7 +323,10 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs pt-2 border-t border-border/20">
                   <div>
                     <span className="text-[10px] text-muted-foreground block uppercase font-mono">Evidence Role</span>
-                    <span className="font-medium text-foreground capitalize">{issue.evidenceRole || "None"}</span>
+                    <span className="font-medium text-foreground capitalize">
+                      {issue.evidenceRole === "capacity-cost" ? "Capacity-cost" : (issue.evidenceRole ? "Evidence-moving" : "None")}
+                      {issue.evidenceRole && <span className="text-muted-foreground font-normal text-[10px] ml-1">({issue.evidenceRole})</span>}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[10px] text-muted-foreground block uppercase font-mono">Evidence Strength</span>
@@ -356,9 +359,9 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                 )}
 
                 {issue.evidenceRole === "capacity-cost" && (
-                  <div className="pt-2 border-t border-border/20 text-[11px] text-warning flex items-start gap-1.5">
-                    <AlertTriangle className="size-3.5 shrink-0 mt-0.5" />
-                    <span>Incurs operator capacity pressure.</span>
+                  <div className="pt-2 border-t border-border/20 text-[11px] text-muted-foreground flex items-start gap-1.5 leading-normal">
+                    <AlertTriangle className="size-3.5 shrink-0 mt-0.5 text-warning" />
+                    <span>This work consumes operator capacity without moving validation confidence yet. Review focus if the gate remains weak.</span>
                   </div>
                 )}
               </div>

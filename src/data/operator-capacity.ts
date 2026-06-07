@@ -38,6 +38,18 @@ export const operatorAllocations: OperatorAllocation[] = [
     linkedRoadmapIds: ["roadmap-sentra-onboarding"],
     updatedAt: "2026-05-24T10:00:00.000Z"
   },
+  {
+    id: "alloc-sentra-gtm",
+    ventureId: "venture-sentra",
+    function: "gtm",
+    operatorName: "Noah Patel",
+    allocationPercent: 20,
+    pressure: "healthy",
+    impact: "Customer outreach and referral activation quality checks.",
+    linkedIssueIds: ["issue-sentra-referral-cohort-review"],
+    linkedRoadmapIds: ["roadmap-sentra-referral-foundation"],
+    updatedAt: "2026-05-24T10:00:00.000Z"
+  },
 
   // Reson8 Allocations
   {
@@ -73,6 +85,18 @@ export const operatorAllocations: OperatorAllocation[] = [
     pressure: "overloaded",
     impact: "Active onboarding prototypes design iteration.",
     linkedIssueIds: ["issue-reson8-onboarding-variant"],
+    linkedRoadmapIds: ["roadmap-reson8-retention"],
+    updatedAt: "2026-05-24T10:00:00.000Z"
+  },
+  {
+    id: "alloc-reson8-partner",
+    ventureId: "venture-reson8",
+    function: "partner",
+    operatorName: "Maya Rodriguez",
+    allocationPercent: 30,
+    pressure: "watch",
+    impact: "Strategic pressure review and weekly retention threshold validation.",
+    linkedIssueIds: ["issue-reson8-retention-assumptions"],
     linkedRoadmapIds: ["roadmap-reson8-retention"],
     updatedAt: "2026-05-24T10:00:00.000Z"
   },

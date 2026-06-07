@@ -115,6 +115,11 @@ export function RoadmapCard({
                 {matchingSignals.length} evidence
               </Badge>
             )}
+            {(item.operatorImpact?.effort === "high" || linkedIssues.some((issue) => issue.evidenceRole === "capacity-cost")) && (
+              <Badge variant="outline" className="text-[9px] font-mono px-1 py-0 h-4 bg-warning/5 text-warning border-warning/20" title={item.operatorImpact?.effort === "high" ? "High operator effort" : "Linked work has capacity cost"}>
+                capacity
+              </Badge>
+            )}
           </div>
 
           <div className="mt-4 flex items-center justify-between gap-3 text-xs text-muted-foreground border-t border-border/40 pt-2.5">

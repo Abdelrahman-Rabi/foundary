@@ -83,6 +83,7 @@ export type CapacityPressureSummary = {
   affectedVentureNames: string[]
   contentionReason: string
   downstreamImpact: string
+  recommendedDecision?: StudioDecision
   sourceIssueIds: string[]
   sourceRoadmapIds: string[]
 }

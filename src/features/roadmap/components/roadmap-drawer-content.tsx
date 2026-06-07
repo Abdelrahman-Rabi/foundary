@@ -526,7 +526,7 @@ export function RoadmapDrawerContent({
 
         <section className="px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">
-            Operational intelligence
+            Studio Analyst
           </h3>
           <div className="mt-3">
             <AiRoadmapAnalysis

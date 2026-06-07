@@ -5,10 +5,9 @@ import {
   getLinkedIssues,
   getSyncedRoadmapMetrics,
 } from "@/features/synchronization/utils/sync-utils"
-import type { AiRecommendationKind } from "@/types/ai"
 import type { Issue, RiskLevel } from "@/types/issue"
 import type { RoadmapItem } from "@/types/roadmap"
-import type { Venture } from "@/types/venture"
+import type { StudioDecision, Venture } from "@/types/venture"
 
 export function getRoadmapSignals(
   item: RoadmapItem,
@@ -44,9 +43,17 @@ export function getRoadmapSignals(
     withDedupe({
       id: `roadmap-confidence-${item.id}`,
       title: "Roadmap confidence analysis",
+      signalType:
+        item.confidenceTrend === "declining" || metrics.confidence < 50
+          ? "sunk-cost-risk"
+          : missingOutcome
+            ? "evidence-gap"
+            : "gate-confidence",
       type: "summary",
       severity,
       confidence: Math.max(58, Math.min(89, metrics.confidence + 12)),
+      analystConfidence:
+        severity === "high" ? "high" : severity === "medium" ? "medium" : "low",
       ventureId: item.ventureId,
       ventureName,
       entityType: "roadmap",
@@ -56,6 +63,7 @@ export function getRoadmapSignals(
       sourceLabel: item.title,
       sourceActionLabel: "Open roadmap",
       signalOrigin: "derived",
+      recommendedDecision: recommendationKind,
       recommendationKind,
       observation: `${ventureName} ${item.title} is at ${metrics.confidence}% confidence with ${completion}% linked issue progress.${targetOutcome}`,
       reason: getRoadmapReason(
@@ -68,6 +76,11 @@ export function getRoadmapSignals(
         metrics.confidence
       ),
       suggestedAction: getRoadmapAction(recommendationKind),
+      gateIds: item.validationGateId ? [item.validationGateId] : [],
+      evidenceSignalIds: item.evidenceSignalIds ?? [],
+      issueIds: linkedIssues.map((issue) => issue.id),
+      roadmapIds: [item.id],
+      capacitySignalIds: [],
     }),
   ]
 }
@@ -79,32 +92,32 @@ export function getRoadmapRecommendationKind(
   completion: number,
   confidence: number,
   missingOutcome: boolean
-): AiRecommendationKind {
+): StudioDecision {
   if (item.status === "killed") {
     return "kill"
   }
 
   if (blockedCount > 0 || overdueCount > 0) {
-    return "reduce-scope"
+    return "narrow"
   }
 
   if (confidence < 30) {
-    return "reduce-scope"
+    return "pause"
   }
 
   if (missingOutcome) {
-    return "clarify"
+    return "narrow"
   }
 
   if (confidence < 60 || item.confidenceTrend === "declining") {
-    return "split"
+    return "narrow"
   }
 
   if (completion >= 50 && confidence >= 75) {
     return "continue"
   }
 
-  return "prioritize"
+  return "continue"
 }
 
 function getRoadmapReason(
@@ -145,14 +158,10 @@ function getRoadmapReason(
   return "The initiative has manageable uncertainty but needs tighter execution focus."
 }
 
-function getRoadmapAction(kind: AiRecommendationKind) {
-  const actions: Record<AiRecommendationKind, string> = {
+function getRoadmapAction(kind: StudioDecision) {
+  const actions: Record<StudioDecision, string> = {
     continue: "Continue the current initiative path while monitoring linked execution quality.",
-    split: "Separate validation work from delivery execution before expanding scope.",
     kill: "Record the stop decision and fold learnings into the next roadmap review.",
-    prioritize: "Focus the highest-impact linked work before adding new initiative scope.",
-    clarify: "Define outcome criteria before expanding execution work.",
-    "reduce-scope": "Reduce active scope until the confidence signal stabilizes.",
     narrow: "Narrow the initiative focus to core validation targets before another build cycle.",
     pause: "Pause execution on this initiative until validation gate conditions are met.",
     "staff-up": "Allocate additional studio operator capacity to unblock active execution.",

@@ -41,7 +41,7 @@ export function IssueList({
         <NextBestAction
           icon={Plus}
           title={`No execution issues in ${contextLabel.toLowerCase()} yet.`}
-          description="Capture the first blocker, validation task, or delivery risk so Foundary can start building operational signal."
+          description="Capture the first blocker, validation task, or delivery risk so Foundary can start building analyst signal."
           actionLabel="Create issue"
           onAction={onOpenQuickCreate}
         />

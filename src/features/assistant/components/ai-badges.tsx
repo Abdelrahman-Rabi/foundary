@@ -15,11 +15,11 @@ const riskClassName: Record<RiskLevel, string> = {
 
 const recommendationLabels: Record<AiRecommendationKind, string> = {
   continue: "Continue",
-  split: "Split",
+  split: "Narrow",
   kill: "Kill",
-  prioritize: "Prioritize",
-  clarify: "Clarify",
-  "reduce-scope": "Reduce scope",
+  prioritize: "Continue",
+  clarify: "Narrow",
+  "reduce-scope": "Narrow",
   narrow: "Narrow",
   pause: "Pause",
   "staff-up": "Staff up",
@@ -48,7 +48,7 @@ export function AiRiskBadge({
 }: BadgeProps & { severity: RiskLevel }) {
   return (
     <Badge variant="outline" className={cn(riskClassName[severity], className)}>
-      {severity} risk
+      {severity} severity
     </Badge>
   )
 }

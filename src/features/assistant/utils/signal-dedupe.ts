@@ -33,11 +33,25 @@ export function sortSignals(signals: AiSignal[]) {
 
   return [...signals].sort(
     (a, b) =>
+      signalTypeRank(b.signalType) - signalTypeRank(a.signalType) ||
       severityRank[a.severity] - severityRank[b.severity] ||
       recommendationRank(b.recommendationKind) -
         recommendationRank(a.recommendationKind) ||
       b.confidence - a.confidence
   )
+}
+
+function signalTypeRank(type: AiSignal["signalType"]) {
+  const rank: Record<AiSignal["signalType"], number> = {
+    "studio-decision": 6,
+    "sunk-cost-risk": 5,
+    "capacity-tradeoff": 4,
+    "evidence-gap": 3,
+    "gate-confidence": 2,
+    "execution-risk": 1,
+  }
+
+  return rank[type]
 }
 
 function scoreSignal(signal: AiSignal) {

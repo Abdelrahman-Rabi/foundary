@@ -19,7 +19,7 @@ export function AppDrawer() {
       ? "Issue details"
       : activeDrawer?.type === "roadmap"
         ? "Roadmap details"
-        : "Assistant signal"
+        : "Studio Analyst signal"
 
   return (
     <Sheet
@@ -32,7 +32,7 @@ export function AppDrawer() {
       >
         <SheetTitle className="sr-only">{drawerLabel}</SheetTitle>
         <SheetDescription className="sr-only">
-          Contextual Foundary drawer for the selected operational item.
+          Contextual Foundary drawer for the selected source-linked item.
         </SheetDescription>
         {activeDrawer?.type === "issue" ? (
           <IssueDrawerContent issueId={activeDrawer.id} />

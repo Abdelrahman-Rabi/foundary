@@ -56,9 +56,11 @@ export function getIssueSignals(
       withDedupe({
         id: `issue-risk-${issue.id}`,
         title: issue.blocked ? "Blocked execution risk" : "Overdue delivery risk",
+        signalType: issue.evidenceRole === "capacity-cost" ? "capacity-tradeoff" : "execution-risk",
         type: "risk",
         severity: issue.blocked ? "high" : "medium",
         confidence: issue.blocked ? 86 : 73,
+        analystConfidence: issue.blocked ? "high" : "medium",
         ventureId: issue.ventureId,
         ventureName,
         entityType: "issue",
@@ -68,7 +70,8 @@ export function getIssueSignals(
         sourceLabel: issue.title,
         sourceActionLabel: "Open issue",
         signalOrigin: "derived",
-        recommendationKind: "reduce-scope",
+        recommendedDecision: "narrow",
+        recommendationKind: "narrow",
         observation: `${ventureName} has ${
           issue.blocked ? "blocked" : "overdue"
         } work affecting execution confidence.`,
@@ -77,6 +80,11 @@ export function getIssueSignals(
           : "The issue is not linked to a strategic initiative, which can make priority tradeoffs less clear.",
         suggestedAction:
           "Clarify the blocker and reduce active scope before adding related work.",
+        gateIds: issue.validationGateId ? [issue.validationGateId] : [],
+        evidenceSignalIds: issue.evidenceSignalIds ?? [],
+        issueIds: [issue.id],
+        roadmapIds: issue.roadmapId ? [issue.roadmapId] : [],
+        capacitySignalIds: [],
       })
     )
   }
@@ -86,9 +94,11 @@ export function getIssueSignals(
       withDedupe({
         id: `issue-clarity-${issue.id}`,
         title: "Completion criteria need definition",
+        signalType: issue.validationGateId ? "gate-confidence" : "evidence-gap",
         type: "warning",
         severity: "medium",
         confidence: 78,
+        analystConfidence: "medium",
         ventureId: issue.ventureId,
         ventureName,
         entityType: "issue",
@@ -98,12 +108,18 @@ export function getIssueSignals(
         sourceLabel: issue.title,
         sourceActionLabel: "Open issue",
         signalOrigin: "derived",
-        recommendationKind: "clarify",
+        recommendedDecision: "narrow",
+        recommendationKind: "narrow",
         observation: "The issue lacks measurable acceptance criteria.",
         reason:
           "Undefined completion conditions can weaken handoff quality and roadmap confidence.",
         suggestedAction:
           "Define validation conditions and expected delivery outcomes before implementation continues.",
+        gateIds: issue.validationGateId ? [issue.validationGateId] : [],
+        evidenceSignalIds: issue.evidenceSignalIds ?? [],
+        issueIds: [issue.id],
+        roadmapIds: issue.roadmapId ? [issue.roadmapId] : [],
+        capacitySignalIds: [],
       })
     )
   }
@@ -113,9 +129,11 @@ export function getIssueSignals(
       withDedupe({
         id: `issue-roadmap-${issue.id}`,
         title: "Linked roadmap confidence is declining",
+        signalType: "sunk-cost-risk",
         type: "recommendation",
         severity: roadmap.confidence < 50 ? "high" : "medium",
         confidence: 81,
+        analystConfidence: roadmap.confidence < 50 ? "high" : "medium",
         ventureId: issue.ventureId,
         ventureName,
         entityType: "issue",
@@ -125,12 +143,18 @@ export function getIssueSignals(
         sourceLabel: issue.title,
         sourceActionLabel: "Open issue",
         signalOrigin: "derived",
-        recommendationKind: "prioritize",
+        recommendedDecision: "narrow",
+        recommendationKind: "narrow",
         observation: `${roadmap.title} is trending down at ${roadmap.confidence}% confidence.`,
         reason:
           "Issue progress is directly connected to the initiative's confidence signal.",
         suggestedAction:
           "Prioritize the linked execution path before expanding initiative scope.",
+        gateIds: issue.validationGateId ? [issue.validationGateId] : [],
+        evidenceSignalIds: issue.evidenceSignalIds ?? [],
+        issueIds: [issue.id],
+        roadmapIds: [roadmap.id],
+        capacitySignalIds: [],
       })
     )
   }

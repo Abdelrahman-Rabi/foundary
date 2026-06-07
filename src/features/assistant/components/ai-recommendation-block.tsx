@@ -29,7 +29,9 @@ export function AiRecommendationBlock({
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs text-muted-foreground">Recommendation</p>
+          <p className="text-xs text-muted-foreground">
+            {getSignalTypeLabel(signal.signalType)}
+          </p>
           <h3 className="mt-1 text-sm font-medium text-foreground">
             {signal.title}
           </h3>
@@ -45,12 +47,26 @@ export function AiRecommendationBlock({
         </div>
       </div>
 
-      <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        {signal.reason}
-      </p>
-      <p className="mt-2 text-xs leading-5 text-foreground">
-        {signal.suggestedAction}
-      </p>
+      <div className="mt-3 space-y-2">
+        {signal.recommendedDecision ? (
+          <SignalText
+            label="Recommended move"
+            value={formatDecision(signal.recommendedDecision)}
+          />
+        ) : null}
+        <SignalText label="Reason" value={signal.reason} muted />
+        {signal.evidenceSummary ? (
+          <SignalText label="Evidence" value={signal.evidenceSummary} muted />
+        ) : null}
+        {signal.capacityTradeoff ? (
+          <SignalText
+            label="Capacity tradeoff"
+            value={signal.capacityTradeoff}
+            muted
+          />
+        ) : null}
+        <SignalText label="Suggested action" value={signal.suggestedAction} />
+      </div>
       <AiConfidenceIndicator
         confidence={signal.confidence}
         className="mt-3 max-w-40"
@@ -84,4 +100,51 @@ export function AiRecommendationBlock({
       ) : null}
     </motion.section>
   )
+}
+
+function SignalText({
+  label,
+  value,
+  muted = false,
+}: {
+  label: string
+  value: string
+  muted?: boolean
+}) {
+  return (
+    <div>
+      <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+        {label}
+      </p>
+      <p
+        className={
+          muted
+            ? "mt-1 text-xs leading-5 text-muted-foreground"
+            : "mt-1 text-xs leading-5 text-foreground"
+        }
+      >
+        {value}
+      </p>
+    </div>
+  )
+}
+
+function formatDecision(value: string) {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function getSignalTypeLabel(type: AiSignal["signalType"]) {
+  const labels: Record<AiSignal["signalType"], string> = {
+    "studio-decision": "Recommended studio move",
+    "evidence-gap": "Evidence gap",
+    "sunk-cost-risk": "Sunk-cost risk",
+    "capacity-tradeoff": "Capacity tradeoff",
+    "gate-confidence": "Gate confidence",
+    "execution-risk": "Execution risk",
+  }
+
+  return labels[type]
 }

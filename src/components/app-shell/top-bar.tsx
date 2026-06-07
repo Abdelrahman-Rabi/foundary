@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu, PanelLeft, Sparkles, Database, Download, Upload, RefreshCw, Trash2 } from "lucide-react"
+import { BrainCircuit, Menu, PanelLeft, Database, Download, Upload, RefreshCw, Trash2 } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useRef } from "react"
 
@@ -166,9 +166,9 @@ export function TopBar() {
           variant="ghost"
           size="icon"
           onClick={() => openDrawer({ type: "assistant" })}
-          aria-label="Open assistant drawer"
+          aria-label="Open analyst drawer"
         >
-          <Sparkles className="size-4" strokeWidth={1.8} />
+          <BrainCircuit className="size-4" strokeWidth={1.8} />
         </Button>
       </div>
     </header>

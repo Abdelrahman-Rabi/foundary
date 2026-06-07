@@ -13,6 +13,7 @@ import {
   sortSignals,
 } from "@/features/assistant/utils/assistant-analysis"
 import { getSyncedRoadmapItems } from "@/features/synchronization/utils/sync-utils"
+import { analystSignals } from "@/data/analyst-signals"
 import { aiInsights } from "@/data/ai-insights"
 import { useAssistantStore } from "@/stores/assistant-store"
 import { useIssueStore } from "@/stores/issue-store"
@@ -42,6 +43,7 @@ export function AssistantDrawerContent({
     syncedRoadmapItems,
     ventures,
     aiInsights,
+    analystSignals,
     {
       mode,
       activeVentureId,
@@ -52,7 +54,8 @@ export function AssistantDrawerContent({
       scoped.issues,
       scoped.roadmapItems,
       scoped.ventures,
-      scoped.insights
+      scoped.insights,
+      scoped.analystSignals
     )
   )
   const isInspectingSignal = Boolean(insightId)
@@ -91,7 +94,7 @@ export function AssistantDrawerContent({
       <header className="sticky top-0 z-10 border-b border-border/60 bg-popover/95 px-5 py-4 backdrop-blur-sm">
         <div className="pr-8">
           <p className="text-xs text-muted-foreground">
-            Operational intelligence
+            Studio Analyst
           </p>
           <h2 className="mt-2 text-base font-semibold leading-6 text-foreground">
             {signal?.title ?? "Operational signals"}
@@ -99,7 +102,7 @@ export function AssistantDrawerContent({
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {signal
               ? `${signal.ventureName} / ${signal.sourceLabel}`
-              : `${signals.length} contextual signals from current issue and roadmap state.`}
+              : `${signals.length} source-linked recommendations from current venture, evidence, and capacity context.`}
           </p>
         </div>
       </header>
@@ -113,28 +116,108 @@ export function AssistantDrawerContent({
             transition={{ duration: 0.16, ease: "easeOut" }}
           >
             {signal.recommendationKind ? (
-              <AiRecommendationBlock
-                signal={signal}
-                onOpenSource={handleOpenSource}
-              />
+              <div className="space-y-3">
+                <AiRecommendationBlock
+                  signal={signal}
+                  onOpenSource={handleOpenSource}
+                />
+                <SourceStack signal={signal} onOpenSource={handleOpenSource} />
+              </div>
             ) : (
-              <AiInsightCard signal={signal} onOpenSource={handleOpenSource} />
+              <div className="space-y-3">
+                <AiInsightCard signal={signal} onOpenSource={handleOpenSource} />
+                <SourceStack signal={signal} onOpenSource={handleOpenSource} />
+              </div>
             )}
           </motion.div>
         ) : signals.length > 0 ? (
           <AiSignalList
             signals={signals}
-            emptyText="No operational signal available."
+            emptyText="No analyst signal available."
             onOpenSource={handleOpenSource}
             onOpenInsight={handleInspectSignal}
           />
         ) : (
           <EmptyState
-            title="No operational signal available."
-            description="No significant intelligence signal is active for the current context."
+            title="No studio decisions to analyze."
+            description="Create a venture and capture the first gate or evidence item."
           />
         )}
       </div>
     </div>
+  )
+}
+
+function SourceStack({
+  signal,
+  onOpenSource,
+}: {
+  signal: AiSignal
+  onOpenSource: (signal: AiSignal) => void
+}) {
+  const sourceCount =
+    signal.gateIds.length +
+    signal.evidenceSignalIds.length +
+    signal.issueIds.length +
+    signal.roadmapIds.length +
+    signal.capacitySignalIds.length
+
+  if (sourceCount === 0) {
+    return null
+  }
+
+  return (
+    <section className="rounded-lg border border-border/60 bg-muted/20 p-3">
+      <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+        Source evidence
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {signal.issueIds.length > 0 ? (
+          <button
+            type="button"
+            className="rounded border border-info/20 bg-info/5 px-2 py-1 text-xs text-info"
+            onClick={() =>
+              onOpenSource({
+                ...signal,
+                sourceType: "issue",
+                sourceId: signal.issueIds[0],
+              })
+            }
+          >
+            {signal.issueIds.length} issue source
+          </button>
+        ) : null}
+        {signal.roadmapIds.length > 0 ? (
+          <button
+            type="button"
+            className="rounded border border-info/20 bg-info/5 px-2 py-1 text-xs text-info"
+            onClick={() =>
+              onOpenSource({
+                ...signal,
+                sourceType: "roadmap",
+                sourceId: signal.roadmapIds[0],
+              })
+            }
+          >
+            {signal.roadmapIds.length} bet source
+          </button>
+        ) : null}
+        {signal.gateIds.length > 0 ? (
+          <span className="rounded border border-warning/20 bg-warning/5 px-2 py-1 text-xs text-warning">
+            {signal.gateIds.length} gate
+          </span>
+        ) : null}
+        {signal.evidenceSignalIds.length > 0 ? (
+          <span className="rounded border border-success/20 bg-success/5 px-2 py-1 text-xs text-success">
+            {signal.evidenceSignalIds.length} evidence signal
+          </span>
+        ) : null}
+        {signal.capacitySignalIds.length > 0 ? (
+          <span className="rounded border border-warning/20 bg-warning/5 px-2 py-1 text-xs text-warning">
+            {signal.capacitySignalIds.length} capacity signal
+          </span>
+        ) : null}
+      </div>
+    </section>
   )
 }

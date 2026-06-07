@@ -164,7 +164,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                   openDrawer({ type: "assistant", id: strongestSignal.id })
                 }
               >
-                Inspect operational signal
+                Inspect analyst signal
               </Button>
             ) : null}
           </div>
@@ -469,7 +469,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
 
         <section className="px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">
-            Operational intelligence
+            Studio Analyst
           </h3>
           <div className="mt-3 space-y-3">
             {allSignals.length > 0 ? (

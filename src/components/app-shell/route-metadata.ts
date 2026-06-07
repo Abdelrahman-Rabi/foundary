@@ -1,8 +1,8 @@
 import {
+  BrainCircuit,
   LayoutDashboard,
   ListTodo,
   Map,
-  Sparkles,
   type LucideIcon,
 } from "lucide-react"
 
@@ -38,10 +38,10 @@ export const appRoutes: AppRoute[] = [
   },
   {
     href: "/assistant",
-    label: "AI Assistant",
-    description: "Operational intelligence",
-    icon: Sparkles,
-    keywords: ["ai", "insights", "risk", "recommendations"],
+    label: "Studio Analyst",
+    description: "Source-linked recommendations",
+    icon: BrainCircuit,
+    keywords: ["analyst", "studio", "evidence", "risk", "recommendations"],
   },
 ]
 

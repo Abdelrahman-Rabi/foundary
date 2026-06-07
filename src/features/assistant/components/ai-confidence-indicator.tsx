@@ -23,7 +23,7 @@ export function AiConfidenceIndicator({
   return (
     <div className={cn("min-w-28", className)}>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-muted-foreground">Confidence</span>
+        <span className="text-muted-foreground">Signal confidence</span>
         <span className="text-foreground">{confidence}%</span>
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted/60">

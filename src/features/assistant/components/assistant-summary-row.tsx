@@ -9,7 +9,7 @@ type AssistantSummaryRowProps = {
 const items = [
   {
     key: "activeInsights",
-    label: "Active insights",
+    label: "Analyst signals",
     icon: BrainCircuit,
   },
   {
@@ -19,7 +19,7 @@ const items = [
   },
   {
     key: "unclearIssues",
-    label: "Unclear issues",
+    label: "Evidence gaps",
     icon: ListChecks,
   },
   {

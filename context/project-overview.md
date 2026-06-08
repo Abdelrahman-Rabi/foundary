@@ -2,26 +2,84 @@
 
 ## Project Identity
 
-Foundary is a studio operating intelligence layer for venture studios deciding
-where to spend scarce time, talent, and capital across multiple ventures.
+Foundary is a Linear-inspired studio command center that helps venture builders decide which ventures to continue, narrow, pause, stop, staff up, or defer based on evidence, validation confidence, and shared team capacity.
+
+Foundary helps venture studios decide where to spend scarce time, talent, and capital across multiple ventures.
 
 The system helps lean studio teams understand:
-- which ventures need intervention
+
+- which ventures need attention now
 - which ventures are consuming capacity without enough evidence
-- which validation gates are weak or blocked
-- which execution work proves or disproves venture progress
-- which operators or functions are overloaded across the portfolio
-- what studio decision should happen next
+- which validation checkpoints are weak or blocked
+- which execution work proves, disproves, unblocks, de-risks, or only consumes capacity
+- which team functions are overloaded across the portfolio
+- what studio move should happen next
 
 Foundary is intentionally optimized for:
+
 - small elite venture teams
 - async operating reviews
 - rapid validation cycles
 - scarce shared operator capacity
-- evidence-based continue / narrow / pause / kill decisions
+- evidence-based continue / narrow / pause / stop decisions
 - operational clarity without enterprise process
+- compact, calm, fast, Linear-inspired workflows
 
-This is NOT a generic project management tool.
+This is not a generic project management tool.
+
+---
+
+## Clear Product Promise
+
+User-facing promise:
+
+> Decide where your studio should focus next.
+
+Strategic product promise:
+
+> Foundary helps venture studios prevent wasted execution.
+
+Expanded explanation:
+
+> Foundary turns venture execution noise into evidence-backed studio decisions.
+
+The product should be immediately understandable without a long verbal explanation.
+
+Within 30 seconds, a first-time reviewer should understand:
+
+- which venture needs attention
+- why it needs attention
+- what move the studio should make
+- what evidence supports that move
+- what capacity tradeoff is involved
+
+---
+
+## Current Product Clarity Goal
+
+Foundary's strategy is strong, but the UI must make the value obvious faster.
+
+The current improvement focus is Product Clarity and Aha Moment Improvement.
+
+This means improving:
+
+- first-time comprehension
+- decision hierarchy
+- user-facing copy
+- screen-to-screen narrative
+- source-linked evidence clarity
+- Studio Analyst recommendation hierarchy
+- seeded demo story coherence
+
+The goal is not to add more features.
+
+The goal is to make the current product easier to understand, easier to demo, and more obviously valuable.
+
+For the full improvement plan, load:
+
+```txt
+context/product-clarity-improvement-plan.md
+```
 
 ---
 
@@ -29,16 +87,18 @@ This is NOT a generic project management tool.
 
 Foundary should feel like:
 
-> "A calm command center for deciding what deserves the studio's attention next."
+> A calm command center for deciding what deserves the studio's attention next.
 
 The product combines:
+
 - portfolio decision visibility
-- validation-gate intelligence
+- validation checkpoint intelligence
 - execution evidence across issues and roadmap work
-- shared operator capacity awareness
-- embedded studio analyst recommendations
+- shared team capacity awareness
+- embedded Studio Analyst recommendations
 
 The system prioritizes:
+
 - decisions over dashboards
 - evidence over activity
 - operator leverage over task volume
@@ -46,13 +106,11 @@ The system prioritizes:
 - clarity over configurability
 - local-first continuity over backend infrastructure
 
-Foundary should help studios prevent wasted execution.
-
 ---
 
 # Product Spine
 
-Foundary's product model is:
+Foundary's internal product model is:
 
 ```txt
 Portfolio Decisions
@@ -62,70 +120,94 @@ Portfolio Decisions
 -> Studio Analyst Recommendations
 ```
 
+This is the strategic model.
+
+The user-facing UX should translate this into simpler questions:
+
+```txt
+What should we do?
+Why?
+What evidence supports it?
+What capacity is affected?
+What is the next action?
+```
+
+Every major product surface should help answer those questions.
+
+---
+
 ## 1. Portfolio Decisions
 
 The first product question is:
 
 > Which venture deserves attention, intervention, or restraint this week?
 
-The primary surface should make studio-level decisions visible:
+The primary surface should make studio-level moves visible:
+
 - continue
 - narrow
 - pause
-- kill
+- stop
 - staff up
 - defer
-- escalate for partner review
+- partner review
 
-Issues, roadmap items, and AI signals should support these decisions instead of
-becoming disconnected task-management artifacts.
+Issues, bets, and analyst signals should support these moves instead of becoming disconnected task-management artifacts.
 
-## 2. Validation Gates
+---
 
-Each venture should be understood by lifecycle phase and current validation
-gate.
+## 2. Validation Checkpoints
+
+Each venture should be understood by lifecycle phase and current validation checkpoint.
 
 Example phases:
+
 - Explore
 - Validate
 - Build
 - Scale
 
-Each gate should clarify:
+Each checkpoint should clarify:
+
 - the assumption being tested
-- required evidence
+- required proof
 - current confidence
 - missing signal
 - decision pressure
-- next studio move
+- next recommended move
 
-Foundary should distinguish execution progress from validation progress.
+Foundary should distinguish execution progress from validation confidence.
+
+---
 
 ## 3. Execution Evidence
 
 Issues and roadmap items are not generic delivery artifacts.
 
-They are execution evidence linked to:
+They are evidence-bearing execution objects linked to:
+
 - assumptions
-- validation gates
+- validation checkpoints
 - evidence signals
-- roadmap bets
+- venture bets
 - operator effort
 - capacity impact
 - studio decision outcomes
 
-An issue should help answer:
+An evidence item should help answer:
 
-> Does this work prove, disprove, unblock, or merely consume capacity?
+> Does this work prove, disprove, unblock, de-risk, or merely consume capacity?
 
-A roadmap item should represent a venture bet or validation initiative, not a
-static planning object.
+A roadmap item should represent a venture bet or validation initiative, not a static planning object.
 
-## 4. Operator Capacity
+---
+
+## 4. Team Capacity
 
 Venture studios operate through shared builders and specialists.
 
 Foundary should make fractional capacity visible across:
+
 - product
 - design
 - engineering
@@ -133,6 +215,7 @@ Foundary should make fractional capacity visible across:
 - partner / studio leadership time
 
 The product should surface:
+
 - overloaded functions
 - venture-to-venture contention
 - downstream impact of reallocating capacity
@@ -140,20 +223,24 @@ The product should surface:
 
 This should remain lightweight and operational, not a heavy scheduling engine.
 
+---
+
 ## 5. Studio Analyst Recommendations
 
-AI should behave like an embedded studio analyst.
+AI should behave like an embedded Studio Analyst.
 
 It should:
-- recommend studio moves
-- explain evidence gaps
-- detect sunk-cost risk
-- flag operator contention
-- connect execution activity to validation confidence
-- summarize why a venture should continue, narrow, pause, kill, or receive more
-  capacity
 
-The AI is NOT a chatbot.
+- recommend studio moves
+- explain missing proof
+- detect sunk-cost risk
+- flag team capacity contention
+- connect execution activity to validation confidence
+- summarize why a venture should continue, narrow, pause, stop, or receive more capacity
+
+The AI is not a chatbot.
+
+It should produce concise, structured, source-linked recommendations.
 
 ---
 
@@ -162,58 +249,71 @@ The AI is NOT a chatbot.
 ## 1. Decisions Over Dashboards
 
 Prioritize:
+
+- recommended moves
 - decision pressure
 - intervention needs
 - portfolio attention ranking
 - evidence-backed recommendations
 
 Avoid:
+
 - passive reporting
 - vanity metrics
 - generic status summaries
 - dashboards that require a meeting to interpret
 
+---
+
 ## 2. Evidence Over Activity
 
 Venture studios do not win by completing more tasks for weak ideas.
 
-Foundary should show whether work is increasing confidence, reducing risk, or
-revealing that a venture should be narrowed, paused, or killed.
+Foundary should show whether work is increasing confidence, reducing risk, or revealing that a venture should be narrowed, paused, or stopped.
 
 Avoid treating:
+
 - completed issues as automatic progress
 - roadmap movement as automatic confidence
 - velocity as proof of venture quality
 
-## 3. Operator Leverage Over Task Volume
+---
+
+## 3. Capacity Leverage Over Task Volume
 
 The core studio constraint is scarce shared talent.
 
-Foundary should show whether operator time is being used against the highest
-confidence opportunities or being trapped in low-evidence execution.
+Foundary should show whether team capacity is being used against the highest-confidence opportunities or being trapped in low-evidence execution.
 
 Avoid:
+
 - single-team project assumptions
 - unbounded backlog growth
 - hidden cross-venture contention
+
+---
 
 ## 4. Venture Awareness
 
 The core differentiator from Linear is venture context awareness.
 
 Everything should become venture-aware:
+
 - portfolio decisions
-- validation gates
-- issues
-- roadmap items
-- dashboard metrics
-- AI insights
+- validation checkpoints
+- evidence items
+- venture bets
+- command center metrics
+- analyst recommendations
 - health signals
-- operator capacity
+- team capacity
+
+---
 
 ## 5. Calm High-Performance UX
 
 The UI should feel:
+
 - focused
 - elegant
 - intentional
@@ -221,12 +321,12 @@ The UI should feel:
 - operationally calm
 
 Inspired by:
+
 - Linear
 - Vercel
 - Raycast
 
-Foundary should feel premium because it is coherent and decisive, not because it
-adds more systems.
+Foundary should feel premium because it is coherent and decisive, not because it adds more systems.
 
 ---
 
@@ -235,6 +335,7 @@ adds more systems.
 ## Studio Partners / Operating Leads
 
 Need:
+
 - portfolio-level truth
 - decision-ready venture status
 - visibility into capacity contention
@@ -244,15 +345,17 @@ Need:
 ## Venture Product Managers
 
 Need:
+
 - validation clarity
 - prioritization confidence
-- roadmap and issue linkage to assumptions
+- roadmap and evidence linkage to assumptions
 - focused execution workflows
 - clear next studio move
 
 ## Venture Builders / Studio Operators
 
 Need:
+
 - fractional workload visibility
 - cross-venture contention awareness
 - clarity on why work matters
@@ -262,6 +365,7 @@ Need:
 ## Founders
 
 Need:
+
 - venture progress visibility
 - evidence expectations
 - delivery transparency
@@ -270,6 +374,7 @@ Need:
 ## AI-Native Engineers
 
 Need:
+
 - fast workflows
 - low-friction execution
 - clear validation context
@@ -279,110 +384,186 @@ Need:
 
 # Core Product Modules
 
-## 1. Studio Command Center
+## 1. Command Center
 
-The primary portfolio surface.
+The primary portfolio decision surface.
 
 It should show:
-- top studio decision
-- portfolio attention queue
+
+- top recommended move
+- why the move matters now
+- ventures needing attention
 - validation risk
-- operator capacity pressure
-- linked execution evidence
-- recommended studio move
+- team capacity pressure
+- evidence behind the decision
+- Studio Analyst reasoning
 
-The command center should feel like:
+The Command Center should answer quickly:
 
-> "The weekly studio operating meeting, already synthesized."
+```txt
+Which venture needs attention?
+Why?
+What move should the studio make?
+What evidence supports it?
+What capacity is constrained?
+```
+
+The Command Center should feel like:
+
+> the weekly studio operating meeting, already synthesized.
+
+---
 
 ## 2. Venture Selector
 
-Allows users to switch operational context between portfolio and individual
-ventures.
+Allows users to switch operational context between portfolio and individual ventures.
 
 Examples:
+
 - Sentra
 - Reson8
 - Internal Ops
 
 Each venture has:
+
 - lifecycle phase
-- current validation gate
-- issues
-- roadmap bets
-- execution evidence
+- current validation checkpoint
+- evidence items
+- venture bets
 - operator allocations
 - decision status
-- studio analyst signals
+- Studio Analyst signals
 
-Users should be able to create a new local venture context that behaves like a
-first-class workspace object without turning Foundary into account setup,
-settings, or CRM software.
+Users should be able to create a new local venture context that behaves like a first-class workspace object without turning Foundary into account setup, settings, or CRM software.
 
-## 3. Validation Gates
+---
 
-The phase-aware decision layer.
+## 3. Evidence
 
-Supported behaviors:
-- show current phase and gate
-- identify required evidence
-- track confidence
-- expose missing signals
-- recommend continue / narrow / pause / kill decisions
-- connect gates to issues and roadmap work
+The execution work layer.
 
-Validation gates should prevent the sunk-cost trap where teams keep executing
-because tasks exist.
+Evidence items are the work behind each studio decision.
 
-## 4. Execution Evidence
+Each evidence item should show:
 
-Issues and roadmap items become evidence-bearing execution objects.
+- what it supports
+- its evidence role
+- execution status
+- owner
+- decision impact
+- venture context
+- linked bet or checkpoint
 
-Includes:
-- issue list and board
-- roadmap bet board
-- drawers that explain strategic linkage
-- links to assumptions and gates
-- operator capacity impact
-- confidence impact
+Evidence roles include:
 
-The execution experience should still feel fast and alive, but its purpose is
-to prove or disprove venture progress.
+- Proving
+- Disproving
+- Unlocking
+- De-risking
+- Challenging
+- Capacity Cost
 
-## 5. Operator Capacity
+The Evidence screen should remain familiar and Linear-inspired through:
+
+- compact list view
+- board view
+- fast search
+- filters
+- drawers
+- quick creation
+
+But it should not feel like a generic issue tracker.
+
+---
+
+## 4. Bets / Validation Initiatives
+
+The strategic validation layer.
+
+Bets are the venture initiatives the studio is testing before committing more time, talent, or capital.
+
+Each bet should show:
+
+- what is being tested
+- validation confidence
+- execution progress
+- recommended move
+- missing proof
+- evidence count
+- capacity impact where relevant
+
+A bet should help answer:
+
+> Should the studio continue, narrow, pause, stop, staff up, defer, or review this initiative?
+
+Progress should not overpower confidence.
+
+Execution progress is not the same as validation confidence.
+
+---
+
+## 5. Team Capacity
 
 A lightweight shared-capacity layer.
 
 Includes:
+
 - function-level capacity
 - venture allocation
 - contention warnings
 - downstream impact notes
 - over-capacity signals
 
-This should be believable and useful without becoming enterprise resource
-planning.
+This should be believable and useful without becoming enterprise resource planning.
+
+---
 
 ## 6. Studio Analyst
 
 Embedded operational intelligence layer.
 
 Supported behaviors:
+
 - recommend studio moves
-- summarize evidence gaps
-- detect delivery and sunk-cost risks
+- summarize missing proof
+- detect execution and sunk-cost risks
 - identify missing validation signals
-- flag operator contention
+- flag capacity contention
 - explain capacity-versus-confidence tradeoffs
+- link recommendations back to source evidence and bets
+
+Studio Analyst should lead with the highest-leverage recommendation before showing supporting signals.
 
 AI outputs should feel:
+
 - concise
 - contextual
 - operational
 - evidence-backed
 - believable
+- source-linked
 
 The Studio Analyst is not a chat-first assistant.
+
+---
+
+# Global Decision Pattern
+
+Every major screen should support this compact pattern:
+
+```txt
+Recommended Move
+Why
+Evidence
+Capacity Impact
+Next Action
+```
+
+This pattern should appear through hierarchy, cards, drawers, labels, or source links.
+
+Do not add tours or tutorial overlays to explain the product.
+
+The product should explain itself through the work.
 
 ---
 
@@ -398,6 +579,7 @@ The Studio Analyst is not a chat-first assistant.
 - premium
 - decision-ready
 - studio-native
+- Linear-inspired
 
 ## Must Avoid
 
@@ -409,28 +591,29 @@ The Studio Analyst is not a chat-first assistant.
 - admin-panel UX
 - generic portfolio reporting
 - chatbot-first AI
+- onboarding-tour dependency
 
 ---
 
 # Navigation Philosophy
 
 Navigation should feel:
+
 - stable
 - always available
 - unobtrusive
 - low cognitive load
 
 Primary navigation:
+
 - Command Center
 - Evidence
-- Roadmap / Bets
+- Bets
 - Studio Analyst
 
 The global venture switcher should always remain accessible.
 
-Route names may evolve gradually from the existing app structure, but the
-product meaning should move toward studio decisions, gates, evidence, capacity,
-and analyst recommendations.
+Route names may evolve gradually from the existing app structure, but the product meaning should move toward studio decisions, evidence, bets, capacity, and analyst recommendations.
 
 ---
 
@@ -449,6 +632,7 @@ and analyst recommendations.
 ## Interaction Style
 
 Prefer:
+
 - drawers over page reloads
 - inline editing
 - hover actions
@@ -456,12 +640,15 @@ Prefer:
 - keyboard-friendly patterns
 - compact decision cards
 - evidence drill-downs
+- source-linked actions
 
 Avoid:
+
 - marketing sections inside the app
 - oversized hero treatment in product routes
 - tutorial overlays
 - settings-style configuration panels
+- visual noise
 
 ---
 
@@ -471,7 +658,8 @@ This project optimizes for:
 
 > believable studio operating intelligence.
 
-NOT:
+Not:
+
 - backend realism
 - enterprise architecture
 - infrastructure complexity
@@ -479,12 +667,14 @@ NOT:
 - real finance or cap-table systems
 
 Priority should be:
-1. product coherence
-2. decision quality
-3. operational realism
-4. UX quality
-5. interaction polish
-6. contextual AI behavior
+
+1. product clarity
+2. product coherence
+3. decision quality
+4. operational realism
+5. UX quality
+6. interaction polish
+7. contextual AI behavior
 
 ---
 
@@ -500,19 +690,20 @@ Priority should be:
 - Framer Motion
 
 Data layer should remain:
+
 - mocked
 - lightweight
 - frontend-driven
 - browser-persisted for local workspace continuity
 - capable of holding custom local venture contexts
-- capable of modeling gates, evidence, decisions, and capacity without backend
-  infrastructure
+- capable of modeling checkpoints, evidence, decisions, bets, and capacity without backend infrastructure
 
 ---
 
 # AI-Assisted Development Philosophy
 
 AI should be used for:
+
 - acceleration
 - scaffolding
 - repetitive UI generation
@@ -521,6 +712,7 @@ AI should be used for:
 - seeded data expansion
 
 Humans should control:
+
 - product decisions
 - UX hierarchy
 - strategic framing
@@ -530,18 +722,21 @@ Humans should control:
 
 ---
 
-# Development Priorities
+# Current Development Priorities
 
-Highest implementation priority:
-1. Studio Command Center
-2. Validation gates and decision states
-3. Execution evidence linkage
-4. Operator capacity visibility
-5. Studio Analyst recommendations
-6. Navigation and copy repositioning
-7. Motion and interaction polish
+The current improvement cycle should follow:
+
+1. Copy and hierarchy clarity pass
+2. Command Center Aha redesign
+3. Evidence decision linkage
+4. Bets decision-state upgrade
+5. Studio Analyst decision-first restructure
+6. Cross-screen narrative and click path
+7. Seeded story and demo data tuning
+8. Final polish and Linear-inspired submission readiness
 
 Lower priority:
+
 - authentication
 - notifications
 - permissions
@@ -554,7 +749,8 @@ Lower priority:
 
 # Anti-Goals
 
-DO NOT:
+Do not:
+
 - build Mini Jira
 - create enterprise workflows
 - add excessive settings
@@ -566,6 +762,9 @@ DO NOT:
 - build full multi-tenant security
 - build real bill-back or cap-table systems
 - prioritize feature quantity over product coherence
+- add onboarding tours or coach marks
+- create chatbot-style AI
+- add heavy capacity planning workflows
 
 ---
 
@@ -573,19 +772,27 @@ DO NOT:
 
 The final product should make reviewers feel:
 
-> "This person understands how venture studios decide where to spend attention,
-> talent, and capital."
+> This person understands how venture studios decide where to spend attention, talent, and capital.
 
-NOT:
+Not:
 
-> "They built a nice frontend."
+> They built a nice frontend.
 
 Foundary succeeds when a studio operator can open it and understand:
+
 - which venture needs attention
-- which gate is weak
+- why it needs attention
 - which execution work is evidence
-- which operator capacity is constrained
-- which studio decision should happen next
+- which capacity is constrained
+- which studio move should happen next
+
+Foundary also succeeds when the first-time reviewer can understand the core demo story without a long explanation:
+
+```txt
+Reson8 should be narrowed because validation is weak and capacity is being consumed.
+Sentra is promising but constrained by shared capacity.
+Internal Ops is stable and should not distract the studio.
+```
 
 ---
 
@@ -593,14 +800,16 @@ Foundary succeeds when a studio operator can open it and understand:
 
 Foundary should feel like:
 
-> "A calm, intelligent studio command center for preventing wasted execution."
+> A calm, intelligent, Linear-inspired command center for preventing wasted execution.
 
 Every implementation decision should reinforce:
+
+- product clarity
 - decision clarity
 - venture awareness
 - validation confidence
 - execution evidence
-- operator leverage
+- capacity leverage
 - AI-native studio reasoning
 - strategic simplicity
 - premium interaction quality

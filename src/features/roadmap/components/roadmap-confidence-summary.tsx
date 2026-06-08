@@ -10,22 +10,22 @@ type RoadmapConfidenceSummaryProps = {
 const summaryItems = [
   {
     key: "visible",
-    label: "Visible initiatives",
+    label: "Visible bets",
     icon: Signal,
   },
   {
     key: "confidence",
-    label: "Average confidence",
+    label: "Validation confidence",
     icon: Signal,
   },
   {
     key: "risk",
-    label: "At-risk initiatives",
+    label: "At-risk bets",
     icon: AlertTriangle,
   },
   {
     key: "declining",
-    label: "Declining confidence",
+    label: "Declining validation",
     icon: TrendingDown,
   },
 ] as const

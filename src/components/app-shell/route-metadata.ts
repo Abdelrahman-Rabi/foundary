@@ -1,8 +1,8 @@
 import {
   BrainCircuit,
   LayoutDashboard,
-  ListTodo,
-  Map,
+  FlaskConical,
+  GitGraph,
   type LucideIcon,
 } from "lucide-react"
 
@@ -17,31 +17,31 @@ export type AppRoute = {
 export const appRoutes: AppRoute[] = [
   {
     href: "/dashboard",
-    label: "Dashboard",
-    description: "Portfolio operating context",
+    label: "Command Center",
+    description: "Studio decision surface",
     icon: LayoutDashboard,
-    keywords: ["home", "portfolio", "metrics", "overview"],
+    keywords: ["home", "portfolio", "command", "decisions", "overview", "dashboard"],
   },
   {
     href: "/issues",
-    label: "Issues",
-    description: "Execution workflow",
-    icon: ListTodo,
-    keywords: ["tasks", "execution", "board", "list"],
+    label: "Evidence",
+    description: "Execution evidence",
+    icon: FlaskConical,
+    keywords: ["evidence", "issues", "tasks", "execution", "board", "list"],
   },
   {
     href: "/roadmap",
-    label: "Roadmap",
-    description: "Strategic direction",
-    icon: Map,
-    keywords: ["strategy", "initiatives", "now", "next", "later"],
+    label: "Bets",
+    description: "Validation initiatives",
+    icon: GitGraph,
+    keywords: ["bets", "roadmap", "strategy", "initiatives", "validation", "now", "next", "later"],
   },
   {
     href: "/assistant",
     label: "Studio Analyst",
     description: "Source-linked recommendations",
     icon: BrainCircuit,
-    keywords: ["analyst", "studio", "evidence", "risk", "recommendations"],
+    keywords: ["analyst", "studio", "evidence", "risk", "recommendations", "assistant"],
   },
 ]
 

@@ -42,7 +42,7 @@ export function getRoadmapSignals(
   return [
     withDedupe({
       id: `roadmap-confidence-${item.id}`,
-      title: "Roadmap confidence analysis",
+      title: "Validation confidence analysis",
       signalType:
         item.confidenceTrend === "declining" || metrics.confidence < 50
           ? "sunk-cost-risk"

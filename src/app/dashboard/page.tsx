@@ -152,7 +152,7 @@ export default function DashboardPage() {
         <NextBestAction
           icon={Plus}
           title="Create the first venture context"
-          description="Start with a local venture so Foundary can organize issues, roadmap confidence, and analyst signals around one company."
+          description="Start with a local venture so Foundary can organize evidence, validation confidence, and analyst signals around one company."
           actionLabel="Create venture"
           onAction={openQuickCreateVenture}
         />
@@ -198,9 +198,9 @@ export default function DashboardPage() {
     return (
       <NextBestAction
         icon={Map}
-        title="Define the next validation initiative"
-        description="Add a roadmap initiative to connect venture direction, execution confidence, and follow-up work."
-        actionLabel="Add roadmap initiative"
+        title="Define the first validation bet"
+        description="Add a venture bet to connect validation assumptions, execution evidence, and gate confidence."
+        actionLabel="Add validation bet"
         onAction={openQuickCreateRoadmap}
       />
     )

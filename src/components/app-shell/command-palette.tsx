@@ -87,9 +87,9 @@ export function CommandPalette() {
       },
       {
         id: "create-roadmap",
-        label: "New Initiative",
-        description: "Capture a roadmap outcome.",
-        keywords: ["create", "roadmap", "initiative"],
+        label: "New Bet",
+        description: "Capture a validation initiative or venture bet.",
+        keywords: ["create", "bet", "roadmap", "initiative", "validation"],
         icon: GitBranchPlus,
         run: () => {
           openQuickCreateRoadmap()
@@ -109,9 +109,9 @@ export function CommandPalette() {
       },
       {
         id: "open-assistant",
-        label: "Inspect Assistant Signal",
-        description: "Open the contextual intelligence drawer.",
-        keywords: ["ai", "risk", "assistant", "insight"],
+        label: "Inspect analyst signal",
+        description: "Open the Studio Analyst intelligence drawer.",
+        keywords: ["ai", "analyst", "studio", "risk", "signal", "insight"],
         icon: Bot,
         run: () => {
           openDrawer({ type: "assistant" })
@@ -120,9 +120,9 @@ export function CommandPalette() {
       },
       {
         id: "toggle-assistant-panel",
-        label: assistantPanelOpen ? "Hide Assistant Panel" : "Show Assistant Panel",
+        label: assistantPanelOpen ? "Hide Studio Analyst panel" : "Show Studio Analyst panel",
         description: "Toggle the ambient intelligence panel.",
-        keywords: ["ai", "panel", "insights"],
+        keywords: ["analyst", "studio", "panel", "insights"],
         icon: PanelRight,
         run: () => {
           setAssistantPanelOpen(!assistantPanelOpen)

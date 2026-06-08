@@ -42,9 +42,9 @@ export function VentureHealthPanel({ ventures }: VentureHealthPanelProps) {
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Venture health</h2>
+          <h2 className="text-sm font-medium text-foreground">Decision pressure</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Momentum, execution load, and confidence by venture.
+            Venture-level attention, execution load, and validation confidence.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">{ventures.length} visible</span>

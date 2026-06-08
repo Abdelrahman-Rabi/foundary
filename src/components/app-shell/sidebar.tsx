@@ -36,7 +36,7 @@ export function Sidebar() {
             Foundary
           </div>
           <div className="truncate text-[11px] text-muted-foreground">
-            Venture execution
+            Studio operating intelligence
           </div>
         </div>
       </div>

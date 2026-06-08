@@ -28,15 +28,15 @@ export function RoadmapColumn({
   onOpenRoadmapItem,
 }: RoadmapColumnProps) {
   const emptyTitle = hasActiveFilters
-    ? "No matching initiatives."
+    ? "No matching bets."
     : {
-        now: "No active initiatives in Now.",
-        next: "No upcoming initiatives in Next.",
-        later: "No longer-term opportunities in Later.",
+        now: "No active bets in Now.",
+        next: "No upcoming bets in Next.",
+        later: "No longer-term bets in Later.",
       }[timeframe]
   const emptyDescription = hasActiveFilters
-    ? "Try loosening the roadmap filters for this context."
-    : "Strategic initiatives will appear here when this timeframe has a clear outcome."
+    ? "Try loosening the filters for this context."
+    : "Strategic bets will appear here when this timeframe has a clear outcome."
 
   return (
     <section className="flex min-h-[440px] flex-col rounded-lg border border-border/60 bg-card/35">

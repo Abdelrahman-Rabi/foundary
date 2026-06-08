@@ -17,14 +17,14 @@ export function IssuesHeader({
     <header className="flex items-start justify-between gap-6 border-b border-border/60 pb-5">
       <div className="min-w-0">
         <p className="mb-2 text-xs font-medium text-muted-foreground">
-          {contextLabel} execution
+          {contextLabel} evidence
         </p>
         <h1 className="text-2xl font-semibold tracking-normal text-foreground">
-          Issues
+          Evidence
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-          Track operational work, move status quickly, and keep venture context
-          visible across execution.
+          Execution work that proves, disproves, unblocks, or de-risks a studio
+          decision. Move status quickly and keep validation context visible.
         </p>
       </div>
       <Button

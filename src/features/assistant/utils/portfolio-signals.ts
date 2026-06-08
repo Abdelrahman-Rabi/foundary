@@ -40,7 +40,7 @@ export function getPortfolioSignals(
         recommendationKind: "narrow",
         observation: `${blockedIssues.length} blocked and ${overdueIssues.length} overdue issues are active in the current context.`,
         reason:
-          "Blocked or overdue work tends to reduce roadmap confidence before progress visibly stalls.",
+          "Blocked or overdue work tends to reduce validation confidence before progress visibly stalls.",
         suggestedAction:
           "Reduce concurrent scope and resolve blocked execution paths before adding new work.",
         gateIds: [],
@@ -56,7 +56,7 @@ export function getPortfolioSignals(
     signals.push(
       withDedupe({
         id: "portfolio-declining-roadmaps",
-        title: "Roadmap confidence requires attention",
+        title: "Validation confidence requires attention",
         signalType: "sunk-cost-risk",
         type: "recommendation",
         severity: "medium",
@@ -94,7 +94,7 @@ export function getPortfolioSignals(
     signals.push(
       withDedupe({
         id: "portfolio-venture-health",
-        title: "Venture health signal is uneven",
+        title: "Decision pressure is uneven",
         signalType: "studio-decision",
         type: "summary",
         severity: "medium",
@@ -112,7 +112,7 @@ export function getPortfolioSignals(
           .map((venture) => venture.name)
           .join(", ")} need focused operating attention.`,
         reason:
-          "Venture health combines confidence, momentum, overdue work, and roadmap progress.",
+          "Decision pressure combines confidence, momentum, overdue work, and roadmap progress.",
         suggestedAction:
           "Prioritize the highest-confidence path and defer lower-signal execution work.",
         gateIds: [],

@@ -2,51 +2,100 @@
 
 ## Product Summary
 
-Foundary is a studio operating intelligence layer for venture studios deciding
-where to spend scarce time, talent, and capital across multiple ventures.
+Foundary is a Linear-inspired studio command center for venture builders managing multiple ventures at the same time.
+
+Foundary helps venture studios decide which ventures to continue, narrow, pause, stop, staff up, or defer based on evidence, validation confidence, and shared team capacity.
 
 The system is intentionally optimized for:
+
 - lean venture studios
 - async operating reviews
-- portfolio attention decisions
 - rapid validation cycles
-- shared operator capacity
-- evidence-based continue / narrow / pause / kill decisions
+- portfolio attention decisions
+- shared team capacity
+- evidence-backed decisions
 - venture-aware execution workflows
+- compact, calm, fast, Linear-inspired UX
 
 The application should feel:
+
 - calm
 - fast
 - focused
 - strategically intelligent
 - decision-ready
 - studio-native
+- easy to understand without a long walkthrough
+
+---
+
+# Current Product Clarity Requirement
+
+The current implementation focus is not to add more product areas.
+
+The current focus is to make the existing product clearer, easier to understand, and easier to demo.
+
+Within 30 seconds, a first-time reviewer should understand:
+
+- which venture needs attention
+- why it needs attention
+- what studio move is recommended
+- what evidence supports that move
+- what capacity tradeoff is involved
+
+Primary UI promise:
+
+> Decide where your studio should focus next.
+
+Strategic product promise:
+
+> Foundary helps venture studios prevent wasted execution.
+
+---
+
+# Global Decision Pattern
+
+Every major surface should support the same compact decision pattern:
+
+```txt
+Recommended Move
+Why
+Evidence
+Capacity Impact
+Next Action
+```
+
+This pattern should be visible through page hierarchy, cards, drawers, labels, source links, or actions.
+
+Do not add onboarding tours, coach marks, walkthroughs, or heavy explanatory overlays to solve comprehension. The product should explain itself through the work.
 
 ---
 
 # Product Scope
 
-## Included in V1 / Current Product Direction
+## Included in Current Product Direction
 
-### Core Areas
+Core areas:
 
-- Venture switching
-- Local-first venture creation
-- Studio Command Center
-- Validation gate visibility
-- Execution evidence across issues and roadmap work
-- Shared operator capacity mock data
-- Studio Analyst intelligence
-- Mock operational recommendations
-- Drag and drop workflows
-- Responsive desktop-first UI
-- Global app shell
-- Contextual drawers
-- Venture-aware metrics
-- Local-first workspace persistence
-- Reset / export / import workspace utilities
+- venture switching
+- local-first venture creation
+- Command Center
+- Evidence screen with list and board views
+- Bets / Validation Initiatives screen
+- Studio Analyst screen
+- validation checkpoint visibility
+- execution evidence linkage
+- team capacity signals
+- mocked Studio Analyst recommendations
+- drag and drop workflows
+- desktop-first responsive UI
+- global app shell
+- contextual drawers
+- venture-aware metrics
+- local-first workspace persistence
+- reset / export / import workspace utilities
 
-### Strategic Product Layers
+Strategic product layers:
 
 ```txt
 Portfolio Decisions
@@ -56,14 +105,22 @@ Portfolio Decisions
 -> Studio Analyst Recommendations
 ```
 
-These layers should guide naming, data modeling, UI hierarchy, and demo story
-decisions.
+User-facing translation:
+
+```txt
+What should we do?
+Why?
+What evidence supports it?
+What capacity is affected?
+What is the next action?
+```
 
 ---
 
 ## Explicitly Excluded
 
-DO NOT implement:
+Do not implement:
+
 - authentication
 - RBAC
 - notifications
@@ -77,20 +134,19 @@ DO NOT implement:
 - audit logs
 - advanced permissions
 - enterprise reporting
-- settings pages
+- settings-heavy pages
 - billing
 - multi-user collaboration
 - real multi-tenant security
 - real scheduling optimization
-- real finance, bill-back, or cap-table workflows
+- real finance, bill-back, LP reporting, or cap-table workflows
+- onboarding tours
+- coach marks
+- chatbot-first AI
+- heavy capacity planning workflows
+- complex gate configuration systems
 
-The goal is:
-
-> believable studio operating intelligence.
-
-NOT:
-
-> production infrastructure completeness.
+The goal is believable studio operating intelligence, not production infrastructure completeness.
 
 ---
 
@@ -105,7 +161,7 @@ App Shell
   - Sidebar
   - Venture Switcher
   - Main Content
-  - Studio Analyst / Intelligence Panel
+  - Studio Analyst / Intelligence Panel when needed
 
 Pages
   - Dashboard / Command Center
@@ -114,8 +170,7 @@ Pages
   - Assistant / Studio Analyst
 ```
 
-Route renaming can happen gradually. Implementation should prioritize product
-behavior and hierarchy over cosmetic route churn.
+Route renaming can happen gradually. Implementation should prioritize product behavior, hierarchy, and visible clarity over cosmetic route churn.
 
 ---
 
@@ -128,16 +183,16 @@ behavior and hierarchy over cosmetic route churn.
 ```
 
 Product meaning:
-- portfolio decision command center
-- top studio decision
-- venture attention queue
+
+- top recommended studio move
+- why the move matters now
+- ventures needing attention
 - validation risk
 - capacity pressure
-- execution evidence summary
-- Studio Analyst recommendation
+- evidence behind the decision
+- Studio Analyst reasoning
 
-The route may still be `/dashboard`, but the screen should no longer read as a
-generic metrics dashboard.
+The route may still be `/dashboard`, but the screen should no longer read as a generic metrics dashboard.
 
 ## Evidence
 
@@ -146,30 +201,31 @@ generic metrics dashboard.
 ```
 
 Product meaning:
+
 - execution evidence workflow
-- issue management
+- issue management with evidence meaning
 - delivery coordination
-- assumption and validation linkage
-- operator effort and impact visibility
+- decision and bet linkage
+- capacity impact visibility
 
-Issues should still be fast and operational, but they must explain how work
-supports or challenges venture progress.
+Issues should still be fast and operational, but the screen must explain how work supports, challenges, de-risks, unlocks, or consumes capacity against a studio decision.
 
-## Roadmap / Bets
+## Bets / Validation Initiatives
 
 ```txt
 /roadmap
 ```
 
 Product meaning:
+
 - venture bets
 - validation initiatives
 - strategic planning
 - confidence tracking
-- gate-linked roadmap work
+- missing proof visibility
+- evidence-linked roadmap work
 
-Roadmap items should represent bets or validation initiatives, not generic
-planning cards.
+Roadmap items should represent bets or validation initiatives, not generic planning cards.
 
 ## Studio Analyst
 
@@ -178,20 +234,21 @@ planning cards.
 ```
 
 Product meaning:
+
 - embedded studio intelligence
+- source-linked recommendations
 - evidence analysis
 - capacity contention analysis
 - sunk-cost risk detection
 - recommended studio moves
 
-The route may still be `/assistant`, but the product behavior should not be
-chatbot-like.
+The route may still be `/assistant`, but the product behavior should not be chatbot-like.
 
 ---
 
 # Venture System
 
-## Supported Ventures
+## Seeded Ventures
 
 Seeded demo ventures:
 
@@ -204,24 +261,67 @@ Seeded demo ventures:
 ```
 
 Each venture should contain:
+
 - lifecycle phase
-- current validation gate
-- current studio decision
-- issues
-- roadmap bets / initiatives
-- execution evidence
-- operator allocations
+- current validation checkpoint
+- current studio move
+- evidence items
+- bets / validation initiatives
+- team capacity allocation
 - metrics
 - Studio Analyst insights
 - health and confidence signals
 
-Users may add custom local ventures. Custom ventures should behave as
-first-class venture contexts across the shell, command center, evidence,
-roadmap, analyst surfaces, and local workspace persistence.
+## Seeded Demo Story
 
-Custom venture creation remains local-first. It does not imply backend accounts,
-team management, organization settings, permissions, billing, CRM records, or
-legal entity management.
+The seeded data should make the portfolio story obvious:
+
+### Sentra
+
+Story:
+
+> Promising growth opportunity with capacity strain.
+
+Should show:
+
+- stronger validation confidence
+- activation or growth upside
+- meaningful design or engineering bottleneck
+- recommended move may be Continue, Staff up, or Protect capacity
+
+### Reson8
+
+Story:
+
+> Weak validation with active execution and sunk-cost risk.
+
+Should show:
+
+- weak retention evidence
+- active product or engineering work
+- low or declining confidence
+- high decision pressure
+- recommended move should be Narrow or Pause
+
+### Internal Ops
+
+Story:
+
+> Stable studio leverage with contained scope and freed capacity.
+
+Should show:
+
+- stable confidence
+- low risk
+- contained work
+- reduced capacity pressure
+- recommended move should be Continue or Defer expansion
+
+## Custom Local Ventures
+
+Users may add custom local ventures. Custom ventures should behave as first-class venture contexts across the shell, Command Center, Evidence, Bets, Studio Analyst, and local workspace persistence.
+
+Custom venture creation remains local-first. It does not imply backend accounts, team management, organization settings, permissions, billing, CRM records, or legal entity management.
 
 Minimum custom venture input:
 
@@ -233,103 +333,172 @@ type CreateVentureInput = {
 }
 ```
 
-Future model direction:
+Generated venture defaults should remain believable and restrained:
+
+- generated id, slug, icon, and color
+- phase-aware health
+- stable initial confidence
+- no fake risk when no evidence exists
+- zero evidence and bet counts until work exists
+
+---
+
+# Studio Decision Model
+
+## Studio Move Values
 
 ```ts
-type VenturePhase = "explore" | "validate" | "build" | "scale"
-
-type StudioDecision =
+type StudioMove =
   | "continue"
   | "narrow"
   | "pause"
-  | "kill"
+  | "stop"
   | "staff-up"
   | "defer"
   | "partner-review"
 ```
 
-Generated venture defaults should remain believable and restrained:
-- generated id, slug, icon, and color
-- phase-aware health
-- stable initial confidence
-- no fake risk when no evidence exists
-- zero issue and roadmap counts until work exists
+Use this language across Command Center, Bets, Evidence, and Studio Analyst.
+
+## Move Meanings
+
+### Continue
+
+Use when momentum is healthy, evidence is acceptable, and capacity cost is justified.
+
+### Narrow
+
+Use when the opportunity may still be valuable, but scope must be reduced until proof improves.
+
+### Pause
+
+Use when more execution would be premature until missing proof is resolved.
+
+### Stop
+
+Use when confidence has collapsed or the initiative should no longer consume studio capacity.
+
+### Staff Up
+
+Use when confidence is strong but the venture is constrained by scarce team capacity.
+
+### Defer
+
+Use when the idea is valid but not the highest-leverage use of studio capacity now.
+
+### Partner Review
+
+Use when the decision requires leadership judgment, tradeoff discussion, or portfolio-level intervention.
 
 ---
 
-# Studio Command Center Specifications
+# Command Center Specifications
 
 ## Purpose
 
-The Command Center is:
+The Command Center is the primary portfolio decision surface.
+
+It should be:
+
 - decision-first
 - portfolio-aware
 - executive-readable
 - operationally informative
 - strategically calm
+- understandable within 30 seconds
 
 It should answer:
-- Which venture needs attention?
-- Which gate is weak?
-- Which execution work is evidence?
-- Which operator capacity is constrained?
-- Which studio decision should happen next?
 
-It should NOT feel:
+```txt
+Which venture needs attention?
+Why?
+What move should the studio make?
+What evidence supports it?
+What capacity is constrained?
+```
+
+It should not feel:
+
 - cluttered
 - analytical-heavy
 - enterprise-like
 - passively report-driven
+- KPI-first
+
+---
+
+## First Viewport Requirement
+
+The first viewport must make the top recommended move obvious.
+
+Recommended hero pattern:
+
+```txt
+Recommended Move: Narrow Reson8
+
+Why now:
+Reson8 is consuming product and engineering capacity, but retention evidence is still weak.
+
+Studio decision:
+Pause broad buildout. Continue only the retained-creator threshold experiment.
+
+Supporting signals:
+- Validation confidence: 23%
+- Capacity pressure: High
+- Missing proof: Retained creator signal
+
+Primary action:
+Inspect evidence
+```
+
+The exact seeded numbers may change, but the structure should remain decision-led.
 
 ---
 
 ## Required Command Center Components
 
-### Top Studio Decision
+### Recommended Move Hero
 
 Display the highest-signal portfolio decision.
 
 Should include:
+
 - venture name
-- recommended decision
-- decision reason
-- linked validation gate
-- linked execution evidence
+- recommended move
+- concise reason
+- linked validation checkpoint or bet
+- linked evidence items
 - capacity implication
 - primary action
 
-Example:
-
-```txt
-Reson8 needs a narrow decision before another build cycle.
-Retention evidence is below gate threshold while engineering work remains active.
-```
-
-### Portfolio Attention Queue
+### Ventures Needing Attention
 
 Rank ventures by decision pressure.
 
 Each row/card should show:
+
 - venture
 - lifecycle phase
-- current gate
+- current checkpoint
 - confidence
 - capacity pressure
 - recommended move
 - attention reason
 
-### Validation Risk Panel
+### Validation Checkpoints / Risk Panel
 
 Surface:
-- weak gates
-- missing evidence
+
+- weak checkpoints
+- missing proof
 - stale assumptions
 - confidence drops
 - execution activity with low evidence
 
-### Operator Capacity Panel
+### Team Capacity Panel
 
 Surface:
+
 - overloaded functions
 - venture-to-venture contention
 - allocation pressure
@@ -337,114 +506,120 @@ Surface:
 
 This is lightweight capacity intelligence, not a scheduling system.
 
-### Execution Evidence Summary
+### Evidence Behind This Decision
 
 Surface:
-- issues linked to current gates
-- roadmap bets linked to assumptions
+
+- evidence items linked to the top decision
+- bets linked to assumptions
 - work that proves or disproves progress
-- work consuming capacity without enough evidence
+- work consuming capacity without enough proof
 
-### Studio Analyst Recommendation
+### Analyst Reasoning Block
 
 Surface:
+
 - concise recommendation
-- reason
+- why it matters
 - supporting evidence
-- suggested next studio move
+- suggested next move
 
 ---
 
-# Validation Gate Specifications
+# Validation Checkpoint Specifications
 
 ## Purpose
 
-Validation gates prevent the sunk-cost trap where teams keep building because
-tasks exist.
+Validation checkpoints prevent the sunk-cost trap where teams keep building because work is already in motion.
 
-They should make it clear whether a venture has enough evidence to justify more
-operator time, engineering work, or capital.
-
----
+They should make it clear whether a venture has enough evidence to justify more team time, engineering work, or capital.
 
 ## Lifecycle Phases
-
-Supported phases:
 
 ```ts
 type VenturePhase = "explore" | "validate" | "build" | "scale"
 ```
 
 Phase meaning:
+
 - `explore`: problem discovery, market sizing, early founder/customer signal
 - `validate`: demand, retention, willingness to pay, ICP clarity
 - `build`: MVP scope, launch readiness, technical execution risk
 - `scale`: GTM repeatability, revenue signal, operational scaling
 
----
-
-## Gate Data Model Direction
+## Validation Checkpoint Model Direction
 
 ```ts
-type ValidationGate = {
+type ValidationCheckpoint = {
   id: string
   ventureId: string
   phase: VenturePhase
   name: string
   assumption: string
-  requiredEvidence: string[]
-  evidenceSignalIds: string[]
-  linkedIssueIds: string[]
-  linkedRoadmapIds: string[]
+  requiredProof: string[]
+  existingProof: string[]
+  missingProof: string[]
+  linkedEvidenceIds: string[]
+  linkedBetIds: string[]
   confidence: number
   status: "healthy" | "watch" | "at-risk" | "blocked" | "passed" | "failed"
-  recommendedDecision: StudioDecision
+  recommendedMove: StudioMove
   decisionReason: string
   updatedAt: string
 }
 ```
 
-This model may be implemented incrementally. Early versions can derive gate
-signals from seeded data, issues, roadmap items, and mock intelligence.
+This model may be implemented incrementally. Early versions can derive checkpoint signals from seeded data, evidence items, bets, and mock intelligence.
 
----
+## Checkpoint Behavior
 
-## Gate Behavior
+Each checkpoint should clarify:
 
-Each gate should clarify:
 - what assumption is being tested
-- what evidence is required
-- what evidence exists
+- what proof is required
+- what proof exists
+- what proof is missing
 - what work is linked
 - what confidence level exists
 - what decision pressure exists
 - what should happen next
 
-Gate confidence should not be a decorative number. It should affect:
+Checkpoint confidence should affect:
+
 - Command Center attention ranking
-- roadmap confidence
+- bet confidence
 - Studio Analyst recommendations
-- issue and roadmap drawer context
+- evidence and bet drawer context
 - seeded demo story
 
 ---
 
-# Execution Evidence Specifications
+# Evidence Specifications
 
 ## Purpose
 
-The execution layer should prove or disprove venture progress.
+The Evidence screen is the execution work layer.
 
-Issues and roadmap items should no longer behave like generic delivery objects.
-They should link to validation gates, assumptions, evidence signals, and
-operator capacity impact.
+It should remain fast and Linear-inspired while making every work item explain why it exists.
+
+Evidence items answer:
+
+> What work is proving, disproving, unlocking, de-risking, challenging, or consuming capacity against a studio decision?
 
 ---
 
-# Issue Data Model Direction
+## Evidence Item Data Model Direction
 
 ```ts
-type Issue = {
+type EvidenceRole =
+  | "proving"
+  | "disproving"
+  | "unlocking"
+  | "de-risking"
+  | "challenging"
+  | "capacity-cost"
+
+type EvidenceItem = {
   id: string
   title: string
   description: string
@@ -457,241 +632,307 @@ type Issue = {
     | "tech-debt"
     | "research"
 
-  priority:
-    | "urgent"
-    | "high"
-    | "medium"
-    | "low"
-
   status:
     | "backlog"
     | "planned"
     | "in-progress"
     | "in-review"
     | "done"
-    | "killed"
+    | "stopped"
 
   owner: string
   dueDate?: string
   tags: string[]
-  roadmapId?: string
 
-  validationGateId?: string
-  assumptionId?: string
-  evidenceSignalIds?: string[]
-  evidenceRole?: "prove" | "disprove" | "unblock" | "de-risk" | "capacity-cost"
-  operatorImpact?: OperatorImpact
+  supports: string
+  evidenceRole: EvidenceRole
+  decisionImpact?: StudioMove
+  priority?: "urgent" | "high" | "medium" | "low"
+  betId?: string
+  checkpointId?: string
+  capacityImpact?: CapacityImpact
 
   createdAt: string
   updatedAt: string
 }
 ```
 
-The existing issue model can evolve toward this incrementally.
+The existing issue model can evolve toward this incrementally. Avoid breaking current interactions unless the current task explicitly scopes it.
 
 ---
 
-# Required Issue Views
+## Evidence List View
 
-## 1. List View
+Required columns:
 
-Must support:
+```txt
+Evidence Item | Supports | Role | Status | Owner | Impact | Venture
+```
+
+The old issue-tracking columns may remain in the data model, but visible hierarchy should move toward evidence meaning.
+
+List view must support:
+
 - filtering
 - searching
 - sorting
 - compact rows
 - inline metadata visibility
-- gate / assumption indicators when available
-- evidence role indicators when available
+- supports field
+- evidence role indicators
+- decision impact when useful
 
 The list should feel:
+
 - scannable
 - dense but breathable
 - operationally efficient
 - connected to venture decisions
 
-## 2. Board View
+## Evidence Board View
 
 Kanban-style workflow.
 
 Columns:
+
 - Backlog
 - Planned
 - In Progress
 - In Review
 - Done
-- Killed
+- Stopped
 
-Must support:
-- drag and drop
-- smooth transitions
-- responsive interactions
-- clear evidence/gate context on cards when useful
+Board cards should show:
 
-## 3. Issue Drawer
+- title
+- venture indicator
+- supports field
+- evidence role
+- decision impact
+- owner
+- status / priority where useful
+
+Example card metadata:
+
+```txt
+Supports: Creator Retention Signal
+Role: Challenging
+Decision impact: May force Narrow
+```
+
+Drag and drop must remain stable, smooth, and fast.
+
+## Evidence Drawer
 
 Should open from:
-- list items
+
+- list rows
 - board cards
 - Command Center evidence links
 - Studio Analyst recommendations
+- Bet source links
 
-Contains:
-- full issue details
-- linked roadmap item
-- linked validation gate
-- assumption or evidence role
-- operator impact
-- Studio Analyst context
-- editable metadata
+The drawer should answer:
+
+- What decision does this support?
+- What is this work trying to prove, disprove, unblock, de-risk, challenge, or reveal?
+- Which bet or checkpoint is connected?
+- What is the capacity impact?
+- What is the recommended next action?
 
 Use drawer pattern instead of page navigation.
 
 ---
 
-# Roadmap / Bets Specifications
+# Bets / Validation Initiatives Specifications
 
 ## Purpose
 
-The roadmap system is:
+Bets represent the strategic validation initiatives the studio is testing before committing more time, talent, or capital.
 
-> the strategic bet and validation initiative layer.
+Bets should feel more strategic than Evidence and more decision-oriented than a normal roadmap.
 
-It should feel:
-- calmer
-- more strategic
-- less operational than Issues
-- directly connected to validation confidence
+Every bet should answer:
+
+```txt
+What are we testing?
+How confident are we?
+What proof is missing?
+What should the studio do next?
+```
 
 ---
 
-# Roadmap Data Model Direction
+## Bet Data Model Direction
 
 ```ts
-type RoadmapItem = {
+type BetTimeframe = "now" | "next" | "later"
+
+type BetStatus = "planned" | "active" | "at-risk" | "completed" | "stopped"
+
+type VentureBet = {
   id: string
   title: string
   ventureId: string
+  timeframe: BetTimeframe
+  status: BetStatus
 
-  timeframe:
-    | "now"
-    | "next"
-    | "later"
-
-  goal: string
-
-  status:
-    | "planned"
-    | "active"
-    | "at-risk"
-    | "completed"
-    | "killed"
-
-  linkedIssueIds: string[]
-  validationGateId?: string
-  assumptionId?: string
-  evidenceSignalIds?: string[]
-  betType?: "validation" | "growth" | "delivery" | "risk-reduction" | "leverage"
-  operatorImpact?: OperatorImpact
-
-  progress: number
+  testingStatement: string
+  targetOutcome: string
   confidence: number
+  confidenceTrend?: "improving" | "stable" | "declining"
+  progress: number
 
+  recommendedMove: StudioMove
+  missingProof: string
+  evidenceIds: string[]
+  capacityImpact?: CapacityImpact
+  checkpointId?: string
+
+  owner?: string
+  analystNote?: string
   createdAt: string
   updatedAt: string
 }
 ```
 
+The existing roadmap model can evolve toward this incrementally. The UI can still use the `/roadmap` route and Now / Next / Later board.
+
 ---
 
-# Roadmap Layout
+## Bets Layout
 
 Columns:
+
 - Now
 - Next
 - Later
 
-Each roadmap card should display:
+Column helper copy should clarify decision maturity:
+
+- Now: active bets requiring a decision soon
+- Next: validated or emerging bets ready for capacity consideration
+- Later: lower-commitment opportunities to watch
+
+## Bet Card Requirements
+
+Each card should include:
+
 - title
-- goal
-- progress
+- venture
+- testing statement or target outcome
 - confidence
-- linked issue count
-- venture indicator
-- gate indicator when available
-- bet type when available
+- progress
+- recommended move
+- missing proof
+- evidence count
+- capacity impact when relevant
+
+Example:
+
+```txt
+Creator Retention Signal Validation
+
+Testing:
+Define retained-creator threshold for continue / narrow / stop decision.
+
+Confidence: 23%
+Progress: 0%
+
+Recommended move: Narrow
+Missing proof: weekly retained creator signal
+Capacity impact: Product + Engineering
+
+4 evidence items - 0 done
+```
+
+Important rule:
+
+> Execution progress is not the same as validation confidence.
+
+When progress and confidence diverge, expose that with concise copy such as:
+
+```txt
+Execution is moving, but validation confidence remains weak.
+```
+
+## Bets Filters
+
+Add or support:
+
+- All status
+- All confidence
+- All moves
+- Venture
+
+Move filter values:
+
+- Continue
+- Narrow
+- Pause
+- Stop
+- Staff up
+- Defer
+- Partner review
+
+## Bet Drawer
+
+The drawer should show:
+
+- title
+- venture
+- timeframe
+- recommended move
+- testing statement
+- target outcome
+- confidence and trend
+- progress
+- missing proof
+- linked evidence items
+- capacity impact
+- analyst reasoning
 
 ---
 
-# Roadmap Interactions
-
-Users should be able to:
-- open roadmap drawer
-- view linked issues
-- view linked gate context
-- navigate between roadmap and issues
-- understand execution confidence
-- understand whether a bet is proving, disproving, or consuming capacity
-
----
-
-# Operator Capacity Specifications
+# Team Capacity Specifications
 
 ## Purpose
 
-The capacity layer shows how scarce shared operators are allocated across the
-studio portfolio.
+Team capacity is a lightweight shared-capacity layer.
 
-It should make contention visible without becoming a full workforce planning
-tool.
+It should show when scarce studio talent is being spent on high-confidence work or trapped in low-evidence execution.
 
----
+This is not scheduling software.
 
-## Operator Model Direction
+## Capacity Functions
 
 ```ts
-type OperatorFunction =
+type TeamFunction =
   | "product"
   | "design"
   | "engineering"
   | "gtm"
   | "partner"
+```
 
-type OperatorImpact = {
-  function: OperatorFunction
-  effort: "low" | "medium" | "high"
-  capacityPercent?: number
+## Capacity Impact Model Direction
+
+```ts
+type CapacityImpact = {
+  functions: TeamFunction[]
+  level: "low" | "medium" | "high"
   note: string
-}
-
-type OperatorAllocation = {
-  id: string
-  ventureId: string
-  function: OperatorFunction
-  operatorName?: string
-  allocationPercent: number
-  pressure: "healthy" | "watch" | "overloaded"
-  impact: string
 }
 ```
 
----
+Surface capacity in:
 
-## Required Capacity Behaviors
+- Command Center
+- Evidence cards / drawers where relevant
+- Bet cards / drawers where relevant
+- Studio Analyst reasoning
 
-Capacity surfaces should show:
-- function-level load
-- venture allocation
-- contention between ventures
-- over-capacity warnings
-- downstream impact on gates or roadmap bets
-- execution work that is expensive relative to evidence quality
-
-Avoid:
-- calendar scheduling
-- utilization bureaucracy
-- approval workflows
-- enterprise resource planning density
+Avoid utilization bureaucracy, schedules, timesheets, and approval flows.
 
 ---
 
@@ -699,77 +940,136 @@ Avoid:
 
 ## Purpose
 
-The Studio Analyst should feel:
+Studio Analyst is the embedded operational intelligence layer.
 
-> embedded operating intelligence for studio decisions.
-
-NOT:
-
-> chatbot UX.
+It should feel like a source-linked decision support layer, not a chatbot or generic insight feed.
 
 ---
 
-# Analyst Behaviors
+## Decision-First Page Requirement
 
-Supported mocked behaviors:
-- recommend continue / narrow / pause / kill / staff-up / defer decisions
-- summarize evidence gaps
-- detect delivery risk
-- detect sunk-cost risk
-- flag weak validation gates
-- flag operator contention
-- connect issues and roadmap items to gates
-- explain capacity-versus-confidence tradeoffs
-- identify missing acceptance or success criteria
+The Studio Analyst page should open with one dominant recommendation before the feed.
 
----
-
-# Analyst Output Style
-
-Analyst responses should feel:
-- concise
-- operational
-- strategic
-- evidence-backed
-- believable
-- low-noise
-
----
-
-# Example Analyst Response
+Required hero structure:
 
 ```txt
-Recommended move: Narrow
+Recommended Move
 
-Reason:
-Reson8 has active engineering work against the onboarding loop, but retention
-evidence remains below the Validate gate threshold.
+Pause Reson8 build and narrow validation focus.
+
+Why:
+Retention evidence is weak while engineering and design capacity are being consumed.
+
+Next:
+Stop broad build work. Continue only retained-creator threshold validation.
+
+Source evidence:
+3 evidence items - 1 bet - 2 capacity signals
 
 Capacity impact:
-Design and PM are already above healthy allocation, pulling attention from
-Sentra's higher-confidence activation work.
+Protects engineering capacity for Sentra activation work.
 
-Suggested action:
-Pause broad build work and run targeted retention interviews before another
-cycle.
+Actions:
+- Inspect evidence
+- Open bet
 ```
+
+The exact copy may adapt to data, but the structure should remain decision-first.
 
 ---
 
-# Analyst UI Rules
+## Analyst Behaviors
+
+Supported mocked behaviors:
+
+- recommend studio moves
+- summarize missing proof
+- detect delivery risk
+- detect sunk-cost risk
+- identify capacity contention
+- explain validation confidence
+- connect evidence items to bets
+- recommend continue / narrow / pause / stop / staff up / defer / partner review
+
+## Analyst Signal Model Direction
+
+```ts
+type AnalystSignal = {
+  id: string
+  ventureId?: string
+  title: string
+  severity: "low" | "medium" | "high"
+  recommendedMove: StudioMove
+  reason: string
+  evidenceIds: string[]
+  betIds: string[]
+  capacityImpact?: CapacityImpact
+  confidence: number
+  createdAt: string
+}
+```
+
+## Analyst UI Rules
 
 Avoid:
+
 - chat bubbles
-- playful AI styling
 - assistant avatars
-- conversational UI
+- fake typing
+- fake streaming
+- generic "AI says" framing
+- long conversational responses
+- decorative AI visuals
 
 Prefer:
-- structured analysis blocks
-- contextual panels
-- embedded intelligence cards
-- evidence links
-- decision recommendations
+
+- structured analyst blocks
+- recommended moves
+- source-linked reasoning
+- evidence-backed explanation
+- capacity tradeoff explanation
+
+---
+
+# Cross-Screen Narrative Specifications
+
+## Primary Demo Flow
+
+The app should support this narrative:
+
+```txt
+1. Command Center
+   Foundary recommends narrowing Reson8.
+
+2. Evidence
+   Shows the work and signals behind that recommendation.
+
+3. Bets
+   Shows the validation bet losing confidence.
+
+4. Studio Analyst
+   Explains the reasoning, capacity tradeoff, and recommended move.
+```
+
+## Required Source Links
+
+Create or strengthen links between:
+
+```txt
+Command Center decision -> Evidence items
+Evidence item -> Supported bet
+Bet -> Studio Analyst reasoning
+Studio Analyst signal -> Source evidence / bet
+```
+
+Preferred interaction pattern:
+
+- source links
+- filtered views
+- drawers
+- lightweight CTA buttons
+
+Avoid deep detail routes and heavy modal stacks.
 
 ---
 
@@ -777,126 +1077,90 @@ Prefer:
 
 ## Sidebar Navigation
 
-Current primary navigation may remain:
-- Dashboard
-- Issues
-- Roadmap
-- AI Assistant
+Primary navigation:
 
-Product language should gradually move toward:
 - Command Center
 - Evidence
 - Bets
 - Studio Analyst
 
+Existing routes can remain:
+
+```txt
+/dashboard
+/issues
+/roadmap
+/assistant
+```
+
 Sidebar should:
+
 - remain persistent
-- support collapse behavior
 - feel lightweight
+- show active route clearly
+- preserve spatial memory
 
----
-
-# Venture Switcher
+## Venture Switcher
 
 Requirements:
+
 - globally accessible
 - always visible
 - instant switching
 - low friction
 
 Switching ventures should update:
-- command center mode
+
 - metrics
-- validation gates
-- roadmap / bets
-- issues / evidence
-- capacity context
+- evidence
+- bets
 - analyst context
+- empty states
 
 ---
 
 # State Management
 
 Use Zustand for:
+
 - venture state
-- issue state
-- roadmap state
+- evidence / issue state
+- bet / roadmap state
 - UI state
 - filters
-- assistant / analyst context
-- local-first hydration and reset state
+- analyst context
+- workspace persistence
 
-Future domain state can be added incrementally for:
-- validation gates
-- evidence signals
-- operator capacity
-- studio decisions
-
-Prefer derived utilities before adding global stores. Add a store only when the
-state is user-editable, persisted, or shared across multiple distant surfaces.
+Prefer existing stores and lightweight derived selectors before creating new complex state systems.
 
 ---
 
 # Data Strategy
 
-## Data Source
-
 Use:
-- mocked JSON
+
+- mocked data
 - local frontend stores
 - deterministic seeded datasets
-- versioned browser localStorage for current workspace continuity
+- browser persistence where already supported
 
-DO NOT:
-- create backend APIs
-- add database complexity
-- simulate production infrastructure
+Do not create backend APIs, databases, or production infrastructure.
 
-Local-first persistence should cover:
-- custom venture records
-- issue records and filters
-- roadmap records and filters
-- venture context
-- issues list / board view mode
-- assistant inspected and dismissed signal state
-- future gate, evidence, capacity, and decision state when user-editable
+Mock data should feel:
 
-Workspace utilities should support:
-- reset to seeded demo data
-- start with clean local platform state
-- export current workspace state
-- import valid workspace state without crashing on invalid JSON
-
-Reset should remove custom local ventures and restore the seeded demo ventures.
-Export/import should round-trip custom ventures and their linked issue/roadmap
-records when valid.
-
----
-
-# Mock Data Requirements
-
-Data should feel:
 - operationally believable
 - strategically coherent
 - interconnected
-- studio-native
-- decision-oriented
+- demo-ready
 
 Relationships should exist between:
-- ventures
-- lifecycle phases
-- validation gates
-- assumptions
-- evidence signals
-- issues
-- roadmap bets
-- operator allocations
-- analyst insights
 
-Seeded ventures should tell distinct studio operating stories:
-- Sentra: higher-confidence growth opportunity with capacity strain
-- Reson8: validation uncertainty with active execution and sunk-cost risk
-- Internal Ops: stable studio leverage with contained scope and freed capacity
+- ventures
+- validation checkpoints
+- evidence items
+- bets
+- capacity signals
+- analyst recommendations
 
 ---
 
@@ -905,58 +1169,56 @@ Seeded ventures should tell distinct studio operating stories:
 ## Interaction Philosophy
 
 Prefer:
+
 - drawers
 - inline editing
 - hover actions
 - keyboard-friendly workflows
 - fast transitions
-- compact decision cards
-- evidence drill-downs
+- filtered views
+- compact source links
 
 Avoid:
+
 - full page reloads
 - modal overload
 - excessive confirmations
-- tutorial overlays
-- settings-style setup
+- deep detail routes
+- wizard flows
 
----
-
-# Motion Philosophy
+## Motion Philosophy
 
 Motion should be:
+
 - subtle
 - disciplined
 - responsive
 - premium
 
 Use motion for:
+
 - drawer transitions
-- DnD interactions
+- drag and drop interactions
 - hover feedback
 - loading states
+- venture switching
 
-Avoid:
-- flashy animations
-- excessive transitions
+Avoid flashy animations and excessive transitions.
 
----
-
-# Responsive Strategy
+## Responsive Strategy
 
 Priority:
+
 1. Desktop
 2. Large tablet
 
-Mobile support can remain minimal.
-
-This assignment is desktop-first.
+Mobile support can remain minimal. This assignment is desktop-first operational software.
 
 ---
 
 # Technical Stack
 
-## Required Technologies
+Required technologies:
 
 - Next.js
 - TypeScript
@@ -972,19 +1234,32 @@ This assignment is desktop-first.
 # Build Priorities
 
 Highest implementation priority:
-1. Studio Command Center quality
-2. Validation gates and decision states
-3. Execution evidence linkage
-4. Operator capacity visibility
-5. Studio Analyst behavior realism
-6. Navigation and product-copy repositioning
-7. Interaction polish
+
+1. Product clarity
+2. Command Center Aha moment
+3. Evidence decision linkage
+4. Bets decision state
+5. Studio Analyst decision-first behavior
+6. Cross-screen narrative
+7. Seeded demo story
+8. Interaction polish
+
+Lower priority:
+
+- backend realism
+- authentication
+- permissions
+- notifications
+- settings
+- edge-case-heavy configuration
+- mobile parity
 
 ---
 
 # Anti-Patterns
 
-DO NOT:
+Do not:
+
 - build Mini Jira
 - create enterprise UX
 - overcomplicate workflows
@@ -994,15 +1269,17 @@ DO NOT:
 - simulate production backend systems
 - create noisy dashboards
 - implement chatbot interfaces
-- make issues or roadmap feel disconnected from validation
-- add full finance, cap-table, or bill-back systems
-- overbuild resource planning
+- add onboarding tours
+- create heavy capacity planning
+- add investor reporting
+- create finance or cap-table workflows
 
 ---
 
 # Final UX Success Criteria
 
 The product should feel:
+
 - strategically intelligent
 - operationally calm
 - AI-native
@@ -1010,13 +1287,21 @@ The product should feel:
 - premium
 - modern
 - cohesive
-- decision-ready
+- easy to understand
+- compact and Linear-inspired
+
+A first-time reviewer should understand:
+
+```txt
+Reson8 should be narrowed because validation is weak and capacity is being consumed.
+Sentra is promising but constrained by shared capacity.
+Internal Ops is stable and should not distract the studio.
+```
 
 Users should feel:
 
-> "This system shows which venture deserves the studio's next hour, person, and
-> dollar."
+> This system helps venture studios decide where to focus next.
 
-NOT:
+Not:
 
-> "This is another generic PM dashboard."
+> This is another generic PM dashboard.

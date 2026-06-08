@@ -19,10 +19,10 @@ export function RiskPanel({ risks, onOpenRisk }: RiskPanelProps) {
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
           <h2 className="text-sm font-medium text-foreground">
-            Roadmap confidence risk
+            Validation confidence risk
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Execution signals that can change venture confidence.
+            Execution signals that can change venture validation confidence.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">{risks.length} signals</span>
@@ -71,7 +71,7 @@ export function RiskPanel({ risks, onOpenRisk }: RiskPanelProps) {
         ) : (
           <div className="rounded-lg border border-border/50 bg-background/35 p-3">
             <p className="text-sm text-muted-foreground">
-              No active roadmap confidence risks detected.
+              No active validation confidence risks detected.
             </p>
             <p className="mt-1 text-xs leading-5 text-muted-foreground">
               Current issue and roadmap signals do not require an operating

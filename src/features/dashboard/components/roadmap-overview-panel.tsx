@@ -27,9 +27,9 @@ export function RoadmapOverviewPanel({
     <section className="rounded-lg border border-border/60 bg-card/50 p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Roadmap overview</h2>
+          <h2 className="text-sm font-medium text-foreground">Validation bets</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Active initiatives sorted by confidence risk.
+            Active bets sorted by validation confidence risk.
           </p>
         </div>
         <span className="text-xs text-muted-foreground">
@@ -89,14 +89,14 @@ export function RoadmapOverviewPanel({
               </div>
               <div>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Confidence</span>
+                  <span className="text-muted-foreground">Validation confidence</span>
                   <span className="text-foreground">{item.confidence}%</span>
                 </div>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted/60">
                   <div
                     className={cn(
-                      "h-full rounded-full",
-                      item.confidence < 50 ? "bg-warning" : "bg-success"
+                       "h-full rounded-full",
+                       item.confidence < 50 ? "bg-warning" : "bg-success"
                     )}
                     style={{ width: `${item.confidence}%` }}
                   />
@@ -110,10 +110,10 @@ export function RoadmapOverviewPanel({
         )) : (
           <div className="rounded-lg border border-border/50 bg-background/35 p-3">
             <p className="text-sm text-muted-foreground">
-              No active roadmap initiatives in this context.
+              No active validation bets in this context.
             </p>
             <p className="mt-1 text-xs leading-5 text-muted-foreground">
-              Planned, active, and at-risk initiatives will appear here.
+              Planned, active, and at-risk bets will appear here.
             </p>
           </div>
         )}

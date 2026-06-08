@@ -149,7 +149,7 @@ export function getKpiMetrics(
 
   return [
     {
-      label: "Total issues",
+      label: "Execution evidence",
       value: aggregateIssueCount,
       helper: `${blockedIssues} blocked in detailed records`,
       tone: "neutral",
@@ -165,14 +165,14 @@ export function getKpiMetrics(
       issueFilter: { overdueOnly: true },
     },
     {
-      label: "Active initiatives",
+      label: "Active bets",
       value: activeRoadmapItems,
       helper: "Planned, active, or at risk",
       tone: "neutral",
       targetRoute: "/roadmap",
     },
     {
-      label: "Killed initiatives",
+      label: "Stopped bets",
       value: killedInitiatives,
       helper: "Disciplined stopped work",
       tone: "muted",
@@ -274,7 +274,7 @@ function getIssueRiskCopy(issue: Issue) {
 
   return {
     explanation: issue.blocked
-      ? "Execution is blocked and may affect linked roadmap confidence."
+      ? "Execution is blocked and may affect linked validation confidence."
       : "Issue risk is elevated based on priority, date, or confidence.",
     suggestedAction:
       "Clarify the blocker and reduce active scope before adding work.",
@@ -320,7 +320,7 @@ export function getDashboardRisks(
       title: item.title,
       ventureName: getVentureName(ventures, item.ventureId),
       severity: getRoadmapRiskSeverity(item.status, item.riskLevel),
-      explanation: "Roadmap confidence is weak or declining.",
+      explanation: "Validation confidence is weak or declining.",
       suggestedAction:
         "Review linked execution work and the decision criteria behind it.",
       sourceType: "roadmap" as const,

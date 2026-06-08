@@ -18,13 +18,13 @@ export function RoadmapHeader({
 }: RoadmapHeaderProps) {
   return (
     <PageHeader
-      eyebrow={`${contextLabel} / ${visibleCount} visible`}
-      title="Roadmap"
-      description="Coordinate venture direction through outcomes, confidence, and execution progress."
+      eyebrow={`${contextLabel} / ${visibleCount} bets visible`}
+      title="Bets"
+      description="Validation initiatives and venture bets tied to assumptions, evidence, and gate confidence."
       action={
         <Button size="sm" className="h-9 gap-2" onClick={onOpenQuickCreate}>
           <Plus className="size-4" />
-          New Initiative
+          New Bet
         </Button>
       }
     />

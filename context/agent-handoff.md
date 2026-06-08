@@ -59,6 +59,41 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-07 - Antigravity - Phase 14.10 Navigation, Copy, And Verification (Including Tightening Pass)
+
+Task:
+Completed Phase 14.10 by aligning all navigation labels, route headers, command palette definitions, and dashboard cards to the new portfolio decision/studio operating vocabulary (Command Center, Evidence, Bets, Studio Analyst, Decision pressure, Validation confidence, and Recommended studio move). Performed a tightening pass to replace residual PM/roadmap language in the secondary dashboard panel, KPI helpers, and Studio Analyst derived signals.
+
+Changed:
+- `src/components/app-shell/route-metadata.ts`
+- `src/components/app-shell/sidebar.tsx`
+- `src/components/app-shell/command-palette.tsx`
+- `src/features/dashboard/components/dashboard-header.tsx`
+- `src/features/issues/components/issues-header.tsx`
+- `src/features/roadmap/components/roadmap-header.tsx`
+- `src/features/roadmap/components/roadmap-confidence-summary.tsx`
+- `src/features/dashboard/components/venture-health-panel.tsx`
+- `src/features/dashboard/components/risk-panel.tsx`
+- `src/app/dashboard/page.tsx`
+- `src/features/dashboard/components/roadmap-overview-panel.tsx`
+- `src/features/dashboard/utils/dashboard-metrics.ts`
+- `src/features/assistant/utils/portfolio-signals.ts`
+- `src/features/assistant/utils/roadmap-signals.ts`
+- `src/features/roadmap/components/roadmap-column.tsx`
+
+Verification:
+- `npx tsc --noEmit` - Passed (exit code 0)
+- `npm run lint` - Passed (exit code 0)
+- `npm run build` - Passed (exit code 0)
+- Browser check - Passed. Verified:
+  - `/dashboard` displays "Validation bets" instead of "Roadmap overview", uses "Active bets sorted by validation confidence risk", and correctly renders "Execution evidence", "Active bets", and "Stopped bets" KPI labels.
+  - `/assistant` signals now read "Validation confidence analysis" and "Decision pressure is uneven" instead of the old terms.
+  - "Start Clean Platform" and "Reset Demo Data" work perfectly.
+
+Notes:
+- Completed all Phase 14 repositioning objectives.
+- Factual verification confirmed that `src/components/app-shell/mobile-nav.tsx` was not modified during the implementation of this phase.
+
 ## 2026-06-07 - Codex - Phase 14.9 Studio Analyst Repositioning
 
 Task:

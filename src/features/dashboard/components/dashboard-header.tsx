@@ -23,17 +23,17 @@ export function DashboardHeader({
     scopedVentures.length === 0
       ? "No venture context is active yet. Create a venture or reset demo data to begin shaping analyst signal."
       : mode === "portfolio"
-        ? `${attentionCount} venture${attentionCount === 1 ? "" : "s"} require attention. Review venture health, execution pressure, and roadmap confidence from one operating view.`
-        : `${contextLabel} is ${activeVenture?.health ?? "stable"} with ${activeVenture?.confidence ?? 0}% roadmap confidence. Use the highest-signal work below to decide the next operating move.`
+        ? `${attentionCount} venture${attentionCount === 1 ? "" : "s"} require attention. Review decision pressure, validation confidence, and operator capacity from one command view.`
+        : `${contextLabel} is ${activeVenture?.health ?? "stable"} with ${activeVenture?.confidence ?? 0}% validation confidence. Use the highest-signal work below to decide the next studio move.`
 
   return (
     <header className="flex items-start justify-between gap-6 border-b border-border/60 pb-5">
       <div className="min-w-0">
         <p className="mb-2 text-xs font-medium text-muted-foreground">
-          {contextLabel} overview
+          {contextLabel} decision context
         </p>
         <h1 className="text-2xl font-semibold tracking-normal text-foreground">
-          Dashboard
+          Command Center
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
           {summary}

@@ -5,8 +5,13 @@ import type { RoadmapItem } from "@/types/roadmap"
 import type { RoadmapFilters } from "@/stores/roadmap-store"
 import type { Venture } from "@/types/venture"
 
-export const PERSISTENCE_VERSION = 1
+export const PERSISTENCE_VERSION = 2
 export const PERSISTENCE_KEY = "foundary_workspace_state"
+const SEEDED_VENTURE_IDS = [
+  "venture-sentra",
+  "venture-reson8",
+  "venture-internal-ops",
+]
 
 export interface WorkspaceState {
   version: number
@@ -235,11 +240,43 @@ export function loadWorkspaceState(): WorkspaceState | null {
     if (!raw) return null
     
     const parsed = JSON.parse(raw)
+    if (shouldRefreshSeededDemoState(parsed)) {
+      clearWorkspaceState()
+      return null
+    }
+
     return validateAndNormalizeState(parsed)
   } catch (err) {
     console.error("Failed to load workspace state from localStorage:", err)
     return null
   }
+}
+
+function shouldRefreshSeededDemoState(raw: unknown) {
+  if (!raw || typeof raw !== "object") return false
+
+  const rawState = raw as Record<string, unknown>
+  const version = typeof rawState.version === "number" ? rawState.version : 1
+  if (version >= PERSISTENCE_VERSION) return false
+
+  const ventureState = rawState.venture
+  if (!ventureState || typeof ventureState !== "object") return false
+
+  const ventures = (ventureState as Record<string, unknown>).ventures
+  if (!Array.isArray(ventures)) return false
+
+  const ids = ventures
+    .map((venture) =>
+      venture && typeof venture === "object"
+        ? (venture as Record<string, unknown>).id
+        : null
+    )
+    .filter((id): id is string => typeof id === "string")
+
+  return (
+    ids.length === SEEDED_VENTURE_IDS.length &&
+    SEEDED_VENTURE_IDS.every((id) => ids.includes(id))
+  )
 }
 
 /**

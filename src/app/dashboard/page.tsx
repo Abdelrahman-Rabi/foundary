@@ -35,6 +35,7 @@ import type {
   OperationalActivity,
   StatusCount,
 } from "@/features/dashboard/utils/dashboard-metrics"
+import type { CommandCenterDecision } from "@/types/dashboard"
 import type { IssueFilters } from "@/types/issue"
 
 export default function DashboardPage() {
@@ -146,6 +147,36 @@ export default function DashboardPage() {
     openDrawer({ type: "assistant" })
   }
 
+  const handleInspectDecisionEvidence = (decision: CommandCenterDecision) => {
+    const roadmapIds = decision.sourceRoadmapIds?.length
+      ? decision.sourceRoadmapIds
+      : ["roadmap-reson8-retention"]
+
+    openFilteredIssues({
+      ventureIds: [decision.ventureId],
+      roadmapIds,
+    })
+  }
+
+  const handleOpenDecisionBet = (decision: CommandCenterDecision) => {
+    const roadmapId = decision.sourceRoadmapIds?.[0] ?? "roadmap-reson8-retention"
+    openDrawer({ type: "roadmap", id: roadmapId })
+  }
+
+  const handleReviewDecisionReasoning = (decision: CommandCenterDecision) => {
+    const signalId =
+      decision.analystSignalId ?? commandCenterData.analystRecommendation?.id
+
+    if (signalId) {
+      selectSignal(signalId)
+      markInspected(signalId)
+      openDrawer({ type: "assistant", id: signalId })
+      return
+    }
+
+    openDrawer({ type: "assistant" })
+  }
+
   const renderNextAction = () => {
     if (ventures.length === 0) {
       return (
@@ -221,24 +252,17 @@ export default function DashboardPage() {
       <div className="space-y-5">
         <TopStudioDecision
           decision={commandCenterData.topDecision}
-          onVentureSelect={setActiveVenture}
+          onInspectEvidence={handleInspectDecisionEvidence}
+          onOpenBet={handleOpenDecisionBet}
+          onReviewReasoning={handleReviewDecisionReasoning}
         />
 
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-5 xl:grid-cols-3">
           <AttentionQueueCard
             attentionQueue={commandCenterData.attentionQueue}
             activeVentureId={activeVenture?.id ?? null}
             onVentureSelect={setActiveVenture}
           />
-          <AnalystRecommendationCard
-            recommendation={commandCenterData.analystRecommendation}
-            onOpenAssistant={handleOpenAnalystSignal}
-            onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
-            onOpenRoadmap={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
-          />
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-3">
           <ValidationRiskPanel
             risks={commandCenterData.validationRisks}
             onOpenGate={() => {
@@ -249,8 +273,17 @@ export default function DashboardPage() {
             pressures={commandCenterData.capacityPressures}
             onOpenSignalSource={openDashboardSource}
           />
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-2">
           <ExecutionEvidenceSummary
             summary={commandCenterData.evidenceSummary}
+            onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
+            onOpenRoadmap={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
+          />
+          <AnalystRecommendationCard
+            recommendation={commandCenterData.analystRecommendation}
+            onOpenAssistant={handleOpenAnalystSignal}
             onOpenIssue={(issueId) => openDrawer({ type: "issue", id: issueId })}
             onOpenRoadmap={(roadmapId) => openDrawer({ type: "roadmap", id: roadmapId })}
           />

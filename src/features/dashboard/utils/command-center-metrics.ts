@@ -61,6 +61,64 @@ export function getCommandCenterData(
     })
   const activeAnalystSignals = analystSignals.filter((s) => currentVentureIds.has(s.ventureId))
 
+  const buildDecision = (
+    venture: Venture,
+    gate: (typeof activeGates)[number] | undefined
+  ): CommandCenterDecision => {
+    const ventureCapacitySignals = activeCapacitySignals.filter((signal) =>
+      signal.affectedVentureIds.includes(venture.id)
+    )
+    const linkedIssueIds = gate?.linkedIssueIds ?? []
+    const linkedRoadmapIds = gate?.linkedRoadmapIds ?? []
+    const primaryRoadmap =
+      roadmapItems.find((item) => linkedRoadmapIds.includes(item.id)) ??
+      roadmapItems.find((item) => item.ventureId === venture.id)
+    const analystRecommendation =
+      activeAnalystSignals.find(
+        (signal) => signal.ventureId === venture.id && signal.severity === "high"
+      ) ?? activeAnalystSignals.find((signal) => signal.ventureId === venture.id)
+    const hasOverloaded = ventureCapacitySignals.some(
+      (signal) => signal.pressure === "overloaded"
+    )
+    const hasWatch = ventureCapacitySignals.some((signal) => signal.pressure === "watch")
+    const capacityPressure = hasOverloaded ? "overloaded" : hasWatch ? "watch" : "healthy"
+
+    const isReson8 = venture.id === "venture-reson8"
+
+    return {
+      ventureId: venture.id,
+      ventureName: venture.name,
+      recommendedDecision: venture.recommendedDecision ?? "continue",
+      decisionPressure: venture.decisionPressure ?? "low",
+      reason: gate?.decisionReason ?? venture.description,
+      gateName: gate?.name,
+      headline: isReson8
+        ? "Recommended Move: Narrow Reson8"
+        : `Recommended Move: ${formatDecision(venture.recommendedDecision ?? "continue")} ${venture.name}`,
+      whyNow: isReson8
+        ? "Retention evidence is weak while product and engineering capacity are actively being consumed."
+        : gate?.decisionReason ?? venture.description,
+      studioDecision: isReson8
+        ? "Stop broad onboarding buildout. Continue only retained-creator threshold validation."
+        : gate?.decisionReason ?? "Continue the current validation path until the next source signal changes.",
+      validationConfidence: gate?.confidence ?? venture.confidence,
+      capacityPressure,
+      missingProof: isReson8
+        ? "Weekly retained creator signal"
+        : gate?.requiredEvidence.find((item) => !item.toLowerCase().includes("complete")) ??
+          "No urgent missing proof",
+      capacityImpact:
+        analystRecommendation?.capacityTradeoff ??
+        ventureCapacitySignals[0]?.downstreamImpact,
+      sourceIssueIds: analystRecommendation?.issueIds ?? linkedIssueIds,
+      sourceRoadmapIds:
+        analystRecommendation?.roadmapIds ??
+        (primaryRoadmap ? [primaryRoadmap.id] : linkedRoadmapIds),
+      analystSignalId: analystRecommendation?.id,
+      analystConfidence: analystRecommendation?.confidenceScore,
+    }
+  }
+
   // 1. Calculate venture priority scores for attention queue ranking
   const rankedVentures = ventures.map((venture) => {
     const gate = activeGates.find((g) => g.ventureId === venture.id)
@@ -131,36 +189,15 @@ export function getCommandCenterData(
   if (context.mode === "portfolio") {
     const leading = sortedRankings[0]
     if (leading && leading.venture.recommendedDecision && leading.venture.recommendedDecision !== "continue") {
-      topDecision = {
-        ventureId: leading.venture.id,
-        ventureName: leading.venture.name,
-        recommendedDecision: leading.venture.recommendedDecision,
-        decisionPressure: leading.venture.decisionPressure ?? "low",
-        reason: leading.gate?.decisionReason ?? leading.venture.description,
-        gateName: leading.gate?.name,
-      }
+      topDecision = buildDecision(leading.venture, leading.gate)
     } else if (leading) {
       // Fallback if top ranked doesn't have an action decision
-      topDecision = {
-        ventureId: leading.venture.id,
-        ventureName: leading.venture.name,
-        recommendedDecision: leading.venture.recommendedDecision ?? "continue",
-        decisionPressure: leading.venture.decisionPressure ?? "low",
-        reason: leading.gate?.decisionReason ?? leading.venture.description,
-        gateName: leading.gate?.name,
-      }
+      topDecision = buildDecision(leading.venture, leading.gate)
     }
   } else if (context.activeVentureId) {
     const active = rankedVentures.find((rv) => rv.venture.id === context.activeVentureId)
     if (active) {
-      topDecision = {
-        ventureId: active.venture.id,
-        ventureName: active.venture.name,
-        recommendedDecision: active.venture.recommendedDecision ?? "continue",
-        decisionPressure: active.venture.decisionPressure ?? "low",
-        reason: active.gate?.decisionReason ?? active.venture.description,
-        gateName: active.gate?.name,
-      }
+      topDecision = buildDecision(active.venture, active.gate)
     }
   }
 
@@ -297,4 +334,11 @@ export function getCommandCenterData(
     evidenceSummary,
     analystRecommendation,
   }
+}
+
+function formatDecision(value: string) {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
 }

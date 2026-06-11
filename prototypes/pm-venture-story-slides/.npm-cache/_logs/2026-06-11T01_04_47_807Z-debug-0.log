@@ -1,0 +1,26 @@
+0 verbose cli C:\nvm4w\nodejs\node.exe C:\nvm4w\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.13.0
+2 info using node@v26.2.0
+3 silly config load:file:C:\Users\USER0\AppData\Local\nvm\v26.2.0\node_modules\npm\npmrc
+4 silly config load:file:Y:\foundary\prototypes\pm-guided-cockpit\.npmrc
+5 silly config load:file:C:\Users\USER0\.npmrc
+6 silly config load:file:C:\nvm4w\nodejs\etc\npmrc
+7 verbose title npm install
+8 verbose argv "install"
+9 verbose logfile logs-max:10 dir:Y:\foundary\prototypes\pm-guided-cockpit\.npm-cache\_logs\2026-06-11T01_04_47_807Z-
+10 verbose logfile Y:\foundary\prototypes\pm-guided-cockpit\.npm-cache\_logs\2026-06-11T01_04_47_807Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4395630592 maxSize:1098907648 maxEntrySize:549453824
+13 silly idealTree buildDeps
+14 silly fetch manifest @vitejs/plugin-react@5.0.4
+15 silly packumentCache full:https://registry.npmjs.org/@vitejs%2fplugin-react cache-miss
+16 http fetch GET https://registry.npmjs.org/npm attempt 1 failed with EACCES
+17 http fetch GET https://registry.npmjs.org/@vitejs%2fplugin-react attempt 1 failed with EACCES
+18 http fetch GET https://registry.npmjs.org/npm attempt 2 failed with EACCES
+19 http fetch GET https://registry.npmjs.org/@vitejs%2fplugin-react attempt 2 failed with EACCES
+20 http fetch GET https://registry.npmjs.org/npm attempt 3 failed with EACCES
+21 http fetch GET https://registry.npmjs.org/@vitejs%2fplugin-react attempt 3 failed with EACCES
+22 silly fetch manifest vite@6.4.2
+23 silly packumentCache full:https://registry.npmjs.org/vite cache-miss
+24 http fetch GET https://registry.npmjs.org/vite attempt 1 failed with EACCES
+25 http fetch GET https://registry.npmjs.org/vite attempt 2 failed with EACCES

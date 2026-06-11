@@ -40,9 +40,9 @@ export function IssueList({
       return (
         <NextBestAction
           icon={Plus}
-          title={`No execution issues in ${contextLabel.toLowerCase()} yet.`}
-          description="Capture the first blocker, validation task, or delivery risk so Foundary can start building analyst signal."
-          actionLabel="Create issue"
+          title={`No evidence items in ${contextLabel.toLowerCase()} yet.`}
+          description="Add the first blocker, validation signal, or delivery risk so Foundary can connect work to a studio decision."
+          actionLabel="Add Evidence"
           onAction={onOpenQuickCreate}
         />
       )
@@ -50,8 +50,8 @@ export function IssueList({
 
     return (
       <EmptyState
-        title="No issues match the current filters."
-        description="Adjust search or filters to widen the execution view."
+        title="No evidence matches the current filters."
+        description="Adjust search or filters to widen the evidence view."
         action={
           <Button variant="outline" className="h-8" onClick={resetFilters}>
             Clear filters
@@ -65,10 +65,10 @@ export function IssueList({
     <section className="overflow-x-auto rounded-lg border border-border/60 bg-card/45">
       <div className="min-w-[980px]">
         <div className="grid grid-cols-[minmax(280px,1fr)_110px_100px_110px_100px_130px_110px] gap-3 border-b border-border/60 px-3 py-2 text-xs text-muted-foreground">
-          <span>Issue</span>
+          <span>Evidence Item</span>
           <span>Status</span>
-          <span>Priority</span>
-          <span>Type</span>
+          <span>Impact</span>
+          <span>Role</span>
           <span>Owner</span>
           <span>Due</span>
           <span>Venture</span>

@@ -69,7 +69,7 @@ export const riskLabels: Record<RiskLevel, string> = {
 }
 
 export const sortLabels: Record<IssueSortBy, string> = {
-  priority: "Priority",
+  priority: "Decision Impact",
   dueDate: "Due date",
   status: "Status",
   owner: "Owner",

@@ -47,9 +47,9 @@ export function RoadmapBoard({
     return (
       <NextBestAction
         icon={Plus}
-        title={`No roadmap initiatives in ${contextLabel.toLowerCase()} yet.`}
-        description="Define the first validation initiative so Foundary can connect strategic direction, confidence, and execution work."
-        actionLabel="Add roadmap initiative"
+        title={`No bets in ${contextLabel.toLowerCase()} yet.`}
+        description="Add the first bet so Foundary can connect strategic direction, confidence, and evidence."
+        actionLabel="Add Bet"
         onAction={onOpenQuickCreate}
       />
     )
@@ -58,8 +58,8 @@ export function RoadmapBoard({
   if (visibleRoadmapCount === 0 && hasActiveFilters) {
     return (
       <EmptyState
-        title="No roadmap initiatives match the current filters."
-        description="Clear filters to return to the full strategic roadmap for this context."
+        title="No bets match the current filters."
+        description="Clear filters to return to the full bets board for this context."
         action={
           <Button variant="outline" className="h-8" onClick={onClearFilters}>
             Clear filters

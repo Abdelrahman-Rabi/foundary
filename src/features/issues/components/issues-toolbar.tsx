@@ -76,7 +76,7 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
           <Input
             value={filters.search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search issues, owners, tags..."
+            placeholder="Search evidence, owners, tags..."
             className="h-8 min-w-56 max-w-md border-border/60 bg-background/50"
           />
           <DropdownMenu>
@@ -121,7 +121,7 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
                 </DropdownMenuCheckboxItem>
               ))}
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Priority</DropdownMenuLabel>
+              <DropdownMenuLabel>Decision Impact</DropdownMenuLabel>
               {issuePriorities.map((priority) => (
                 <DropdownMenuCheckboxItem
                   key={priority}
@@ -139,7 +139,7 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
                 </DropdownMenuCheckboxItem>
               ))}
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Type</DropdownMenuLabel>
+              <DropdownMenuLabel>Evidence Role</DropdownMenuLabel>
               {issueTypes.map((type) => (
                 <DropdownMenuCheckboxItem
                   key={type}
@@ -183,7 +183,7 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
                   setFilters({ roadmapLinkedOnly: Boolean(checked) })
                 }
               >
-                Roadmap linked
+                Bet linked
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -233,7 +233,7 @@ export function IssuesToolbar({ ventures, roadmapItems }: IssuesToolbarProps) {
               variant="ghost"
               className="h-8"
               onClick={resetFilters}
-              aria-label="Clear issue filters"
+              aria-label="Clear evidence filters"
             >
               <X className="size-3.5" strokeWidth={1.8} />
               Clear
@@ -322,7 +322,7 @@ function getFilterChips(
       key: `roadmap-${roadmapId}`,
       label:
         roadmapItems.find((item) => item.id === roadmapId)?.title ??
-        "Roadmap initiative",
+        "Bet",
       onRemove: () =>
         setFilters({
           roadmapIds: filters.roadmapIds.filter((item) => item !== roadmapId),
@@ -341,7 +341,7 @@ function getFilterChips(
       ? [
           {
             key: "roadmap-linked",
-            label: "Roadmap linked",
+            label: "Bet linked",
             onRemove: () => setFilters({ roadmapLinkedOnly: false }),
           },
         ]

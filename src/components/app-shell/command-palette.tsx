@@ -76,9 +76,9 @@ export function CommandPalette() {
       ...routeActions,
       {
         id: "create-issue",
-        label: "New Issue",
-        description: "Capture execution work in the active context.",
-        keywords: ["create", "task", "execution"],
+        label: "Add Evidence",
+        description: "Capture execution evidence in the active context.",
+        keywords: ["create", "evidence", "execution"],
         icon: FilePlus2,
         run: () => {
           openQuickCreateIssue()
@@ -87,7 +87,7 @@ export function CommandPalette() {
       },
       {
         id: "create-roadmap",
-        label: "New Bet",
+        label: "Add Bet",
         description: "Capture a validation initiative or venture bet.",
         keywords: ["create", "bet", "roadmap", "initiative", "validation"],
         icon: GitBranchPlus,
@@ -109,9 +109,9 @@ export function CommandPalette() {
       },
       {
         id: "open-assistant",
-        label: "Inspect analyst signal",
-        description: "Open the Studio Analyst intelligence drawer.",
-        keywords: ["ai", "analyst", "studio", "risk", "signal", "insight"],
+        label: "Inspect reasoning",
+        description: "Open the Studio Analyst reasoning drawer.",
+        keywords: ["analyst", "studio", "risk", "reasoning", "recommendation"],
         icon: Bot,
         run: () => {
           openDrawer({ type: "assistant" })

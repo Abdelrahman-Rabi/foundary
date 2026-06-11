@@ -59,6 +59,36 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-11 - Codex - Phase 1 Product Language Clarity
+
+Task:
+Implemented Phase 1 as a focused user-facing copy pass for product language and navigation clarity.
+
+Changed:
+- `eslint.config.mjs`
+- `src/components/app-shell/app-drawer.tsx`
+- `src/components/app-shell/command-palette.tsx`
+- `src/app/dashboard/page.tsx`
+- `src/app/assistant/page.tsx`
+- `src/features/issues/components/*`
+- `src/features/issues/utils/issue-utils.ts`
+- `src/features/roadmap/components/*`
+- `src/features/assistant/utils/assistant-analysis.ts`
+
+Verification:
+- Targeted legacy-copy scans - Passed.
+- `git diff --check` - Passed.
+- `npx eslint src eslint.config.mjs` - Passed.
+- `npm run lint` - Failed on pre-existing prototype source lint in `prototypes/pm-timeline-workshop/src/App.jsx`.
+- `npm run build` - Passed with network access for Google Fonts.
+
+Notes:
+- Scope stayed copy/config only; no seeded data, route, store, type, or workflow changes.
+- `prototypes/**/dist/**` is now ignored by ESLint so generated prototype bundles no longer block lint.
+
+Risks / Follow-ups:
+- Full `npm run lint` still scans prototype source and fails on unescaped apostrophes outside Phase 1 scope.
+
 ## 2026-06-11 - Codex - Venture Story Slides PM Concept Coverage
 
 Task:

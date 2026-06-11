@@ -61,6 +61,17 @@ export type CommandCenterDecision = {
   decisionPressure: DecisionPressure
   reason: string
   gateName?: string
+  headline?: string
+  whyNow?: string
+  studioDecision?: string
+  validationConfidence?: number
+  capacityPressure?: CapacityPressure
+  missingProof?: string
+  capacityImpact?: string
+  sourceIssueIds?: string[]
+  sourceRoadmapIds?: string[]
+  analystSignalId?: string
+  analystConfidence?: number
 }
 
 export type ValidationRiskSummary = {
@@ -113,4 +124,3 @@ export type CommandCenterData = {
   evidenceSummary: ExecutionEvidenceSummary | null
   analystRecommendation: AnalystSignal | null
 }
-

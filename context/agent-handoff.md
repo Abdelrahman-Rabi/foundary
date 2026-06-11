@@ -59,6 +59,33 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-11 - Codex - Phase 3 Command Center Aha Moment
+
+Task:
+Implemented Phase 3 Command Center Aha Moment for the first `/dashboard` viewport.
+
+Changed:
+- Promoted `TopStudioDecision` into a dominant recommendation hero with Why now, Studio decision, supporting evidence, capacity impact, and Evidence/Bet/Analyst CTAs.
+- Extended Command Center derived data with source issue IDs, source bet IDs, validation confidence, missing proof, capacity impact, and analyst confidence.
+- Reordered the dashboard first viewport so attention, validation, and capacity proof panels sit directly below the hero, with KPI/legacy dashboard surfaces demoted.
+- Bumped persistence to v2 with a narrow seeded-demo refresh so old persisted demo values do not mask the Phase 2 anchors.
+
+Verification:
+- Targeted Phase 3 copy/source scans passed.
+- `git diff --check` passed.
+- `npx eslint src eslint.config.mjs` passed.
+- `npm run build` passed after rerun with network access for Google Fonts.
+- `npm run lint` failed only on existing prototype lint in `prototypes/pm-timeline-workshop/src/App.jsx`.
+- Browser checked `/dashboard`: hero shows Narrow Reson8, 23% validation confidence, high capacity pressure, missing retained creator proof, and current Sentra/Internal Ops anchors.
+- Browser checked hero CTAs: Inspect evidence filters `/issues` to 4 Reson8 evidence items, Open Bet opens the Creator Retention Signal Validation drawer with 23% / 41%, Review reasoning opens the Narrow Reson8 Analyst reasoning.
+
+Notes:
+- Scope stayed frontend/local mock data only.
+- Internal route names and store APIs were left unchanged.
+
+Risks / Follow-ups:
+- Full lint remains blocked by unrelated prototype source apostrophe lint.
+
 ## 2026-06-11 - Codex - Phase 2 Seeded Demo Data Coherence
 
 Task:

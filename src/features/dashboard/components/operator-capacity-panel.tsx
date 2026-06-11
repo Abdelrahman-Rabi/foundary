@@ -54,6 +54,8 @@ function buildDecisionLabel(decision: string, ventureNames: string[]): string {
   let targetVenture: string
   if (ventureNames.length === 1) {
     targetVenture = ventureNames[0]
+  } else if (reducingActions.includes(decision) && ventureNames.includes("Reson8")) {
+    targetVenture = "Reson8"
   } else if (reducingActions.includes(decision)) {
     // For reducing actions, target the last named venture
     // (seeded data orders protected venture first, contested last)

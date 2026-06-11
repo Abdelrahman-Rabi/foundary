@@ -120,7 +120,9 @@ export function getSeededAnalystSignals(
       signalType: signal.signalType ?? "studio-decision",
       type: "recommendation",
       severity: signal.severity,
-      confidence: getNumericAnalystConfidence(signal.confidence, signal.severity),
+      confidence:
+        signal.confidenceScore ??
+        getNumericAnalystConfidence(signal.confidence, signal.severity),
       analystConfidence: signal.confidence ?? getAnalystConfidence(signal.severity),
       ventureId: signal.ventureId,
       ventureName: getVentureName(ventures, signal.ventureId),

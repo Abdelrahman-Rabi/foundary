@@ -6,8 +6,8 @@ export const validationGates: ValidationGate[] = [
     ventureId: "venture-sentra",
     phase: "build",
     name: "Activation Quality & Growth Readiness",
-    description: "Prove users reach first key value quickly enough to support acquisition spend.",
-    assumption: "New workspaces can complete setup and reach key actions within 72 hours.",
+    description: "Protect a higher-confidence activation path while clearing the measurement work needed for growth.",
+    assumption: "Referral-sourced workspaces can activate above quality threshold once analytics confidence is restored.",
     requiredEvidence: [
       "Activation cohort rate > 80%",
       "Setup completion lift verified",
@@ -25,11 +25,11 @@ export const validationGates: ValidationGate[] = [
       "roadmap-sentra-referrals",
       "roadmap-sentra-referral-foundation"
     ],
-    confidence: 66,
+    confidence: 78,
     status: "watch",
     decisionPressure: "medium",
     recommendedDecision: "continue",
-    decisionReason: "Referral loops are healthy, but event taxonomy and ingestion must be resolved to trust future onboarding variants.",
+    decisionReason: "Referral evidence is strong enough to continue, but Sentra needs protected product and engineering capacity to clear analytics recovery.",
     updatedAt: "2026-05-24T10:00:00.000Z"
   },
   {
@@ -40,10 +40,16 @@ export const validationGates: ValidationGate[] = [
     description: "Confirm creators return weekly to collaborate on workflow drafts.",
     assumption: "Target creators experience weekly collaborative pull with draft-based workflows.",
     requiredEvidence: [
-      "Weekly retention > 40%",
-      "Qualitative urgency confirmed in positioning interviews"
+      "Weekly retained-creator cohort clears 40%",
+      "Creator interviews confirm urgent repeat collaboration need",
+      "Onboarding scope stays narrow until retention proof improves"
     ],
-    evidenceSignalIds: ["signal-reson8-interviews-fail", "signal-reson8-broadcast-archive"],
+    evidenceSignalIds: [
+      "signal-reson8-weekly-cohort-weak",
+      "signal-reson8-interviews-fail",
+      "signal-reson8-buildout-capacity-cost",
+      "signal-reson8-broadcast-archive"
+    ],
     linkedIssueIds: [
       "issue-reson8-retention-assumptions",
       "issue-reson8-positioning-interviews",
@@ -57,11 +63,11 @@ export const validationGates: ValidationGate[] = [
       "roadmap-reson8-broadcast-loop",
       "roadmap-reson8-pricing-signal"
     ],
-    confidence: 41,
+    confidence: 23,
     status: "at-risk",
-    decisionPressure: "high",
+    decisionPressure: "critical",
     recommendedDecision: "narrow",
-    decisionReason: "Broadcast experiment failed and qualitative retention signal is weak. Recommend narrowing scope to creator-only retention validation before monetization or platform build-out.",
+    decisionReason: "Retention evidence is weak while product and engineering capacity are actively being consumed. Recommend narrowing Reson8 before expanding onboarding scope.",
     updatedAt: "2026-05-24T10:00:00.000Z"
   },
   {
@@ -70,9 +76,9 @@ export const validationGates: ValidationGate[] = [
     phase: "build",
     name: "Studio Operating Leverage",
     description: "Reduce repeated coordination overhead and follow-up leakage across meetings.",
-    assumption: "AI summaries and sync workflows reduce weekly missed actions below 5%.",
+    assumption: "Meeting summaries and action sync workflows reduce weekly missed actions below 5%.",
     requiredEvidence: [
-      "AI summary rollout complete",
+      "Meeting summary rollout complete",
       "Issue capture automated"
     ],
     evidenceSignalIds: ["signal-internal-meeting-rollout"],
@@ -89,11 +95,11 @@ export const validationGates: ValidationGate[] = [
       "roadmap-internal-hiring-workflow",
       "roadmap-internal-metrics-dashboard"
     ],
-    confidence: 74,
+    confidence: 71,
     status: "healthy",
     decisionPressure: "low",
     recommendedDecision: "continue",
-    decisionReason: "Meeting intelligence rollout is healthy and show-stopper risks are low. Defer new operational workflows and continue steady execution.",
+    decisionReason: "Internal Ops is stable and contained. Maintain the current operating cadence without distracting capacity from Reson8 and Sentra decisions.",
     updatedAt: "2026-05-24T12:00:00.000Z"
   }
 ]

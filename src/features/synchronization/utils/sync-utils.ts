@@ -51,13 +51,15 @@ export function getSyncedRoadmapMetrics(
       ? Math.round((completedIssues / activeLinkedIssues.length) * 100)
       : item.progress
   const riskPenalty = blockedIssues * 12 + overdueIssues * 7
-  const confidence = Math.max(
+  const penalizedConfidence = Math.max(
     0,
     Math.min(100, Math.round(item.confidence - riskPenalty))
   )
+  const progress = item.manualProgress ?? issueProgress
+  const confidence = item.manualConfidence ?? penalizedConfidence
 
   return {
-    progress: issueProgress,
+    progress,
     confidence,
     completedIssues,
     linkedIssues: linkedIssues.length,

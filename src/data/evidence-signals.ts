@@ -42,6 +42,32 @@ export const evidenceSignals: EvidenceSignal[] = [
     observedAt: "2026-05-21T10:00:00.000Z"
   },
   {
+    id: "signal-reson8-weekly-cohort-weak",
+    ventureId: "venture-reson8",
+    gateId: "gate-reson8-retention",
+    title: "Weekly creator cohort misses retention threshold",
+    summary: "Weekly creator cohort analysis shows repeat collaboration below the threshold needed to continue broad buildout.",
+    signalType: "retention",
+    strength: "negative" as EvidenceStrength,
+    confidenceImpact: "decrease",
+    sourceIssueIds: ["issue-reson8-retention-assumptions", "issue-reson8-message-threshold"],
+    sourceRoadmapIds: ["roadmap-reson8-retention"],
+    observedAt: "2026-05-24T10:00:00.000Z"
+  },
+  {
+    id: "signal-reson8-buildout-capacity-cost",
+    ventureId: "venture-reson8",
+    gateId: "gate-reson8-retention",
+    title: "Broad onboarding buildout is consuming capacity",
+    summary: "Product, design, and engineering capacity remain active on Reson8 onboarding despite weak retained-creator evidence.",
+    signalType: "capacity",
+    strength: "weak" as EvidenceStrength,
+    confidenceImpact: "neutral",
+    sourceIssueIds: ["issue-reson8-onboarding-variant"],
+    sourceRoadmapIds: ["roadmap-reson8-retention"],
+    observedAt: "2026-05-24T10:00:00.000Z"
+  },
+  {
     id: "signal-reson8-broadcast-archive",
     ventureId: "venture-reson8",
     gateId: "gate-reson8-retention",
@@ -58,7 +84,7 @@ export const evidenceSignals: EvidenceSignal[] = [
     id: "signal-internal-meeting-rollout",
     ventureId: "venture-internal-ops",
     gateId: "gate-internal-ops-leverage",
-    title: "AI summary rollout cuts prep overhead",
+    title: "Meeting summary rollout cuts prep overhead",
     summary: "Studio reviews confirm reduced preparation time and faster follow-up issue capture after weekly meetings.",
     signalType: "qualitative",
     strength: "strong" as EvidenceStrength,

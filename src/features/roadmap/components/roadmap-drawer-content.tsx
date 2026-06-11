@@ -108,8 +108,8 @@ export function RoadmapDrawerContent({
     return (
       <div className="p-5">
         <EmptyState
-          title="Roadmap context is unavailable."
-          description="The selected initiative is no longer present in the current workspace."
+          title="Bet context is unavailable."
+          description="The selected bet is no longer present in the current workspace."
         />
       </div>
     )
@@ -206,7 +206,7 @@ export function RoadmapDrawerContent({
               updateRoadmapItem(item.id, { goal: event.target.value })
             }
             rows={3}
-            aria-label="Roadmap strategic outcome"
+            aria-label="Bet strategic outcome"
             className="mt-3 w-full resize-none rounded-lg border border-border/60 bg-background/50 p-3 text-sm leading-6 text-foreground placeholder:text-muted-foreground"
           />
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
@@ -286,7 +286,7 @@ export function RoadmapDrawerContent({
 
                 {/* Linked Issue Roles Summary */}
                 <div className="pt-2 border-t border-border/20">
-                  <span className="text-[10px] text-muted-foreground block uppercase font-mono mb-1">Linked Issue Roles</span>
+                  <span className="text-[10px] text-muted-foreground block uppercase font-mono mb-1">Linked Evidence Roles</span>
                   <div className="flex flex-wrap gap-1.5">
                     {Object.entries(linkedIssueRoleCounts).map(([role, count]) => {
                       if (count === 0) return null
@@ -307,7 +307,7 @@ export function RoadmapDrawerContent({
                       )
                     })}
                     {Object.values(linkedIssueRoleCounts).every((c) => c === 0) && (
-                      <span className="text-xs text-muted-foreground italic">No evidence roles assigned to linked issues</span>
+                      <span className="text-xs text-muted-foreground italic">No evidence roles assigned to linked evidence</span>
                     )}
                   </div>
                 </div>
@@ -425,7 +425,7 @@ export function RoadmapDrawerContent({
 
         <section className="border-b border-border/50 px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">
-            Progress and confidence
+            Execution progress and validation confidence
           </h3>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <RoadmapProgress value={syncedMetrics.progress} />
@@ -466,7 +466,7 @@ export function RoadmapDrawerContent({
               }))}
             />
             <MetadataInput
-              label="Confidence"
+              label="Validation Confidence"
               value={String(item.confidence)}
               onChange={(value) =>
                 updateRoadmapItem(item.id, {
@@ -476,7 +476,7 @@ export function RoadmapDrawerContent({
             />
             <MetadataItem label="Impact" value={item.impact} />
             <MetadataItem
-              label="Linked completion"
+              label="Linked evidence completion"
               value={`${issueCompletion.percent}%`}
             />
           </div>
@@ -484,7 +484,7 @@ export function RoadmapDrawerContent({
 
         <section className="border-b border-border/50 px-5 py-4">
           <h3 className="text-sm font-medium text-foreground">
-            Execution overview
+            Evidence overview
           </h3>
           <div className="mt-3">
             <RoadmapExecutionSummary metrics={syncedMetrics} />
@@ -496,7 +496,7 @@ export function RoadmapDrawerContent({
             <div className="flex items-center gap-2">
               <GitBranch className="size-4 text-muted-foreground" />
               <h3 className="text-sm font-medium text-foreground">
-                Execution links
+                Linked evidence
               </h3>
             </div>
             <span className="text-xs text-muted-foreground">
@@ -512,7 +512,7 @@ export function RoadmapDrawerContent({
               className="h-8 px-2 text-xs"
               onClick={handleViewLinkedIssues}
             >
-              View execution links
+              View linked evidence
             </Button>
           </div>
 

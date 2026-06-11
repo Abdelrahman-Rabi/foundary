@@ -33,9 +33,9 @@ export function IssuesHeader({
         className="hidden md:inline-flex"
       >
         <Plus className="size-3.5" strokeWidth={1.8} />
-        New Issue
+        Add Evidence
       </Button>
-      <span className="sr-only">{visibleCount} issues visible</span>
+      <span className="sr-only">{visibleCount} evidence items visible</span>
     </header>
   )
 }

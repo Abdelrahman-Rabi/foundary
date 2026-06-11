@@ -24,7 +24,7 @@ export function RoadmapHeader({
       action={
         <Button size="sm" className="h-9 gap-2" onClick={onOpenQuickCreate}>
           <Plus className="size-4" />
-          New Bet
+          Add Bet
         </Button>
       }
     />

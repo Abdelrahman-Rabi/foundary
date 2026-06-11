@@ -257,7 +257,7 @@ function getInsightSource(
   if (insight.entityType === "issue") {
     const issue = issues.find((item) => item.id === insight.entityId)
     return {
-      label: issue?.title ?? "Issue context",
+      label: issue?.title ?? "Evidence context",
       actionLabel: "Open issue",
     }
   }
@@ -265,7 +265,7 @@ function getInsightSource(
   if (insight.entityType === "roadmap") {
     const roadmap = roadmapItems.find((item) => item.id === insight.entityId)
     return {
-      label: roadmap?.title ?? "Roadmap context",
+      label: roadmap?.title ?? "Bet context",
       actionLabel: "Open roadmap",
     }
   }

@@ -86,7 +86,7 @@ export function IssueRow({
               <span className="truncate max-w-[150px]">{roadmap.title}</span>
             </>
           ) : (
-            <span>No roadmap link</span>
+            <span>No supported bet</span>
           )}
           {issue.evidenceRole && (
             <>
@@ -132,7 +132,7 @@ export function IssueRow({
               size="icon-sm"
               className="h-7 w-7 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
               onClick={(event) => event.stopPropagation()}
-              aria-label="Update issue status"
+              aria-label="Update evidence status"
             >
               <ChevronDown className="size-3" strokeWidth={1.8} />
             </Button>
@@ -180,7 +180,7 @@ export function IssueRow({
             event.stopPropagation()
             updateIssueStatus(issue.id, nextStatus)
           }}
-          aria-label="Move issue forward"
+          aria-label="Move evidence forward"
         >
           {nextStatus === issue.status ? (
             <ArrowRight className="size-3" strokeWidth={1.8} />

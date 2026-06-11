@@ -16,9 +16,9 @@ export function AppDrawer() {
   const closeDrawer = useUiStore((state) => state.closeDrawer)
   const drawerLabel =
     activeDrawer?.type === "issue"
-      ? "Issue details"
+      ? "Evidence details"
       : activeDrawer?.type === "roadmap"
-        ? "Roadmap details"
+        ? "Bet details"
         : "Studio Analyst signal"
 
   return (

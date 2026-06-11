@@ -99,7 +99,7 @@ export function QuickCreateIssue({
         <div>
           <h2 className="text-sm font-medium text-foreground">Quick create</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Capture execution work with the minimum useful context.
+            Capture evidence with the minimum useful context.
           </p>
         </div>
         <Button variant="ghost" className="h-8" onClick={onClose}>
@@ -117,7 +117,7 @@ export function QuickCreateIssue({
               handleCreateIssue()
             }
           }}
-          placeholder="Issue title..."
+          placeholder="Evidence title..."
           className="h-8 border-border/60 bg-background/50"
         />
 
@@ -202,13 +202,13 @@ export function QuickCreateIssue({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="h-8 border-border/60 bg-background/50 px-2 text-xs font-normal text-foreground justify-between w-full select-none">
-              <span className="truncate">{selectedRoadmap?.title ?? "No roadmap link"}</span>
+              <span className="truncate">{selectedRoadmap?.title ?? "No supported bet"}</span>
               <ChevronDown className="size-3.5 opacity-60 ml-1 shrink-0" strokeWidth={1.8} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-60 overflow-y-auto">
             <DropdownMenuRadioGroup value={roadmapId} onValueChange={setRoadmapId}>
-              <DropdownMenuRadioItem value="">No roadmap link</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="">No supported bet</DropdownMenuRadioItem>
               {ventureRoadmapItems.map((item) => (
                 <DropdownMenuRadioItem key={item.id} value={item.id}>
                   {item.title}
@@ -219,7 +219,7 @@ export function QuickCreateIssue({
         </DropdownMenu>
 
         <Button className="h-8" onClick={handleCreateIssue}>
-          Create
+          Add
         </Button>
       </div>
     </section>

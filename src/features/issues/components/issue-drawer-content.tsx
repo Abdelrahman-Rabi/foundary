@@ -90,8 +90,8 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
     return (
       <div className="p-5">
         <EmptyState
-          title="Issue context is unavailable."
-          description="The selected issue is no longer present in the current workspace."
+          title="Evidence context is unavailable."
+          description="The selected evidence item is no longer present in the current workspace."
         />
       </div>
     )
@@ -164,7 +164,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                   openDrawer({ type: "assistant", id: strongestSignal.id })
                 }
               >
-                Inspect analyst signal
+                Inspect reasoning
               </Button>
             ) : null}
           </div>
@@ -181,7 +181,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
               }))}
             />
             <MetadataSelect
-              label="Priority"
+              label="Decision Impact"
               value={issue.priority}
               onChange={(value) =>
                 updateIssue(issue.id, { priority: value as IssuePriority })
@@ -192,7 +192,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
               }))}
             />
             <MetadataSelect
-              label="Type"
+              label="Evidence Role"
               value={issue.type}
               onChange={(value) =>
                 updateIssue(issue.id, { type: value as IssueType })
@@ -219,7 +219,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
               }
             />
             <MetadataSelect
-              label="Roadmap"
+              label="Supported Bet"
               value={issue.roadmapId ?? ""}
               onChange={(value) => {
                 if (issue.roadmapId) {
@@ -231,7 +231,7 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                 updateIssue(issue.id, { roadmapId: value || undefined })
               }}
               options={[
-                { value: "", label: "No roadmap link" },
+                { value: "", label: "No supported bet" },
                 ...roadmapItems
                   .filter((item) => item.ventureId === issue.ventureId)
                   .map((item) => ({ value: item.id, label: item.title })),
@@ -455,14 +455,14 @@ export function IssueDrawerContent({ issueId }: IssueDrawerContentProps) {
                     className="mt-3 h-8 px-2 text-xs"
                     onClick={() => openDrawer({ type: "roadmap", id: roadmap.id })}
                   >
-                    Open linked roadmap
+                    Open supported bet
                   </Button>
                 </div>
               </div>
             </div>
           ) : (
             <p className="mt-3 text-sm text-muted-foreground">
-              No strategic roadmap linkage yet.
+              No supported bet linked yet.
             </p>
           )}
         </section>

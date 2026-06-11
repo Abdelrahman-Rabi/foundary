@@ -26,7 +26,7 @@ export function RoadmapLinkedIssues({
   if (issues.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-border/60 p-4 text-sm text-muted-foreground">
-        No linked execution work yet.
+        No linked evidence yet.
       </p>
     )
   }

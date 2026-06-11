@@ -167,7 +167,7 @@ export default function AssistantPage() {
                     ? "Create a venture and capture the first gate or evidence item."
                     : "Start by defining the venture's current assumption or first validation gate."
                 }
-                actionLabel="Create issue"
+                actionLabel="Add Evidence"
                 onAction={openQuickCreateIssue}
               />
             )}
@@ -210,7 +210,7 @@ export default function AssistantPage() {
                 icon={Map}
                 title="No analyst recommendation yet."
                 description="Start by defining the venture's current assumption or first validation gate."
-                actionLabel="Add roadmap initiative"
+                actionLabel="Add Bet"
                 onAction={openQuickCreateRoadmap}
               />
             )}

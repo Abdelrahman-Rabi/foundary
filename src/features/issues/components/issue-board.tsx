@@ -97,9 +97,9 @@ export function IssueBoard({
     return (
       <NextBestAction
         icon={Plus}
-        title={`No board work in ${contextLabel.toLowerCase()} yet.`}
-        description="Create the first execution issue to start shaping backlog, planned work, and delivery pressure."
-        actionLabel="Create issue"
+        title={`No board evidence in ${contextLabel.toLowerCase()} yet.`}
+        description="Add the first evidence item to connect execution, validation, and delivery pressure."
+        actionLabel="Add Evidence"
         onAction={onOpenQuickCreate}
       />
     )
@@ -108,8 +108,8 @@ export function IssueBoard({
   if (visibleIssueCount === 0 && hasActiveFilters) {
     return (
       <EmptyState
-        title="No board issues match the current filters."
-        description="Clear filters to return to the full execution board for this context."
+        title="No board evidence matches the current filters."
+        description="Clear filters to return to the full evidence board for this context."
         action={
           <Button variant="outline" className="h-8" onClick={resetFilters}>
             Clear filters

@@ -165,7 +165,7 @@ export default function DashboardPage() {
           icon={GitPullRequest}
           title="Capture the first execution signal"
           description="Add a blocker, validation task, or delivery risk to turn this empty venture into an operating workspace."
-          actionLabel="Create issue"
+          actionLabel="Add Evidence"
           onAction={openQuickCreateIssue}
         />
       )

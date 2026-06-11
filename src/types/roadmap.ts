@@ -33,6 +33,8 @@ export type RoadmapItem = {
   linkedIssueIds: string[]
   progress: number
   confidence: number
+  manualProgress?: number
+  manualConfidence?: number
   confidenceTrend: ConfidenceTrend
   impact: RoadmapImpact
   riskLevel: RiskLevel
@@ -49,4 +51,3 @@ export type RoadmapItem = {
   createdAt: string
   updatedAt: string
 }
-

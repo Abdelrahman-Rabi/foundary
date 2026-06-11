@@ -59,6 +59,30 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-11 - Codex - Phase 2 Seeded Demo Data Coherence
+
+Task:
+Implemented Phase 2 seeded demo data coherence around the Reson8/Sentra/Internal Ops studio operating story.
+
+Changed:
+- Aligned venture, validation gate, bet, evidence, capacity, and analyst seed data to the canonical Reson8 23% confidence / 41% progress, Sentra 78% confidence, Internal Ops 71% confidence anchors.
+- Added minimal optional roadmap manual sync fields and analyst numeric confidence support so seeded anchor values can display intentionally without changing routes or stores.
+- Updated Reson8 source linkage so Narrow Reson8 cites four evidence items, the Creator Retention Signal Validation bet, and product/design/engineering capacity signals.
+
+Verification:
+- `rg` targeted anchor/source-link scans passed.
+- `git diff --check` passed.
+- `npx eslint src eslint.config.mjs` passed.
+- `npm run build` passed after rerun with network access for Google Fonts.
+- `npm run lint` failed on pre-existing prototype source lint in `prototypes/pm-timeline-workshop/src/App.jsx` unescaped apostrophes.
+
+Notes:
+- Scope stayed frontend/local mock data only.
+- Internal route names and store APIs were left unchanged.
+
+Risks / Follow-ups:
+- Full `npm run lint` may still report unrelated prototype source lint issues.
+
 ## 2026-06-11 - Codex - Phase 1 Product Language Clarity
 
 Task:

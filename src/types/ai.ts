@@ -80,6 +80,7 @@ export type AnalystSignal = {
   capacityTradeoff?: string
   suggestedAction: string
   confidence?: AnalystConfidence
+  confidenceScore?: number
   severity: RiskLevel
   createdAt: string
 }

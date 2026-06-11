@@ -99,22 +99,22 @@ export const issues: Issue[] = [
     id: "issue-reson8-retention-assumptions",
     ventureId: "venture-reson8",
     roadmapId: "roadmap-reson8-retention",
-    title: "Validate creator retention assumptions",
+    title: "Weekly creator cohort analysis",
     description:
-      "Interview retained creators and identify repeat collaboration triggers.",
+      "Review weekly creator cohorts and confirm whether repeat collaboration clears the retention threshold.",
     type: "research",
     priority: "high",
-    status: "planned",
+    status: "done",
     ownerId: "user-sarah-chen",
     dueDate: "2026-05-29",
     tags: ["Research", "Retention"],
-    riskLevel: "medium",
-    confidence: 58,
+    riskLevel: "high",
+    confidence: 23,
     effort: "medium",
     blocked: false,
     acceptanceCriteria: [
-      "Activation threshold drafted",
-      "Repeat collaboration behavior defined",
+      "Weekly creator return rate reviewed",
+      "Retention remains below the continue threshold",
     ],
     validationGateId: "gate-reson8-retention",
     evidenceRole: "disprove",
@@ -123,7 +123,7 @@ export const issues: Issue[] = [
     operatorImpact: {
       function: "product",
       effort: "medium",
-      note: "Drafting creator return metrics thresholds."
+      note: "Reviewing creator return cohorts against the retention threshold."
     },
     aiInsightIds: ["insight-reson8-validation-criteria"],
     createdAt: "2026-05-12T09:00:00.000Z",
@@ -229,9 +229,9 @@ export const issues: Issue[] = [
     id: "issue-reson8-positioning-interviews",
     ventureId: "venture-reson8",
     roadmapId: "roadmap-reson8-retention",
-    title: "Complete creator positioning interviews",
+    title: "Creator positioning interviews",
     description:
-      "Complete blocked interviews needed to identify the strongest repeat-collaboration narrative.",
+      "Interview creators to confirm whether collaboration urgency is strong enough for repeat use.",
     type: "research",
     priority: "urgent",
     status: "in-progress",
@@ -239,7 +239,7 @@ export const issues: Issue[] = [
     dueDate: "2026-05-21",
     tags: ["Research", "Retention"],
     riskLevel: "high",
-    confidence: 45,
+    confidence: 24,
     effort: "medium",
     blocked: true,
     validationGateId: "gate-reson8-retention",
@@ -249,7 +249,7 @@ export const issues: Issue[] = [
     operatorImpact: {
       function: "product",
       effort: "medium",
-      note: "Conducting user development interviews."
+      note: "Validating whether creators have urgent weekly collaboration pull."
     },
     aiInsightIds: ["insight-reson8-validation-criteria"],
     createdAt: "2026-05-10T09:00:00.000Z",
@@ -259,9 +259,9 @@ export const issues: Issue[] = [
     id: "issue-reson8-message-threshold",
     ventureId: "venture-reson8",
     roadmapId: "roadmap-reson8-retention",
-    title: "Define retention signal threshold",
+    title: "Define retained-creator threshold",
     description:
-      "Set the continue/split/stop threshold for creator collaboration behavior.",
+      "Set the continue/narrow/stop threshold for creator collaboration behavior.",
     type: "research",
     priority: "urgent",
     status: "planned",
@@ -269,7 +269,7 @@ export const issues: Issue[] = [
     dueDate: "2026-05-27",
     tags: ["Research", "Retention"],
     riskLevel: "high",
-    confidence: 39,
+    confidence: 36,
     effort: "small",
     blocked: false,
     validationGateId: "gate-reson8-retention",
@@ -279,7 +279,7 @@ export const issues: Issue[] = [
     operatorImpact: {
       function: "product",
       effort: "low",
-      note: "Defining the core repeat creator retention metrics."
+      note: "Defining the proof threshold before any wider onboarding buildout."
     },
     aiInsightIds: ["insight-reson8-validation-criteria", "insight-reson8-split-initiative"],
     createdAt: "2026-05-20T09:00:00.000Z",
@@ -289,9 +289,9 @@ export const issues: Issue[] = [
     id: "issue-reson8-onboarding-variant",
     ventureId: "venture-reson8",
     roadmapId: "roadmap-reson8-retention",
-    title: "Prototype creator onboarding variant",
+    title: "Narrow creator onboarding buildout",
     description:
-      "Prototype the onboarding path only after the retained-creator signal threshold is clear.",
+      "Contain onboarding prototype work until weekly retained-creator proof improves.",
     type: "experiment",
     priority: "high",
     status: "in-review",
@@ -299,12 +299,12 @@ export const issues: Issue[] = [
     dueDate: "2026-05-28",
     tags: ["Onboarding", "Research"],
     riskLevel: "medium",
-    confidence: 61,
+    confidence: 31,
     effort: "medium",
     blocked: false,
     acceptanceCriteria: [
-      "Prototype reviewed",
-      "Friction points mapped back to retention threshold",
+      "Prototype scope narrowed",
+      "No broad onboarding expansion before retention proof improves",
     ],
     validationGateId: "gate-reson8-retention",
     evidenceRole: "capacity-cost",
@@ -313,7 +313,7 @@ export const issues: Issue[] = [
     operatorImpact: {
       function: "engineering",
       effort: "high",
-      note: "Prototype variant coding."
+      note: "Active prototype coding is consuming capacity while retention proof is weak."
     },
     aiInsightIds: [],
     createdAt: "2026-05-14T09:00:00.000Z",

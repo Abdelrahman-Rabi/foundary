@@ -8,6 +8,4 @@ It exists to protect the product direction while using AI tools such as Codex, A
 
 AI agents should help execute the plan, not redefine the product.
 
-The current implementation focus is Product Clarity and Aha Moment Improvement.
-
-The goal is to make Foundary easier to
+The current implementation focus is Product Clarity and Aha Moment Improvement

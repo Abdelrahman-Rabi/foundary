@@ -1836,10 +1836,884 @@ The final product should feel:
 - fast
 - focused
 
-The reviewer should feel:
 
-> "This product understands how modern venture studios operate."
 
-NOT:
+# Implementation Phases — Clarity & Demo Readiness
 
-> "This is just another PM dashboard."
+## Purpose
+
+This roadmap should be implemented in controlled phases.
+
+The agent must not attempt to implement everything at once.
+
+Each phase should be completed, reviewed, and validated before moving to the next phase.
+
+The goal is to avoid rushed implementation and protect the product from becoming:
+
+* too broad
+* visually noisy
+* poorly connected
+* over-engineered
+* unclear to a first-time reviewer
+
+The implementation priority is:
+
+```txt
+clarity first
+data coherence second
+cross-screen flow third
+visual polish last
+```
+
+---
+
+# Global Rule For Every Phase
+
+Before starting any phase, the agent must:
+
+```txt
+1. Read context/current-feature.md
+2. Read the specific feature files listed for the phase
+3. Inspect the existing implementation
+4. Produce a short implementation plan
+5. Implement only that phase
+6. Run checks
+7. Report what changed before continuing
+```
+
+The agent must not jump ahead to later phases without completing the current phase.
+
+---
+
+# Phase 0 — Baseline Inspection
+
+## Goal
+
+Understand the current app structure before changing anything.
+
+## Required Context
+
+Read:
+
+```txt
+@context/current-feature.md
+@context/project-overview.md
+@context/project-specs.md
+@context/coding-standards.md
+@context/ai-development-rules.md
+@context/implementation-roadmap.md
+```
+
+## Tasks
+
+The agent should inspect:
+
+```txt
+routes
+navigation labels
+main page components
+mock data files
+stores
+drawer patterns
+existing Dashboard / Issues / Roadmap / AI Assistant implementation
+current build/lint state
+```
+
+## Deliverable
+
+Before editing, the agent should report:
+
+```txt
+1. Current route structure
+2. Current data structure
+3. Main components that need updates
+4. Any existing issues or risks
+5. Proposed phase-by-phase implementation plan
+```
+
+## Validation
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+If the project already has failures, document them clearly before making changes.
+
+---
+
+# Phase 1 — Product Language & Navigation Clarity
+
+## Goal
+
+Update user-facing language so the app clearly feels like Foundary, not generic Linear/Jira.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-copy-hierarchy.md
+@context/current-feature.md
+@context/features/feature-navigation.md
+```
+
+## Tasks
+
+Update user-facing labels:
+
+```txt
+Dashboard → Command Center
+Issues → Evidence
+Roadmap → Bets
+AI Assistant → Studio Analyst
+```
+
+Update major copy terms:
+
+```txt
+Issue → Evidence Item
+New Issue → Add Evidence
+Priority → Decision Impact
+Type → Evidence Role
+Roadmap Item → Bet
+Linked Issues → Linked Evidence
+AI Insight → Analyst Recommendation
+```
+
+## Important Rule
+
+Internal route names or variable names may remain unchanged if changing them creates unnecessary risk.
+
+User-facing copy must be updated.
+
+## Do Not Do Yet
+
+Do not redesign screens in this phase.
+
+Do not change seeded data deeply yet.
+
+Do not add new components unless required for copy alignment.
+
+## Validation
+
+Check:
+
+```txt
+navigation labels
+page titles
+primary CTAs
+empty states
+drawer titles
+table headers
+button labels
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 2 — Seeded Demo Data Coherence
+
+## Goal
+
+Make the mock data tell one clear venture studio story.
+
+## Required Context
+
+Read:
+
+```txt
+@context/data/seeded-demo-story.md
+@context/features/feature-seeded-demo-story.md
+@context/data/domain-models.md
+@context/data/mock-data-strategy.md
+```
+
+## Tasks
+
+Implement or update seeded data for:
+
+```txt
+ventures
+bets
+evidence items
+studio decisions
+analyst recommendations
+capacity signals
+```
+
+Required ventures:
+
+```txt
+Sentra
+Reson8
+Internal Ops
+```
+
+Required anchor values:
+
+```txt
+Reson8 validation confidence: 23%
+Reson8 execution progress: 41%
+Studio Analyst confidence: 82%
+Sentra validation confidence: 78%
+Internal Ops validation confidence: 71%
+```
+
+Required primary story:
+
+```txt
+Reson8 is consuming product and engineering capacity, but retention evidence is weak.
+Foundary recommends narrowing Reson8 before more capacity is wasted.
+Sentra is stronger but capacity constrained.
+Internal Ops is stable and contained.
+```
+
+## Do Not Do Yet
+
+Do not polish visual UI yet.
+
+Do not create new complex data systems.
+
+Do not add backend or database.
+
+## Validation
+
+Check:
+
+```txt
+Reson8 is highest urgency
+Sentra is promising but constrained
+Internal Ops is stable
+Evidence links to Bets
+Bets link to Evidence
+Recommendations cite source evidence
+No Lorem Ipsum remains in primary demo surfaces
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 3 — Command Center Aha Moment
+
+## Goal
+
+Make the first screen explain Foundary within 30 seconds.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-command-center-aha.md
+@context/features/feature-seeded-demo-story.md
+@context/current-feature.md
+```
+
+## Tasks
+
+Update Command Center so the first viewport shows one dominant recommendation:
+
+```txt
+Recommended Move: Narrow Reson8
+```
+
+Required hero content:
+
+```txt
+Why now
+Retention evidence is weak while product and engineering capacity are actively being consumed.
+
+Studio decision
+Stop broad onboarding buildout. Continue only retained-creator threshold validation.
+
+Supporting evidence
+Validation confidence: 23%
+Capacity pressure: High
+Missing proof: Weekly retained creator signal
+
+Capacity impact
+Protects product and engineering capacity for higher-confidence Sentra activation work.
+
+Primary action
+Inspect evidence
+```
+
+Add or refine supporting panels only if they help the hero recommendation.
+
+## Do Not Do Yet
+
+Do not build a generic dashboard.
+
+Do not let KPI cards dominate the first viewport.
+
+Do not add decorative charts.
+
+## Validation
+
+The screen passes if a reviewer can answer:
+
+```txt
+What should the studio do?
+Why?
+What evidence supports it?
+What capacity is affected?
+What is the next action?
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 4 — Evidence Decision Linkage
+
+## Goal
+
+Make Evidence feel like source proof behind decisions, not renamed issues.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-evidence-decision-linkage.md
+@context/data/seeded-demo-story.md
+@context/features/feature-cross-screen-narrative.md
+```
+
+## Tasks
+
+Update Evidence list/table/board/drawer to show:
+
+```txt
+Evidence Item
+Supports
+Evidence Role
+Status
+Owner
+Decision Impact
+Venture
+Connected Bet
+Capacity Impact
+Recommended Move
+```
+
+Required table direction:
+
+```txt
+Evidence Item | Supports | Role | Status | Owner | Impact | Venture
+```
+
+Add context banner support:
+
+```txt
+Showing evidence for: Narrow Reson8 · Creator Retention Signal
+```
+
+Ensure evidence items can open connected Bets.
+
+## Do Not Do Yet
+
+Do not add comments.
+
+Do not add enterprise issue workflows.
+
+Do not make due dates or statuses dominate the experience.
+
+## Validation
+
+Check:
+
+```txt
+Evidence does not feel like generic Issues
+Supports is visible
+Evidence Role is visible
+Decision Impact is visible
+Connected Bet is visible
+Reson8 evidence supports Narrow/Pause
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 5 — Bets Decision State
+
+## Goal
+
+Make Bets feel like validation decisions, not roadmap cards.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-bets-decision-state.md
+@context/data/seeded-demo-story.md
+@context/features/feature-cross-screen-narrative.md
+```
+
+## Tasks
+
+Update Bets board/cards/drawer to show:
+
+```txt
+Testing Statement
+Validation Confidence
+Execution Progress
+Recommended Move
+Missing Proof
+Linked Evidence
+Capacity Impact
+```
+
+Keep columns:
+
+```txt
+Now
+Next
+Later
+```
+
+Required Reson8 tension:
+
+```txt
+Validation confidence: 23%
+Execution progress: 41%
+Recommended move: Narrow
+```
+
+Use this copy where appropriate:
+
+```txt
+Execution is moving, but validation confidence remains weak.
+```
+
+## Do Not Do Yet
+
+Do not add Gantt charts.
+
+Do not add roadmap timeline complexity.
+
+Do not make execution progress more prominent than validation confidence.
+
+## Validation
+
+Check:
+
+```txt
+Bets do not feel like generic roadmap cards
+Recommended Move is visible on every important card
+Missing Proof is visible
+Linked Evidence is visible
+Validation Confidence is more important than Execution Progress
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 6 — Studio Analyst Decision-First
+
+## Goal
+
+Make Studio Analyst feel like a decision reasoning layer, not a chatbot.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-studio-analyst-decision-first.md
+@context/data/ai-behavior-rules.md
+@context/data/seeded-demo-story.md
+```
+
+## Tasks
+
+Update Studio Analyst so the first viewport shows:
+
+```txt
+Recommended Move
+Narrow Reson8
+
+Why
+Retention evidence is weak while product and engineering capacity are actively being consumed.
+
+Next
+Stop broad onboarding buildout. Continue only retained-creator threshold validation.
+
+Source evidence
+4 evidence items · 1 bet · 2 capacity signals
+
+Capacity impact
+Protects product and engineering capacity for Sentra activation work.
+
+Confidence
+82%
+```
+
+Actions:
+
+```txt
+Inspect evidence
+Open bet
+View capacity impact
+```
+
+## Do Not Do
+
+Do not add:
+
+```txt
+chat bubbles
+assistant avatar
+fake typing
+fake streaming
+AI says
+prompt box as main interaction
+```
+
+## Validation
+
+Check:
+
+```txt
+Studio Analyst opens with one dominant recommendation
+Top recommendation is Narrow Reson8
+Source evidence is visible
+Capacity impact is visible
+Confidence is visible
+Actions link to Evidence and Bet
+No chatbot patterns exist
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 7 — Cross-Screen Narrative & Context Links
+
+## Goal
+
+Make the product feel like one connected decision system.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-cross-screen-narrative.md
+@context/features/feature-seeded-demo-story.md
+@context/data/seeded-demo-story.md
+```
+
+## Tasks
+
+Implement or refine links:
+
+```txt
+Command Center → Evidence
+Command Center → Bet
+Evidence → Bet
+Bets → Evidence
+Bets → Studio Analyst
+Studio Analyst → Evidence
+Studio Analyst → Bet
+```
+
+Add lightweight decision context state if needed.
+
+Use context banners:
+
+```txt
+Showing evidence for: Narrow Reson8 · Creator Retention Signal
+```
+
+Use selected highlights when navigating to a source object.
+
+## Do Not Do
+
+Do not add:
+
+```txt
+new heavy route system
+decision detail page
+guided tour
+coach marks
+modal stacks
+complex breadcrumbs
+```
+
+## Validation
+
+Main flow must work:
+
+```txt
+1. Command Center shows Narrow Reson8.
+2. Click Inspect evidence.
+3. Evidence opens filtered to Creator Retention Signal.
+4. Open Weekly creator cohort analysis.
+5. Open connected Bet.
+6. Bet shows 23% confidence and 41% progress.
+7. Open Studio Analyst reasoning.
+8. Studio Analyst explains evidence, capacity, confidence, and next action.
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 8 — Visual Polish & Interaction Readiness
+
+## Goal
+
+Make the product feel premium, calm, compact, and submission-ready.
+
+## Required Context
+
+Read:
+
+```txt
+@context/features/feature-polish-readiness.md
+@context/features/feature-design-system.md
+@context/qa/final-review-checklist.md
+```
+
+## Tasks
+
+Refine:
+
+```txt
+spacing
+typography
+badge consistency
+drawer polish
+hover states
+loading states
+empty states
+error states
+motion restraint
+dark-first visual quality
+responsive desktop layout
+```
+
+## Visual Direction
+
+The app should feel:
+
+```txt
+compact
+calm
+premium
+dark-first
+Linear-inspired
+source-linked
+decision-led
+operational
+```
+
+## Avoid
+
+Do not add:
+
+```txt
+rainbow dashboards
+heavy gradients
+large decorative hero sections
+playful animations
+marketing UI
+Jira-like density
+enterprise admin visuals
+```
+
+## Validation
+
+Check:
+
+```txt
+first viewport feels clear
+cards are compact
+drawers feel polished
+motion supports orientation
+copy is calm
+no screen feels noisy
+no screen feels overbuilt
+```
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# Phase 9 — Final QA & Submission Readiness
+
+## Goal
+
+Confirm the product is ready to submit.
+
+## Required Context
+
+Read:
+
+```txt
+@context/qa/final-review-checklist.md
+@context/features/feature-polish-readiness.md
+```
+
+## Tasks
+
+Run the full final review checklist.
+
+Verify:
+
+```txt
+30-second Aha moment
+main demo flow
+Reson8 decision chain
+Sentra contrast
+Internal Ops stability
+copy consistency
+seeded data coherence
+cross-screen links
+visual polish
+scope discipline
+README alignment
+Product Note alignment
+AI Usage Note alignment
+```
+
+## Required Commands
+
+Run:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Final Report Format
+
+The agent must report:
+
+```txt
+1. Summary of changes made
+2. Files changed
+3. Demo flow supported
+4. Checks run and results
+5. Known limitations or follow-up items
+```
+
+---
+
+# Phase Discipline Rules
+
+The agent must follow these rules:
+
+```txt
+Do one phase at a time.
+Do not skip validation.
+Do not add unrelated features.
+Do not start polish before clarity works.
+Do not introduce backend complexity.
+Do not create chatbot UI.
+Do not over-refactor.
+Do not hide build or lint failures.
+```
+
+If a phase reveals a blocker, the agent should stop and report:
+
+```txt
+what is blocked
+why it is blocked
+what files are involved
+recommended next step
+```
+
+---
+
+# Recommended Phase Execution Prompt
+
+Use this prompt when asking the agent to execute one phase:
+
+```txt
+Implement Phase [number] from @context/implementation-roadmap.md.
+
+Before coding:
+- read @context/current-feature.md
+- read the context files listed in that phase
+- inspect the current implementation
+- provide a short implementation plan
+
+Then implement only this phase.
+
+Do not jump to later phases.
+Do not add unrelated features.
+Run npm run lint and npm run build when done.
+
+Report:
+1. summary of changes
+2. files changed
+3. validation results
+4. any limitations
+```
+
+---
+
+# Final Roadmap Principle
+
+This roadmap should make the agent slow down.
+
+The goal is not speed.
+
+The goal is:
+
+```txt
+clear product judgment
+coherent implementation
+connected demo story
+submission-ready quality
+```

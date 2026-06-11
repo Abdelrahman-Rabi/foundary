@@ -59,6 +59,102 @@ Review Agent
 
 ## Handoff Log
 
+## 2026-06-11 - Codex - Venture Story Slides PM Concept Coverage
+
+Task:
+Expanded the PM Venture Story Slides prototype so it covers the core product management concepts a beginner PM should recognize while learning Foundary.
+
+Changed:
+- `prototypes/pm-venture-story-slides/src/App.jsx`
+- `prototypes/pm-venture-story-slides/src/styles.css`
+- `prototypes/pm-venture-story-slides/design-qa.md`
+
+Verification:
+- `npm run build` - Passed.
+- Browser verification - Passed via `http://127.0.0.1:5176`: checked the 17-slide concept path, PM toolkit, answer reveal, progress count, and next-slide behavior.
+
+Notes:
+- Added slides for customer, problem, segment, value, assumption, metric, priority, scope, and tradeoff in addition to the existing Foundary platform concepts.
+- Added a compact PM toolkit for discovery, user, buyer, ICP, MVP, risk, dependency, stakeholder, GTM, pricing, outcome, and next action.
+
+## 2026-06-11 - Codex - Venture Story Slides Simplification Pass
+
+Task:
+Refined the PM Venture Story Slides prototype to make it simpler and more comprehensive for a new PM learning Foundary.
+
+Changed:
+- `prototypes/pm-venture-story-slides/src/App.jsx`
+- `prototypes/pm-venture-story-slides/src/styles.css`
+- `prototypes/pm-venture-story-slides/design-qa.md`
+
+Verification:
+- `npm run build` - Passed.
+- Browser verification - Passed via `http://127.0.0.1:5176`: checked new beginner anchors, full story recap, answer reveal, and next-slide behavior.
+
+Notes:
+- Added per-slide anchors for "Where in Foundary?", "Remember this", and "Simple example" to reduce conceptual confusion.
+
+## 2026-06-11 - Codex - PM Venture Story Slides Prototype
+
+Task:
+Created a third self-contained Product Design prototype that teaches Foundary platform concepts through a simple interactive venture story, using the warmer Timeline Workshop visual language.
+
+Changed:
+- `prototypes/pm-venture-story-slides/src/App.jsx`
+- `prototypes/pm-venture-story-slides/src/styles.css`
+- `prototypes/pm-venture-story-slides/package.json`
+- `prototypes/pm-venture-story-slides/serve-dist.mjs`
+- `prototypes/pm-venture-story-slides/design-qa.md`
+
+Verification:
+- `npm run build` - Passed.
+- Browser verification - Passed via `http://127.0.0.1:5176`: checked story render, answer reveal, next/back navigation, timeline navigation, map toggle, restart reset, and journal updates.
+
+Notes:
+- Prototype is intentionally beginner-friendly and explains Foundary concepts in simple language through the SparkCharge venture story.
+- Existing Guided Cockpit and Timeline Workshop prototypes remain separate and unchanged.
+
+## 2026-06-11 - Codex - PM Timeline Workshop Prototype
+
+Task:
+Created a second self-contained Product Design prototype for the 30-minute Foundary PM routine using the selected Timeline Workshop direction, while leaving the Guided Cockpit prototype untouched.
+
+Changed:
+- `prototypes/pm-timeline-workshop/src/App.jsx`
+- `prototypes/pm-timeline-workshop/src/styles.css`
+- `prototypes/pm-timeline-workshop/package.json`
+- `prototypes/pm-timeline-workshop/serve-dist.mjs`
+- `prototypes/pm-timeline-workshop/design-qa.md`
+
+Verification:
+- `npm run build` - Passed.
+- Browser verification - Passed via `http://127.0.0.1:5175`: checked timeline render, step completion, scenario switching, answer selection, board tabs, confidence slider, timer toggle, and journal updates.
+
+Notes:
+- Guided Cockpit remains available separately at `http://127.0.0.1:5174`.
+- Timeline Workshop is available separately at `http://127.0.0.1:5175`.
+
+## 2026-06-11 - Codex - PM Guided Cockpit Prototype
+
+Task:
+Created a self-contained Product Design prototype for teaching a new PM the 30-minute Foundary daily operating routine using the selected Guided Cockpit direction.
+
+Changed:
+- `prototypes/pm-guided-cockpit/src/App.jsx`
+- `prototypes/pm-guided-cockpit/src/styles.css`
+- `prototypes/pm-guided-cockpit/vite.config.mjs`
+- `prototypes/pm-guided-cockpit/serve-dist.mjs`
+- `prototypes/pm-guided-cockpit/design-qa.md`
+
+Verification:
+- `npm install` - Passed with approved network access for prototype dependencies.
+- `npm run build` - Passed.
+- Browser verification - Passed via `http://127.0.0.1:5174`: checked desktop render, next-step flow, venture switching, decision selection, evidence chip toggles, tips drawer, and decision-note update.
+
+Notes:
+- Prototype is intentionally self-contained and does not modify the production Foundary app routes.
+- Built output is file-friendly through relative Vite asset paths, but the current live preview is served by `serve-dist.mjs`.
+
 ## 2026-06-07 - Antigravity - Phase 14.10 Navigation, Copy, And Verification (Including Tightening Pass)
 
 Task:

@@ -8,4 +8,36 @@ It exists to protect the product direction while using AI tools such as Codex, A
 
 AI agents should help execute the plan, not redefine the product.
 
-The current implementation focus is Product Clarity and Aha Moment Improvement
+The current implementation focus is Product Clarity and Aha Moment Improvement.
+
+This document exists to prevent:
+
+- overbuilding
+- product drift
+- generic project-management behavior
+- Mini Jira complexity
+- inconsistent UI decisions
+- unnecessary backend work
+- chatbot-style AI
+- weak first-time product clarity
+
+---
+
+# 1. Core Product Rule
+
+Foundary is a Linear-inspired studio command center for venture builders.
+
+It helps venture studios decide which ventures to:
+
+- continue
+- narrow
+- pause
+- stop
+- staff up
+- defer
+- escalate for partner review
+
+based on:
+
+- evidence
+- validation
